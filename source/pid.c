@@ -18,6 +18,7 @@
 #include "utils.h"
 #include "debug.h"
 #include "time.h"
+#include "odom.h"
 
 #define SAMPLE_RATE (20) // Hz
 #define SAMPLE_PERIOD (1000/SAMPLE_RATE) /* milliseconds */
@@ -131,7 +132,7 @@ void PID_Update()
     {    
         last_time = millis();
         
-        input = Encoder_GetVelocity();       
+        input = Odom_GetVelocity();       
         pid_calc(&pid, velocity - input); 
         new_velocity = input + pid.control;        
         Motor_SetOutput(new_velocity);

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
   30:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
   31:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Parameters:
   32:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  None
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
   87:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
   88:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     #if (HCSR04_Timer__PWM_SEL == HCSR04_Timer_CONFIG)
   89:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         HCSR04_Timer_CONTROL_REG = HCSR04_Timer_CTRL_PWM_BASE_CONFIG;
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 3
 
 
   90:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  144:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
  145:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         /* Set other values from customizer */
  146:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         HCSR04_Timer_WritePeriod(HCSR04_Timer_PWM_PERIOD_VALUE );
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 4
 
 
  147:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         HCSR04_Timer_WriteCompare(HCSR04_Timer_PWM_COMPARE_VALUE);
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
   43              	.LVL1:
  184:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
  185:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     /* Start Timer or PWM if start input is absent */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 5
 
 
  186:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     #if (HCSR04_Timer__PWM_SEL == HCSR04_Timer_CONFIG)
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  222:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
  223:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *******************************************************************************/
  224:.\Generated_Source\PSoC4/HCSR04_Timer.c **** void HCSR04_Timer_Start(void)
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 6
 
 
  225:.\Generated_Source\PSoC4/HCSR04_Timer.c **** {
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
   81              		@ sp needed
   82 0014 08BD     		pop	{r3, pc}
   83              	.L6:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 7
 
 
   84 0016 C046     		.align	2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  106              		.loc 1 291 0
  107 0004 FFF7FEFF 		bl	CyEnterCriticalSection
  108              	.LVL5:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 8
 
 
  292:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  313:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *         - HCSR04_Timer_MODE_X4 - Counts on both edges of phi1 and phi2
  314:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *                                        (4x faster)
  315:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 9
 
 
  316:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Return:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  181              		.code	16
  182              		.thumb_func
  183              		.type	HCSR04_Timer_SetPrescaler, %function
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 10
 
 
  184              	HCSR04_Timer_SetPrescaler:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  204 0012 1A68     		ldr	r2, [r3]
  205 0014 1443     		orr	r4, r2
  206              	.LVL14:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 11
 
 
  207 0016 1C60     		str	r4, [r3]
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  235              		.cfi_offset 4, -8
  236              		.cfi_offset 14, -4
  237 0002 041C     		mov	r4, r0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 12
 
 
  391:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     uint8 enableInterrupts;
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  406:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
  407:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Summary:
  408:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Writes the control register that determines what mode of operation the PWM
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 13
 
 
  409:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  output lines are driven in.  There is a setting for what to do on a
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  293              		.cfi_endproc
  294              	.LFE9:
  295              		.size	HCSR04_Timer_SetPWMMode, .-HCSR04_Timer_SetPWMMode
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 14
 
 
  296              		.section	.text.HCSR04_Timer_SetPWMSyncKill,"ax",%progbits
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  313 0004 FFF7FEFF 		bl	CyEnterCriticalSection
  314              	.LVL23:
  484:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 15
 
 
  485:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     HCSR04_Timer_CONTROL_REG &= (uint32)~HCSR04_Timer_PWM_SYNC_KILL_MASK;
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  504:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  stopOnKillEnable
  505:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *   Values:
  506:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *     - 0 - Don't stop
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 16
 
 
  507:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *     - 1 - Stop
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  386              	.LFE11:
  387              		.size	HCSR04_Timer_SetPWMStopOnKill, .-HCSR04_Timer_SetPWMStopOnKill
  388              		.section	.text.HCSR04_Timer_SetPWMDeadTime,"ax",%progbits
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 17
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 17
 
 
  389              		.align	2
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  414 0012 1A68     		ldr	r2, [r3]
  415 0014 2406     		lsl	r4, r4, #24
  416              	.LVL32:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 18
 
 
  417 0016 240C     		lsr	r4, r4, #16
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  444              	.LVL34:
  445 0000 10B5     		push	{r4, lr}
  446              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 19
 
 
  447              		.cfi_offset 4, -8
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  596:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
  597:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Summary:
  598:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Writes a new 16bit counter value directly into the counter register, thus
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 20
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 20
 
 
  599:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  setting the counter (not the period) to the value written. It is not
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  626:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Current counter value
  627:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
  628:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *******************************************************************************/
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 21
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 21
 
 
  629:.\Generated_Source\PSoC4/HCSR04_Timer.c **** uint32 HCSR04_Timer_ReadCounter(void)
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  658:.\Generated_Source\PSoC4/HCSR04_Timer.c **** void HCSR04_Timer_SetCounterMode(uint32 counterMode)
  659:.\Generated_Source\PSoC4/HCSR04_Timer.c **** {
  538              		.loc 1 659 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 22
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 22
 
 
  539              		.cfi_startproc
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  671:.\Generated_Source\PSoC4/HCSR04_Timer.c **** /*******************************************************************************
  672:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Function Name: HCSR04_Timer_WritePeriod
  673:.\Generated_Source\PSoC4/HCSR04_Timer.c **** ********************************************************************************
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 23
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 23
 
 
  674:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  701:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  None
  702:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
  703:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Return:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 24
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 24
 
 
  704:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Period value
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  733:.\Generated_Source\PSoC4/HCSR04_Timer.c **** void HCSR04_Timer_SetCompareSwap(uint32 swapEnable)
  734:.\Generated_Source\PSoC4/HCSR04_Timer.c **** {
  634              		.loc 1 734 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 25
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 25
 
 
  635              		.cfi_startproc
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  746:.\Generated_Source\PSoC4/HCSR04_Timer.c **** /*******************************************************************************
  747:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Function Name: HCSR04_Timer_WritePeriodBuf
  748:.\Generated_Source\PSoC4/HCSR04_Timer.c **** ********************************************************************************
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 26
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 26
 
 
  749:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  776:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Return:
  777:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Period value
  778:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 27
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 27
 
 
  779:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *******************************************************************************/
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  730              		.loc 1 807 0
  731              		.cfi_startproc
  732              	.LVL52:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 28
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 28
 
 
  733 0000 10B5     		push	{r4, lr}
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  819:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
  820:.\Generated_Source\PSoC4/HCSR04_Timer.c **** /*******************************************************************************
  821:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Function Name: HCSR04_Timer_WriteCompare
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 29
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 29
 
 
  822:.\Generated_Source\PSoC4/HCSR04_Timer.c **** ********************************************************************************
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  791 000c 0C012040 		.word	1075839244
  792              		.cfi_endproc
  793              	.LFE23:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 30
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 30
 
 
  794              		.size	HCSR04_Timer_WriteCompare, .-HCSR04_Timer_WriteCompare
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  904:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         return (HCSR04_Timer_COMP_CAP_REG & HCSR04_Timer_16BIT_MASK);
  805              		.loc 1 904 0
  806 0000 024B     		ldr	r3, .L65
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 31
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 31
 
 
  807 0002 1868     		ldr	r0, [r3]
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  935:.\Generated_Source\PSoC4/HCSR04_Timer.c ****             compareBuf++;
  936:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         }
  937:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         else if (((uint32)HCSR04_Timer__COUNT_UP == currentMode) && (0u != compareBuf))
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 32
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 32
 
 
  938:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         {
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  856              		.cfi_startproc
  967:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     #if (HCSR04_Timer_CY_TCPWM_4000)
  968:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         uint32 currentMode;
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 33
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 33
 
 
  969:.\Generated_Source\PSoC4/HCSR04_Timer.c ****         uint32 regVal;
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1000:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Summary:
 1001:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Reads the captured counter value. This API is applicable only for
 1002:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Timer/Counter with the capture mode and Quadrature Decoder modes.
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 34
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 34
 
 
 1003:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1032:.\Generated_Source\PSoC4/HCSR04_Timer.c **** uint32 HCSR04_Timer_ReadCaptureBuf(void)
 1033:.\Generated_Source\PSoC4/HCSR04_Timer.c **** {
  905              		.loc 1 1033 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 35
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 35
 
 
  906              		.cfi_startproc
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  933 0000 10B5     		push	{r4, lr}
  934              		.cfi_def_cfa_offset 8
  935              		.cfi_offset 4, -8
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 36
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 36
 
 
  936              		.cfi_offset 14, -4
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1078:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  input.
 1079:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
 1080:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Parameters:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 37
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 37
 
 
 1081:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  triggerMode: Enumerated trigger mode value
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1005 0020 24012040 		.word	1075839268
  1006              		.cfi_endproc
  1007              	.LFE30:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 38
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 38
 
 
  1008              		.size	HCSR04_Timer_SetReloadMode, .-HCSR04_Timer_SetReloadMode
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1033 0010 1A60     		str	r2, [r3]
 1132:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     HCSR04_Timer_TRIG_CONTROL1_REG |= ((uint32)(triggerMode << HCSR04_Timer_START_SHIFT));
  1034              		.loc 1 1132 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 39
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 39
 
 
  1035 0012 1A68     		ldr	r2, [r3]
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1063              		.cfi_startproc
  1064              	.LVL72:
  1065 0000 10B5     		push	{r4, lr}
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 40
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 40
 
 
  1066              		.cfi_def_cfa_offset 8
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1173:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *
 1174:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Summary:
 1175:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  Sets the count trigger mode. For Quadrature Decoder mode this is the phiA
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 41
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 41
 
 
 1176:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *  input.
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1135              	.L93:
  1136              		.align	2
  1137              	.L92:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 42
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 42
 
 
  1138 0020 24012040 		.word	1075839268
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1232:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     uint8 enableInterrupts;
 1233:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
 1234:.\Generated_Source\PSoC4/HCSR04_Timer.c ****     enableInterrupts = CyEnterCriticalSection();
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 43
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 43
 
 
  1161              		.loc 1 1234 0
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1259:.\Generated_Source\PSoC4/HCSR04_Timer.c **** uint32 HCSR04_Timer_ReadStatus(void)
 1260:.\Generated_Source\PSoC4/HCSR04_Timer.c **** {
  1191              		.loc 1 1260 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 44
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 44
 
 
  1192              		.cfi_startproc
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1285:.\Generated_Source\PSoC4/HCSR04_Timer.c **** {
  1221              		.loc 1 1285 0
  1222              		.cfi_startproc
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 45
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 45
 
 
  1223              	.LVL85:
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1269 001c 0020     		mov	r0, #0
  1270 001e FFF7FEFF 		bl	HCSR04_Timer_WriteCounter
  1271              	.LVL88:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 46
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 46
 
 
  160:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1319              	.L108:
  1320 001c 00000000 		.word	.LANCHOR0
  1321              		.cfi_endproc
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 47
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 47
 
 
  1322              	.LFE3:
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1353              	HCSR04_Timer_GetInterruptSource:
  1354              	.LFB38:
 1311:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 48
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 48
 
 
 1312:.\Generated_Source\PSoC4/HCSR04_Timer.c **** 
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1343:.\Generated_Source\PSoC4/HCSR04_Timer.c **** * Parameters:
 1344:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *   interruptMask: Mask of interrupts to clear
 1345:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *   Values:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 49
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 49
 
 
 1346:.\Generated_Source\PSoC4/HCSR04_Timer.c **** *     - HCSR04_Timer_INTR_MASK_TC       - Terminal count mask
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
 1376:.\Generated_Source\PSoC4/HCSR04_Timer.c **** void HCSR04_Timer_SetInterrupt(uint32 interruptMask)
 1377:.\Generated_Source\PSoC4/HCSR04_Timer.c **** {
  1402              		.loc 1 1377 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 50
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 50
 
 
  1403              		.cfi_startproc
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1455 003a 02       		.uleb128 0x2
  1456 003b 02       		.byte	0x2
  1457 003c 07       		.byte	0x7
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 51
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 51
 
 
  1458 003d C3020000 		.4byte	.LASF3
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1512 00a7 02       		.uleb128 0x2
  1513 00a8 04       		.byte	0x4
  1514 00a9 07       		.byte	0x7
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 52
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 52
 
 
  1515 00aa 64030000 		.4byte	.LASF15
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1569 0132 0B       		.uleb128 0xb
  1570 0133 32050000 		.4byte	.LASF21
  1571 0137 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 53
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 53
 
 
  1572 0138 1F01     		.2byte	0x11f
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1626 01c5 4C040000 		.4byte	.LASF24
  1627 01c9 01       		.byte	0x1
  1628 01ca 6501     		.2byte	0x165
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 54
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 54
 
 
  1629 01cc 76000000 		.4byte	0x76
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1683 025b 01       		.byte	0x1
  1684 025c BB01     		.2byte	0x1bb
  1685 025e 76000000 		.4byte	0x76
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 55
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 55
 
 
  1686 0262 22010000 		.4byte	.LLST10
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1740 02ef 09       		.uleb128 0x9
  1741 02f0 22000000 		.4byte	.LVL29
  1742 02f4 CB080000 		.4byte	0x8cb
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 56
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 56
 
 
  1743 02f8 00       		.byte	0
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1797 0382 1C000000 		.4byte	.LVL37
  1798 0386 CB080000 		.4byte	0x8cb
  1799 038a 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 57
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 57
 
 
  1800 038b 0A       		.uleb128 0xa
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1854 0412 56040000 		.4byte	.LASF41
  1855 0416 01       		.byte	0x1
  1856 0417 AF02     		.2byte	0x2af
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 58
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 58
 
 
  1857 0419 00000000 		.4byte	.LFB17
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1911 04a3 10000000 		.4byte	.LFE20-.LFB20
  1912 04a7 01       		.uleb128 0x1
  1913 04a8 9C       		.byte	0x9c
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 59
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 59
 
 
  1914 04a9 BE040000 		.4byte	0x4be
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  1968 0533 0B       		.uleb128 0xb
  1969 0534 98030000 		.4byte	.LASF52
  1970 0538 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 60
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 60
 
 
  1971 0539 4303     		.2byte	0x343
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2025 05c1 01       		.uleb128 0x1
  2026 05c2 9C       		.byte	0x9c
  2027 05c3 0A       		.uleb128 0xa
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 61
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 61
 
 
  2028 05c4 AC060000 		.4byte	.LASF59
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2082 0654 00       		.byte	0
  2083 0655 0A       		.uleb128 0xa
  2084 0656 0A010000 		.4byte	.LASF62
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 62
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 62
 
 
  2085 065a 01       		.byte	0x1
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2139 06e7 0A       		.uleb128 0xa
  2140 06e8 A2050000 		.4byte	.LASF64
  2141 06ec 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 63
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 63
 
 
  2142 06ed A604     		.2byte	0x4a6
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2196 077b C0080000 		.4byte	0x8c0
  2197 077f 09       		.uleb128 0x9
  2198 0780 14000000 		.4byte	.LVL83
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 64
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 64
 
 
  2199 0784 CB080000 		.4byte	0x8cb
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2253 07fc 03       		.uleb128 0x3
  2254 07fd 0A       		.byte	0xa
  2255 07fe 3075     		.2byte	0x7530
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 65
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 65
 
 
  2256 0800 00       		.byte	0
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2310 087b 0E       		.uleb128 0xe
  2311 087c 05050000 		.4byte	.LASF69
  2312 0880 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 66
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 66
 
 
  2313 0881 4905     		.2byte	0x549
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2367 0009 1B       		.uleb128 0x1b
  2368 000a 0E       		.uleb128 0xe
  2369 000b 55       		.uleb128 0x55
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 67
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 67
 
 
  2370 000c 17       		.uleb128 0x17
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2424 0042 00       		.byte	0
  2425 0043 06       		.uleb128 0x6
  2426 0044 35       		.uleb128 0x35
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 68
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 68
 
 
  2427 0045 00       		.byte	0
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2481 007e 0A       		.uleb128 0xa
  2482 007f 2E       		.uleb128 0x2e
  2483 0080 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 69
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 69
 
 
  2484 0081 3F       		.uleb128 0x3f
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2538 00b8 00       		.byte	0
  2539 00b9 3F       		.uleb128 0x3f
  2540 00ba 19       		.uleb128 0x19
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 70
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 70
 
 
  2541 00bb 03       		.uleb128 0x3
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2595 00f7 00       		.byte	0
  2596 00f8 11       		.uleb128 0x11
  2597 00f9 898201   		.uleb128 0x4109
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 71
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 71
 
 
  2598 00fc 01       		.byte	0x1
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2652 0132 27       		.uleb128 0x27
  2653 0133 19       		.uleb128 0x19
  2654 0134 3C       		.uleb128 0x3c
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 72
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 72
 
 
  2655 0135 19       		.uleb128 0x19
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2709 0069 07000000 		.4byte	.LVL9-1
  2710 006d 0100     		.2byte	0x1
  2711 006f 50       		.byte	0x50
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 73
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 73
 
 
  2712 0070 07000000 		.4byte	.LVL9-1
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2766 00f9 18000000 		.4byte	.LVL18
  2767 00fd 2C000000 		.4byte	.LFE8
  2768 0101 0400     		.2byte	0x4
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 74
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 74
 
 
  2769 0103 F3       		.byte	0xf3
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2823 0186 07000000 		.4byte	.LVL27-1
  2824 018a 0100     		.2byte	0x1
  2825 018c 50       		.byte	0x50
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 75
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 75
 
 
  2826 018d 07000000 		.4byte	.LVL27-1
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2880 0216 16000000 		.4byte	.LVL36
  2881 021a 28000000 		.4byte	.LFE13
  2882 021e 0400     		.2byte	0x4
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 76
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 76
 
 
  2883 0220 F3       		.byte	0xf3
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2937 02a3 02000000 		.4byte	.LVL45
  2938 02a7 0100     		.2byte	0x1
  2939 02a9 50       		.byte	0x50
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 77
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 77
 
 
  2940 02aa 02000000 		.4byte	.LVL45
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  2994 032f 18000000 		.4byte	.LVL54
  2995 0333 0100     		.2byte	0x1
  2996 0335 54       		.byte	0x54
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 78
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 78
 
 
  2997 0336 18000000 		.4byte	.LVL54
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3051 03bb 24000000 		.4byte	.LFE29
  3052 03bf 0400     		.2byte	0x4
  3053 03c1 F3       		.byte	0xf3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 79
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 79
 
 
  3054 03c2 01       		.uleb128 0x1
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3108 0447 00000000 		.4byte	0
  3109              	.LLST35:
  3110 044b 08000000 		.4byte	.LVL69
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 80
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 80
 
 
  3111 044f 1D000000 		.4byte	.LVL71-1
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3165 04d8 00000000 		.4byte	0
  3166              	.LLST40:
  3167 04dc 00000000 		.4byte	.LVL80
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 81
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 81
 
 
  3168 04e0 09000000 		.4byte	.LVL81-1
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3222 0024 28000000 		.4byte	.LFE5-.LFB5
  3223 0028 00000000 		.4byte	.LFB6
  3224 002c 28000000 		.4byte	.LFE6-.LFB6
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 82
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 82
 
 
  3225 0030 00000000 		.4byte	.LFB7
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3279 0108 00000000 		.4byte	.LFB34
  3280 010c 1C000000 		.4byte	.LFE34-.LFB34
  3281 0110 00000000 		.4byte	.LFB35
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 83
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 83
 
 
  3282 0114 14000000 		.4byte	.LFE35-.LFB35
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3336 008c 10000000 		.4byte	.LFE20
  3337 0090 00000000 		.4byte	.LFB21
  3338 0094 10000000 		.4byte	.LFE21
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 84
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 84
 
 
  3339 0098 00000000 		.4byte	.LFB22
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3388              	.LASF81:
  3389 0006 43794578 		.ascii	"CyExitCriticalSection\000"
  3389      69744372 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 85
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 85
 
 
  3389      69746963 
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3410              	.LASF70:
  3411 00de 48435352 		.ascii	"HCSR04_Timer_Init\000"
  3411      30345F54 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 86
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 86
 
 
  3411      696D6572 
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3431      63655C50 
  3432              	.LASF10:
  3433 01c9 75696E74 		.ascii	"uint32\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 87
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 87
 
 
  3433      333200
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3455      6420696E 
  3455      7400
  3456              	.LASF28:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 88
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 88
 
 
  3457 0287 6D6F6465 		.ascii	"modeMask\000"
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3477 0364 73697A65 		.ascii	"sizetype\000"
  3477      74797065 
  3477      00
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 89
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 89
 
 
  3478              	.LASF30:
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3497      4D6F6465 
  3498              	.LASF78:
  3499 0484 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 90
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 90
 
 
  3499      726F6A65 
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3520      30345F54 
  3520      696D6572 
  3520      5F536574 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 91
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 91
 
 
  3520      51444D6F 
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 1
  3540      696D6572 
  3540      5F577269 
  3540      7465436F 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccxUHKOb.s 			page 92
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cczPkzyY.s 			page 92
 
 
  3541              	.LASF46:

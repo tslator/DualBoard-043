@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
   30:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****     *
   31:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****     * Parameters:
   32:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****     *  None
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****     *
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
   42              	.L2:
   71:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****         }
   72:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****     #else
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 3
 
 
   73:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****         CY_EZI2C_Slave_CUSTOM_INTR_HANDLER();
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
   72              		.loc 1 97 0
   73 0034 1978     		ldrb	r1, [r3]
   74 0036 1022     		mov	r2, #16
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 4
 
 
   75 0038 0A43     		orr	r2, r1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  117:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****             /* Disable TX and RX interrupt sources */
  118:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****             EZI2C_Slave_SetRxInterruptMode(EZI2C_Slave_NO_INTR_SOURCES);
  110              		.loc 1 118 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 5
 
 
  111 0070 0023     		mov	r3, #0
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  142              	.LCB117:
  142:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****             {
  143:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                 /* INTR_RX.NOT_EMPTY */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 6
 
 
  144:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                 /* Receives data byte-by-byte. Does not use RX FIFO capabilities */
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  166:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                 locIndex++;
  175              		.loc 1 166 0
  176 00ce 0134     		add	r4, r4, #1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 7
 
 
  177              	.LVL6:
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  198 00e8 2BD9     		bls	.L15
  200:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                             {
  201:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                 EZI2C_Slave_I2C_SLAVE_GENERATE_ACK;
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 8
 
 
  199              		.loc 1 201 0
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  235:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                     */
  236:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                     EZI2C_Slave_fsmState = EZI2C_Slave_EZI2C_FSM_BYTE_WRITE;
  237:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                 }
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 9
 
 
  238:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                 #else
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  255:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                     }
  256:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                 }
  257:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                                 #endif
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 10
 
 
  258:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c **** 
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  286 015a 1B68     		ldr	r3, [r3]
  287 015c 9B04     		lsl	r3, r3, #18
  288 015e 31D5     		bpl	.L8
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 11
 
 
  282:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                 {
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  315:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                     {
  316:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                         /* Calculate buffer size available to write data into */
  317:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                         locBufSize -= (uint16) EZI2C_Slave_EZI2C_FIFO_SIZE;
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 12
 
 
  318:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c **** 
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  341              	.LVL20:
  333:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                     {
  342              		.loc 1 333 0 discriminator 2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 13
 
 
  343 01a2 0139     		sub	r1, r1, #1
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  373 01c6 4AD5     		bpl	.L25
  361:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****             {
  362:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                 /* INTR_SLAVE.I2C_STOP */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 14
 
 
  363:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                 /* Catch Stop condition: completion of write or read transfer */
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  401              		.loc 1 388 0
  402 01e6 354A     		ldr	r2, .L38+20
  403 01e8 1178     		ldrb	r1, [r2]
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 15
 
 
  404 01ea 0B43     		orr	r3, r1
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  428:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                             /* Set buffer exposed to secondary slave address */
  429:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                             EZI2C_Slave_dataBuffer = EZI2C_Slave_dataBuffer2;
  430:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                             EZI2C_Slave_bufSizeBuf = EZI2C_Slave_bufSizeBuf2;
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 16
 
 
  431:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                             EZI2C_Slave_protectBuf = EZI2C_Slave_protectBuf2;
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  425              		.loc 1 478 0
  426 0206 2F4B     		ldr	r3, .L38+28
  427 0208 1B78     		ldrb	r3, [r3]
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 17
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 17
 
 
  428 020a 1C1C     		mov	r4, r3
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  495:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c **** 
  496:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                         /* Clear interrupt sources before ACK address */
  497:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                         EZI2C_Slave_ClearI2CExtClkInterruptSource(EZI2C_Slave_INTR_I2C_EC_WAKE_UP);
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 18
 
 
  466              		.loc 1 497 0
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  524:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****                     if(0u != locBufSize)
  494              		.loc 1 524 0
  495 0266 1F4B     		ldr	r3, .L38+60
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 19
 
 
  496 0268 1B88     		ldrh	r3, [r3]
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  541:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****         /* Store local index copy into global variable */
  542:.\Generated_Source\PSoC4/EZI2C_Slave_EZI2C_INT.c ****         EZI2C_Slave_EZI2C_SET_INDEX(activeAddress, locIndex);
  534              		.loc 1 542 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 20
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 20
 
 
  535 02a0 024B     		ldr	r3, .L38+4
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  583              		.type	locBufSize.4785, %object
  584              		.size	locBufSize.4785, 2
  585              	locBufSize.4785:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 21
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 21
 
 
  586 0000 0000     		.space	2
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  640 005e 04       		.byte	0x4
  641 005f 05       		.byte	0x5
  642 0060 696E7400 		.ascii	"int\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 22
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 22
 
 
  643 0064 02       		.uleb128 0x2
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  697 00d2 BF000000 		.4byte	.LASF37
  698 00d6 01       		.byte	0x1
  699 00d7 26       		.byte	0x26
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 23
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 23
 
 
  700 00d8 00000000 		.4byte	.LFB1
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  754 015c 1F010000 		.4byte	.LLST6
  755 0160 0C       		.uleb128 0xc
  756 0161 50010000 		.4byte	.LVL14
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 24
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 24
 
 
  757 0165 CE010000 		.4byte	0x1ce
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  811 01d4 60       		.byte	0x60
  812 01d5 10       		.uleb128 0x10
  813 01d6 6B000000 		.4byte	0x6b
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 25
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 25
 
 
  814 01da 00       		.byte	0
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  868 0032 49       		.uleb128 0x49
  869 0033 13       		.uleb128 0x13
  870 0034 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 26
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 26
 
 
  871 0035 00       		.byte	0
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  925 006b 40       		.uleb128 0x40
  926 006c 18       		.uleb128 0x18
  927 006d 9642     		.uleb128 0x2116
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 27
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 27
 
 
  928 006f 19       		.uleb128 0x19
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  982 00aa 34       		.uleb128 0x34
  983 00ab 00       		.byte	0
  984 00ac 03       		.uleb128 0x3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 28
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 28
 
 
  985 00ad 0E       		.uleb128 0xe
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  1039 0025 0C020000 		.4byte	.LVL29
  1040 0029 0100     		.2byte	0x1
  1041 002b 54       		.byte	0x54
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 29
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 29
 
 
  1042 002c 0C020000 		.4byte	.LVL29
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  1096 00b2 00000000 		.4byte	0
  1097 00b6 00000000 		.4byte	0
  1098              	.LLST3:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 30
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 30
 
 
  1099 00ba 6C010000 		.4byte	.LVL15
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  1153 001c 00000000 		.4byte	0
  1154              		.section	.debug_ranges,"",%progbits
  1155              	.Ldebug_ranges0:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 31
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 31
 
 
  1156 0000 00000000 		.4byte	.LFB1
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  1180      7300
  1181              	.LASF5:
  1182 008f 6C6F6E67 		.ascii	"long unsigned int\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 32
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 32
 
 
  1182      20756E73 
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  1207      206C6F6E 
  1207      6720756E 
  1207      7369676E 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 33
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 33
 
 
  1207      65642069 
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 1
  1228              	.LASF36:
  1229 025f 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
  1229      726F6A65 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccQq6x9b.s 			page 34
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccRWbVsB.s 			page 34
 
 
  1229      6374735C 

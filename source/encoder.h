@@ -17,12 +17,9 @@
 
 void Encoder_Init();
 void Encoder_Start();
-int32 Encoder_GetCount();
 int32 Encoder_GetLeftCount();
 int32 Encoder_GetRightCount();
 void Encoder_Reset();
-void Encoder_Update();
-int16 Encoder_GetVelocity();
 
 #endif
 /* [] END OF FILE */

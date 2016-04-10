@@ -83,8 +83,6 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\cydisabledsheets.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\PWM_1MHz.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\PWM_1MHz.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Intr.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Intr.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\cycodeshareimport.ld</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\cycodeshareimport.scat</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\cm0gcc.ld</File>
@@ -118,9 +116,6 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HB25_PWM_Pin.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HB25_PWM_Pin.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HB25_PWM_Pin_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Pins.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Pins.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Pins_aliases.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_0.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_0.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_0_aliases.h</File>
@@ -133,10 +128,6 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_3.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_3.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_3_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_1.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_1.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_1_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_1_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\ADC_Infrared.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\ADC_Infrared.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\ADC_Infrared_PM.c</File>
@@ -256,6 +247,21 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\I2C_Master_scl_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\I2C_Master_SCB_IRQ.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\I2C_Master_SCB_IRQ.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Phase_Counter.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Phase_Counter.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Phase_Counter_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_B.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_B.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_B_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_B_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_A.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_A.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_A_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_A_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\PhaseCounter_Intr.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\PhaseCounter_Intr.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Quadrature_Decode_Clock.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Quadrature_Decode_Clock.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\Export\ARM_GCC_Generic">

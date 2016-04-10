@@ -1,0 +1,2058 @@
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"Phase_Counter.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Phase_Counter_Enable,"ax",%progbits
+  18              		.align	2
+  19              		.global	Phase_Counter_Enable
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	Phase_Counter_Enable, %function
+  23              	Phase_Counter_Enable:
+  24              	.LFB2:
+  25              		.file 1 ".\\Generated_Source\\PSoC4\\Phase_Counter.c"
+   1:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC4/Phase_Counter.c **** * File Name: Phase_Counter.c  
+   3:.\Generated_Source\PSoC4/Phase_Counter.c **** * Version 3.0
+   4:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+   5:.\Generated_Source\PSoC4/Phase_Counter.c **** *  Description:
+   6:.\Generated_Source\PSoC4/Phase_Counter.c **** *     The Counter component consists of a 8, 16, 24 or 32-bit counter with
+   7:.\Generated_Source\PSoC4/Phase_Counter.c **** *     a selectable period between 2 and 2^Width - 1.  
+   8:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+   9:.\Generated_Source\PSoC4/Phase_Counter.c **** *   Note:
+  10:.\Generated_Source\PSoC4/Phase_Counter.c **** *     None
+  11:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+  12:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+  13:.\Generated_Source\PSoC4/Phase_Counter.c **** * Copyright 2008-2012, Cypress Semiconductor Corporation.  All rights reserved.
+  14:.\Generated_Source\PSoC4/Phase_Counter.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  15:.\Generated_Source\PSoC4/Phase_Counter.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  16:.\Generated_Source\PSoC4/Phase_Counter.c **** * the software package with which this file was provided.
+  17:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+  18:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+  19:.\Generated_Source\PSoC4/Phase_Counter.c **** #include "Phase_Counter.h"
+  20:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+  21:.\Generated_Source\PSoC4/Phase_Counter.c **** uint8 Phase_Counter_initVar = 0u;
+  22:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+  23:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+  24:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+  25:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_Init
+  26:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+  27:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+  28:.\Generated_Source\PSoC4/Phase_Counter.c **** *     Initialize to the schematic state
+  29:.\Generated_Source\PSoC4/Phase_Counter.c **** * 
+  30:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+  31:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void  
+  32:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 2
+
+
+  33:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+  34:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+  35:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+  36:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+  37:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_Init(void) 
+  38:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+  39:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if (!Phase_Counter_UsingFixedFunction && !Phase_Counter_ControlRegRemoved)
+  40:.\Generated_Source\PSoC4/Phase_Counter.c ****             uint8 ctrl;
+  41:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (!Phase_Counter_UsingFixedFunction && !Phase_Counter_ControlRegRemoved) */
+  42:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+  43:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if(!Phase_Counter_UsingFixedFunction) 
+  44:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Interrupt State Backup for Critical Region*/
+  45:.\Generated_Source\PSoC4/Phase_Counter.c ****             uint8 Phase_Counter_interruptState;
+  46:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (!Phase_Counter_UsingFixedFunction) */
+  47:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+  48:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if (Phase_Counter_UsingFixedFunction)
+  49:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Clear all bits but the enable bit (if it's already set for Timer operation */
+  50:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_CONTROL &= Phase_Counter_CTRL_ENABLE;
+  51:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+  52:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Clear the mode bits for continuous run mode */
+  53:.\Generated_Source\PSoC4/Phase_Counter.c ****             #if (CY_PSOC5A)
+  54:.\Generated_Source\PSoC4/Phase_Counter.c ****                 Phase_Counter_CONTROL2 &= ((uint8)(~Phase_Counter_CTRL_MODE_MASK));
+  55:.\Generated_Source\PSoC4/Phase_Counter.c ****             #endif /* (CY_PSOC5A) */
+  56:.\Generated_Source\PSoC4/Phase_Counter.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  57:.\Generated_Source\PSoC4/Phase_Counter.c ****                 Phase_Counter_CONTROL3 &= ((uint8)(~Phase_Counter_CTRL_MODE_MASK));                
+  58:.\Generated_Source\PSoC4/Phase_Counter.c ****             #endif /* (CY_PSOC3 || CY_PSOC5LP) */
+  59:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Check if One Shot mode is enabled i.e. RunMode !=0*/
+  60:.\Generated_Source\PSoC4/Phase_Counter.c ****             #if (Phase_Counter_RunModeUsed != 0x0u)
+  61:.\Generated_Source\PSoC4/Phase_Counter.c ****                 /* Set 3rd bit of Control register to enable one shot mode */
+  62:.\Generated_Source\PSoC4/Phase_Counter.c ****                 Phase_Counter_CONTROL |= Phase_Counter_ONESHOT;
+  63:.\Generated_Source\PSoC4/Phase_Counter.c ****             #endif /* (Phase_Counter_RunModeUsed != 0x0u) */
+  64:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+  65:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Set the IRQ to use the status register interrupts */
+  66:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_CONTROL2 |= Phase_Counter_CTRL2_IRQ_SEL;
+  67:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+  68:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Clear and Set SYNCTC and SYNCCMP bits of RT1 register */
+  69:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_RT1 &= ((uint8)(~Phase_Counter_RT1_MASK));
+  70:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_RT1 |= Phase_Counter_SYNC;     
+  71:.\Generated_Source\PSoC4/Phase_Counter.c ****                     
+  72:.\Generated_Source\PSoC4/Phase_Counter.c ****             /*Enable DSI Sync all all inputs of the Timer*/
+  73:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_RT1 &= ((uint8)(~Phase_Counter_SYNCDSI_MASK));
+  74:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_RT1 |= Phase_Counter_SYNCDSI_EN;
+  75:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+  76:.\Generated_Source\PSoC4/Phase_Counter.c ****         #else
+  77:.\Generated_Source\PSoC4/Phase_Counter.c ****             #if(!Phase_Counter_ControlRegRemoved)
+  78:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Set the default compare mode defined in the parameter */
+  79:.\Generated_Source\PSoC4/Phase_Counter.c ****             ctrl = Phase_Counter_CONTROL & ((uint8)(~Phase_Counter_CTRL_CMPMODE_MASK));
+  80:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_CONTROL = ctrl | Phase_Counter_DEFAULT_COMPARE_MODE;
+  81:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+  82:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Set the default capture mode defined in the parameter */
+  83:.\Generated_Source\PSoC4/Phase_Counter.c ****             ctrl = Phase_Counter_CONTROL & ((uint8)(~Phase_Counter_CTRL_CAPMODE_MASK));
+  84:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+  85:.\Generated_Source\PSoC4/Phase_Counter.c ****             #if( 0 != Phase_Counter_CAPTURE_MODE_CONF)
+  86:.\Generated_Source\PSoC4/Phase_Counter.c ****                 Phase_Counter_CONTROL = ctrl | Phase_Counter_DEFAULT_CAPTURE_MODE;
+  87:.\Generated_Source\PSoC4/Phase_Counter.c ****             #else
+  88:.\Generated_Source\PSoC4/Phase_Counter.c ****                 Phase_Counter_CONTROL = ctrl;
+  89:.\Generated_Source\PSoC4/Phase_Counter.c ****             #endif /* 0 != Phase_Counter_CAPTURE_MODE */ 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 3
+
+
+  90:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+  91:.\Generated_Source\PSoC4/Phase_Counter.c ****             #endif /* (!Phase_Counter_ControlRegRemoved) */
+  92:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (Phase_Counter_UsingFixedFunction) */
+  93:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+  94:.\Generated_Source\PSoC4/Phase_Counter.c ****         /* Clear all data in the FIFO's */
+  95:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if (!Phase_Counter_UsingFixedFunction)
+  96:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_ClearFIFO();
+  97:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (!Phase_Counter_UsingFixedFunction) */
+  98:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+  99:.\Generated_Source\PSoC4/Phase_Counter.c ****         /* Set Initial values from Configuration */
+ 100:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_WritePeriod(Phase_Counter_INIT_PERIOD_VALUE);
+ 101:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if (!(Phase_Counter_UsingFixedFunction && (CY_PSOC5A)))
+ 102:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_WriteCounter(Phase_Counter_INIT_COUNTER_VALUE);
+ 103:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (!(Phase_Counter_UsingFixedFunction && (CY_PSOC5A))) */
+ 104:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_SetInterruptMode(Phase_Counter_INIT_INTERRUPTS_MASK);
+ 105:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+ 106:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if (!Phase_Counter_UsingFixedFunction)
+ 107:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Read the status register to clear the unwanted interrupts */
+ 108:.\Generated_Source\PSoC4/Phase_Counter.c ****             (void)Phase_Counter_ReadStatusRegister();
+ 109:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Set the compare value (only available to non-fixed function implementation */
+ 110:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_WriteCompare(Phase_Counter_INIT_COMPARE_VALUE);
+ 111:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Use the interrupt output of the status register for IRQ output */
+ 112:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+ 113:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* CyEnterCriticalRegion and CyExitCriticalRegion are used to mark following region cri
+ 114:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Enter Critical Region*/
+ 115:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_interruptState = CyEnterCriticalSection();
+ 116:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+ 117:.\Generated_Source\PSoC4/Phase_Counter.c ****             Phase_Counter_STATUS_AUX_CTRL |= Phase_Counter_STATUS_ACTL_INT_EN_MASK;
+ 118:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+ 119:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Exit Critical Region*/
+ 120:.\Generated_Source\PSoC4/Phase_Counter.c ****             CyExitCriticalSection(Phase_Counter_interruptState);
+ 121:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+ 122:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (!Phase_Counter_UsingFixedFunction) */
+ 123:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 124:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 125:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 126:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 127:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_Enable
+ 128:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 129:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 130:.\Generated_Source\PSoC4/Phase_Counter.c **** *     Enable the Counter
+ 131:.\Generated_Source\PSoC4/Phase_Counter.c **** * 
+ 132:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 133:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void  
+ 134:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 135:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 136:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 137:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 138:.\Generated_Source\PSoC4/Phase_Counter.c **** * Side Effects: 
+ 139:.\Generated_Source\PSoC4/Phase_Counter.c **** *   If the Enable mode is set to Hardware only then this function has no effect 
+ 140:.\Generated_Source\PSoC4/Phase_Counter.c **** *   on the operation of the counter.
+ 141:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 142:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 143:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_Enable(void) 
+ 144:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+  26              		.loc 1 144 0
+  27              		.cfi_startproc
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 4
+
+
+ 145:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Globally Enable the Fixed Function Block chosen */
+ 146:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if (Phase_Counter_UsingFixedFunction)
+ 147:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_GLOBAL_ENABLE |= Phase_Counter_BLOCK_EN_MASK;
+ 148:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_GLOBAL_STBY_ENABLE |= Phase_Counter_BLOCK_STBY_EN_MASK;
+ 149:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */  
+ 150:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+ 151:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Enable the counter from the control register  */
+ 152:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* If Fixed Function then make sure Mode is set correctly */
+ 153:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* else make sure reset is clear */
+ 154:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(!Phase_Counter_ControlRegRemoved || Phase_Counter_UsingFixedFunction)
+ 155:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_CONTROL |= Phase_Counter_CTRL_ENABLE;                
+ 156:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (!Phase_Counter_ControlRegRemoved || Phase_Counter_UsingFixedFunction) */
+ 157:.\Generated_Source\PSoC4/Phase_Counter.c ****     
+ 158:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+  28              		.loc 1 158 0
+  29              		@ sp needed
+  30 0000 7047     		bx	lr
+  31              		.cfi_endproc
+  32              	.LFE2:
+  33              		.size	Phase_Counter_Enable, .-Phase_Counter_Enable
+  34 0002 C046     		.section	.text.Phase_Counter_Stop,"ax",%progbits
+  35              		.align	2
+  36              		.global	Phase_Counter_Stop
+  37              		.code	16
+  38              		.thumb_func
+  39              		.type	Phase_Counter_Stop, %function
+  40              	Phase_Counter_Stop:
+  41              	.LFB4:
+ 159:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 160:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 161:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 162:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_Start
+ 163:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 164:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 165:.\Generated_Source\PSoC4/Phase_Counter.c **** *  Enables the counter for operation 
+ 166:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 167:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 168:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void  
+ 169:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 170:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 171:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 172:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 173:.\Generated_Source\PSoC4/Phase_Counter.c **** * Global variables:
+ 174:.\Generated_Source\PSoC4/Phase_Counter.c **** *  Phase_Counter_initVar: Is modified when this function is called for the  
+ 175:.\Generated_Source\PSoC4/Phase_Counter.c **** *   first time. Is used to ensure that initialization happens only once.
+ 176:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 177:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 178:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_Start(void) 
+ 179:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 180:.\Generated_Source\PSoC4/Phase_Counter.c ****     if(Phase_Counter_initVar == 0u)
+ 181:.\Generated_Source\PSoC4/Phase_Counter.c ****     {
+ 182:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_Init();
+ 183:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+ 184:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_initVar = 1u; /* Clear this bit for Initialization */        
+ 185:.\Generated_Source\PSoC4/Phase_Counter.c ****     }
+ 186:.\Generated_Source\PSoC4/Phase_Counter.c ****     
+ 187:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Enable the Counter */
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 5
+
+
+ 188:.\Generated_Source\PSoC4/Phase_Counter.c ****     Phase_Counter_Enable();        
+ 189:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 190:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 191:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 192:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 193:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_Stop
+ 194:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 195:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 196:.\Generated_Source\PSoC4/Phase_Counter.c **** * Halts the counter, but does not change any modes or disable interrupts.
+ 197:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 198:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 199:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void  
+ 200:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 201:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 202:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 203:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 204:.\Generated_Source\PSoC4/Phase_Counter.c **** * Side Effects: If the Enable mode is set to Hardware only then this function
+ 205:.\Generated_Source\PSoC4/Phase_Counter.c **** *               has no effect on the operation of the counter.
+ 206:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 207:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 208:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_Stop(void) 
+ 209:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+  42              		.loc 1 209 0
+  43              		.cfi_startproc
+ 210:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Disable Counter */
+ 211:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(!Phase_Counter_ControlRegRemoved || Phase_Counter_UsingFixedFunction)
+ 212:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_CONTROL &= ((uint8)(~Phase_Counter_CTRL_ENABLE));        
+ 213:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (!Phase_Counter_ControlRegRemoved || Phase_Counter_UsingFixedFunction) */
+ 214:.\Generated_Source\PSoC4/Phase_Counter.c ****     
+ 215:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Globally disable the Fixed Function Block chosen */
+ 216:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if (Phase_Counter_UsingFixedFunction)
+ 217:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_GLOBAL_ENABLE &= ((uint8)(~Phase_Counter_BLOCK_EN_MASK));
+ 218:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_GLOBAL_STBY_ENABLE &= ((uint8)(~Phase_Counter_BLOCK_STBY_EN_MASK));
+ 219:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */
+ 220:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+  44              		.loc 1 220 0
+  45              		@ sp needed
+  46 0000 7047     		bx	lr
+  47              		.cfi_endproc
+  48              	.LFE4:
+  49              		.size	Phase_Counter_Stop, .-Phase_Counter_Stop
+  50 0002 C046     		.section	.text.Phase_Counter_SetInterruptMode,"ax",%progbits
+  51              		.align	2
+  52              		.global	Phase_Counter_SetInterruptMode
+  53              		.code	16
+  54              		.thumb_func
+  55              		.type	Phase_Counter_SetInterruptMode, %function
+  56              	Phase_Counter_SetInterruptMode:
+  57              	.LFB5:
+ 221:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 222:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 223:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 224:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_SetInterruptMode
+ 225:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 226:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 227:.\Generated_Source\PSoC4/Phase_Counter.c **** * Configures which interrupt sources are enabled to generate the final interrupt
+ 228:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 6
+
+
+ 229:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 230:.\Generated_Source\PSoC4/Phase_Counter.c **** *  InterruptsMask: This parameter is an or'd collection of the status bits
+ 231:.\Generated_Source\PSoC4/Phase_Counter.c **** *                   which will be allowed to generate the counters interrupt.   
+ 232:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 233:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 234:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 235:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 236:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 237:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_SetInterruptMode(uint8 interruptsMask) 
+ 238:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+  58              		.loc 1 238 0
+  59              		.cfi_startproc
+  60              	.LVL0:
+ 239:.\Generated_Source\PSoC4/Phase_Counter.c ****     Phase_Counter_STATUS_MASK = interruptsMask;
+  61              		.loc 1 239 0
+  62 0000 014B     		ldr	r3, .L4
+  63 0002 1870     		strb	r0, [r3]
+ 240:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+  64              		.loc 1 240 0
+  65              		@ sp needed
+  66 0004 7047     		bx	lr
+  67              	.L5:
+  68 0006 C046     		.align	2
+  69              	.L4:
+  70 0008 83000F40 		.word	1074724995
+  71              		.cfi_endproc
+  72              	.LFE5:
+  73              		.size	Phase_Counter_SetInterruptMode, .-Phase_Counter_SetInterruptMode
+  74              		.section	.text.Phase_Counter_ReadStatusRegister,"ax",%progbits
+  75              		.align	2
+  76              		.global	Phase_Counter_ReadStatusRegister
+  77              		.code	16
+  78              		.thumb_func
+  79              		.type	Phase_Counter_ReadStatusRegister, %function
+  80              	Phase_Counter_ReadStatusRegister:
+  81              	.LFB6:
+ 241:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 242:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 243:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 244:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_ReadStatusRegister
+ 245:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 246:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 247:.\Generated_Source\PSoC4/Phase_Counter.c **** *   Reads the status register and returns it's state. This function should use
+ 248:.\Generated_Source\PSoC4/Phase_Counter.c **** *       defined types for the bit-field information as the bits in this
+ 249:.\Generated_Source\PSoC4/Phase_Counter.c **** *       register may be permuteable.
+ 250:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 251:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 252:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 253:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 254:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 255:.\Generated_Source\PSoC4/Phase_Counter.c **** *  (uint8) The contents of the status register
+ 256:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 257:.\Generated_Source\PSoC4/Phase_Counter.c **** * Side Effects:
+ 258:.\Generated_Source\PSoC4/Phase_Counter.c **** *   Status register bits may be clear on read. 
+ 259:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 260:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 261:.\Generated_Source\PSoC4/Phase_Counter.c **** uint8   Phase_Counter_ReadStatusRegister(void) 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 7
+
+
+ 262:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+  82              		.loc 1 262 0
+  83              		.cfi_startproc
+ 263:.\Generated_Source\PSoC4/Phase_Counter.c ****     return Phase_Counter_STATUS;
+  84              		.loc 1 263 0
+  85 0000 014B     		ldr	r3, .L7
+  86 0002 1878     		ldrb	r0, [r3]
+  87 0004 C0B2     		uxtb	r0, r0
+ 264:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+  88              		.loc 1 264 0
+  89              		@ sp needed
+  90 0006 7047     		bx	lr
+  91              	.L8:
+  92              		.align	2
+  93              	.L7:
+  94 0008 63000F40 		.word	1074724963
+  95              		.cfi_endproc
+  96              	.LFE6:
+  97              		.size	Phase_Counter_ReadStatusRegister, .-Phase_Counter_ReadStatusRegister
+  98              		.section	.text.Phase_Counter_WriteCounter,"ax",%progbits
+  99              		.align	2
+ 100              		.global	Phase_Counter_WriteCounter
+ 101              		.code	16
+ 102              		.thumb_func
+ 103              		.type	Phase_Counter_WriteCounter, %function
+ 104              	Phase_Counter_WriteCounter:
+ 105              	.LFB7:
+ 265:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 266:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 267:.\Generated_Source\PSoC4/Phase_Counter.c **** #if(!Phase_Counter_ControlRegRemoved)
+ 268:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 269:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_ReadControlRegister
+ 270:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 271:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 272:.\Generated_Source\PSoC4/Phase_Counter.c **** *   Reads the control register and returns it's state. This function should use
+ 273:.\Generated_Source\PSoC4/Phase_Counter.c **** *       defined types for the bit-field information as the bits in this
+ 274:.\Generated_Source\PSoC4/Phase_Counter.c **** *       register may be permuteable.
+ 275:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 276:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 277:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 278:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 279:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 280:.\Generated_Source\PSoC4/Phase_Counter.c **** *  (uint8) The contents of the control register
+ 281:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 282:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 283:.\Generated_Source\PSoC4/Phase_Counter.c **** uint8   Phase_Counter_ReadControlRegister(void) 
+ 284:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 285:.\Generated_Source\PSoC4/Phase_Counter.c ****     return Phase_Counter_CONTROL;
+ 286:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 287:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 288:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 289:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 290:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_WriteControlRegister
+ 291:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 292:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 293:.\Generated_Source\PSoC4/Phase_Counter.c **** *   Sets the bit-field of the control register.  This function should use
+ 294:.\Generated_Source\PSoC4/Phase_Counter.c **** *       defined types for the bit-field information as the bits in this
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 8
+
+
+ 295:.\Generated_Source\PSoC4/Phase_Counter.c **** *       register may be permuteable.
+ 296:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 297:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 298:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 299:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 300:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 301:.\Generated_Source\PSoC4/Phase_Counter.c **** *  (uint8) The contents of the control register
+ 302:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 303:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 304:.\Generated_Source\PSoC4/Phase_Counter.c **** void    Phase_Counter_WriteControlRegister(uint8 control) 
+ 305:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 306:.\Generated_Source\PSoC4/Phase_Counter.c ****     Phase_Counter_CONTROL = control;
+ 307:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 308:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 309:.\Generated_Source\PSoC4/Phase_Counter.c **** #endif  /* (!Phase_Counter_ControlRegRemoved) */
+ 310:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 311:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 312:.\Generated_Source\PSoC4/Phase_Counter.c **** #if (!(Phase_Counter_UsingFixedFunction && (CY_PSOC5A)))
+ 313:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 314:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_WriteCounter
+ 315:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 316:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 317:.\Generated_Source\PSoC4/Phase_Counter.c **** *   This funtion is used to set the counter to a specific value
+ 318:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 319:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 320:.\Generated_Source\PSoC4/Phase_Counter.c **** *  counter:  New counter value. 
+ 321:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 322:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 323:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void 
+ 324:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 325:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 326:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_WriteCounter(uint32 counter) \
+ 327:.\Generated_Source\PSoC4/Phase_Counter.c ****                                    
+ 328:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 106              		.loc 1 328 0
+ 107              		.cfi_startproc
+ 108              	.LVL1:
+ 329:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(Phase_Counter_UsingFixedFunction)
+ 330:.\Generated_Source\PSoC4/Phase_Counter.c ****         /* assert if block is already enabled */
+ 331:.\Generated_Source\PSoC4/Phase_Counter.c ****         CYASSERT (0u == (Phase_Counter_GLOBAL_ENABLE & Phase_Counter_BLOCK_EN_MASK));
+ 332:.\Generated_Source\PSoC4/Phase_Counter.c ****         /* If block is disabled, enable it and then write the counter */
+ 333:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_GLOBAL_ENABLE |= Phase_Counter_BLOCK_EN_MASK;
+ 334:.\Generated_Source\PSoC4/Phase_Counter.c ****         CY_SET_REG16(Phase_Counter_COUNTER_LSB_PTR, (uint16)counter);
+ 335:.\Generated_Source\PSoC4/Phase_Counter.c ****         Phase_Counter_GLOBAL_ENABLE &= ((uint8)(~Phase_Counter_BLOCK_EN_MASK));
+ 336:.\Generated_Source\PSoC4/Phase_Counter.c ****     #else
+ 337:.\Generated_Source\PSoC4/Phase_Counter.c ****         CY_SET_REG32(Phase_Counter_COUNTER_LSB_PTR, counter);
+ 109              		.loc 1 337 0
+ 110 0000 014B     		ldr	r3, .L10
+ 111 0002 1860     		str	r0, [r3]
+ 338:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */
+ 339:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 112              		.loc 1 339 0
+ 113              		@ sp needed
+ 114 0004 7047     		bx	lr
+ 115              	.L11:
+ 116 0006 C046     		.align	2
+ 117              	.L10:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 9
+
+
+ 118 0008 00200F40 		.word	1074733056
+ 119              		.cfi_endproc
+ 120              	.LFE7:
+ 121              		.size	Phase_Counter_WriteCounter, .-Phase_Counter_WriteCounter
+ 122              		.section	.text.Phase_Counter_ReadCounter,"ax",%progbits
+ 123              		.align	2
+ 124              		.global	Phase_Counter_ReadCounter
+ 125              		.code	16
+ 126              		.thumb_func
+ 127              		.type	Phase_Counter_ReadCounter, %function
+ 128              	Phase_Counter_ReadCounter:
+ 129              	.LFB8:
+ 340:.\Generated_Source\PSoC4/Phase_Counter.c **** #endif /* (!(Phase_Counter_UsingFixedFunction && (CY_PSOC5A))) */
+ 341:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 342:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 343:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 344:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_ReadCounter
+ 345:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 346:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 347:.\Generated_Source\PSoC4/Phase_Counter.c **** * Returns the current value of the counter.  It doesn't matter
+ 348:.\Generated_Source\PSoC4/Phase_Counter.c **** * if the counter is enabled or running.
+ 349:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 350:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 351:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void:  
+ 352:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 353:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 354:.\Generated_Source\PSoC4/Phase_Counter.c **** *  (uint32) The present value of the counter.
+ 355:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 356:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 357:.\Generated_Source\PSoC4/Phase_Counter.c **** uint32 Phase_Counter_ReadCounter(void) 
+ 358:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 130              		.loc 1 358 0
+ 131              		.cfi_startproc
+ 359:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Force capture by reading Accumulator */
+ 360:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Must first do a software capture to be able to read the counter */
+ 361:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* It is up to the user code to make sure there isn't already captured data in the FIFO */
+ 362:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(Phase_Counter_UsingFixedFunction)
+ 363:.\Generated_Source\PSoC4/Phase_Counter.c **** 		(void)CY_GET_REG16(Phase_Counter_COUNTER_LSB_PTR);
+ 364:.\Generated_Source\PSoC4/Phase_Counter.c **** 	#else
+ 365:.\Generated_Source\PSoC4/Phase_Counter.c **** 		(void)CY_GET_REG8(Phase_Counter_COUNTER_LSB_PTR_8BIT);
+ 132              		.loc 1 365 0
+ 133 0000 024B     		ldr	r3, .L13
+ 134 0002 1B78     		ldrb	r3, [r3]
+ 366:.\Generated_Source\PSoC4/Phase_Counter.c **** 	#endif/* (Phase_Counter_UsingFixedFunction) */
+ 367:.\Generated_Source\PSoC4/Phase_Counter.c ****     
+ 368:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Read the data from the FIFO (or capture register for Fixed Function)*/
+ 369:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(Phase_Counter_UsingFixedFunction)
+ 370:.\Generated_Source\PSoC4/Phase_Counter.c ****         return ((uint32)CY_GET_REG16(Phase_Counter_STATICCOUNT_LSB_PTR));
+ 371:.\Generated_Source\PSoC4/Phase_Counter.c ****     #else
+ 372:.\Generated_Source\PSoC4/Phase_Counter.c ****         return (CY_GET_REG32(Phase_Counter_STATICCOUNT_LSB_PTR));
+ 135              		.loc 1 372 0
+ 136 0004 024B     		ldr	r3, .L13+4
+ 137 0006 1868     		ldr	r0, [r3]
+ 373:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */
+ 374:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 138              		.loc 1 374 0
+ 139              		@ sp needed
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 10
+
+
+ 140 0008 7047     		bx	lr
+ 141              	.L14:
+ 142 000a C046     		.align	2
+ 143              	.L13:
+ 144 000c 00000F40 		.word	1074724864
+ 145 0010 00210F40 		.word	1074733312
+ 146              		.cfi_endproc
+ 147              	.LFE8:
+ 148              		.size	Phase_Counter_ReadCounter, .-Phase_Counter_ReadCounter
+ 149              		.section	.text.Phase_Counter_ReadCapture,"ax",%progbits
+ 150              		.align	2
+ 151              		.global	Phase_Counter_ReadCapture
+ 152              		.code	16
+ 153              		.thumb_func
+ 154              		.type	Phase_Counter_ReadCapture, %function
+ 155              	Phase_Counter_ReadCapture:
+ 156              	.LFB9:
+ 375:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 376:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 377:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 378:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_ReadCapture
+ 379:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 380:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 381:.\Generated_Source\PSoC4/Phase_Counter.c **** *   This function returns the last value captured.
+ 382:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 383:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 384:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 385:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 386:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 387:.\Generated_Source\PSoC4/Phase_Counter.c **** *  (uint32) Present Capture value.
+ 388:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 389:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 390:.\Generated_Source\PSoC4/Phase_Counter.c **** uint32 Phase_Counter_ReadCapture(void) 
+ 391:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 157              		.loc 1 391 0
+ 158              		.cfi_startproc
+ 392:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(Phase_Counter_UsingFixedFunction)
+ 393:.\Generated_Source\PSoC4/Phase_Counter.c ****         return ((uint32)CY_GET_REG16(Phase_Counter_STATICCOUNT_LSB_PTR));
+ 394:.\Generated_Source\PSoC4/Phase_Counter.c ****     #else
+ 395:.\Generated_Source\PSoC4/Phase_Counter.c ****         return (CY_GET_REG32(Phase_Counter_STATICCOUNT_LSB_PTR));
+ 159              		.loc 1 395 0
+ 160 0000 014B     		ldr	r3, .L16
+ 161 0002 1868     		ldr	r0, [r3]
+ 396:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */
+ 397:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 162              		.loc 1 397 0
+ 163              		@ sp needed
+ 164 0004 7047     		bx	lr
+ 165              	.L17:
+ 166 0006 C046     		.align	2
+ 167              	.L16:
+ 168 0008 00210F40 		.word	1074733312
+ 169              		.cfi_endproc
+ 170              	.LFE9:
+ 171              		.size	Phase_Counter_ReadCapture, .-Phase_Counter_ReadCapture
+ 172              		.section	.text.Phase_Counter_WritePeriod,"ax",%progbits
+ 173              		.align	2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 11
+
+
+ 174              		.global	Phase_Counter_WritePeriod
+ 175              		.code	16
+ 176              		.thumb_func
+ 177              		.type	Phase_Counter_WritePeriod, %function
+ 178              	Phase_Counter_WritePeriod:
+ 179              	.LFB10:
+ 398:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 399:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 400:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 401:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_WritePeriod
+ 402:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 403:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 404:.\Generated_Source\PSoC4/Phase_Counter.c **** * Changes the period of the counter.  The new period 
+ 405:.\Generated_Source\PSoC4/Phase_Counter.c **** * will be loaded the next time terminal count is detected.
+ 406:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 407:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 408:.\Generated_Source\PSoC4/Phase_Counter.c **** *  period: (uint32) A value of 0 will result in
+ 409:.\Generated_Source\PSoC4/Phase_Counter.c **** *         the counter remaining at zero.  
+ 410:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 411:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 412:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 413:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 414:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 415:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_WritePeriod(uint32 period) 
+ 416:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 180              		.loc 1 416 0
+ 181              		.cfi_startproc
+ 182              	.LVL2:
+ 417:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(Phase_Counter_UsingFixedFunction)
+ 418:.\Generated_Source\PSoC4/Phase_Counter.c ****         CY_SET_REG16(Phase_Counter_PERIOD_LSB_PTR,(uint16)period);
+ 419:.\Generated_Source\PSoC4/Phase_Counter.c ****     #else
+ 420:.\Generated_Source\PSoC4/Phase_Counter.c ****         CY_SET_REG32(Phase_Counter_PERIOD_LSB_PTR, period);
+ 183              		.loc 1 420 0
+ 184 0000 014B     		ldr	r3, .L19
+ 185 0002 1860     		str	r0, [r3]
+ 421:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */
+ 422:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 186              		.loc 1 422 0
+ 187              		@ sp needed
+ 188 0004 7047     		bx	lr
+ 189              	.L20:
+ 190 0006 C046     		.align	2
+ 191              	.L19:
+ 192 0008 80200F40 		.word	1074733184
+ 193              		.cfi_endproc
+ 194              	.LFE10:
+ 195              		.size	Phase_Counter_WritePeriod, .-Phase_Counter_WritePeriod
+ 196              		.section	.text.Phase_Counter_ReadPeriod,"ax",%progbits
+ 197              		.align	2
+ 198              		.global	Phase_Counter_ReadPeriod
+ 199              		.code	16
+ 200              		.thumb_func
+ 201              		.type	Phase_Counter_ReadPeriod, %function
+ 202              	Phase_Counter_ReadPeriod:
+ 203              	.LFB11:
+ 423:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 424:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 12
+
+
+ 425:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 426:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_ReadPeriod
+ 427:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 428:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 429:.\Generated_Source\PSoC4/Phase_Counter.c **** * Reads the current period value without affecting counter operation.
+ 430:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 431:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 432:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void:  
+ 433:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 434:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 435:.\Generated_Source\PSoC4/Phase_Counter.c **** *  (uint32) Present period value.
+ 436:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 437:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 438:.\Generated_Source\PSoC4/Phase_Counter.c **** uint32 Phase_Counter_ReadPeriod(void) 
+ 439:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 204              		.loc 1 439 0
+ 205              		.cfi_startproc
+ 440:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(Phase_Counter_UsingFixedFunction)
+ 441:.\Generated_Source\PSoC4/Phase_Counter.c ****         return ((uint32)CY_GET_REG16(Phase_Counter_PERIOD_LSB_PTR));
+ 442:.\Generated_Source\PSoC4/Phase_Counter.c ****     #else
+ 443:.\Generated_Source\PSoC4/Phase_Counter.c ****         return (CY_GET_REG32(Phase_Counter_PERIOD_LSB_PTR));
+ 206              		.loc 1 443 0
+ 207 0000 014B     		ldr	r3, .L22
+ 208 0002 1868     		ldr	r0, [r3]
+ 444:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */
+ 445:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 209              		.loc 1 445 0
+ 210              		@ sp needed
+ 211 0004 7047     		bx	lr
+ 212              	.L23:
+ 213 0006 C046     		.align	2
+ 214              	.L22:
+ 215 0008 80200F40 		.word	1074733184
+ 216              		.cfi_endproc
+ 217              	.LFE11:
+ 218              		.size	Phase_Counter_ReadPeriod, .-Phase_Counter_ReadPeriod
+ 219              		.section	.text.Phase_Counter_WriteCompare,"ax",%progbits
+ 220              		.align	2
+ 221              		.global	Phase_Counter_WriteCompare
+ 222              		.code	16
+ 223              		.thumb_func
+ 224              		.type	Phase_Counter_WriteCompare, %function
+ 225              	Phase_Counter_WriteCompare:
+ 226              	.LFB12:
+ 446:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 447:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 448:.\Generated_Source\PSoC4/Phase_Counter.c **** #if (!Phase_Counter_UsingFixedFunction)
+ 449:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 450:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_WriteCompare
+ 451:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 452:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 453:.\Generated_Source\PSoC4/Phase_Counter.c **** * Changes the compare value.  The compare output will 
+ 454:.\Generated_Source\PSoC4/Phase_Counter.c **** * reflect the new value on the next UDB clock.  The compare output will be 
+ 455:.\Generated_Source\PSoC4/Phase_Counter.c **** * driven high when the present counter value compares true based on the 
+ 456:.\Generated_Source\PSoC4/Phase_Counter.c **** * configured compare mode setting. 
+ 457:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 458:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 13
+
+
+ 459:.\Generated_Source\PSoC4/Phase_Counter.c **** *  Compare:  New compare value. 
+ 460:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 461:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 462:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 463:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 464:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 465:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_WriteCompare(uint32 compare) \
+ 466:.\Generated_Source\PSoC4/Phase_Counter.c ****                                    
+ 467:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 227              		.loc 1 467 0
+ 228              		.cfi_startproc
+ 229              	.LVL3:
+ 468:.\Generated_Source\PSoC4/Phase_Counter.c ****     #if(Phase_Counter_UsingFixedFunction)
+ 469:.\Generated_Source\PSoC4/Phase_Counter.c ****         CY_SET_REG16(Phase_Counter_COMPARE_LSB_PTR, (uint16)compare);
+ 470:.\Generated_Source\PSoC4/Phase_Counter.c ****     #else
+ 471:.\Generated_Source\PSoC4/Phase_Counter.c ****         CY_SET_REG32(Phase_Counter_COMPARE_LSB_PTR, compare);
+ 230              		.loc 1 471 0
+ 231 0000 014B     		ldr	r3, .L25
+ 232 0002 1860     		str	r0, [r3]
+ 472:.\Generated_Source\PSoC4/Phase_Counter.c ****     #endif /* (Phase_Counter_UsingFixedFunction) */
+ 473:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 233              		.loc 1 473 0
+ 234              		@ sp needed
+ 235 0004 7047     		bx	lr
+ 236              	.L26:
+ 237 0006 C046     		.align	2
+ 238              	.L25:
+ 239 0008 C0200F40 		.word	1074733248
+ 240              		.cfi_endproc
+ 241              	.LFE12:
+ 242              		.size	Phase_Counter_WriteCompare, .-Phase_Counter_WriteCompare
+ 243              		.section	.text.Phase_Counter_ReadCompare,"ax",%progbits
+ 244              		.align	2
+ 245              		.global	Phase_Counter_ReadCompare
+ 246              		.code	16
+ 247              		.thumb_func
+ 248              		.type	Phase_Counter_ReadCompare, %function
+ 249              	Phase_Counter_ReadCompare:
+ 250              	.LFB13:
+ 474:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 475:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 476:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 477:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_ReadCompare
+ 478:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 479:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 480:.\Generated_Source\PSoC4/Phase_Counter.c **** * Returns the compare value.
+ 481:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 482:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 483:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void:
+ 484:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 485:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 486:.\Generated_Source\PSoC4/Phase_Counter.c **** *  (uint32) Present compare value.
+ 487:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 488:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 489:.\Generated_Source\PSoC4/Phase_Counter.c **** uint32 Phase_Counter_ReadCompare(void) 
+ 490:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 251              		.loc 1 490 0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 14
+
+
+ 252              		.cfi_startproc
+ 491:.\Generated_Source\PSoC4/Phase_Counter.c ****     return (CY_GET_REG32(Phase_Counter_COMPARE_LSB_PTR));
+ 253              		.loc 1 491 0
+ 254 0000 014B     		ldr	r3, .L28
+ 255 0002 1868     		ldr	r0, [r3]
+ 492:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 256              		.loc 1 492 0
+ 257              		@ sp needed
+ 258 0004 7047     		bx	lr
+ 259              	.L29:
+ 260 0006 C046     		.align	2
+ 261              	.L28:
+ 262 0008 C0200F40 		.word	1074733248
+ 263              		.cfi_endproc
+ 264              	.LFE13:
+ 265              		.size	Phase_Counter_ReadCompare, .-Phase_Counter_ReadCompare
+ 266              		.section	.text.Phase_Counter_ClearFIFO,"ax",%progbits
+ 267              		.align	2
+ 268              		.global	Phase_Counter_ClearFIFO
+ 269              		.code	16
+ 270              		.thumb_func
+ 271              		.type	Phase_Counter_ClearFIFO, %function
+ 272              	Phase_Counter_ClearFIFO:
+ 273              	.LFB14:
+ 493:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 494:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 495:.\Generated_Source\PSoC4/Phase_Counter.c **** #if (Phase_Counter_COMPARE_MODE_SOFTWARE)
+ 496:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 497:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_SetCompareMode
+ 498:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 499:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 500:.\Generated_Source\PSoC4/Phase_Counter.c **** *  Sets the software controlled Compare Mode.
+ 501:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 502:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:
+ 503:.\Generated_Source\PSoC4/Phase_Counter.c **** *  compareMode:  Compare Mode Enumerated Type.
+ 504:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 505:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return:
+ 506:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 507:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 508:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 509:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_SetCompareMode(uint8 compareMode) 
+ 510:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 511:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Clear the compare mode bits in the control register */
+ 512:.\Generated_Source\PSoC4/Phase_Counter.c ****     Phase_Counter_CONTROL &= ((uint8)(~Phase_Counter_CTRL_CMPMODE_MASK));
+ 513:.\Generated_Source\PSoC4/Phase_Counter.c ****     
+ 514:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Write the new setting */
+ 515:.\Generated_Source\PSoC4/Phase_Counter.c ****     Phase_Counter_CONTROL |= compareMode;
+ 516:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 517:.\Generated_Source\PSoC4/Phase_Counter.c **** #endif  /* (Phase_Counter_COMPARE_MODE_SOFTWARE) */
+ 518:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 519:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 520:.\Generated_Source\PSoC4/Phase_Counter.c **** #if (Phase_Counter_CAPTURE_MODE_SOFTWARE)
+ 521:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 522:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_SetCaptureMode
+ 523:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 524:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 525:.\Generated_Source\PSoC4/Phase_Counter.c **** *  Sets the software controlled Capture Mode.
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 15
+
+
+ 526:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 527:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:
+ 528:.\Generated_Source\PSoC4/Phase_Counter.c **** *  captureMode:  Capture Mode Enumerated Type.
+ 529:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 530:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return:
+ 531:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void
+ 532:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 533:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 534:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_SetCaptureMode(uint8 captureMode) 
+ 535:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 536:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Clear the capture mode bits in the control register */
+ 537:.\Generated_Source\PSoC4/Phase_Counter.c ****     Phase_Counter_CONTROL &= ((uint8)(~Phase_Counter_CTRL_CAPMODE_MASK));
+ 538:.\Generated_Source\PSoC4/Phase_Counter.c ****     
+ 539:.\Generated_Source\PSoC4/Phase_Counter.c ****     /* Write the new setting */
+ 540:.\Generated_Source\PSoC4/Phase_Counter.c ****     Phase_Counter_CONTROL |= ((uint8)((uint8)captureMode << Phase_Counter_CTRL_CAPMODE0_SHIFT));
+ 541:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 542:.\Generated_Source\PSoC4/Phase_Counter.c **** #endif  /* (Phase_Counter_CAPTURE_MODE_SOFTWARE) */
+ 543:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 544:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 545:.\Generated_Source\PSoC4/Phase_Counter.c **** /*******************************************************************************
+ 546:.\Generated_Source\PSoC4/Phase_Counter.c **** * Function Name: Phase_Counter_ClearFIFO
+ 547:.\Generated_Source\PSoC4/Phase_Counter.c **** ********************************************************************************
+ 548:.\Generated_Source\PSoC4/Phase_Counter.c **** * Summary:
+ 549:.\Generated_Source\PSoC4/Phase_Counter.c **** *   This function clears all capture data from the capture FIFO
+ 550:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 551:.\Generated_Source\PSoC4/Phase_Counter.c **** * Parameters:  
+ 552:.\Generated_Source\PSoC4/Phase_Counter.c **** *  void:
+ 553:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 554:.\Generated_Source\PSoC4/Phase_Counter.c **** * Return: 
+ 555:.\Generated_Source\PSoC4/Phase_Counter.c **** *  None
+ 556:.\Generated_Source\PSoC4/Phase_Counter.c **** *
+ 557:.\Generated_Source\PSoC4/Phase_Counter.c **** *******************************************************************************/
+ 558:.\Generated_Source\PSoC4/Phase_Counter.c **** void Phase_Counter_ClearFIFO(void) 
+ 559:.\Generated_Source\PSoC4/Phase_Counter.c **** {
+ 274              		.loc 1 559 0
+ 275              		.cfi_startproc
+ 276 0000 08B5     		push	{r3, lr}
+ 277              		.cfi_def_cfa_offset 8
+ 278              		.cfi_offset 3, -8
+ 279              		.cfi_offset 14, -4
+ 560:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 561:.\Generated_Source\PSoC4/Phase_Counter.c ****     while(0u != (Phase_Counter_ReadStatusRegister() & Phase_Counter_STATUS_FIFONEMP))
+ 280              		.loc 1 561 0
+ 281 0002 01E0     		b	.L31
+ 282              	.L32:
+ 562:.\Generated_Source\PSoC4/Phase_Counter.c ****     {
+ 563:.\Generated_Source\PSoC4/Phase_Counter.c ****         (void)Phase_Counter_ReadCapture();
+ 283              		.loc 1 563 0
+ 284 0004 FFF7FEFF 		bl	Phase_Counter_ReadCapture
+ 285              	.LVL4:
+ 286              	.L31:
+ 561:.\Generated_Source\PSoC4/Phase_Counter.c ****     {
+ 287              		.loc 1 561 0
+ 288 0008 FFF7FEFF 		bl	Phase_Counter_ReadStatusRegister
+ 289              	.LVL5:
+ 290 000c 4306     		lsl	r3, r0, #25
+ 291 000e F9D4     		bmi	.L32
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 16
+
+
+ 564:.\Generated_Source\PSoC4/Phase_Counter.c ****     }
+ 565:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 566:.\Generated_Source\PSoC4/Phase_Counter.c **** }
+ 292              		.loc 1 566 0
+ 293              		@ sp needed
+ 294 0010 08BD     		pop	{r3, pc}
+ 295              		.cfi_endproc
+ 296              	.LFE14:
+ 297              		.size	Phase_Counter_ClearFIFO, .-Phase_Counter_ClearFIFO
+ 298 0012 C046     		.section	.text.Phase_Counter_Init,"ax",%progbits
+ 299              		.align	2
+ 300              		.global	Phase_Counter_Init
+ 301              		.code	16
+ 302              		.thumb_func
+ 303              		.type	Phase_Counter_Init, %function
+ 304              	Phase_Counter_Init:
+ 305              	.LFB1:
+  38:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if (!Phase_Counter_UsingFixedFunction && !Phase_Counter_ControlRegRemoved)
+ 306              		.loc 1 38 0
+ 307              		.cfi_startproc
+ 308 0000 10B5     		push	{r4, lr}
+ 309              		.cfi_def_cfa_offset 8
+ 310              		.cfi_offset 4, -8
+ 311              		.cfi_offset 14, -4
+  96:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (!Phase_Counter_UsingFixedFunction) */
+ 312              		.loc 1 96 0
+ 313 0002 FFF7FEFF 		bl	Phase_Counter_ClearFIFO
+ 314              	.LVL6:
+ 100:.\Generated_Source\PSoC4/Phase_Counter.c ****         #if (!(Phase_Counter_UsingFixedFunction && (CY_PSOC5A)))
+ 315              		.loc 1 100 0
+ 316 0006 0224     		mov	r4, #2
+ 317 0008 6442     		neg	r4, r4
+ 318 000a 201C     		mov	r0, r4
+ 319 000c FFF7FEFF 		bl	Phase_Counter_WritePeriod
+ 320              	.LVL7:
+ 102:.\Generated_Source\PSoC4/Phase_Counter.c ****         #endif /* (!(Phase_Counter_UsingFixedFunction && (CY_PSOC5A))) */
+ 321              		.loc 1 102 0
+ 322 0010 201C     		mov	r0, r4
+ 323 0012 FFF7FEFF 		bl	Phase_Counter_WriteCounter
+ 324              	.LVL8:
+ 104:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+ 325              		.loc 1 104 0
+ 326 0016 0C20     		mov	r0, #12
+ 327 0018 FFF7FEFF 		bl	Phase_Counter_SetInterruptMode
+ 328              	.LVL9:
+ 108:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Set the compare value (only available to non-fixed function implementation */
+ 329              		.loc 1 108 0
+ 330 001c FFF7FEFF 		bl	Phase_Counter_ReadStatusRegister
+ 331              	.LVL10:
+ 110:.\Generated_Source\PSoC4/Phase_Counter.c ****             /* Use the interrupt output of the status register for IRQ output */
+ 332              		.loc 1 110 0
+ 333 0020 0120     		mov	r0, #1
+ 334 0022 4042     		neg	r0, r0
+ 335 0024 FFF7FEFF 		bl	Phase_Counter_WriteCompare
+ 336              	.LVL11:
+ 115:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+ 337              		.loc 1 115 0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 17
+
+
+ 338 0028 FFF7FEFF 		bl	CyEnterCriticalSection
+ 339              	.LVL12:
+ 117:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+ 340              		.loc 1 117 0
+ 341 002c 034A     		ldr	r2, .L34
+ 342 002e 1178     		ldrb	r1, [r2]
+ 343 0030 1023     		mov	r3, #16
+ 344 0032 0B43     		orr	r3, r1
+ 345 0034 1370     		strb	r3, [r2]
+ 120:.\Generated_Source\PSoC4/Phase_Counter.c ****             
+ 346              		.loc 1 120 0
+ 347 0036 FFF7FEFF 		bl	CyExitCriticalSection
+ 348              	.LVL13:
+ 123:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 349              		.loc 1 123 0
+ 350              		@ sp needed
+ 351 003a 10BD     		pop	{r4, pc}
+ 352              	.L35:
+ 353              		.align	2
+ 354              	.L34:
+ 355 003c 93000F40 		.word	1074725011
+ 356              		.cfi_endproc
+ 357              	.LFE1:
+ 358              		.size	Phase_Counter_Init, .-Phase_Counter_Init
+ 359              		.section	.text.Phase_Counter_Start,"ax",%progbits
+ 360              		.align	2
+ 361              		.global	Phase_Counter_Start
+ 362              		.code	16
+ 363              		.thumb_func
+ 364              		.type	Phase_Counter_Start, %function
+ 365              	Phase_Counter_Start:
+ 366              	.LFB3:
+ 179:.\Generated_Source\PSoC4/Phase_Counter.c ****     if(Phase_Counter_initVar == 0u)
+ 367              		.loc 1 179 0
+ 368              		.cfi_startproc
+ 369 0000 08B5     		push	{r3, lr}
+ 370              		.cfi_def_cfa_offset 8
+ 371              		.cfi_offset 3, -8
+ 372              		.cfi_offset 14, -4
+ 180:.\Generated_Source\PSoC4/Phase_Counter.c ****     {
+ 373              		.loc 1 180 0
+ 374 0002 054B     		ldr	r3, .L38
+ 375 0004 1B78     		ldrb	r3, [r3]
+ 376 0006 002B     		cmp	r3, #0
+ 377 0008 04D1     		bne	.L36
+ 182:.\Generated_Source\PSoC4/Phase_Counter.c ****         
+ 378              		.loc 1 182 0
+ 379 000a FFF7FEFF 		bl	Phase_Counter_Init
+ 380              	.LVL14:
+ 184:.\Generated_Source\PSoC4/Phase_Counter.c ****     }
+ 381              		.loc 1 184 0
+ 382 000e 0122     		mov	r2, #1
+ 383 0010 014B     		ldr	r3, .L38
+ 384 0012 1A70     		strb	r2, [r3]
+ 385              	.L36:
+ 189:.\Generated_Source\PSoC4/Phase_Counter.c **** 
+ 386              		.loc 1 189 0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 18
+
+
+ 387              		@ sp needed
+ 388 0014 08BD     		pop	{r3, pc}
+ 389              	.L39:
+ 390 0016 C046     		.align	2
+ 391              	.L38:
+ 392 0018 00000000 		.word	.LANCHOR0
+ 393              		.cfi_endproc
+ 394              	.LFE3:
+ 395              		.size	Phase_Counter_Start, .-Phase_Counter_Start
+ 396              		.global	Phase_Counter_initVar
+ 397              		.bss
+ 398              		.set	.LANCHOR0,. + 0
+ 399              		.type	Phase_Counter_initVar, %object
+ 400              		.size	Phase_Counter_initVar, 1
+ 401              	Phase_Counter_initVar:
+ 402 0000 00       		.space	1
+ 403              		.text
+ 404              	.Letext0:
+ 405              		.file 2 ".\\Generated_Source\\PSoC4\\cytypes.h"
+ 406              		.file 3 ".\\Generated_Source\\PSoC4\\CyLib.h"
+ 407              		.section	.debug_info,"",%progbits
+ 408              	.Ldebug_info0:
+ 409 0000 E7020000 		.4byte	0x2e7
+ 410 0004 0400     		.2byte	0x4
+ 411 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 412 000a 04       		.byte	0x4
+ 413 000b 01       		.uleb128 0x1
+ 414 000c 4B020000 		.4byte	.LASF35
+ 415 0010 01       		.byte	0x1
+ 416 0011 92010000 		.4byte	.LASF36
+ 417 0015 D9020000 		.4byte	.LASF37
+ 418 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 419 001d 00000000 		.4byte	0
+ 420 0021 00000000 		.4byte	.Ldebug_line0
+ 421 0025 02       		.uleb128 0x2
+ 422 0026 01       		.byte	0x1
+ 423 0027 06       		.byte	0x6
+ 424 0028 4F030000 		.4byte	.LASF0
+ 425 002c 02       		.uleb128 0x2
+ 426 002d 01       		.byte	0x1
+ 427 002e 08       		.byte	0x8
+ 428 002f E2000000 		.4byte	.LASF1
+ 429 0033 02       		.uleb128 0x2
+ 430 0034 02       		.byte	0x2
+ 431 0035 05       		.byte	0x5
+ 432 0036 69010000 		.4byte	.LASF2
+ 433 003a 02       		.uleb128 0x2
+ 434 003b 02       		.byte	0x2
+ 435 003c 07       		.byte	0x7
+ 436 003d 97000000 		.4byte	.LASF3
+ 437 0041 02       		.uleb128 0x2
+ 438 0042 04       		.byte	0x4
+ 439 0043 05       		.byte	0x5
+ 440 0044 30030000 		.4byte	.LASF4
+ 441 0048 02       		.uleb128 0x2
+ 442 0049 04       		.byte	0x4
+ 443 004a 07       		.byte	0x7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 19
+
+
+ 444 004b 1E010000 		.4byte	.LASF5
+ 445 004f 02       		.uleb128 0x2
+ 446 0050 08       		.byte	0x8
+ 447 0051 05       		.byte	0x5
+ 448 0052 38020000 		.4byte	.LASF6
+ 449 0056 02       		.uleb128 0x2
+ 450 0057 08       		.byte	0x8
+ 451 0058 07       		.byte	0x7
+ 452 0059 CB000000 		.4byte	.LASF7
+ 453 005d 03       		.uleb128 0x3
+ 454 005e 04       		.byte	0x4
+ 455 005f 05       		.byte	0x5
+ 456 0060 696E7400 		.ascii	"int\000"
+ 457 0064 02       		.uleb128 0x2
+ 458 0065 04       		.byte	0x4
+ 459 0066 07       		.byte	0x7
+ 460 0067 D2010000 		.4byte	.LASF8
+ 461 006b 04       		.uleb128 0x4
+ 462 006c 30010000 		.4byte	.LASF9
+ 463 0070 02       		.byte	0x2
+ 464 0071 C2       		.byte	0xc2
+ 465 0072 2C000000 		.4byte	0x2c
+ 466 0076 04       		.uleb128 0x4
+ 467 0077 8B010000 		.4byte	.LASF10
+ 468 007b 02       		.byte	0x2
+ 469 007c C4       		.byte	0xc4
+ 470 007d 48000000 		.4byte	0x48
+ 471 0081 02       		.uleb128 0x2
+ 472 0082 04       		.byte	0x4
+ 473 0083 04       		.byte	0x4
+ 474 0084 BD000000 		.4byte	.LASF11
+ 475 0088 02       		.uleb128 0x2
+ 476 0089 08       		.byte	0x8
+ 477 008a 04       		.byte	0x4
+ 478 008b 45010000 		.4byte	.LASF12
+ 479 008f 02       		.uleb128 0x2
+ 480 0090 01       		.byte	0x1
+ 481 0091 08       		.byte	0x8
+ 482 0092 46020000 		.4byte	.LASF13
+ 483 0096 05       		.uleb128 0x5
+ 484 0097 0F020000 		.4byte	.LASF14
+ 485 009b 02       		.byte	0x2
+ 486 009c 6C01     		.2byte	0x16c
+ 487 009e A2000000 		.4byte	0xa2
+ 488 00a2 06       		.uleb128 0x6
+ 489 00a3 6B000000 		.4byte	0x6b
+ 490 00a7 05       		.uleb128 0x5
+ 491 00a8 1A000000 		.4byte	.LASF15
+ 492 00ac 02       		.byte	0x2
+ 493 00ad 6E01     		.2byte	0x16e
+ 494 00af B3000000 		.4byte	0xb3
+ 495 00b3 06       		.uleb128 0x6
+ 496 00b4 76000000 		.4byte	0x76
+ 497 00b8 02       		.uleb128 0x2
+ 498 00b9 04       		.byte	0x4
+ 499 00ba 07       		.byte	0x7
+ 500 00bb 14020000 		.4byte	.LASF16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 20
+
+
+ 501 00bf 07       		.uleb128 0x7
+ 502 00c0 5A000000 		.4byte	.LASF17
+ 503 00c4 01       		.byte	0x1
+ 504 00c5 8F       		.byte	0x8f
+ 505 00c6 00000000 		.4byte	.LFB2
+ 506 00ca 02000000 		.4byte	.LFE2-.LFB2
+ 507 00ce 01       		.uleb128 0x1
+ 508 00cf 9C       		.byte	0x9c
+ 509 00d0 07       		.uleb128 0x7
+ 510 00d1 AA000000 		.4byte	.LASF18
+ 511 00d5 01       		.byte	0x1
+ 512 00d6 D0       		.byte	0xd0
+ 513 00d7 00000000 		.4byte	.LFB4
+ 514 00db 02000000 		.4byte	.LFE4-.LFB4
+ 515 00df 01       		.uleb128 0x1
+ 516 00e0 9C       		.byte	0x9c
+ 517 00e1 08       		.uleb128 0x8
+ 518 00e2 20000000 		.4byte	.LASF19
+ 519 00e6 01       		.byte	0x1
+ 520 00e7 ED       		.byte	0xed
+ 521 00e8 00000000 		.4byte	.LFB5
+ 522 00ec 0C000000 		.4byte	.LFE5-.LFB5
+ 523 00f0 01       		.uleb128 0x1
+ 524 00f1 9C       		.byte	0x9c
+ 525 00f2 04010000 		.4byte	0x104
+ 526 00f6 09       		.uleb128 0x9
+ 527 00f7 36010000 		.4byte	.LASF21
+ 528 00fb 01       		.byte	0x1
+ 529 00fc ED       		.byte	0xed
+ 530 00fd 6B000000 		.4byte	0x6b
+ 531 0101 01       		.uleb128 0x1
+ 532 0102 50       		.byte	0x50
+ 533 0103 00       		.byte	0
+ 534 0104 0A       		.uleb128 0xa
+ 535 0105 6F000000 		.4byte	.LASF23
+ 536 0109 01       		.byte	0x1
+ 537 010a 0501     		.2byte	0x105
+ 538 010c 6B000000 		.4byte	0x6b
+ 539 0110 00000000 		.4byte	.LFB6
+ 540 0114 0C000000 		.4byte	.LFE6-.LFB6
+ 541 0118 01       		.uleb128 0x1
+ 542 0119 9C       		.byte	0x9c
+ 543 011a 0B       		.uleb128 0xb
+ 544 011b 3F000000 		.4byte	.LASF20
+ 545 011f 01       		.byte	0x1
+ 546 0120 4601     		.2byte	0x146
+ 547 0122 00000000 		.4byte	.LFB7
+ 548 0126 0C000000 		.4byte	.LFE7-.LFB7
+ 549 012a 01       		.uleb128 0x1
+ 550 012b 9C       		.byte	0x9c
+ 551 012c 3F010000 		.4byte	0x13f
+ 552 0130 0C       		.uleb128 0xc
+ 553 0131 C3000000 		.4byte	.LASF22
+ 554 0135 01       		.byte	0x1
+ 555 0136 4601     		.2byte	0x146
+ 556 0138 76000000 		.4byte	0x76
+ 557 013c 01       		.uleb128 0x1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 21
+
+
+ 558 013d 50       		.byte	0x50
+ 559 013e 00       		.byte	0
+ 560 013f 0A       		.uleb128 0xa
+ 561 0140 00000000 		.4byte	.LASF24
+ 562 0144 01       		.byte	0x1
+ 563 0145 6501     		.2byte	0x165
+ 564 0147 76000000 		.4byte	0x76
+ 565 014b 00000000 		.4byte	.LFB8
+ 566 014f 14000000 		.4byte	.LFE8-.LFB8
+ 567 0153 01       		.uleb128 0x1
+ 568 0154 9C       		.byte	0x9c
+ 569 0155 0A       		.uleb128 0xa
+ 570 0156 16030000 		.4byte	.LASF25
+ 571 015a 01       		.byte	0x1
+ 572 015b 8601     		.2byte	0x186
+ 573 015d 76000000 		.4byte	0x76
+ 574 0161 00000000 		.4byte	.LFB9
+ 575 0165 0C000000 		.4byte	.LFE9-.LFB9
+ 576 0169 01       		.uleb128 0x1
+ 577 016a 9C       		.byte	0x9c
+ 578 016b 0B       		.uleb128 0xb
+ 579 016c F0000000 		.4byte	.LASF26
+ 580 0170 01       		.byte	0x1
+ 581 0171 9F01     		.2byte	0x19f
+ 582 0173 00000000 		.4byte	.LFB10
+ 583 0177 0C000000 		.4byte	.LFE10-.LFB10
+ 584 017b 01       		.uleb128 0x1
+ 585 017c 9C       		.byte	0x9c
+ 586 017d 90010000 		.4byte	0x190
+ 587 0181 0C       		.uleb128 0xc
+ 588 0182 90000000 		.4byte	.LASF27
+ 589 0186 01       		.byte	0x1
+ 590 0187 9F01     		.2byte	0x19f
+ 591 0189 76000000 		.4byte	0x76
+ 592 018d 01       		.uleb128 0x1
+ 593 018e 50       		.byte	0x50
+ 594 018f 00       		.byte	0
+ 595 0190 0A       		.uleb128 0xa
+ 596 0191 63030000 		.4byte	.LASF28
+ 597 0195 01       		.byte	0x1
+ 598 0196 B601     		.2byte	0x1b6
+ 599 0198 76000000 		.4byte	0x76
+ 600 019c 00000000 		.4byte	.LFB11
+ 601 01a0 0C000000 		.4byte	.LFE11-.LFB11
+ 602 01a4 01       		.uleb128 0x1
+ 603 01a5 9C       		.byte	0x9c
+ 604 01a6 0B       		.uleb128 0xb
+ 605 01a7 1D020000 		.4byte	.LASF29
+ 606 01ab 01       		.byte	0x1
+ 607 01ac D101     		.2byte	0x1d1
+ 608 01ae 00000000 		.4byte	.LFB12
+ 609 01b2 0C000000 		.4byte	.LFE12-.LFB12
+ 610 01b6 01       		.uleb128 0x1
+ 611 01b7 9C       		.byte	0x9c
+ 612 01b8 CB010000 		.4byte	0x1cb
+ 613 01bc 0C       		.uleb128 0xc
+ 614 01bd 5B030000 		.4byte	.LASF30
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 22
+
+
+ 615 01c1 01       		.byte	0x1
+ 616 01c2 D101     		.2byte	0x1d1
+ 617 01c4 76000000 		.4byte	0x76
+ 618 01c8 01       		.uleb128 0x1
+ 619 01c9 50       		.byte	0x50
+ 620 01ca 00       		.byte	0
+ 621 01cb 0A       		.uleb128 0xa
+ 622 01cc F5010000 		.4byte	.LASF31
+ 623 01d0 01       		.byte	0x1
+ 624 01d1 E901     		.2byte	0x1e9
+ 625 01d3 76000000 		.4byte	0x76
+ 626 01d7 00000000 		.4byte	.LFB13
+ 627 01db 0C000000 		.4byte	.LFE13-.LFB13
+ 628 01df 01       		.uleb128 0x1
+ 629 01e0 9C       		.byte	0x9c
+ 630 01e1 0B       		.uleb128 0xb
+ 631 01e2 73010000 		.4byte	.LASF32
+ 632 01e6 01       		.byte	0x1
+ 633 01e7 2E02     		.2byte	0x22e
+ 634 01e9 00000000 		.4byte	.LFB14
+ 635 01ed 12000000 		.4byte	.LFE14-.LFB14
+ 636 01f1 01       		.uleb128 0x1
+ 637 01f2 9C       		.byte	0x9c
+ 638 01f3 0A020000 		.4byte	0x20a
+ 639 01f7 0D       		.uleb128 0xd
+ 640 01f8 08000000 		.4byte	.LVL4
+ 641 01fc 55010000 		.4byte	0x155
+ 642 0200 0D       		.uleb128 0xd
+ 643 0201 0C000000 		.4byte	.LVL5
+ 644 0205 04010000 		.4byte	0x104
+ 645 0209 00       		.byte	0
+ 646 020a 08       		.uleb128 0x8
+ 647 020b 7C030000 		.4byte	.LASF33
+ 648 020f 01       		.byte	0x1
+ 649 0210 25       		.byte	0x25
+ 650 0211 00000000 		.4byte	.LFB1
+ 651 0215 40000000 		.4byte	.LFE1-.LFB1
+ 652 0219 01       		.uleb128 0x1
+ 653 021a 9C       		.byte	0x9c
+ 654 021b A2020000 		.4byte	0x2a2
+ 655 021f 0E       		.uleb128 0xe
+ 656 0220 4C010000 		.4byte	.LASF38
+ 657 0224 01       		.byte	0x1
+ 658 0225 2D       		.byte	0x2d
+ 659 0226 6B000000 		.4byte	0x6b
+ 660 022a 00000000 		.4byte	.LLST0
+ 661 022e 0D       		.uleb128 0xd
+ 662 022f 06000000 		.4byte	.LVL6
+ 663 0233 E1010000 		.4byte	0x1e1
+ 664 0237 0F       		.uleb128 0xf
+ 665 0238 10000000 		.4byte	.LVL7
+ 666 023c 6B010000 		.4byte	0x16b
+ 667 0240 4B020000 		.4byte	0x24b
+ 668 0244 10       		.uleb128 0x10
+ 669 0245 01       		.uleb128 0x1
+ 670 0246 50       		.byte	0x50
+ 671 0247 02       		.uleb128 0x2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 23
+
+
+ 672 0248 74       		.byte	0x74
+ 673 0249 00       		.sleb128 0
+ 674 024a 00       		.byte	0
+ 675 024b 0F       		.uleb128 0xf
+ 676 024c 16000000 		.4byte	.LVL8
+ 677 0250 1A010000 		.4byte	0x11a
+ 678 0254 5F020000 		.4byte	0x25f
+ 679 0258 10       		.uleb128 0x10
+ 680 0259 01       		.uleb128 0x1
+ 681 025a 50       		.byte	0x50
+ 682 025b 02       		.uleb128 0x2
+ 683 025c 74       		.byte	0x74
+ 684 025d 00       		.sleb128 0
+ 685 025e 00       		.byte	0
+ 686 025f 0F       		.uleb128 0xf
+ 687 0260 1C000000 		.4byte	.LVL9
+ 688 0264 E1000000 		.4byte	0xe1
+ 689 0268 72020000 		.4byte	0x272
+ 690 026c 10       		.uleb128 0x10
+ 691 026d 01       		.uleb128 0x1
+ 692 026e 50       		.byte	0x50
+ 693 026f 01       		.uleb128 0x1
+ 694 0270 3C       		.byte	0x3c
+ 695 0271 00       		.byte	0
+ 696 0272 0D       		.uleb128 0xd
+ 697 0273 20000000 		.4byte	.LVL10
+ 698 0277 04010000 		.4byte	0x104
+ 699 027b 0F       		.uleb128 0xf
+ 700 027c 28000000 		.4byte	.LVL11
+ 701 0280 A6010000 		.4byte	0x1a6
+ 702 0284 8F020000 		.4byte	0x28f
+ 703 0288 10       		.uleb128 0x10
+ 704 0289 01       		.uleb128 0x1
+ 705 028a 50       		.byte	0x50
+ 706 028b 02       		.uleb128 0x2
+ 707 028c 09       		.byte	0x9
+ 708 028d FF       		.byte	0xff
+ 709 028e 00       		.byte	0
+ 710 028f 0D       		.uleb128 0xd
+ 711 0290 2C000000 		.4byte	.LVL12
+ 712 0294 D2020000 		.4byte	0x2d2
+ 713 0298 0D       		.uleb128 0xd
+ 714 0299 3A000000 		.4byte	.LVL13
+ 715 029d DD020000 		.4byte	0x2dd
+ 716 02a1 00       		.byte	0
+ 717 02a2 08       		.uleb128 0x8
+ 718 02a3 0A010000 		.4byte	.LASF34
+ 719 02a7 01       		.byte	0x1
+ 720 02a8 B2       		.byte	0xb2
+ 721 02a9 00000000 		.4byte	.LFB3
+ 722 02ad 1C000000 		.4byte	.LFE3-.LFB3
+ 723 02b1 01       		.uleb128 0x1
+ 724 02b2 9C       		.byte	0x9c
+ 725 02b3 C1020000 		.4byte	0x2c1
+ 726 02b7 0D       		.uleb128 0xd
+ 727 02b8 0E000000 		.4byte	.LVL14
+ 728 02bc 0A020000 		.4byte	0x20a
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 24
+
+
+ 729 02c0 00       		.byte	0
+ 730 02c1 11       		.uleb128 0x11
+ 731 02c2 39030000 		.4byte	.LASF39
+ 732 02c6 01       		.byte	0x1
+ 733 02c7 15       		.byte	0x15
+ 734 02c8 6B000000 		.4byte	0x6b
+ 735 02cc 05       		.uleb128 0x5
+ 736 02cd 03       		.byte	0x3
+ 737 02ce 00000000 		.4byte	Phase_Counter_initVar
+ 738 02d2 12       		.uleb128 0x12
+ 739 02d3 BB010000 		.4byte	.LASF40
+ 740 02d7 03       		.byte	0x3
+ 741 02d8 5E       		.byte	0x5e
+ 742 02d9 6B000000 		.4byte	0x6b
+ 743 02dd 13       		.uleb128 0x13
+ 744 02de DF010000 		.4byte	.LASF41
+ 745 02e2 03       		.byte	0x3
+ 746 02e3 5F       		.byte	0x5f
+ 747 02e4 14       		.uleb128 0x14
+ 748 02e5 6B000000 		.4byte	0x6b
+ 749 02e9 00       		.byte	0
+ 750 02ea 00       		.byte	0
+ 751              		.section	.debug_abbrev,"",%progbits
+ 752              	.Ldebug_abbrev0:
+ 753 0000 01       		.uleb128 0x1
+ 754 0001 11       		.uleb128 0x11
+ 755 0002 01       		.byte	0x1
+ 756 0003 25       		.uleb128 0x25
+ 757 0004 0E       		.uleb128 0xe
+ 758 0005 13       		.uleb128 0x13
+ 759 0006 0B       		.uleb128 0xb
+ 760 0007 03       		.uleb128 0x3
+ 761 0008 0E       		.uleb128 0xe
+ 762 0009 1B       		.uleb128 0x1b
+ 763 000a 0E       		.uleb128 0xe
+ 764 000b 55       		.uleb128 0x55
+ 765 000c 17       		.uleb128 0x17
+ 766 000d 11       		.uleb128 0x11
+ 767 000e 01       		.uleb128 0x1
+ 768 000f 10       		.uleb128 0x10
+ 769 0010 17       		.uleb128 0x17
+ 770 0011 00       		.byte	0
+ 771 0012 00       		.byte	0
+ 772 0013 02       		.uleb128 0x2
+ 773 0014 24       		.uleb128 0x24
+ 774 0015 00       		.byte	0
+ 775 0016 0B       		.uleb128 0xb
+ 776 0017 0B       		.uleb128 0xb
+ 777 0018 3E       		.uleb128 0x3e
+ 778 0019 0B       		.uleb128 0xb
+ 779 001a 03       		.uleb128 0x3
+ 780 001b 0E       		.uleb128 0xe
+ 781 001c 00       		.byte	0
+ 782 001d 00       		.byte	0
+ 783 001e 03       		.uleb128 0x3
+ 784 001f 24       		.uleb128 0x24
+ 785 0020 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 25
+
+
+ 786 0021 0B       		.uleb128 0xb
+ 787 0022 0B       		.uleb128 0xb
+ 788 0023 3E       		.uleb128 0x3e
+ 789 0024 0B       		.uleb128 0xb
+ 790 0025 03       		.uleb128 0x3
+ 791 0026 08       		.uleb128 0x8
+ 792 0027 00       		.byte	0
+ 793 0028 00       		.byte	0
+ 794 0029 04       		.uleb128 0x4
+ 795 002a 16       		.uleb128 0x16
+ 796 002b 00       		.byte	0
+ 797 002c 03       		.uleb128 0x3
+ 798 002d 0E       		.uleb128 0xe
+ 799 002e 3A       		.uleb128 0x3a
+ 800 002f 0B       		.uleb128 0xb
+ 801 0030 3B       		.uleb128 0x3b
+ 802 0031 0B       		.uleb128 0xb
+ 803 0032 49       		.uleb128 0x49
+ 804 0033 13       		.uleb128 0x13
+ 805 0034 00       		.byte	0
+ 806 0035 00       		.byte	0
+ 807 0036 05       		.uleb128 0x5
+ 808 0037 16       		.uleb128 0x16
+ 809 0038 00       		.byte	0
+ 810 0039 03       		.uleb128 0x3
+ 811 003a 0E       		.uleb128 0xe
+ 812 003b 3A       		.uleb128 0x3a
+ 813 003c 0B       		.uleb128 0xb
+ 814 003d 3B       		.uleb128 0x3b
+ 815 003e 05       		.uleb128 0x5
+ 816 003f 49       		.uleb128 0x49
+ 817 0040 13       		.uleb128 0x13
+ 818 0041 00       		.byte	0
+ 819 0042 00       		.byte	0
+ 820 0043 06       		.uleb128 0x6
+ 821 0044 35       		.uleb128 0x35
+ 822 0045 00       		.byte	0
+ 823 0046 49       		.uleb128 0x49
+ 824 0047 13       		.uleb128 0x13
+ 825 0048 00       		.byte	0
+ 826 0049 00       		.byte	0
+ 827 004a 07       		.uleb128 0x7
+ 828 004b 2E       		.uleb128 0x2e
+ 829 004c 00       		.byte	0
+ 830 004d 3F       		.uleb128 0x3f
+ 831 004e 19       		.uleb128 0x19
+ 832 004f 03       		.uleb128 0x3
+ 833 0050 0E       		.uleb128 0xe
+ 834 0051 3A       		.uleb128 0x3a
+ 835 0052 0B       		.uleb128 0xb
+ 836 0053 3B       		.uleb128 0x3b
+ 837 0054 0B       		.uleb128 0xb
+ 838 0055 27       		.uleb128 0x27
+ 839 0056 19       		.uleb128 0x19
+ 840 0057 11       		.uleb128 0x11
+ 841 0058 01       		.uleb128 0x1
+ 842 0059 12       		.uleb128 0x12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 26
+
+
+ 843 005a 06       		.uleb128 0x6
+ 844 005b 40       		.uleb128 0x40
+ 845 005c 18       		.uleb128 0x18
+ 846 005d 9742     		.uleb128 0x2117
+ 847 005f 19       		.uleb128 0x19
+ 848 0060 00       		.byte	0
+ 849 0061 00       		.byte	0
+ 850 0062 08       		.uleb128 0x8
+ 851 0063 2E       		.uleb128 0x2e
+ 852 0064 01       		.byte	0x1
+ 853 0065 3F       		.uleb128 0x3f
+ 854 0066 19       		.uleb128 0x19
+ 855 0067 03       		.uleb128 0x3
+ 856 0068 0E       		.uleb128 0xe
+ 857 0069 3A       		.uleb128 0x3a
+ 858 006a 0B       		.uleb128 0xb
+ 859 006b 3B       		.uleb128 0x3b
+ 860 006c 0B       		.uleb128 0xb
+ 861 006d 27       		.uleb128 0x27
+ 862 006e 19       		.uleb128 0x19
+ 863 006f 11       		.uleb128 0x11
+ 864 0070 01       		.uleb128 0x1
+ 865 0071 12       		.uleb128 0x12
+ 866 0072 06       		.uleb128 0x6
+ 867 0073 40       		.uleb128 0x40
+ 868 0074 18       		.uleb128 0x18
+ 869 0075 9742     		.uleb128 0x2117
+ 870 0077 19       		.uleb128 0x19
+ 871 0078 01       		.uleb128 0x1
+ 872 0079 13       		.uleb128 0x13
+ 873 007a 00       		.byte	0
+ 874 007b 00       		.byte	0
+ 875 007c 09       		.uleb128 0x9
+ 876 007d 05       		.uleb128 0x5
+ 877 007e 00       		.byte	0
+ 878 007f 03       		.uleb128 0x3
+ 879 0080 0E       		.uleb128 0xe
+ 880 0081 3A       		.uleb128 0x3a
+ 881 0082 0B       		.uleb128 0xb
+ 882 0083 3B       		.uleb128 0x3b
+ 883 0084 0B       		.uleb128 0xb
+ 884 0085 49       		.uleb128 0x49
+ 885 0086 13       		.uleb128 0x13
+ 886 0087 02       		.uleb128 0x2
+ 887 0088 18       		.uleb128 0x18
+ 888 0089 00       		.byte	0
+ 889 008a 00       		.byte	0
+ 890 008b 0A       		.uleb128 0xa
+ 891 008c 2E       		.uleb128 0x2e
+ 892 008d 00       		.byte	0
+ 893 008e 3F       		.uleb128 0x3f
+ 894 008f 19       		.uleb128 0x19
+ 895 0090 03       		.uleb128 0x3
+ 896 0091 0E       		.uleb128 0xe
+ 897 0092 3A       		.uleb128 0x3a
+ 898 0093 0B       		.uleb128 0xb
+ 899 0094 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 27
+
+
+ 900 0095 05       		.uleb128 0x5
+ 901 0096 27       		.uleb128 0x27
+ 902 0097 19       		.uleb128 0x19
+ 903 0098 49       		.uleb128 0x49
+ 904 0099 13       		.uleb128 0x13
+ 905 009a 11       		.uleb128 0x11
+ 906 009b 01       		.uleb128 0x1
+ 907 009c 12       		.uleb128 0x12
+ 908 009d 06       		.uleb128 0x6
+ 909 009e 40       		.uleb128 0x40
+ 910 009f 18       		.uleb128 0x18
+ 911 00a0 9742     		.uleb128 0x2117
+ 912 00a2 19       		.uleb128 0x19
+ 913 00a3 00       		.byte	0
+ 914 00a4 00       		.byte	0
+ 915 00a5 0B       		.uleb128 0xb
+ 916 00a6 2E       		.uleb128 0x2e
+ 917 00a7 01       		.byte	0x1
+ 918 00a8 3F       		.uleb128 0x3f
+ 919 00a9 19       		.uleb128 0x19
+ 920 00aa 03       		.uleb128 0x3
+ 921 00ab 0E       		.uleb128 0xe
+ 922 00ac 3A       		.uleb128 0x3a
+ 923 00ad 0B       		.uleb128 0xb
+ 924 00ae 3B       		.uleb128 0x3b
+ 925 00af 05       		.uleb128 0x5
+ 926 00b0 27       		.uleb128 0x27
+ 927 00b1 19       		.uleb128 0x19
+ 928 00b2 11       		.uleb128 0x11
+ 929 00b3 01       		.uleb128 0x1
+ 930 00b4 12       		.uleb128 0x12
+ 931 00b5 06       		.uleb128 0x6
+ 932 00b6 40       		.uleb128 0x40
+ 933 00b7 18       		.uleb128 0x18
+ 934 00b8 9742     		.uleb128 0x2117
+ 935 00ba 19       		.uleb128 0x19
+ 936 00bb 01       		.uleb128 0x1
+ 937 00bc 13       		.uleb128 0x13
+ 938 00bd 00       		.byte	0
+ 939 00be 00       		.byte	0
+ 940 00bf 0C       		.uleb128 0xc
+ 941 00c0 05       		.uleb128 0x5
+ 942 00c1 00       		.byte	0
+ 943 00c2 03       		.uleb128 0x3
+ 944 00c3 0E       		.uleb128 0xe
+ 945 00c4 3A       		.uleb128 0x3a
+ 946 00c5 0B       		.uleb128 0xb
+ 947 00c6 3B       		.uleb128 0x3b
+ 948 00c7 05       		.uleb128 0x5
+ 949 00c8 49       		.uleb128 0x49
+ 950 00c9 13       		.uleb128 0x13
+ 951 00ca 02       		.uleb128 0x2
+ 952 00cb 18       		.uleb128 0x18
+ 953 00cc 00       		.byte	0
+ 954 00cd 00       		.byte	0
+ 955 00ce 0D       		.uleb128 0xd
+ 956 00cf 898201   		.uleb128 0x4109
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 28
+
+
+ 957 00d2 00       		.byte	0
+ 958 00d3 11       		.uleb128 0x11
+ 959 00d4 01       		.uleb128 0x1
+ 960 00d5 31       		.uleb128 0x31
+ 961 00d6 13       		.uleb128 0x13
+ 962 00d7 00       		.byte	0
+ 963 00d8 00       		.byte	0
+ 964 00d9 0E       		.uleb128 0xe
+ 965 00da 34       		.uleb128 0x34
+ 966 00db 00       		.byte	0
+ 967 00dc 03       		.uleb128 0x3
+ 968 00dd 0E       		.uleb128 0xe
+ 969 00de 3A       		.uleb128 0x3a
+ 970 00df 0B       		.uleb128 0xb
+ 971 00e0 3B       		.uleb128 0x3b
+ 972 00e1 0B       		.uleb128 0xb
+ 973 00e2 49       		.uleb128 0x49
+ 974 00e3 13       		.uleb128 0x13
+ 975 00e4 02       		.uleb128 0x2
+ 976 00e5 17       		.uleb128 0x17
+ 977 00e6 00       		.byte	0
+ 978 00e7 00       		.byte	0
+ 979 00e8 0F       		.uleb128 0xf
+ 980 00e9 898201   		.uleb128 0x4109
+ 981 00ec 01       		.byte	0x1
+ 982 00ed 11       		.uleb128 0x11
+ 983 00ee 01       		.uleb128 0x1
+ 984 00ef 31       		.uleb128 0x31
+ 985 00f0 13       		.uleb128 0x13
+ 986 00f1 01       		.uleb128 0x1
+ 987 00f2 13       		.uleb128 0x13
+ 988 00f3 00       		.byte	0
+ 989 00f4 00       		.byte	0
+ 990 00f5 10       		.uleb128 0x10
+ 991 00f6 8A8201   		.uleb128 0x410a
+ 992 00f9 00       		.byte	0
+ 993 00fa 02       		.uleb128 0x2
+ 994 00fb 18       		.uleb128 0x18
+ 995 00fc 9142     		.uleb128 0x2111
+ 996 00fe 18       		.uleb128 0x18
+ 997 00ff 00       		.byte	0
+ 998 0100 00       		.byte	0
+ 999 0101 11       		.uleb128 0x11
+ 1000 0102 34       		.uleb128 0x34
+ 1001 0103 00       		.byte	0
+ 1002 0104 03       		.uleb128 0x3
+ 1003 0105 0E       		.uleb128 0xe
+ 1004 0106 3A       		.uleb128 0x3a
+ 1005 0107 0B       		.uleb128 0xb
+ 1006 0108 3B       		.uleb128 0x3b
+ 1007 0109 0B       		.uleb128 0xb
+ 1008 010a 49       		.uleb128 0x49
+ 1009 010b 13       		.uleb128 0x13
+ 1010 010c 3F       		.uleb128 0x3f
+ 1011 010d 19       		.uleb128 0x19
+ 1012 010e 02       		.uleb128 0x2
+ 1013 010f 18       		.uleb128 0x18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 29
+
+
+ 1014 0110 00       		.byte	0
+ 1015 0111 00       		.byte	0
+ 1016 0112 12       		.uleb128 0x12
+ 1017 0113 2E       		.uleb128 0x2e
+ 1018 0114 00       		.byte	0
+ 1019 0115 3F       		.uleb128 0x3f
+ 1020 0116 19       		.uleb128 0x19
+ 1021 0117 03       		.uleb128 0x3
+ 1022 0118 0E       		.uleb128 0xe
+ 1023 0119 3A       		.uleb128 0x3a
+ 1024 011a 0B       		.uleb128 0xb
+ 1025 011b 3B       		.uleb128 0x3b
+ 1026 011c 0B       		.uleb128 0xb
+ 1027 011d 27       		.uleb128 0x27
+ 1028 011e 19       		.uleb128 0x19
+ 1029 011f 49       		.uleb128 0x49
+ 1030 0120 13       		.uleb128 0x13
+ 1031 0121 3C       		.uleb128 0x3c
+ 1032 0122 19       		.uleb128 0x19
+ 1033 0123 00       		.byte	0
+ 1034 0124 00       		.byte	0
+ 1035 0125 13       		.uleb128 0x13
+ 1036 0126 2E       		.uleb128 0x2e
+ 1037 0127 01       		.byte	0x1
+ 1038 0128 3F       		.uleb128 0x3f
+ 1039 0129 19       		.uleb128 0x19
+ 1040 012a 03       		.uleb128 0x3
+ 1041 012b 0E       		.uleb128 0xe
+ 1042 012c 3A       		.uleb128 0x3a
+ 1043 012d 0B       		.uleb128 0xb
+ 1044 012e 3B       		.uleb128 0x3b
+ 1045 012f 0B       		.uleb128 0xb
+ 1046 0130 27       		.uleb128 0x27
+ 1047 0131 19       		.uleb128 0x19
+ 1048 0132 3C       		.uleb128 0x3c
+ 1049 0133 19       		.uleb128 0x19
+ 1050 0134 00       		.byte	0
+ 1051 0135 00       		.byte	0
+ 1052 0136 14       		.uleb128 0x14
+ 1053 0137 05       		.uleb128 0x5
+ 1054 0138 00       		.byte	0
+ 1055 0139 49       		.uleb128 0x49
+ 1056 013a 13       		.uleb128 0x13
+ 1057 013b 00       		.byte	0
+ 1058 013c 00       		.byte	0
+ 1059 013d 00       		.byte	0
+ 1060              		.section	.debug_loc,"",%progbits
+ 1061              	.Ldebug_loc0:
+ 1062              	.LLST0:
+ 1063 0000 2C000000 		.4byte	.LVL12
+ 1064 0004 39000000 		.4byte	.LVL13-1
+ 1065 0008 0100     		.2byte	0x1
+ 1066 000a 50       		.byte	0x50
+ 1067 000b 00000000 		.4byte	0
+ 1068 000f 00000000 		.4byte	0
+ 1069              		.section	.debug_aranges,"",%progbits
+ 1070 0000 84000000 		.4byte	0x84
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 30
+
+
+ 1071 0004 0200     		.2byte	0x2
+ 1072 0006 00000000 		.4byte	.Ldebug_info0
+ 1073 000a 04       		.byte	0x4
+ 1074 000b 00       		.byte	0
+ 1075 000c 0000     		.2byte	0
+ 1076 000e 0000     		.2byte	0
+ 1077 0010 00000000 		.4byte	.LFB2
+ 1078 0014 02000000 		.4byte	.LFE2-.LFB2
+ 1079 0018 00000000 		.4byte	.LFB4
+ 1080 001c 02000000 		.4byte	.LFE4-.LFB4
+ 1081 0020 00000000 		.4byte	.LFB5
+ 1082 0024 0C000000 		.4byte	.LFE5-.LFB5
+ 1083 0028 00000000 		.4byte	.LFB6
+ 1084 002c 0C000000 		.4byte	.LFE6-.LFB6
+ 1085 0030 00000000 		.4byte	.LFB7
+ 1086 0034 0C000000 		.4byte	.LFE7-.LFB7
+ 1087 0038 00000000 		.4byte	.LFB8
+ 1088 003c 14000000 		.4byte	.LFE8-.LFB8
+ 1089 0040 00000000 		.4byte	.LFB9
+ 1090 0044 0C000000 		.4byte	.LFE9-.LFB9
+ 1091 0048 00000000 		.4byte	.LFB10
+ 1092 004c 0C000000 		.4byte	.LFE10-.LFB10
+ 1093 0050 00000000 		.4byte	.LFB11
+ 1094 0054 0C000000 		.4byte	.LFE11-.LFB11
+ 1095 0058 00000000 		.4byte	.LFB12
+ 1096 005c 0C000000 		.4byte	.LFE12-.LFB12
+ 1097 0060 00000000 		.4byte	.LFB13
+ 1098 0064 0C000000 		.4byte	.LFE13-.LFB13
+ 1099 0068 00000000 		.4byte	.LFB14
+ 1100 006c 12000000 		.4byte	.LFE14-.LFB14
+ 1101 0070 00000000 		.4byte	.LFB1
+ 1102 0074 40000000 		.4byte	.LFE1-.LFB1
+ 1103 0078 00000000 		.4byte	.LFB3
+ 1104 007c 1C000000 		.4byte	.LFE3-.LFB3
+ 1105 0080 00000000 		.4byte	0
+ 1106 0084 00000000 		.4byte	0
+ 1107              		.section	.debug_ranges,"",%progbits
+ 1108              	.Ldebug_ranges0:
+ 1109 0000 00000000 		.4byte	.LFB2
+ 1110 0004 02000000 		.4byte	.LFE2
+ 1111 0008 00000000 		.4byte	.LFB4
+ 1112 000c 02000000 		.4byte	.LFE4
+ 1113 0010 00000000 		.4byte	.LFB5
+ 1114 0014 0C000000 		.4byte	.LFE5
+ 1115 0018 00000000 		.4byte	.LFB6
+ 1116 001c 0C000000 		.4byte	.LFE6
+ 1117 0020 00000000 		.4byte	.LFB7
+ 1118 0024 0C000000 		.4byte	.LFE7
+ 1119 0028 00000000 		.4byte	.LFB8
+ 1120 002c 14000000 		.4byte	.LFE8
+ 1121 0030 00000000 		.4byte	.LFB9
+ 1122 0034 0C000000 		.4byte	.LFE9
+ 1123 0038 00000000 		.4byte	.LFB10
+ 1124 003c 0C000000 		.4byte	.LFE10
+ 1125 0040 00000000 		.4byte	.LFB11
+ 1126 0044 0C000000 		.4byte	.LFE11
+ 1127 0048 00000000 		.4byte	.LFB12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 31
+
+
+ 1128 004c 0C000000 		.4byte	.LFE12
+ 1129 0050 00000000 		.4byte	.LFB13
+ 1130 0054 0C000000 		.4byte	.LFE13
+ 1131 0058 00000000 		.4byte	.LFB14
+ 1132 005c 12000000 		.4byte	.LFE14
+ 1133 0060 00000000 		.4byte	.LFB1
+ 1134 0064 40000000 		.4byte	.LFE1
+ 1135 0068 00000000 		.4byte	.LFB3
+ 1136 006c 1C000000 		.4byte	.LFE3
+ 1137 0070 00000000 		.4byte	0
+ 1138 0074 00000000 		.4byte	0
+ 1139              		.section	.debug_line,"",%progbits
+ 1140              	.Ldebug_line0:
+ 1141 0000 6B010000 		.section	.debug_str,"MS",%progbits,1
+ 1141      02005700 
+ 1141      00000201 
+ 1141      FB0E0D00 
+ 1141      01010101 
+ 1142              	.LASF24:
+ 1143 0000 50686173 		.ascii	"Phase_Counter_ReadCounter\000"
+ 1143      655F436F 
+ 1143      756E7465 
+ 1143      725F5265 
+ 1143      6164436F 
+ 1144              	.LASF15:
+ 1145 001a 72656733 		.ascii	"reg32\000"
+ 1145      3200
+ 1146              	.LASF19:
+ 1147 0020 50686173 		.ascii	"Phase_Counter_SetInterruptMode\000"
+ 1147      655F436F 
+ 1147      756E7465 
+ 1147      725F5365 
+ 1147      74496E74 
+ 1148              	.LASF20:
+ 1149 003f 50686173 		.ascii	"Phase_Counter_WriteCounter\000"
+ 1149      655F436F 
+ 1149      756E7465 
+ 1149      725F5772 
+ 1149      69746543 
+ 1150              	.LASF17:
+ 1151 005a 50686173 		.ascii	"Phase_Counter_Enable\000"
+ 1151      655F436F 
+ 1151      756E7465 
+ 1151      725F456E 
+ 1151      61626C65 
+ 1152              	.LASF23:
+ 1153 006f 50686173 		.ascii	"Phase_Counter_ReadStatusRegister\000"
+ 1153      655F436F 
+ 1153      756E7465 
+ 1153      725F5265 
+ 1153      61645374 
+ 1154              	.LASF27:
+ 1155 0090 70657269 		.ascii	"period\000"
+ 1155      6F6400
+ 1156              	.LASF3:
+ 1157 0097 73686F72 		.ascii	"short unsigned int\000"
+ 1157      7420756E 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 32
+
+
+ 1157      7369676E 
+ 1157      65642069 
+ 1157      6E7400
+ 1158              	.LASF18:
+ 1159 00aa 50686173 		.ascii	"Phase_Counter_Stop\000"
+ 1159      655F436F 
+ 1159      756E7465 
+ 1159      725F5374 
+ 1159      6F7000
+ 1160              	.LASF11:
+ 1161 00bd 666C6F61 		.ascii	"float\000"
+ 1161      7400
+ 1162              	.LASF22:
+ 1163 00c3 636F756E 		.ascii	"counter\000"
+ 1163      74657200 
+ 1164              	.LASF7:
+ 1165 00cb 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1165      206C6F6E 
+ 1165      6720756E 
+ 1165      7369676E 
+ 1165      65642069 
+ 1166              	.LASF1:
+ 1167 00e2 756E7369 		.ascii	"unsigned char\000"
+ 1167      676E6564 
+ 1167      20636861 
+ 1167      7200
+ 1168              	.LASF26:
+ 1169 00f0 50686173 		.ascii	"Phase_Counter_WritePeriod\000"
+ 1169      655F436F 
+ 1169      756E7465 
+ 1169      725F5772 
+ 1169      69746550 
+ 1170              	.LASF34:
+ 1171 010a 50686173 		.ascii	"Phase_Counter_Start\000"
+ 1171      655F436F 
+ 1171      756E7465 
+ 1171      725F5374 
+ 1171      61727400 
+ 1172              	.LASF5:
+ 1173 011e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1173      20756E73 
+ 1173      69676E65 
+ 1173      6420696E 
+ 1173      7400
+ 1174              	.LASF9:
+ 1175 0130 75696E74 		.ascii	"uint8\000"
+ 1175      3800
+ 1176              	.LASF21:
+ 1177 0136 696E7465 		.ascii	"interruptsMask\000"
+ 1177      72727570 
+ 1177      74734D61 
+ 1177      736B00
+ 1178              	.LASF12:
+ 1179 0145 646F7562 		.ascii	"double\000"
+ 1179      6C6500
+ 1180              	.LASF38:
+ 1181 014c 50686173 		.ascii	"Phase_Counter_interruptState\000"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 33
+
+
+ 1181      655F436F 
+ 1181      756E7465 
+ 1181      725F696E 
+ 1181      74657272 
+ 1182              	.LASF2:
+ 1183 0169 73686F72 		.ascii	"short int\000"
+ 1183      7420696E 
+ 1183      7400
+ 1184              	.LASF32:
+ 1185 0173 50686173 		.ascii	"Phase_Counter_ClearFIFO\000"
+ 1185      655F436F 
+ 1185      756E7465 
+ 1185      725F436C 
+ 1185      65617246 
+ 1186              	.LASF10:
+ 1187 018b 75696E74 		.ascii	"uint32\000"
+ 1187      333200
+ 1188              	.LASF36:
+ 1189 0192 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\Phase_Counter.c\000"
+ 1189      6E657261 
+ 1189      7465645F 
+ 1189      536F7572 
+ 1189      63655C50 
+ 1190              	.LASF40:
+ 1191 01bb 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 1191      74657243 
+ 1191      72697469 
+ 1191      63616C53 
+ 1191      65637469 
+ 1192              	.LASF8:
+ 1193 01d2 756E7369 		.ascii	"unsigned int\000"
+ 1193      676E6564 
+ 1193      20696E74 
+ 1193      00
+ 1194              	.LASF41:
+ 1195 01df 43794578 		.ascii	"CyExitCriticalSection\000"
+ 1195      69744372 
+ 1195      69746963 
+ 1195      616C5365 
+ 1195      6374696F 
+ 1196              	.LASF31:
+ 1197 01f5 50686173 		.ascii	"Phase_Counter_ReadCompare\000"
+ 1197      655F436F 
+ 1197      756E7465 
+ 1197      725F5265 
+ 1197      6164436F 
+ 1198              	.LASF14:
+ 1199 020f 72656738 		.ascii	"reg8\000"
+ 1199      00
+ 1200              	.LASF16:
+ 1201 0214 73697A65 		.ascii	"sizetype\000"
+ 1201      74797065 
+ 1201      00
+ 1202              	.LASF29:
+ 1203 021d 50686173 		.ascii	"Phase_Counter_WriteCompare\000"
+ 1203      655F436F 
+ 1203      756E7465 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 34
+
+
+ 1203      725F5772 
+ 1203      69746543 
+ 1204              	.LASF6:
+ 1205 0238 6C6F6E67 		.ascii	"long long int\000"
+ 1205      206C6F6E 
+ 1205      6720696E 
+ 1205      7400
+ 1206              	.LASF13:
+ 1207 0246 63686172 		.ascii	"char\000"
+ 1207      00
+ 1208              	.LASF35:
+ 1209 024b 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1209      4320342E 
+ 1209      392E3320 
+ 1209      32303135 
+ 1209      30333033 
+ 1210 027e 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1210      20726576 
+ 1210      6973696F 
+ 1210      6E203232 
+ 1210      31323230 
+ 1211 02b1 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1211      66756E63 
+ 1211      74696F6E 
+ 1211      2D736563 
+ 1211      74696F6E 
+ 1212              	.LASF37:
+ 1213 02d9 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
+ 1213      726F6A65 
+ 1213      6374735C 
+ 1213      41726C6F 
+ 1213      426F745C 
+ 1214 0307 61726431 		.ascii	"ard1-RPi.cydsn\000"
+ 1214      2D525069 
+ 1214      2E637964 
+ 1214      736E00
+ 1215              	.LASF25:
+ 1216 0316 50686173 		.ascii	"Phase_Counter_ReadCapture\000"
+ 1216      655F436F 
+ 1216      756E7465 
+ 1216      725F5265 
+ 1216      61644361 
+ 1217              	.LASF4:
+ 1218 0330 6C6F6E67 		.ascii	"long int\000"
+ 1218      20696E74 
+ 1218      00
+ 1219              	.LASF39:
+ 1220 0339 50686173 		.ascii	"Phase_Counter_initVar\000"
+ 1220      655F436F 
+ 1220      756E7465 
+ 1220      725F696E 
+ 1220      69745661 
+ 1221              	.LASF0:
+ 1222 034f 7369676E 		.ascii	"signed char\000"
+ 1222      65642063 
+ 1222      68617200 
+ 1223              	.LASF30:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccVvG7pC.s 			page 35
+
+
+ 1224 035b 636F6D70 		.ascii	"compare\000"
+ 1224      61726500 
+ 1225              	.LASF28:
+ 1226 0363 50686173 		.ascii	"Phase_Counter_ReadPeriod\000"
+ 1226      655F436F 
+ 1226      756E7465 
+ 1226      725F5265 
+ 1226      61645065 
+ 1227              	.LASF33:
+ 1228 037c 50686173 		.ascii	"Phase_Counter_Init\000"
+ 1228      655F436F 
+ 1228      756E7465 
+ 1228      725F496E 
+ 1228      697400
+ 1229              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

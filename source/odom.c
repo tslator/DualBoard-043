@@ -10,6 +10,7 @@
  * ========================================
 */
 
+#include "hwconfig.h"
 #include "odom.h"
 #include "encoder.h"
 #include "math.h"
@@ -34,6 +35,9 @@ static float x_dist;
 static float y_dist;
 static float linear_speed;
 static float angular_speed;
+static float left_speed;
+static float right_speed;
+
 
 void Odom_Init()
 {
@@ -69,8 +73,6 @@ void calc_odom()
     float delta_dist;
     float delta_x_dist;
     float delta_y_dist;
-    float left_speed;
-    float right_speed;
     
     /* calculate delta left/right count */
     left_count = Encoder_GetLeftCount();
@@ -122,6 +124,17 @@ void Odom_Update()
         last_odom_time = millis();
         calc_odom();
     }
+}
+
+int16 Odom_GetVelocity()
+{
+#ifdef LEFT_BOARD
+    return (int16) left_speed;
+#elif defined RIGHT_BOARD
+    return (int16) right_speed;
+#else
+    #error "You haven't defined a board, e.g. LEFT_BOARD or RIGHT_BOARD"
+#endif
 }
 
 

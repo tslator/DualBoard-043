@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: Pin_1.c  
+* File Name: Encoder_B.c  
 * Version 2.20
 *
 * Description:
@@ -15,13 +15,13 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "Pin_1.h"
+#include "Encoder_B.h"
 
-static Pin_1_BACKUP_STRUCT  Pin_1_backup = {0u, 0u, 0u};
+static Encoder_B_BACKUP_STRUCT  Encoder_B_backup = {0u, 0u, 0u};
 
 
 /*******************************************************************************
-* Function Name: Pin_1_Sleep
+* Function Name: Encoder_B_Sleep
 ****************************************************************************//**
 *
 * \brief Stores the pin configuration and prepares the pin for entering chip 
@@ -39,30 +39,30 @@ static Pin_1_BACKUP_STRUCT  Pin_1_backup = {0u, 0u, 0u};
 *  deep-sleep/hibernate modes.
 *
 * \funcusage
-*  \snippet Pin_1_SUT.c usage_Pin_1_Sleep_Wakeup
+*  \snippet Encoder_B_SUT.c usage_Encoder_B_Sleep_Wakeup
 *******************************************************************************/
-void Pin_1_Sleep(void)
+void Encoder_B_Sleep(void)
 {
-    #if defined(Pin_1__PC)
-        Pin_1_backup.pcState = Pin_1_PC;
+    #if defined(Encoder_B__PC)
+        Encoder_B_backup.pcState = Encoder_B_PC;
     #else
         #if (CY_PSOC4_4200L)
             /* Save the regulator state and put the PHY into suspend mode */
-            Pin_1_backup.usbState = Pin_1_CR1_REG;
-            Pin_1_USB_POWER_REG |= Pin_1_USBIO_ENTER_SLEEP;
-            Pin_1_CR1_REG &= Pin_1_USBIO_CR1_OFF;
+            Encoder_B_backup.usbState = Encoder_B_CR1_REG;
+            Encoder_B_USB_POWER_REG |= Encoder_B_USBIO_ENTER_SLEEP;
+            Encoder_B_CR1_REG &= Encoder_B_USBIO_CR1_OFF;
         #endif
     #endif
-    #if defined(CYIPBLOCK_m0s8ioss_VERSION) && defined(Pin_1__SIO)
-        Pin_1_backup.sioState = Pin_1_SIO_REG;
+    #if defined(CYIPBLOCK_m0s8ioss_VERSION) && defined(Encoder_B__SIO)
+        Encoder_B_backup.sioState = Encoder_B_SIO_REG;
         /* SIO requires unregulated output buffer and single ended input buffer */
-        Pin_1_SIO_REG &= (uint32)(~Pin_1_SIO_LPM_MASK);
+        Encoder_B_SIO_REG &= (uint32)(~Encoder_B_SIO_LPM_MASK);
     #endif  
 }
 
 
 /*******************************************************************************
-* Function Name: Pin_1_Wakeup
+* Function Name: Encoder_B_Wakeup
 ****************************************************************************//**
 *
 * \brief Restores the pin configuration that was saved during Pin_Sleep().
@@ -75,22 +75,22 @@ void Pin_1_Sleep(void)
 *  None
 *  
 * \funcusage
-*  Refer to Pin_1_Sleep() for an example usage.
+*  Refer to Encoder_B_Sleep() for an example usage.
 *******************************************************************************/
-void Pin_1_Wakeup(void)
+void Encoder_B_Wakeup(void)
 {
-    #if defined(Pin_1__PC)
-        Pin_1_PC = Pin_1_backup.pcState;
+    #if defined(Encoder_B__PC)
+        Encoder_B_PC = Encoder_B_backup.pcState;
     #else
         #if (CY_PSOC4_4200L)
             /* Restore the regulator state and come out of suspend mode */
-            Pin_1_USB_POWER_REG &= Pin_1_USBIO_EXIT_SLEEP_PH1;
-            Pin_1_CR1_REG = Pin_1_backup.usbState;
-            Pin_1_USB_POWER_REG &= Pin_1_USBIO_EXIT_SLEEP_PH2;
+            Encoder_B_USB_POWER_REG &= Encoder_B_USBIO_EXIT_SLEEP_PH1;
+            Encoder_B_CR1_REG = Encoder_B_backup.usbState;
+            Encoder_B_USB_POWER_REG &= Encoder_B_USBIO_EXIT_SLEEP_PH2;
         #endif
     #endif
-    #if defined(CYIPBLOCK_m0s8ioss_VERSION) && defined(Pin_1__SIO)
-        Pin_1_SIO_REG = Pin_1_backup.sioState;
+    #if defined(CYIPBLOCK_m0s8ioss_VERSION) && defined(Encoder_B__SIO)
+        Encoder_B_SIO_REG = Encoder_B_backup.sioState;
     #endif
 }
 

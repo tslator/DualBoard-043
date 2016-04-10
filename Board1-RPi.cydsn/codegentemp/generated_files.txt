@@ -32,11 +32,6 @@
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_EZI2C_PVT.h" value="NONE;EZI2C_Slave" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_EZI2C_BOOT.c" value="ARM_C_FILE;EZI2C_Slave" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_BOOT.h" value="NONE;EZI2C_Slave" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Intr.c" value="ARM_C_FILE;Encoder_Intr" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Intr.h" value="NONE;Encoder_Intr" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Pins.c" value="ARM_C_FILE;Encoder_Pins" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Pins.h" value="NONE;Encoder_Pins" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Pins_aliases.h" value="NONE;Encoder_Pins" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_0.c" value="ARM_C_FILE;HCSR04_Echo_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_0.h" value="NONE;HCSR04_Echo_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_0_aliases.h" value="NONE;HCSR04_Echo_0" />
@@ -110,10 +105,6 @@
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_Enable_Pin.h" value="NONE;HB25_Enable_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_Enable_Pin_aliases.h" value="NONE;HB25_Enable_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_Enable_Pin_PM.c" value="ARM_C_FILE;HB25_Enable_Pin" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_1.c" value="ARM_C_FILE;Pin_1" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_1.h" value="NONE;Pin_1" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_1_aliases.h" value="NONE;Pin_1" />
-  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_1_PM.c" value="ARM_C_FILE;Pin_1" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\I2C_Master.c" value="ARM_C_FILE;I2C_Master" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\I2C_Master.h" value="NONE;I2C_Master" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\I2C_Master_I2C.h" value="NONE;I2C_Master" />
@@ -127,6 +118,21 @@
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\I2C_Master_I2C_PVT.h" value="NONE;I2C_Master" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\I2C_Master_PVT.h" value="NONE;I2C_Master" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\I2C_Master_BOOT.h" value="NONE;I2C_Master" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Phase_Counter.c" value="ARM_C_FILE;Phase_Counter" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Phase_Counter.h" value="NONE;Phase_Counter" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Phase_Counter_PM.c" value="ARM_C_FILE;Phase_Counter" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_B.c" value="ARM_C_FILE;Encoder_B" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_B.h" value="NONE;Encoder_B" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_B_aliases.h" value="NONE;Encoder_B" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_B_PM.c" value="ARM_C_FILE;Encoder_B" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_A.c" value="ARM_C_FILE;Encoder_A" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_A.h" value="NONE;Encoder_A" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_A_aliases.h" value="NONE;Encoder_A" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_A_PM.c" value="ARM_C_FILE;Encoder_A" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\PhaseCounter_Intr.c" value="ARM_C_FILE;PhaseCounter_Intr" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\PhaseCounter_Intr.h" value="NONE;PhaseCounter_Intr" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Quadrature_Decode_Clock.c" value="ARM_C_FILE;Quadrature_Decode_Clock" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Quadrature_Decode_Clock.h" value="NONE;Quadrature_Decode_Clock" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_SCBCLK.c" value="ARM_C_FILE;EZI2C_Slave_SCBCLK" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_SCBCLK.h" value="NONE;EZI2C_Slave_SCBCLK" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_sda.c" value="ARM_C_FILE;EZI2C_Slave_sda" />

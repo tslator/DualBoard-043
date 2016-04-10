@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: Encoder_Intr.c  
+* File Name: PhaseCounter_Intr.c  
 * Version 1.70
 *
 *  Description:
@@ -18,15 +18,15 @@
 
 #include <cydevice_trm.h>
 #include <CyLib.h>
-#include <Encoder_Intr.h>
+#include <PhaseCounter_Intr.h>
 #include "cyapicallbacks.h"
 
-#if !defined(Encoder_Intr__REMOVED) /* Check for removal by optimization */
+#if !defined(PhaseCounter_Intr__REMOVED) /* Check for removal by optimization */
 
 /*******************************************************************************
 *  Place your includes, defines and code here 
 ********************************************************************************/
-/* `#START Encoder_Intr_intc` */
+/* `#START PhaseCounter_Intr_intc` */
 
 /* `#END` */
 
@@ -37,7 +37,7 @@ CY_ISR_PROTO(IntDefaultHandler);
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_Start
+* Function Name: PhaseCounter_Intr_Start
 ********************************************************************************
 *
 * Summary:
@@ -53,24 +53,24 @@ CY_ISR_PROTO(IntDefaultHandler);
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_Start(void)
+void PhaseCounter_Intr_Start(void)
 {
     /* For all we know the interrupt is active. */
-    Encoder_Intr_Disable();
+    PhaseCounter_Intr_Disable();
 
-    /* Set the ISR to point to the Encoder_Intr Interrupt. */
-    Encoder_Intr_SetVector(&Encoder_Intr_Interrupt);
+    /* Set the ISR to point to the PhaseCounter_Intr Interrupt. */
+    PhaseCounter_Intr_SetVector(&PhaseCounter_Intr_Interrupt);
 
     /* Set the priority. */
-    Encoder_Intr_SetPriority((uint8)Encoder_Intr_INTC_PRIOR_NUMBER);
+    PhaseCounter_Intr_SetPriority((uint8)PhaseCounter_Intr_INTC_PRIOR_NUMBER);
 
     /* Enable it. */
-    Encoder_Intr_Enable();
+    PhaseCounter_Intr_Enable();
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_StartEx
+* Function Name: PhaseCounter_Intr_StartEx
 ********************************************************************************
 *
 * Summary:
@@ -96,24 +96,24 @@ void Encoder_Intr_Start(void)
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_StartEx(cyisraddress address)
+void PhaseCounter_Intr_StartEx(cyisraddress address)
 {
     /* For all we know the interrupt is active. */
-    Encoder_Intr_Disable();
+    PhaseCounter_Intr_Disable();
 
-    /* Set the ISR to point to the Encoder_Intr Interrupt. */
-    Encoder_Intr_SetVector(address);
+    /* Set the ISR to point to the PhaseCounter_Intr Interrupt. */
+    PhaseCounter_Intr_SetVector(address);
 
     /* Set the priority. */
-    Encoder_Intr_SetPriority((uint8)Encoder_Intr_INTC_PRIOR_NUMBER);
+    PhaseCounter_Intr_SetPriority((uint8)PhaseCounter_Intr_INTC_PRIOR_NUMBER);
 
     /* Enable it. */
-    Encoder_Intr_Enable();
+    PhaseCounter_Intr_Enable();
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_Stop
+* Function Name: PhaseCounter_Intr_Stop
 ********************************************************************************
 *
 * Summary:
@@ -126,22 +126,22 @@ void Encoder_Intr_StartEx(cyisraddress address)
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_Stop(void)
+void PhaseCounter_Intr_Stop(void)
 {
     /* Disable this interrupt. */
-    Encoder_Intr_Disable();
+    PhaseCounter_Intr_Disable();
 
     /* Set the ISR to point to the passive one. */
-    Encoder_Intr_SetVector(&IntDefaultHandler);
+    PhaseCounter_Intr_SetVector(&IntDefaultHandler);
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_Interrupt
+* Function Name: PhaseCounter_Intr_Interrupt
 ********************************************************************************
 *
 * Summary:
-*   The default Interrupt Service Routine for Encoder_Intr.
+*   The default Interrupt Service Routine for PhaseCounter_Intr.
 *
 *   Add custom code between the START and END comments to keep the next version
 *   of this file from over-writing your code.
@@ -156,27 +156,27 @@ void Encoder_Intr_Stop(void)
 *   None
 *
 *******************************************************************************/
-CY_ISR(Encoder_Intr_Interrupt)
+CY_ISR(PhaseCounter_Intr_Interrupt)
 {
-    #ifdef Encoder_Intr_INTERRUPT_INTERRUPT_CALLBACK
-        Encoder_Intr_Interrupt_InterruptCallback();
-    #endif /* Encoder_Intr_INTERRUPT_INTERRUPT_CALLBACK */ 
+    #ifdef PhaseCounter_Intr_INTERRUPT_INTERRUPT_CALLBACK
+        PhaseCounter_Intr_Interrupt_InterruptCallback();
+    #endif /* PhaseCounter_Intr_INTERRUPT_INTERRUPT_CALLBACK */ 
 
     /*  Place your Interrupt code here. */
-    /* `#START Encoder_Intr_Interrupt` */
+    /* `#START PhaseCounter_Intr_Interrupt` */
 
     /* `#END` */
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_SetVector
+* Function Name: PhaseCounter_Intr_SetVector
 ********************************************************************************
 *
 * Summary:
-*   Change the ISR vector for the Interrupt. Note calling Encoder_Intr_Start
+*   Change the ISR vector for the Interrupt. Note calling PhaseCounter_Intr_Start
 *   will override any effect this method would have had. To set the vector 
-*   before the component has been started use Encoder_Intr_StartEx instead.
+*   before the component has been started use PhaseCounter_Intr_StartEx instead.
 * 
 *   When defining ISR functions, the CY_ISR and CY_ISR_PROTO macros should be 
 *   used to provide consistent definition across compilers:
@@ -196,14 +196,14 @@ CY_ISR(Encoder_Intr_Interrupt)
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_SetVector(cyisraddress address)
+void PhaseCounter_Intr_SetVector(cyisraddress address)
 {
-    CyRamVectors[CYINT_IRQ_BASE + Encoder_Intr__INTC_NUMBER] = address;
+    CyRamVectors[CYINT_IRQ_BASE + PhaseCounter_Intr__INTC_NUMBER] = address;
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_GetVector
+* Function Name: PhaseCounter_Intr_GetVector
 ********************************************************************************
 *
 * Summary:
@@ -216,22 +216,22 @@ void Encoder_Intr_SetVector(cyisraddress address)
 *   Address of the ISR in the interrupt vector table.
 *
 *******************************************************************************/
-cyisraddress Encoder_Intr_GetVector(void)
+cyisraddress PhaseCounter_Intr_GetVector(void)
 {
-    return CyRamVectors[CYINT_IRQ_BASE + Encoder_Intr__INTC_NUMBER];
+    return CyRamVectors[CYINT_IRQ_BASE + PhaseCounter_Intr__INTC_NUMBER];
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_SetPriority
+* Function Name: PhaseCounter_Intr_SetPriority
 ********************************************************************************
 *
 * Summary:
 *   Sets the Priority of the Interrupt. 
 *
-*   Note calling Encoder_Intr_Start or Encoder_Intr_StartEx will 
+*   Note calling PhaseCounter_Intr_Start or PhaseCounter_Intr_StartEx will 
 *   override any effect this API would have had. This API should only be called
-*   after Encoder_Intr_Start or Encoder_Intr_StartEx has been called. 
+*   after PhaseCounter_Intr_Start or PhaseCounter_Intr_StartEx has been called. 
 *   To set the initial priority for the component, use the Design-Wide Resources
 *   Interrupt Editor.
 *
@@ -246,20 +246,20 @@ cyisraddress Encoder_Intr_GetVector(void)
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_SetPriority(uint8 priority)
+void PhaseCounter_Intr_SetPriority(uint8 priority)
 {
 	uint8 interruptState;
-    uint32 priorityOffset = ((Encoder_Intr__INTC_NUMBER % 4u) * 8u) + 6u;
+    uint32 priorityOffset = ((PhaseCounter_Intr__INTC_NUMBER % 4u) * 8u) + 6u;
     
 	interruptState = CyEnterCriticalSection();
-    *Encoder_Intr_INTC_PRIOR = (*Encoder_Intr_INTC_PRIOR & (uint32)(~Encoder_Intr__INTC_PRIOR_MASK)) |
+    *PhaseCounter_Intr_INTC_PRIOR = (*PhaseCounter_Intr_INTC_PRIOR & (uint32)(~PhaseCounter_Intr__INTC_PRIOR_MASK)) |
                                     ((uint32)priority << priorityOffset);
 	CyExitCriticalSection(interruptState);
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_GetPriority
+* Function Name: PhaseCounter_Intr_GetPriority
 ********************************************************************************
 *
 * Summary:
@@ -274,19 +274,19 @@ void Encoder_Intr_SetPriority(uint8 priority)
 *    PSoC 4: Priority is from 0 to 3.
 *
 *******************************************************************************/
-uint8 Encoder_Intr_GetPriority(void)
+uint8 PhaseCounter_Intr_GetPriority(void)
 {
     uint32 priority;
-	uint32 priorityOffset = ((Encoder_Intr__INTC_NUMBER % 4u) * 8u) + 6u;
+	uint32 priorityOffset = ((PhaseCounter_Intr__INTC_NUMBER % 4u) * 8u) + 6u;
 
-    priority = (*Encoder_Intr_INTC_PRIOR & Encoder_Intr__INTC_PRIOR_MASK) >> priorityOffset;
+    priority = (*PhaseCounter_Intr_INTC_PRIOR & PhaseCounter_Intr__INTC_PRIOR_MASK) >> priorityOffset;
 
     return (uint8)priority;
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_Enable
+* Function Name: PhaseCounter_Intr_Enable
 ********************************************************************************
 *
 * Summary:
@@ -301,15 +301,15 @@ uint8 Encoder_Intr_GetPriority(void)
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_Enable(void)
+void PhaseCounter_Intr_Enable(void)
 {
     /* Enable the general interrupt. */
-    *Encoder_Intr_INTC_SET_EN = Encoder_Intr__INTC_MASK;
+    *PhaseCounter_Intr_INTC_SET_EN = PhaseCounter_Intr__INTC_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_GetState
+* Function Name: PhaseCounter_Intr_GetState
 ********************************************************************************
 *
 * Summary:
@@ -322,15 +322,15 @@ void Encoder_Intr_Enable(void)
 *   1 if enabled, 0 if disabled.
 *
 *******************************************************************************/
-uint8 Encoder_Intr_GetState(void)
+uint8 PhaseCounter_Intr_GetState(void)
 {
     /* Get the state of the general interrupt. */
-    return ((*Encoder_Intr_INTC_SET_EN & (uint32)Encoder_Intr__INTC_MASK) != 0u) ? 1u:0u;
+    return ((*PhaseCounter_Intr_INTC_SET_EN & (uint32)PhaseCounter_Intr__INTC_MASK) != 0u) ? 1u:0u;
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_Disable
+* Function Name: PhaseCounter_Intr_Disable
 ********************************************************************************
 *
 * Summary:
@@ -343,15 +343,15 @@ uint8 Encoder_Intr_GetState(void)
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_Disable(void)
+void PhaseCounter_Intr_Disable(void)
 {
     /* Disable the general interrupt. */
-    *Encoder_Intr_INTC_CLR_EN = Encoder_Intr__INTC_MASK;
+    *PhaseCounter_Intr_INTC_CLR_EN = PhaseCounter_Intr__INTC_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_SetPending
+* Function Name: PhaseCounter_Intr_SetPending
 ********************************************************************************
 *
 * Summary:
@@ -370,14 +370,14 @@ void Encoder_Intr_Disable(void)
 *   interrupts).
 *
 *******************************************************************************/
-void Encoder_Intr_SetPending(void)
+void PhaseCounter_Intr_SetPending(void)
 {
-    *Encoder_Intr_INTC_SET_PD = Encoder_Intr__INTC_MASK;
+    *PhaseCounter_Intr_INTC_SET_PD = PhaseCounter_Intr__INTC_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: Encoder_Intr_ClearPending
+* Function Name: PhaseCounter_Intr_ClearPending
 ********************************************************************************
 *
 * Summary:
@@ -395,9 +395,9 @@ void Encoder_Intr_SetPending(void)
 *   None
 *
 *******************************************************************************/
-void Encoder_Intr_ClearPending(void)
+void PhaseCounter_Intr_ClearPending(void)
 {
-    *Encoder_Intr_INTC_CLR_PD = Encoder_Intr__INTC_MASK;
+    *PhaseCounter_Intr_INTC_CLR_PD = PhaseCounter_Intr__INTC_MASK;
 }
 
 #endif /* End check for removal by optimization */

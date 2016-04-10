@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
   26              		.loc 1 29 0
   27              		.cfi_startproc
   28 0000 08B5     		push	{r3, lr}
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 2
 
 
   29              		.cfi_def_cfa_offset 8
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
   75              		.type	Control_Update, %function
   76              	Control_Update:
   77              	.LFB36:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 3
 
 
   38:..\source/control.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  109              	.L5:
   61:..\source/control.c ****     }
   62:..\source/control.c ****     
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 4
 
 
   63:..\source/control.c **** }
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  163 0043 05       		.byte	0x5
  164 0044 0E020000 		.4byte	.LASF4
  165 0048 02       		.uleb128 0x2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 5
 
 
  166 0049 04       		.byte	0x4
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  220 00af 00000000 		.4byte	.LFB34
  221 00b3 10000000 		.4byte	.LFE34-.LFB34
  222 00b7 01       		.uleb128 0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 6
 
 
  223 00b8 9C       		.byte	0x9c
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  277 013c 06       		.uleb128 0x6
  278 013d 10000000 		.4byte	.LVL4
  279 0141 8B010000 		.4byte	0x18b
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 7
 
 
  280 0145 06       		.uleb128 0x6
@@ -409,7 +409,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  325 01a5 0D       		.uleb128 0xd
  326 01a6 3D000000 		.4byte	.LASF30
  327 01aa 06       		.byte	0x6
- 328 01ab 17       		.byte	0x17
+ 328 01ab 16       		.byte	0x16
  329 01ac 0B       		.uleb128 0xb
  330 01ad 00       		.byte	0
  331 01ae 00       		.byte	0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  334 0000 01       		.uleb128 0x1
  335 0001 11       		.uleb128 0x11
  336 0002 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 8
 
 
  337 0003 25       		.uleb128 0x25
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  391 0039 3F       		.uleb128 0x3f
  392 003a 19       		.uleb128 0x19
  393 003b 03       		.uleb128 0x3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 9
 
 
  394 003c 0E       		.uleb128 0xe
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  448 0075 09       		.uleb128 0x9
  449 0076 34       		.uleb128 0x34
  450 0077 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 10
 
 
  451 0078 03       		.uleb128 0x3
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  505 00ae 2E       		.uleb128 0x2e
  506 00af 01       		.byte	0x1
  507 00b0 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 11
 
 
  508 00b1 19       		.uleb128 0x19
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  562 000e 0000     		.2byte	0
  563 0010 00000000 		.4byte	.LFB34
  564 0014 10000000 		.4byte	.LFE34-.LFB34
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 12
 
 
  565 0018 00000000 		.4byte	.LFB35
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  595              	.LASF8:
  596 007d 756E7369 		.ascii	"unsigned int\000"
  596      676E6564 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 13
 
 
  596      20696E74 
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  622      61746500 
  623              	.LASF24:
  624 011a 4932635F 		.ascii	"I2c_ReadControl\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 14
 
 
  624      52656164 
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 1
  645              	.LASF23:
  646 0217 6D696C6C 		.ascii	"millis\000"
  646      697300
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfeO4di.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccBEd600.s 			page 15
 
 
  647              	.LASF0:

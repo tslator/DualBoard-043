@@ -51,6 +51,8 @@ int main()
     
     for(;;)
     {
+        /* Update any control changes */
+        Control_Update();
         /* Apply the velocity command to PID */
         PID_Update();
         /* Update the odometry calculation */
@@ -59,8 +61,6 @@ int main()
         Infrared_Measure();
         /* Read the ultrasonic sensors */
         Ultrasonic_Measure();
-        /* Update any control changes */
-        Control_Update();
     }
 }
 
