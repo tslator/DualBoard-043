@@ -1,0 +1,13 @@
+--------------- Build Started: 03/17/2016 15:45:31 Project: Board-KitProg, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
+The code generation step is up to date.
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I..\source -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/encoder.lst -g -D DEBUG -D LEFT_BOARD -D DEBUG_ENABLED -Wall -ffunction-sections -Og -ffat-lto-objects -c ..\source\encoder.c -o .\CortexM0\ARM_GCC_493\Debug\encoder.o
+..\source\encoder.c: In function 'CalcCount':
+..\source\encoder.c:81:12: error: 'direction' undeclared (first use in this function)
+     return direction * enc_states[( old_ab & 0x0f )];
+            ^
+..\source\encoder.c:81:12: note: each undeclared identifier is reported only once for each function it appears in
+..\source\encoder.c:82:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
+--------------- Build Failed: 03/17/2016 15:45:32 ---------------

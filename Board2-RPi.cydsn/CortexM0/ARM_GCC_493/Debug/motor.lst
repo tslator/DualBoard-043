@@ -1,0 +1,1096 @@
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"motor.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Motor_Init,"ax",%progbits
+  18              		.align	2
+  19              		.global	Motor_Init
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	Motor_Init, %function
+  23              	Motor_Init:
+  24              	.LFB34:
+  25              		.file 1 "..\\source\\motor.c"
+   1:..\source/motor.c **** /* ========================================
+   2:..\source/motor.c ****  *
+   3:..\source/motor.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:..\source/motor.c ****  * All Rights Reserved
+   5:..\source/motor.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:..\source/motor.c ****  *
+   7:..\source/motor.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:..\source/motor.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:..\source/motor.c ****  *
+  10:..\source/motor.c ****  * ========================================
+  11:..\source/motor.c **** */
+  12:..\source/motor.c **** 
+  13:..\source/motor.c **** #include "motor.h"
+  14:..\source/motor.c **** #include "utils.h"
+  15:..\source/motor.c **** #include "debug.h"
+  16:..\source/motor.c **** #include "hwconfig.h"
+  17:..\source/motor.c **** 
+  18:..\source/motor.c **** /* Add a link to the HB25 data sheet
+  19:..\source/motor.c ****    Ref:
+  20:..\source/motor.c ****  */
+  21:..\source/motor.c **** 
+  22:..\source/motor.c **** #define HB25_ENABLE_BIT (0)
+  23:..\source/motor.c **** #define HB25_PWM_BIT (1)
+  24:..\source/motor.c **** #define HB25_ENABLE (0)
+  25:..\source/motor.c **** #define HB25_DISABLE (1)
+  26:..\source/motor.c **** 
+  27:..\source/motor.c **** #define MIN_PWM_COUNT (800)
+  28:..\source/motor.c **** #define CNTR_PWM_COUNT (1500)
+  29:..\source/motor.c **** #define MAX_PWM_COUNT (2200)
+  30:..\source/motor.c **** 
+  31:..\source/motor.c **** #define PWM_PADDING (200)
+  32:..\source/motor.c **** 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 2
+
+
+  33:..\source/motor.c **** #define REVERSE_PWM_COUNT (MAX_PWM_COUNT - PWM_PADDING)
+  34:..\source/motor.c **** #define STOP_PWM_COUNT (CNTR_PWM_COUNT)
+  35:..\source/motor.c **** #define FORWARD_PWM_COUNT (MIN_PWM_COUNT + PWM_PADDING)
+  36:..\source/motor.c **** 
+  37:..\source/motor.c **** #define MOTOR_DRIVE_ABSOLUTE_VALUE (100)
+  38:..\source/motor.c **** #define MIN_MOTOR_DRIVE (-MOTOR_DRIVE_ABSOLUTE_VALUE)
+  39:..\source/motor.c **** #define MAX_MOTOR_DRIVE (+MOTOR_DRIVE_ABSOLUTE_VALUE)
+  40:..\source/motor.c **** #define MID_VALUE (0)
+  41:..\source/motor.c **** 
+  42:..\source/motor.c **** #define MOTOR_RANGE (2 * MOTOR_DRIVE_ABSOLUTE_VALUE)
+  43:..\source/motor.c **** #define PWM_RANGE   (REVERSE_PWM_COUNT - FORWARD_PWM_COUNT)
+  44:..\source/motor.c **** //#define COUNT_RESOLUTION ((REVERSE_PWM_COUNT - FORWARD_PWM_COUNT)/MOTOR_RANGE)
+  45:..\source/motor.c **** 
+  46:..\source/motor.c **** /*
+  47:..\source/motor.c ****     Recommendation by Parallax:
+  48:..\source/motor.c **** 
+  49:..\source/motor.c ****     Safe Power-Up and Power-Down
+  50:..\source/motor.c ****     Remember, because the HB-25 responds to pulses like a servo, changing states on your microcontr
+  51:..\source/motor.c ****     I/O pins at startup and shutdown can affect the HB-25 and set it into an unintended state. This
+  52:..\source/motor.c ****     the I/O pins changing between input and output as well as between output high and output low.
+  53:..\source/motor.c ****     If your microcontroller is powered up or powered down while the HB-25 is powered up, the
+  54:..\source/motor.c ****     HB-25 could receive a false trigger. To prevent this, use one of the following options:
+  55:..\source/motor.c ****     • Most reliable option:
+  56:..\source/motor.c ****     1. Power the microcontroller up first, using code that forces the program to wait until the
+  57:..\source/motor.c ****     HB-25 is powered up before sending pulses. Code examples are provided below.
+  58:..\source/motor.c ****     2. Power up the HB-25 for operation.
+  59:..\source/motor.c ****     3. When shutting down your application, cut off power to the HB-25 first.
+  60:..\source/motor.c ****     4. Power down your microcontroller last.
+  61:..\source/motor.c ****     • Or, power the HB-25 and the microcontroller at the same time using a double-post (dual-circ
+  62:..\source/motor.c ****     switch.
+  63:..\source/motor.c ****     • If there is the possibility that the HB-25 will be on before your microcontroller, use the 
+  64:..\source/motor.c ****     code as mentioned above to ensure that the HB-25 is properly initialized when the
+  65:..\source/motor.c ****     microcontroller is powered on. The I/O line connected to the HB-25 should be made LOW either
+  66:..\source/motor.c ****     before or immediately after the HB-25 powers up. If this does not happen the HB-25 may fail to
+  67:..\source/motor.c ****     respond to incoming pulses.
+  68:..\source/motor.c ****     If your application poses any potential safety risk and you need the HB-25 to shut off the moto
+  69:..\source/motor.c ****     the microcontroller has lost power or has malfunctioned, enable the Timeout Feature described b
+  70:..\source/motor.c ****     before operation.
+  71:..\source/motor.c **** 
+  72:..\source/motor.c ****  */
+  73:..\source/motor.c **** 
+  74:..\source/motor.c **** void Motor_Init()
+  75:..\source/motor.c **** {
+  26              		.loc 1 75 0
+  27              		.cfi_startproc
+  28 0000 08B5     		push	{r3, lr}
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 3, -8
+  31              		.cfi_offset 14, -4
+  76:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_DISABLE);
+  32              		.loc 1 76 0
+  33 0002 0120     		mov	r0, #1
+  34 0004 FFF7FEFF 		bl	HB25_Enable_Pin_Write
+  35              	.LVL0:
+  77:..\source/motor.c **** }
+  36              		.loc 1 77 0
+  37              		@ sp needed
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 3
+
+
+  38 0008 08BD     		pop	{r3, pc}
+  39              		.cfi_endproc
+  40              	.LFE34:
+  41              		.size	Motor_Init, .-Motor_Init
+  42              		.section	.text.Motor_Start,"ax",%progbits
+  43              		.align	2
+  44              		.global	Motor_Start
+  45              		.code	16
+  46              		.thumb_func
+  47              		.type	Motor_Start, %function
+  48              	Motor_Start:
+  49              	.LFB35:
+  78:..\source/motor.c **** 
+  79:..\source/motor.c **** void Motor_Start()
+  80:..\source/motor.c **** {
+  50              		.loc 1 80 0
+  51              		.cfi_startproc
+  52 0000 08B5     		push	{r3, lr}
+  53              		.cfi_def_cfa_offset 8
+  54              		.cfi_offset 3, -8
+  55              		.cfi_offset 14, -4
+  81:..\source/motor.c ****     /* Enable the power on the HB-25 motor 
+  82:..\source/motor.c ****        Note: The HB-25 has a specific initialization sequence that is handled in hardware.  All tha
+  83:..\source/motor.c ****        software is to enable power to the HB-25 motor controller and start the PWM.  The PWM will b
+  84:..\source/motor.c ****        HB-25 signal pin when initialization completes.
+  85:..\source/motor.c ****      */
+  86:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_ENABLE);    
+  56              		.loc 1 86 0
+  57 0002 0020     		mov	r0, #0
+  58 0004 FFF7FEFF 		bl	HB25_Enable_Pin_Write
+  59              	.LVL1:
+  87:..\source/motor.c ****     HB25_PWM_Start();
+  60              		.loc 1 87 0
+  61 0008 FFF7FEFF 		bl	HB25_PWM_Start
+  62              	.LVL2:
+  88:..\source/motor.c **** }
+  63              		.loc 1 88 0
+  64              		@ sp needed
+  65 000c 08BD     		pop	{r3, pc}
+  66              		.cfi_endproc
+  67              	.LFE35:
+  68              		.size	Motor_Start, .-Motor_Start
+  69              		.global	__aeabi_idiv
+  70 000e C046     		.section	.rodata.cst2,"aM",%progbits,2
+  71              		.align	1
+  72              	.LC0:
+  73 0000 2003     		.short	800
+  74              		.section	.text.Motor_SetOutput,"ax",%progbits
+  75              		.align	2
+  76              		.global	Motor_SetOutput
+  77              		.code	16
+  78              		.thumb_func
+  79              		.type	Motor_SetOutput, %function
+  80              	Motor_SetOutput:
+  81              	.LFB36:
+  89:..\source/motor.c **** 
+  90:..\source/motor.c **** void Motor_SetOutput(int16 value)
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 4
+
+
+  91:..\source/motor.c **** /* Incoming value units are millimeter per second.  It must be scaled to PWM range
+  92:..\source/motor.c ****  */
+  93:..\source/motor.c **** {
+  82              		.loc 1 93 0
+  83              		.cfi_startproc
+  84              	.LVL3:
+  85 0000 08B5     		push	{r3, lr}
+  86              		.cfi_def_cfa_offset 8
+  87              		.cfi_offset 3, -8
+  88              		.cfi_offset 14, -4
+  94:..\source/motor.c ****     uint16 pwm_compare;
+  95:..\source/motor.c ****     int32 scaled_value;
+  96:..\source/motor.c ****     
+  97:..\source/motor.c ****     scaled_value = DIRECTION * scale_integer(value, SPEED_RANGE, PWM_RANGE);    
+  89              		.loc 1 97 0
+  90 0002 FA23     		mov	r3, #250
+  91 0004 9B00     		lsl	r3, r3, #2
+  92 0006 5843     		mul	r0, r3
+  93              	.LVL4:
+  94 0008 FA21     		mov	r1, #250
+  95 000a C900     		lsl	r1, r1, #3
+  96 000c FFF7FEFF 		bl	__aeabi_idiv
+  97              	.LVL5:
+  98:..\source/motor.c ****     pwm_compare = constrain((uint16) (STOP_PWM_COUNT + scaled_value), (uint16) MIN_PWM_COUNT, (uint
+  98              		.loc 1 98 0
+  99 0010 80B2     		uxth	r0, r0
+ 100              	.LVL6:
+ 101 0012 0B4B     		ldr	r3, .L7
+ 102 0014 C318     		add	r3, r0, r3
+ 103 0016 9BB2     		uxth	r3, r3
+ 104 0018 0A4A     		ldr	r2, .L7+4
+ 105 001a 9342     		cmp	r3, r2
+ 106 001c 0CD9     		bls	.L6
+ 107              		.loc 1 98 0 is_stmt 0 discriminator 1
+ 108 001e 0A4B     		ldr	r3, .L7+8
+ 109 0020 9C46     		mov	ip, r3
+ 110 0022 6044     		add	r0, r0, ip
+ 111 0024 80B2     		uxth	r0, r0
+ 112 0026 031C     		add	r3, r0, #0
+ 113 0028 C822     		mov	r2, #200
+ 114 002a 9200     		lsl	r2, r2, #2
+ 115 002c 9042     		cmp	r0, r2
+ 116 002e 01D2     		bcs	.L5
+ 117 0030 064B     		ldr	r3, .L7+12
+ 118 0032 1B88     		ldrh	r3, [r3]
+ 119              	.L5:
+ 120 0034 98B2     		uxth	r0, r3
+ 121 0036 00E0     		b	.L4
+ 122              	.L6:
+ 123              		.loc 1 98 0
+ 124 0038 0548     		ldr	r0, .L7+16
+ 125              	.L4:
+ 126              	.LVL7:
+  99:..\source/motor.c ****     
+ 100:..\source/motor.c ****     //COMMS_DEBUG_PRINT(0, "v: %d, s: %ld, p: %d\n\r", value, scaled_value, pwm_compare);
+ 101:..\source/motor.c ****     
+ 102:..\source/motor.c ****     HB25_PWM_WriteCompare(pwm_compare);
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 5
+
+
+ 127              		.loc 1 102 0 is_stmt 1 discriminator 4
+ 128 003a FFF7FEFF 		bl	HB25_PWM_WriteCompare
+ 129              	.LVL8:
+ 103:..\source/motor.c **** }
+ 130              		.loc 1 103 0 discriminator 4
+ 131              		@ sp needed
+ 132 003e 08BD     		pop	{r3, pc}
+ 133              	.L8:
+ 134              		.align	2
+ 135              	.L7:
+ 136 0040 44FDFFFF 		.word	-700
+ 137 0044 67F70000 		.word	63335
+ 138 0048 DC050000 		.word	1500
+ 139 004c 00000000 		.word	.LC0
+ 140 0050 98080000 		.word	2200
+ 141              		.cfi_endproc
+ 142              	.LFE36:
+ 143              		.size	Motor_SetOutput, .-Motor_SetOutput
+ 144              		.section	.text.Motor_Stop,"ax",%progbits
+ 145              		.align	2
+ 146              		.global	Motor_Stop
+ 147              		.code	16
+ 148              		.thumb_func
+ 149              		.type	Motor_Stop, %function
+ 150              	Motor_Stop:
+ 151              	.LFB37:
+ 104:..\source/motor.c **** 
+ 105:..\source/motor.c **** void Motor_Stop()
+ 106:..\source/motor.c **** {
+ 152              		.loc 1 106 0
+ 153              		.cfi_startproc
+ 107:..\source/motor.c ****     /* Reverse sequence to start:
+ 108:..\source/motor.c ****         - Stop the PWM
+ 109:..\source/motor.c ****         - Disable power to the HB-25
+ 110:..\source/motor.c ****      */
+ 111:..\source/motor.c ****     //HB25_PWM_Stop();
+ 112:..\source/motor.c ****     //HB25_Enable_Pin_Write(HB25_DISABLE);
+ 113:..\source/motor.c **** }
+ 154              		.loc 1 113 0
+ 155              		@ sp needed
+ 156 0000 7047     		bx	lr
+ 157              		.cfi_endproc
+ 158              	.LFE37:
+ 159              		.size	Motor_Stop, .-Motor_Stop
+ 160 0002 C046     		.section	.text.Motor_Test,"ax",%progbits
+ 161              		.align	2
+ 162              		.global	Motor_Test
+ 163              		.code	16
+ 164              		.thumb_func
+ 165              		.type	Motor_Test, %function
+ 166              	Motor_Test:
+ 167              	.LFB38:
+ 114:..\source/motor.c **** 
+ 115:..\source/motor.c **** void Motor_Test()
+ 116:..\source/motor.c **** {
+ 168              		.loc 1 116 0
+ 169              		.cfi_startproc
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 6
+
+
+ 117:..\source/motor.c **** }
+ 170              		.loc 1 117 0
+ 171              		@ sp needed
+ 172 0000 7047     		bx	lr
+ 173              		.cfi_endproc
+ 174              	.LFE38:
+ 175              		.size	Motor_Test, .-Motor_Test
+ 176              		.comm	formatted_string,256,4
+ 177 0002 C046     		.text
+ 178              	.Letext0:
+ 179              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 180              		.file 3 "..\\source\\debug.h"
+ 181              		.file 4 "Generated_Source\\PSoC4/HB25_Enable_Pin.h"
+ 182              		.file 5 "Generated_Source\\PSoC4/HB25_PWM.h"
+ 183              		.section	.debug_info,"",%progbits
+ 184              	.Ldebug_info0:
+ 185 0000 C8010000 		.4byte	0x1c8
+ 186 0004 0400     		.2byte	0x4
+ 187 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 188 000a 04       		.byte	0x4
+ 189 000b 01       		.uleb128 0x1
+ 190 000c 4D010000 		.4byte	.LASF24
+ 191 0010 01       		.byte	0x1
+ 192 0011 FB000000 		.4byte	.LASF25
+ 193 0015 0D010000 		.4byte	.LASF26
+ 194 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 195 001d 00000000 		.4byte	0
+ 196 0021 00000000 		.4byte	.Ldebug_line0
+ 197 0025 02       		.uleb128 0x2
+ 198 0026 01       		.byte	0x1
+ 199 0027 06       		.byte	0x6
+ 200 0028 21020000 		.4byte	.LASF0
+ 201 002c 02       		.uleb128 0x2
+ 202 002d 01       		.byte	0x1
+ 203 002e 08       		.byte	0x8
+ 204 002f 4A000000 		.4byte	.LASF1
+ 205 0033 02       		.uleb128 0x2
+ 206 0034 02       		.byte	0x2
+ 207 0035 05       		.byte	0x5
+ 208 0036 08020000 		.4byte	.LASF2
+ 209 003a 02       		.uleb128 0x2
+ 210 003b 02       		.byte	0x2
+ 211 003c 07       		.byte	0x7
+ 212 003d 1E000000 		.4byte	.LASF3
+ 213 0041 02       		.uleb128 0x2
+ 214 0042 04       		.byte	0x4
+ 215 0043 05       		.byte	0x5
+ 216 0044 18020000 		.4byte	.LASF4
+ 217 0048 02       		.uleb128 0x2
+ 218 0049 04       		.byte	0x4
+ 219 004a 07       		.byte	0x7
+ 220 004b 69000000 		.4byte	.LASF5
+ 221 004f 02       		.uleb128 0x2
+ 222 0050 08       		.byte	0x8
+ 223 0051 05       		.byte	0x5
+ 224 0052 DB010000 		.4byte	.LASF6
+ 225 0056 02       		.uleb128 0x2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 7
+
+
+ 226 0057 08       		.byte	0x8
+ 227 0058 07       		.byte	0x7
+ 228 0059 D8000000 		.4byte	.LASF7
+ 229 005d 03       		.uleb128 0x3
+ 230 005e 04       		.byte	0x4
+ 231 005f 05       		.byte	0x5
+ 232 0060 696E7400 		.ascii	"int\000"
+ 233 0064 02       		.uleb128 0x2
+ 234 0065 04       		.byte	0x4
+ 235 0066 07       		.byte	0x7
+ 236 0067 B5000000 		.4byte	.LASF8
+ 237 006b 04       		.uleb128 0x4
+ 238 006c 12020000 		.4byte	.LASF9
+ 239 0070 02       		.byte	0x2
+ 240 0071 C2       		.byte	0xc2
+ 241 0072 2C000000 		.4byte	0x2c
+ 242 0076 04       		.uleb128 0x4
+ 243 0077 A7000000 		.4byte	.LASF10
+ 244 007b 02       		.byte	0x2
+ 245 007c C3       		.byte	0xc3
+ 246 007d 3A000000 		.4byte	0x3a
+ 247 0081 04       		.uleb128 0x4
+ 248 0082 AE000000 		.4byte	.LASF11
+ 249 0086 02       		.byte	0x2
+ 250 0087 C4       		.byte	0xc4
+ 251 0088 48000000 		.4byte	0x48
+ 252 008c 04       		.uleb128 0x4
+ 253 008d 63000000 		.4byte	.LASF12
+ 254 0091 02       		.byte	0x2
+ 255 0092 C6       		.byte	0xc6
+ 256 0093 33000000 		.4byte	0x33
+ 257 0097 04       		.uleb128 0x4
+ 258 0098 7B000000 		.4byte	.LASF13
+ 259 009c 02       		.byte	0x2
+ 260 009d C7       		.byte	0xc7
+ 261 009e 41000000 		.4byte	0x41
+ 262 00a2 02       		.uleb128 0x2
+ 263 00a3 04       		.byte	0x4
+ 264 00a4 04       		.byte	0x4
+ 265 00a5 44000000 		.4byte	.LASF14
+ 266 00a9 02       		.uleb128 0x2
+ 267 00aa 08       		.byte	0x8
+ 268 00ab 04       		.byte	0x4
+ 269 00ac 31000000 		.4byte	.LASF15
+ 270 00b0 02       		.uleb128 0x2
+ 271 00b1 01       		.byte	0x1
+ 272 00b2 08       		.byte	0x8
+ 273 00b3 E9010000 		.4byte	.LASF16
+ 274 00b7 02       		.uleb128 0x2
+ 275 00b8 04       		.byte	0x4
+ 276 00b9 07       		.byte	0x7
+ 277 00ba 44010000 		.4byte	.LASF17
+ 278 00be 05       		.uleb128 0x5
+ 279 00bf EE010000 		.4byte	.LASF18
+ 280 00c3 01       		.byte	0x1
+ 281 00c4 4A       		.byte	0x4a
+ 282 00c5 00000000 		.4byte	.LFB34
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 8
+
+
+ 283 00c9 0A000000 		.4byte	.LFE34-.LFB34
+ 284 00cd 01       		.uleb128 0x1
+ 285 00ce 9C       		.byte	0x9c
+ 286 00cf E3000000 		.4byte	0xe3
+ 287 00d3 06       		.uleb128 0x6
+ 288 00d4 08000000 		.4byte	.LVL0
+ 289 00d8 A4010000 		.4byte	0x1a4
+ 290 00dc 07       		.uleb128 0x7
+ 291 00dd 01       		.uleb128 0x1
+ 292 00de 50       		.byte	0x50
+ 293 00df 01       		.uleb128 0x1
+ 294 00e0 31       		.byte	0x31
+ 295 00e1 00       		.byte	0
+ 296 00e2 00       		.byte	0
+ 297 00e3 05       		.uleb128 0x5
+ 298 00e4 EF000000 		.4byte	.LASF19
+ 299 00e8 01       		.byte	0x1
+ 300 00e9 4F       		.byte	0x4f
+ 301 00ea 00000000 		.4byte	.LFB35
+ 302 00ee 0E000000 		.4byte	.LFE35-.LFB35
+ 303 00f2 01       		.uleb128 0x1
+ 304 00f3 9C       		.byte	0x9c
+ 305 00f4 15010000 		.4byte	0x115
+ 306 00f8 08       		.uleb128 0x8
+ 307 00f9 08000000 		.4byte	.LVL1
+ 308 00fd A4010000 		.4byte	0x1a4
+ 309 0101 0B010000 		.4byte	0x10b
+ 310 0105 07       		.uleb128 0x7
+ 311 0106 01       		.uleb128 0x1
+ 312 0107 50       		.byte	0x50
+ 313 0108 01       		.uleb128 0x1
+ 314 0109 30       		.byte	0x30
+ 315 010a 00       		.byte	0
+ 316 010b 09       		.uleb128 0x9
+ 317 010c 0C000000 		.4byte	.LVL2
+ 318 0110 B5010000 		.4byte	0x1b5
+ 319 0114 00       		.byte	0
+ 320 0115 0A       		.uleb128 0xa
+ 321 0116 81000000 		.4byte	.LASF27
+ 322 011a 01       		.byte	0x1
+ 323 011b 5A       		.byte	0x5a
+ 324 011c 00000000 		.4byte	.LFB36
+ 325 0120 54000000 		.4byte	.LFE36-.LFB36
+ 326 0124 01       		.uleb128 0x1
+ 327 0125 9C       		.byte	0x9c
+ 328 0126 61010000 		.4byte	0x161
+ 329 012a 0B       		.uleb128 0xb
+ 330 012b 0B000000 		.4byte	.LASF28
+ 331 012f 01       		.byte	0x1
+ 332 0130 5A       		.byte	0x5a
+ 333 0131 8C000000 		.4byte	0x8c
+ 334 0135 00000000 		.4byte	.LLST0
+ 335 0139 0C       		.uleb128 0xc
+ 336 013a 38000000 		.4byte	.LASF20
+ 337 013e 01       		.byte	0x1
+ 338 013f 5E       		.byte	0x5e
+ 339 0140 76000000 		.4byte	0x76
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 9
+
+
+ 340 0144 21000000 		.4byte	.LLST1
+ 341 0148 0C       		.uleb128 0xc
+ 342 0149 11000000 		.4byte	.LASF21
+ 343 014d 01       		.byte	0x1
+ 344 014e 5F       		.byte	0x5f
+ 345 014f 97000000 		.4byte	0x97
+ 346 0153 34000000 		.4byte	.LLST2
+ 347 0157 09       		.uleb128 0x9
+ 348 0158 3E000000 		.4byte	.LVL8
+ 349 015c BD010000 		.4byte	0x1bd
+ 350 0160 00       		.byte	0
+ 351 0161 0D       		.uleb128 0xd
+ 352 0162 00000000 		.4byte	.LASF22
+ 353 0166 01       		.byte	0x1
+ 354 0167 69       		.byte	0x69
+ 355 0168 00000000 		.4byte	.LFB37
+ 356 016c 02000000 		.4byte	.LFE37-.LFB37
+ 357 0170 01       		.uleb128 0x1
+ 358 0171 9C       		.byte	0x9c
+ 359 0172 0D       		.uleb128 0xd
+ 360 0173 58000000 		.4byte	.LASF23
+ 361 0177 01       		.byte	0x1
+ 362 0178 73       		.byte	0x73
+ 363 0179 00000000 		.4byte	.LFB38
+ 364 017d 02000000 		.4byte	.LFE38-.LFB38
+ 365 0181 01       		.uleb128 0x1
+ 366 0182 9C       		.byte	0x9c
+ 367 0183 0E       		.uleb128 0xe
+ 368 0184 B0000000 		.4byte	0xb0
+ 369 0188 93010000 		.4byte	0x193
+ 370 018c 0F       		.uleb128 0xf
+ 371 018d B7000000 		.4byte	0xb7
+ 372 0191 FF       		.byte	0xff
+ 373 0192 00       		.byte	0
+ 374 0193 10       		.uleb128 0x10
+ 375 0194 2D020000 		.4byte	.LASF29
+ 376 0198 03       		.byte	0x3
+ 377 0199 08       		.byte	0x8
+ 378 019a 83010000 		.4byte	0x183
+ 379 019e 05       		.uleb128 0x5
+ 380 019f 03       		.byte	0x3
+ 381 01a0 00000000 		.4byte	formatted_string
+ 382 01a4 11       		.uleb128 0x11
+ 383 01a5 C2000000 		.4byte	.LASF30
+ 384 01a9 04       		.byte	0x4
+ 385 01aa 33       		.byte	0x33
+ 386 01ab B5010000 		.4byte	0x1b5
+ 387 01af 12       		.uleb128 0x12
+ 388 01b0 6B000000 		.4byte	0x6b
+ 389 01b4 00       		.byte	0
+ 390 01b5 13       		.uleb128 0x13
+ 391 01b6 F9010000 		.4byte	.LASF31
+ 392 01ba 05       		.byte	0x5
+ 393 01bb 3101     		.2byte	0x131
+ 394 01bd 14       		.uleb128 0x14
+ 395 01be 91000000 		.4byte	.LASF32
+ 396 01c2 05       		.byte	0x5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 10
+
+
+ 397 01c3 5401     		.2byte	0x154
+ 398 01c5 12       		.uleb128 0x12
+ 399 01c6 81000000 		.4byte	0x81
+ 400 01ca 00       		.byte	0
+ 401 01cb 00       		.byte	0
+ 402              		.section	.debug_abbrev,"",%progbits
+ 403              	.Ldebug_abbrev0:
+ 404 0000 01       		.uleb128 0x1
+ 405 0001 11       		.uleb128 0x11
+ 406 0002 01       		.byte	0x1
+ 407 0003 25       		.uleb128 0x25
+ 408 0004 0E       		.uleb128 0xe
+ 409 0005 13       		.uleb128 0x13
+ 410 0006 0B       		.uleb128 0xb
+ 411 0007 03       		.uleb128 0x3
+ 412 0008 0E       		.uleb128 0xe
+ 413 0009 1B       		.uleb128 0x1b
+ 414 000a 0E       		.uleb128 0xe
+ 415 000b 55       		.uleb128 0x55
+ 416 000c 17       		.uleb128 0x17
+ 417 000d 11       		.uleb128 0x11
+ 418 000e 01       		.uleb128 0x1
+ 419 000f 10       		.uleb128 0x10
+ 420 0010 17       		.uleb128 0x17
+ 421 0011 00       		.byte	0
+ 422 0012 00       		.byte	0
+ 423 0013 02       		.uleb128 0x2
+ 424 0014 24       		.uleb128 0x24
+ 425 0015 00       		.byte	0
+ 426 0016 0B       		.uleb128 0xb
+ 427 0017 0B       		.uleb128 0xb
+ 428 0018 3E       		.uleb128 0x3e
+ 429 0019 0B       		.uleb128 0xb
+ 430 001a 03       		.uleb128 0x3
+ 431 001b 0E       		.uleb128 0xe
+ 432 001c 00       		.byte	0
+ 433 001d 00       		.byte	0
+ 434 001e 03       		.uleb128 0x3
+ 435 001f 24       		.uleb128 0x24
+ 436 0020 00       		.byte	0
+ 437 0021 0B       		.uleb128 0xb
+ 438 0022 0B       		.uleb128 0xb
+ 439 0023 3E       		.uleb128 0x3e
+ 440 0024 0B       		.uleb128 0xb
+ 441 0025 03       		.uleb128 0x3
+ 442 0026 08       		.uleb128 0x8
+ 443 0027 00       		.byte	0
+ 444 0028 00       		.byte	0
+ 445 0029 04       		.uleb128 0x4
+ 446 002a 16       		.uleb128 0x16
+ 447 002b 00       		.byte	0
+ 448 002c 03       		.uleb128 0x3
+ 449 002d 0E       		.uleb128 0xe
+ 450 002e 3A       		.uleb128 0x3a
+ 451 002f 0B       		.uleb128 0xb
+ 452 0030 3B       		.uleb128 0x3b
+ 453 0031 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 11
+
+
+ 454 0032 49       		.uleb128 0x49
+ 455 0033 13       		.uleb128 0x13
+ 456 0034 00       		.byte	0
+ 457 0035 00       		.byte	0
+ 458 0036 05       		.uleb128 0x5
+ 459 0037 2E       		.uleb128 0x2e
+ 460 0038 01       		.byte	0x1
+ 461 0039 3F       		.uleb128 0x3f
+ 462 003a 19       		.uleb128 0x19
+ 463 003b 03       		.uleb128 0x3
+ 464 003c 0E       		.uleb128 0xe
+ 465 003d 3A       		.uleb128 0x3a
+ 466 003e 0B       		.uleb128 0xb
+ 467 003f 3B       		.uleb128 0x3b
+ 468 0040 0B       		.uleb128 0xb
+ 469 0041 11       		.uleb128 0x11
+ 470 0042 01       		.uleb128 0x1
+ 471 0043 12       		.uleb128 0x12
+ 472 0044 06       		.uleb128 0x6
+ 473 0045 40       		.uleb128 0x40
+ 474 0046 18       		.uleb128 0x18
+ 475 0047 9742     		.uleb128 0x2117
+ 476 0049 19       		.uleb128 0x19
+ 477 004a 01       		.uleb128 0x1
+ 478 004b 13       		.uleb128 0x13
+ 479 004c 00       		.byte	0
+ 480 004d 00       		.byte	0
+ 481 004e 06       		.uleb128 0x6
+ 482 004f 898201   		.uleb128 0x4109
+ 483 0052 01       		.byte	0x1
+ 484 0053 11       		.uleb128 0x11
+ 485 0054 01       		.uleb128 0x1
+ 486 0055 31       		.uleb128 0x31
+ 487 0056 13       		.uleb128 0x13
+ 488 0057 00       		.byte	0
+ 489 0058 00       		.byte	0
+ 490 0059 07       		.uleb128 0x7
+ 491 005a 8A8201   		.uleb128 0x410a
+ 492 005d 00       		.byte	0
+ 493 005e 02       		.uleb128 0x2
+ 494 005f 18       		.uleb128 0x18
+ 495 0060 9142     		.uleb128 0x2111
+ 496 0062 18       		.uleb128 0x18
+ 497 0063 00       		.byte	0
+ 498 0064 00       		.byte	0
+ 499 0065 08       		.uleb128 0x8
+ 500 0066 898201   		.uleb128 0x4109
+ 501 0069 01       		.byte	0x1
+ 502 006a 11       		.uleb128 0x11
+ 503 006b 01       		.uleb128 0x1
+ 504 006c 31       		.uleb128 0x31
+ 505 006d 13       		.uleb128 0x13
+ 506 006e 01       		.uleb128 0x1
+ 507 006f 13       		.uleb128 0x13
+ 508 0070 00       		.byte	0
+ 509 0071 00       		.byte	0
+ 510 0072 09       		.uleb128 0x9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 12
+
+
+ 511 0073 898201   		.uleb128 0x4109
+ 512 0076 00       		.byte	0
+ 513 0077 11       		.uleb128 0x11
+ 514 0078 01       		.uleb128 0x1
+ 515 0079 31       		.uleb128 0x31
+ 516 007a 13       		.uleb128 0x13
+ 517 007b 00       		.byte	0
+ 518 007c 00       		.byte	0
+ 519 007d 0A       		.uleb128 0xa
+ 520 007e 2E       		.uleb128 0x2e
+ 521 007f 01       		.byte	0x1
+ 522 0080 3F       		.uleb128 0x3f
+ 523 0081 19       		.uleb128 0x19
+ 524 0082 03       		.uleb128 0x3
+ 525 0083 0E       		.uleb128 0xe
+ 526 0084 3A       		.uleb128 0x3a
+ 527 0085 0B       		.uleb128 0xb
+ 528 0086 3B       		.uleb128 0x3b
+ 529 0087 0B       		.uleb128 0xb
+ 530 0088 27       		.uleb128 0x27
+ 531 0089 19       		.uleb128 0x19
+ 532 008a 11       		.uleb128 0x11
+ 533 008b 01       		.uleb128 0x1
+ 534 008c 12       		.uleb128 0x12
+ 535 008d 06       		.uleb128 0x6
+ 536 008e 40       		.uleb128 0x40
+ 537 008f 18       		.uleb128 0x18
+ 538 0090 9642     		.uleb128 0x2116
+ 539 0092 19       		.uleb128 0x19
+ 540 0093 01       		.uleb128 0x1
+ 541 0094 13       		.uleb128 0x13
+ 542 0095 00       		.byte	0
+ 543 0096 00       		.byte	0
+ 544 0097 0B       		.uleb128 0xb
+ 545 0098 05       		.uleb128 0x5
+ 546 0099 00       		.byte	0
+ 547 009a 03       		.uleb128 0x3
+ 548 009b 0E       		.uleb128 0xe
+ 549 009c 3A       		.uleb128 0x3a
+ 550 009d 0B       		.uleb128 0xb
+ 551 009e 3B       		.uleb128 0x3b
+ 552 009f 0B       		.uleb128 0xb
+ 553 00a0 49       		.uleb128 0x49
+ 554 00a1 13       		.uleb128 0x13
+ 555 00a2 02       		.uleb128 0x2
+ 556 00a3 17       		.uleb128 0x17
+ 557 00a4 00       		.byte	0
+ 558 00a5 00       		.byte	0
+ 559 00a6 0C       		.uleb128 0xc
+ 560 00a7 34       		.uleb128 0x34
+ 561 00a8 00       		.byte	0
+ 562 00a9 03       		.uleb128 0x3
+ 563 00aa 0E       		.uleb128 0xe
+ 564 00ab 3A       		.uleb128 0x3a
+ 565 00ac 0B       		.uleb128 0xb
+ 566 00ad 3B       		.uleb128 0x3b
+ 567 00ae 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 13
+
+
+ 568 00af 49       		.uleb128 0x49
+ 569 00b0 13       		.uleb128 0x13
+ 570 00b1 02       		.uleb128 0x2
+ 571 00b2 17       		.uleb128 0x17
+ 572 00b3 00       		.byte	0
+ 573 00b4 00       		.byte	0
+ 574 00b5 0D       		.uleb128 0xd
+ 575 00b6 2E       		.uleb128 0x2e
+ 576 00b7 00       		.byte	0
+ 577 00b8 3F       		.uleb128 0x3f
+ 578 00b9 19       		.uleb128 0x19
+ 579 00ba 03       		.uleb128 0x3
+ 580 00bb 0E       		.uleb128 0xe
+ 581 00bc 3A       		.uleb128 0x3a
+ 582 00bd 0B       		.uleb128 0xb
+ 583 00be 3B       		.uleb128 0x3b
+ 584 00bf 0B       		.uleb128 0xb
+ 585 00c0 11       		.uleb128 0x11
+ 586 00c1 01       		.uleb128 0x1
+ 587 00c2 12       		.uleb128 0x12
+ 588 00c3 06       		.uleb128 0x6
+ 589 00c4 40       		.uleb128 0x40
+ 590 00c5 18       		.uleb128 0x18
+ 591 00c6 9742     		.uleb128 0x2117
+ 592 00c8 19       		.uleb128 0x19
+ 593 00c9 00       		.byte	0
+ 594 00ca 00       		.byte	0
+ 595 00cb 0E       		.uleb128 0xe
+ 596 00cc 01       		.uleb128 0x1
+ 597 00cd 01       		.byte	0x1
+ 598 00ce 49       		.uleb128 0x49
+ 599 00cf 13       		.uleb128 0x13
+ 600 00d0 01       		.uleb128 0x1
+ 601 00d1 13       		.uleb128 0x13
+ 602 00d2 00       		.byte	0
+ 603 00d3 00       		.byte	0
+ 604 00d4 0F       		.uleb128 0xf
+ 605 00d5 21       		.uleb128 0x21
+ 606 00d6 00       		.byte	0
+ 607 00d7 49       		.uleb128 0x49
+ 608 00d8 13       		.uleb128 0x13
+ 609 00d9 2F       		.uleb128 0x2f
+ 610 00da 0B       		.uleb128 0xb
+ 611 00db 00       		.byte	0
+ 612 00dc 00       		.byte	0
+ 613 00dd 10       		.uleb128 0x10
+ 614 00de 34       		.uleb128 0x34
+ 615 00df 00       		.byte	0
+ 616 00e0 03       		.uleb128 0x3
+ 617 00e1 0E       		.uleb128 0xe
+ 618 00e2 3A       		.uleb128 0x3a
+ 619 00e3 0B       		.uleb128 0xb
+ 620 00e4 3B       		.uleb128 0x3b
+ 621 00e5 0B       		.uleb128 0xb
+ 622 00e6 49       		.uleb128 0x49
+ 623 00e7 13       		.uleb128 0x13
+ 624 00e8 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 14
+
+
+ 625 00e9 19       		.uleb128 0x19
+ 626 00ea 02       		.uleb128 0x2
+ 627 00eb 18       		.uleb128 0x18
+ 628 00ec 00       		.byte	0
+ 629 00ed 00       		.byte	0
+ 630 00ee 11       		.uleb128 0x11
+ 631 00ef 2E       		.uleb128 0x2e
+ 632 00f0 01       		.byte	0x1
+ 633 00f1 3F       		.uleb128 0x3f
+ 634 00f2 19       		.uleb128 0x19
+ 635 00f3 03       		.uleb128 0x3
+ 636 00f4 0E       		.uleb128 0xe
+ 637 00f5 3A       		.uleb128 0x3a
+ 638 00f6 0B       		.uleb128 0xb
+ 639 00f7 3B       		.uleb128 0x3b
+ 640 00f8 0B       		.uleb128 0xb
+ 641 00f9 27       		.uleb128 0x27
+ 642 00fa 19       		.uleb128 0x19
+ 643 00fb 3C       		.uleb128 0x3c
+ 644 00fc 19       		.uleb128 0x19
+ 645 00fd 01       		.uleb128 0x1
+ 646 00fe 13       		.uleb128 0x13
+ 647 00ff 00       		.byte	0
+ 648 0100 00       		.byte	0
+ 649 0101 12       		.uleb128 0x12
+ 650 0102 05       		.uleb128 0x5
+ 651 0103 00       		.byte	0
+ 652 0104 49       		.uleb128 0x49
+ 653 0105 13       		.uleb128 0x13
+ 654 0106 00       		.byte	0
+ 655 0107 00       		.byte	0
+ 656 0108 13       		.uleb128 0x13
+ 657 0109 2E       		.uleb128 0x2e
+ 658 010a 00       		.byte	0
+ 659 010b 3F       		.uleb128 0x3f
+ 660 010c 19       		.uleb128 0x19
+ 661 010d 03       		.uleb128 0x3
+ 662 010e 0E       		.uleb128 0xe
+ 663 010f 3A       		.uleb128 0x3a
+ 664 0110 0B       		.uleb128 0xb
+ 665 0111 3B       		.uleb128 0x3b
+ 666 0112 05       		.uleb128 0x5
+ 667 0113 27       		.uleb128 0x27
+ 668 0114 19       		.uleb128 0x19
+ 669 0115 3C       		.uleb128 0x3c
+ 670 0116 19       		.uleb128 0x19
+ 671 0117 00       		.byte	0
+ 672 0118 00       		.byte	0
+ 673 0119 14       		.uleb128 0x14
+ 674 011a 2E       		.uleb128 0x2e
+ 675 011b 01       		.byte	0x1
+ 676 011c 3F       		.uleb128 0x3f
+ 677 011d 19       		.uleb128 0x19
+ 678 011e 03       		.uleb128 0x3
+ 679 011f 0E       		.uleb128 0xe
+ 680 0120 3A       		.uleb128 0x3a
+ 681 0121 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 15
+
+
+ 682 0122 3B       		.uleb128 0x3b
+ 683 0123 05       		.uleb128 0x5
+ 684 0124 27       		.uleb128 0x27
+ 685 0125 19       		.uleb128 0x19
+ 686 0126 3C       		.uleb128 0x3c
+ 687 0127 19       		.uleb128 0x19
+ 688 0128 00       		.byte	0
+ 689 0129 00       		.byte	0
+ 690 012a 00       		.byte	0
+ 691              		.section	.debug_loc,"",%progbits
+ 692              	.Ldebug_loc0:
+ 693              	.LLST0:
+ 694 0000 00000000 		.4byte	.LVL3
+ 695 0004 08000000 		.4byte	.LVL4
+ 696 0008 0100     		.2byte	0x1
+ 697 000a 50       		.byte	0x50
+ 698 000b 08000000 		.4byte	.LVL4
+ 699 000f 54000000 		.4byte	.LFE36
+ 700 0013 0400     		.2byte	0x4
+ 701 0015 F3       		.byte	0xf3
+ 702 0016 01       		.uleb128 0x1
+ 703 0017 50       		.byte	0x50
+ 704 0018 9F       		.byte	0x9f
+ 705 0019 00000000 		.4byte	0
+ 706 001d 00000000 		.4byte	0
+ 707              	.LLST1:
+ 708 0021 3A000000 		.4byte	.LVL7
+ 709 0025 3D000000 		.4byte	.LVL8-1
+ 710 0029 0100     		.2byte	0x1
+ 711 002b 50       		.byte	0x50
+ 712 002c 00000000 		.4byte	0
+ 713 0030 00000000 		.4byte	0
+ 714              	.LLST2:
+ 715 0034 10000000 		.4byte	.LVL5
+ 716 0038 12000000 		.4byte	.LVL6
+ 717 003c 0100     		.2byte	0x1
+ 718 003e 50       		.byte	0x50
+ 719 003f 00000000 		.4byte	0
+ 720 0043 00000000 		.4byte	0
+ 721              		.section	.debug_aranges,"",%progbits
+ 722 0000 3C000000 		.4byte	0x3c
+ 723 0004 0200     		.2byte	0x2
+ 724 0006 00000000 		.4byte	.Ldebug_info0
+ 725 000a 04       		.byte	0x4
+ 726 000b 00       		.byte	0
+ 727 000c 0000     		.2byte	0
+ 728 000e 0000     		.2byte	0
+ 729 0010 00000000 		.4byte	.LFB34
+ 730 0014 0A000000 		.4byte	.LFE34-.LFB34
+ 731 0018 00000000 		.4byte	.LFB35
+ 732 001c 0E000000 		.4byte	.LFE35-.LFB35
+ 733 0020 00000000 		.4byte	.LFB36
+ 734 0024 54000000 		.4byte	.LFE36-.LFB36
+ 735 0028 00000000 		.4byte	.LFB37
+ 736 002c 02000000 		.4byte	.LFE37-.LFB37
+ 737 0030 00000000 		.4byte	.LFB38
+ 738 0034 02000000 		.4byte	.LFE38-.LFB38
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 16
+
+
+ 739 0038 00000000 		.4byte	0
+ 740 003c 00000000 		.4byte	0
+ 741              		.section	.debug_ranges,"",%progbits
+ 742              	.Ldebug_ranges0:
+ 743 0000 00000000 		.4byte	.LFB34
+ 744 0004 0A000000 		.4byte	.LFE34
+ 745 0008 00000000 		.4byte	.LFB35
+ 746 000c 0E000000 		.4byte	.LFE35
+ 747 0010 00000000 		.4byte	.LFB36
+ 748 0014 54000000 		.4byte	.LFE36
+ 749 0018 00000000 		.4byte	.LFB37
+ 750 001c 02000000 		.4byte	.LFE37
+ 751 0020 00000000 		.4byte	.LFB38
+ 752 0024 02000000 		.4byte	.LFE38
+ 753 0028 00000000 		.4byte	0
+ 754 002c 00000000 		.4byte	0
+ 755              		.section	.debug_line,"",%progbits
+ 756              	.Ldebug_line0:
+ 757 0000 EB000000 		.section	.debug_str,"MS",%progbits,1
+ 757      02007A00 
+ 757      00000201 
+ 757      FB0E0D00 
+ 757      01010101 
+ 758              	.LASF22:
+ 759 0000 4D6F746F 		.ascii	"Motor_Stop\000"
+ 759      725F5374 
+ 759      6F7000
+ 760              	.LASF28:
+ 761 000b 76616C75 		.ascii	"value\000"
+ 761      6500
+ 762              	.LASF21:
+ 763 0011 7363616C 		.ascii	"scaled_value\000"
+ 763      65645F76 
+ 763      616C7565 
+ 763      00
+ 764              	.LASF3:
+ 765 001e 73686F72 		.ascii	"short unsigned int\000"
+ 765      7420756E 
+ 765      7369676E 
+ 765      65642069 
+ 765      6E7400
+ 766              	.LASF15:
+ 767 0031 646F7562 		.ascii	"double\000"
+ 767      6C6500
+ 768              	.LASF20:
+ 769 0038 70776D5F 		.ascii	"pwm_compare\000"
+ 769      636F6D70 
+ 769      61726500 
+ 770              	.LASF14:
+ 771 0044 666C6F61 		.ascii	"float\000"
+ 771      7400
+ 772              	.LASF1:
+ 773 004a 756E7369 		.ascii	"unsigned char\000"
+ 773      676E6564 
+ 773      20636861 
+ 773      7200
+ 774              	.LASF23:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 17
+
+
+ 775 0058 4D6F746F 		.ascii	"Motor_Test\000"
+ 775      725F5465 
+ 775      737400
+ 776              	.LASF12:
+ 777 0063 696E7431 		.ascii	"int16\000"
+ 777      3600
+ 778              	.LASF5:
+ 779 0069 6C6F6E67 		.ascii	"long unsigned int\000"
+ 779      20756E73 
+ 779      69676E65 
+ 779      6420696E 
+ 779      7400
+ 780              	.LASF13:
+ 781 007b 696E7433 		.ascii	"int32\000"
+ 781      3200
+ 782              	.LASF27:
+ 783 0081 4D6F746F 		.ascii	"Motor_SetOutput\000"
+ 783      725F5365 
+ 783      744F7574 
+ 783      70757400 
+ 784              	.LASF32:
+ 785 0091 48423235 		.ascii	"HB25_PWM_WriteCompare\000"
+ 785      5F50574D 
+ 785      5F577269 
+ 785      7465436F 
+ 785      6D706172 
+ 786              	.LASF10:
+ 787 00a7 75696E74 		.ascii	"uint16\000"
+ 787      313600
+ 788              	.LASF11:
+ 789 00ae 75696E74 		.ascii	"uint32\000"
+ 789      333200
+ 790              	.LASF8:
+ 791 00b5 756E7369 		.ascii	"unsigned int\000"
+ 791      676E6564 
+ 791      20696E74 
+ 791      00
+ 792              	.LASF30:
+ 793 00c2 48423235 		.ascii	"HB25_Enable_Pin_Write\000"
+ 793      5F456E61 
+ 793      626C655F 
+ 793      50696E5F 
+ 793      57726974 
+ 794              	.LASF7:
+ 795 00d8 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 795      206C6F6E 
+ 795      6720756E 
+ 795      7369676E 
+ 795      65642069 
+ 796              	.LASF19:
+ 797 00ef 4D6F746F 		.ascii	"Motor_Start\000"
+ 797      725F5374 
+ 797      61727400 
+ 798              	.LASF25:
+ 799 00fb 2E2E5C73 		.ascii	"..\\source\\motor.c\000"
+ 799      6F757263 
+ 799      655C6D6F 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 18
+
+
+ 799      746F722E 
+ 799      6300
+ 800              	.LASF26:
+ 801 010d 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\Arlobot\\Board2-R"
+ 801      726F6A65 
+ 801      6374735C 
+ 801      41726C6F 
+ 801      426F745C 
+ 802 013b 50692E63 		.ascii	"Pi.cydsn\000"
+ 802      7964736E 
+ 802      00
+ 803              	.LASF17:
+ 804 0144 73697A65 		.ascii	"sizetype\000"
+ 804      74797065 
+ 804      00
+ 805              	.LASF24:
+ 806 014d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 806      4320342E 
+ 806      392E3320 
+ 806      32303135 
+ 806      30333033 
+ 807 0180 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 807      20726576 
+ 807      6973696F 
+ 807      6E203232 
+ 807      31323230 
+ 808 01b3 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 808      66756E63 
+ 808      74696F6E 
+ 808      2D736563 
+ 808      74696F6E 
+ 809              	.LASF6:
+ 810 01db 6C6F6E67 		.ascii	"long long int\000"
+ 810      206C6F6E 
+ 810      6720696E 
+ 810      7400
+ 811              	.LASF16:
+ 812 01e9 63686172 		.ascii	"char\000"
+ 812      00
+ 813              	.LASF18:
+ 814 01ee 4D6F746F 		.ascii	"Motor_Init\000"
+ 814      725F496E 
+ 814      697400
+ 815              	.LASF31:
+ 816 01f9 48423235 		.ascii	"HB25_PWM_Start\000"
+ 816      5F50574D 
+ 816      5F537461 
+ 816      727400
+ 817              	.LASF2:
+ 818 0208 73686F72 		.ascii	"short int\000"
+ 818      7420696E 
+ 818      7400
+ 819              	.LASF9:
+ 820 0212 75696E74 		.ascii	"uint8\000"
+ 820      3800
+ 821              	.LASF4:
+ 822 0218 6C6F6E67 		.ascii	"long int\000"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cccJEBT3.s 			page 19
+
+
+ 822      20696E74 
+ 822      00
+ 823              	.LASF0:
+ 824 0221 7369676E 		.ascii	"signed char\000"
+ 824      65642063 
+ 824      68617200 
+ 825              	.LASF29:
+ 826 022d 666F726D 		.ascii	"formatted_string\000"
+ 826      61747465 
+ 826      645F7374 
+ 826      72696E67 
+ 826      00
+ 827              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

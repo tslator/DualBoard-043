@@ -1,0 +1,21 @@
+--------------- Build Started: 04/07/2016 16:22:19 Project: Board1-RPi, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
+cydsfit.exe -.appdatapath "C:\Users\Tim\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cyprj -d CY8C4247AZS-M485 -s D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Generated_Source\PSoC4 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+ADD: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[1].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:sda\)
+ADD: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[0].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:scl\)
+DEL: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[0].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:scl\)
+ADD: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[0].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:scl\)
+DEL: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[0].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:scl\)
+ADD: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[0].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:scl\)
+DEL: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[0].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:scl\)
+ADD: pft.M0032: error: Pin Error: (Multiple assigments have been made to pin P4[0].).
+ * D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cydwr (\EZI2C_Slave:scl\)
+Error: cdf.M0005: CyDsFit aborted due to errors, please address all errors and rerun CyDsFit. (App=cydsfit)
+--------------- Build Failed: 04/07/2016 16:22:24 ---------------

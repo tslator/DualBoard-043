@@ -1,0 +1,7 @@
+D:\projects\ArloBot\ArlobotHw\Arlobot\Board-KitProg.cydsn\Board-KitProg.cyprj|f6fd0e2d-0f8e-43b8-ab32-fb0e8312ce3b
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|e4d1d0e8-ba9d-4bb2-903e-91c32dbe63dd
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|35a886e4-f074-407a-8526-f33bc048b225
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|07a6f7c5-3439-4ead-bb56-3966e8de1504
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|c6faeec7-ea93-40a7-9465-03ae4bd41769
+D:\projects\ArloBot\ArlobotHw\Arlobot\Board2-RPi.cydsn\Board2-RPi.cyprj|4d7fce48-30e9-49a5-b581-9e8906dcebc9
+D:\projects\ArloBot\ArlobotHw\Arlobot\Board1-RPi.cydsn\Board1-RPi.cyprj|34cc58bf-dad2-40e3-9d00-de3deb4cba93

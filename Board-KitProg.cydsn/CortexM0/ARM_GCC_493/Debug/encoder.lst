@@ -1,0 +1,1828 @@
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"encoder.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.CalcCount,"ax",%progbits
+  18              		.align	2
+  19              		.code	16
+  20              		.thumb_func
+  21              		.type	CalcCount, %function
+  22              	CalcCount:
+  23              	.LFB34:
+  24              		.file 1 "..\\source\\encoder.c"
+   1:..\source/encoder.c **** /* ========================================
+   2:..\source/encoder.c ****  *
+   3:..\source/encoder.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:..\source/encoder.c ****  * All Rights Reserved
+   5:..\source/encoder.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:..\source/encoder.c ****  *
+   7:..\source/encoder.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:..\source/encoder.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:..\source/encoder.c ****  *
+  10:..\source/encoder.c ****  * ========================================
+  11:..\source/encoder.c **** */
+  12:..\source/encoder.c **** 
+  13:..\source/encoder.c **** #include <stdlib.h>
+  14:..\source/encoder.c **** #include "encoder.h"
+  15:..\source/encoder.c **** #include "utils.h"
+  16:..\source/encoder.c **** #include "i2c.h"
+  17:..\source/encoder.c **** #include "time.h"
+  18:..\source/encoder.c **** #include "debug.h"
+  19:..\source/encoder.c **** 
+  20:..\source/encoder.c **** #define SAMPLE_RATE (20) /* Hz */
+  21:..\source/encoder.c **** #define SAMPLE_PERIOD (1000/SAMPLE_RATE) /* milliseconds */
+  22:..\source/encoder.c **** #define MILLIS_PER_SECOND (1000)
+  23:..\source/encoder.c **** 
+  24:..\source/encoder.c **** #define MILLIMETERS_PER_REVOLUTION (479) /* millimeters */
+  25:..\source/encoder.c **** #define COUNTS_PER_REVOLUTION (72)  /* counts */
+  26:..\source/encoder.c **** #define MILLIMETERS_PER_COUNT (MILLIMETERS_PER_REVOLUTION/COUNTS_PER_REVOLUTION) /* millimeters */
+  27:..\source/encoder.c **** #define MILLIMETERS_PER_SECOND (758) /* millimeters */
+  28:..\source/encoder.c **** 
+  29:..\source/encoder.c **** /* Aliases for the encoder pins */
+  30:..\source/encoder.c **** #define Pins_Encoder_A_Read() (Encoder_Pins_Read() & 0x01)
+  31:..\source/encoder.c **** #define Pins_Encoder_B_Read() ((Encoder_Pins_Read() & 0x02) >> 1)
+  32:..\source/encoder.c **** 
+  33:..\source/encoder.c **** #define ENCODER_A (0x01)
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 2
+
+
+  34:..\source/encoder.c **** #define ENCODER_B (0x02)
+  35:..\source/encoder.c **** 
+  36:..\source/encoder.c **** static volatile int32_t enc_count;
+  37:..\source/encoder.c **** static volatile int32 last_enc_count;
+  38:..\source/encoder.c **** static volatile int16 enc_velocity;
+  39:..\source/encoder.c **** static volatile uint32 last_velocity_time;
+  40:..\source/encoder.c **** 
+  41:..\source/encoder.c **** // Encoder Lookup Table
+  42:..\source/encoder.c **** //      sequence: 00 <-> 01 <-> 11 <-> 10 <-> 00 <-> 01 <-> 10 <-> 11 <-> ...
+  43:..\source/encoder.c **** static const int8_t enc_states [] = { 0, /* 00 -> 00 : No Change    */
+  44:..\source/encoder.c ****                                      -1, /* 00 -> 01 : CCW          */
+  45:..\source/encoder.c ****                                       1, /* 00 -> 10 : CW           */
+  46:..\source/encoder.c ****                                       0, /* 00 -> 11 : Can't Happen */
+  47:..\source/encoder.c ****                                       1, /* 01 -> 00 : CW           */
+  48:..\source/encoder.c ****                                       0, /* 01 -> 01 : No Change    */
+  49:..\source/encoder.c ****                                       0, /* 01 -> 10 : Can't Happen */
+  50:..\source/encoder.c ****                                      -1, /* 01 -> 11 : CCW          */
+  51:..\source/encoder.c ****                                      -1, /* 10 -> 00 : CCW          */
+  52:..\source/encoder.c ****                                       0, /* 10 -> 01 : Can't Happen */
+  53:..\source/encoder.c ****                                       0, /* 10 -> 10 : No Change    */
+  54:..\source/encoder.c ****                                       1, /* 10 -> 11 : CW           */
+  55:..\source/encoder.c ****                                       0, /* 11 -> 00 : Can't Happen */
+  56:..\source/encoder.c ****                                       1, /* 11 -> 01 : CW           */
+  57:..\source/encoder.c ****                                      -1, /* 11 -> 10 : CCW          */
+  58:..\source/encoder.c ****                                       0  /* 11 -> 11 : No Change    */
+  59:..\source/encoder.c ****                                     };
+  60:..\source/encoder.c **** static uint8 old_ab = 0;
+  61:..\source/encoder.c **** 
+  62:..\source/encoder.c **** static int32 CalcCount(uint8 a, uint8 b)
+  63:..\source/encoder.c **** {
+  25              		.loc 1 63 0
+  26              		.cfi_startproc
+  27              	.LVL0:
+  64:..\source/encoder.c **** 
+  65:..\source/encoder.c ****     /* Combine old state and new state into a 4 bit number, 0 .. 15, and use as an index
+  66:..\source/encoder.c ****        into the encoder state transistion table
+  67:..\source/encoder.c ****      */
+  68:..\source/encoder.c ****     
+  69:..\source/encoder.c ****     old_ab <<= 2;
+  28              		.loc 1 69 0
+  29 0000 074A     		ldr	r2, .L2
+  30 0002 1378     		ldrb	r3, [r2]
+  31 0004 9B00     		lsl	r3, r3, #2
+  32 0006 DBB2     		uxtb	r3, r3
+  70:..\source/encoder.c ****     old_ab |= ( (a << 1) + b ) & 0x03;
+  33              		.loc 1 70 0
+  34 0008 4000     		lsl	r0, r0, #1
+  35              	.LVL1:
+  36 000a 0818     		add	r0, r1, r0
+  37 000c 0321     		mov	r1, #3
+  38              	.LVL2:
+  39 000e 0140     		and	r1, r0
+  40 0010 1943     		orr	r1, r3
+  41 0012 1170     		strb	r1, [r2]
+  71:..\source/encoder.c ****     
+  72:..\source/encoder.c ****     return enc_states[( old_ab & 0x0f )];
+  42              		.loc 1 72 0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 3
+
+
+  43 0014 0F20     		mov	r0, #15
+  44 0016 0140     		and	r1, r0
+  45 0018 024B     		ldr	r3, .L2+4
+  46 001a 5856     		ldrsb	r0, [r3, r1]
+  73:..\source/encoder.c **** }
+  47              		.loc 1 73 0
+  48              		@ sp needed
+  49 001c 7047     		bx	lr
+  50              	.L3:
+  51 001e C046     		.align	2
+  52              	.L2:
+  53 0020 00000000 		.word	.LANCHOR0
+  54 0024 00000000 		.word	.LANCHOR1
+  55              		.cfi_endproc
+  56              	.LFE34:
+  57              		.size	CalcCount, .-CalcCount
+  58              		.section	.text.Encoder_Interrupt_Handler,"ax",%progbits
+  59              		.align	2
+  60              		.global	Encoder_Interrupt_Handler
+  61              		.code	16
+  62              		.thumb_func
+  63              		.type	Encoder_Interrupt_Handler, %function
+  64              	Encoder_Interrupt_Handler:
+  65              	.LFB35:
+  74:..\source/encoder.c **** 
+  75:..\source/encoder.c **** CY_ISR( Encoder_Interrupt_Handler )
+  76:..\source/encoder.c **** /* An interrupt can occur on either pin A or B
+  77:..\source/encoder.c ****    When an interrupt occurs, 
+  78:..\source/encoder.c ****     - clear the interrupt
+  79:..\source/encoder.c ****     - capture the state of both A and B
+  80:..\source/encoder.c ****     - pass A/B state to calculate the count
+  81:..\source/encoder.c ****  */
+  82:..\source/encoder.c **** {       
+  66              		.loc 1 82 0
+  67              		.cfi_startproc
+  68 0000 10B5     		push	{r4, lr}
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 4, -8
+  71              		.cfi_offset 14, -4
+  72              	.LVL3:
+  83:..\source/encoder.c ****     uint8 pins = 0;
+  84:..\source/encoder.c ****     uint8 a_pin = 0;
+  85:..\source/encoder.c ****     uint8 b_pin = 0;
+  86:..\source/encoder.c ****     
+  87:..\source/encoder.c ****     pins = Encoder_Pins_ClearInterrupt();
+  73              		.loc 1 87 0
+  74 0002 FFF7FEFF 		bl	Encoder_Pins_ClearInterrupt
+  75              	.LVL4:
+  88:..\source/encoder.c ****     
+  89:..\source/encoder.c ****     if (pins & (ENCODER_A | ENCODER_B) )
+  76              		.loc 1 89 0
+  77 0006 8307     		lsl	r3, r0, #30
+  78 0008 0ED0     		beq	.L4
+  90:..\source/encoder.c ****     {
+  91:..\source/encoder.c ****         a_pin = Pins_Encoder_A_Read();
+  79              		.loc 1 91 0
+  80 000a FFF7FEFF 		bl	Encoder_Pins_Read
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 4
+
+
+  81              	.LVL5:
+  82 000e 0124     		mov	r4, #1
+  83 0010 0440     		and	r4, r0
+  84              	.LVL6:
+  92:..\source/encoder.c ****         b_pin = Pins_Encoder_B_Read();
+  85              		.loc 1 92 0
+  86 0012 FFF7FEFF 		bl	Encoder_Pins_Read
+  87              	.LVL7:
+  88 0016 8107     		lsl	r1, r0, #30
+  89 0018 C90F     		lsr	r1, r1, #31
+  90              	.LVL8:
+  93:..\source/encoder.c ****         
+  94:..\source/encoder.c ****         enc_count += CalcCount(a_pin, b_pin);
+  91              		.loc 1 94 0
+  92 001a 201C     		mov	r0, r4
+  93 001c FFF7FEFF 		bl	CalcCount
+  94              	.LVL9:
+  95 0020 024A     		ldr	r2, .L6
+  96 0022 5368     		ldr	r3, [r2, #4]
+  97 0024 C018     		add	r0, r0, r3
+  98 0026 5060     		str	r0, [r2, #4]
+  99              	.LVL10:
+ 100              	.L4:
+  95:..\source/encoder.c ****     }
+  96:..\source/encoder.c **** }
+ 101              		.loc 1 96 0
+ 102              		@ sp needed
+ 103 0028 10BD     		pop	{r4, pc}
+ 104              	.L7:
+ 105 002a C046     		.align	2
+ 106              	.L6:
+ 107 002c 00000000 		.word	.LANCHOR0
+ 108              		.cfi_endproc
+ 109              	.LFE35:
+ 110              		.size	Encoder_Interrupt_Handler, .-Encoder_Interrupt_Handler
+ 111              		.section	.text.Encoder_Init,"ax",%progbits
+ 112              		.align	2
+ 113              		.global	Encoder_Init
+ 114              		.code	16
+ 115              		.thumb_func
+ 116              		.type	Encoder_Init, %function
+ 117              	Encoder_Init:
+ 118              	.LFB36:
+  97:..\source/encoder.c **** 
+  98:..\source/encoder.c **** void Encoder_Init()
+  99:..\source/encoder.c **** {
+ 119              		.loc 1 99 0
+ 120              		.cfi_startproc
+ 100:..\source/encoder.c ****     enc_count = 0;
+ 121              		.loc 1 100 0
+ 122 0000 034B     		ldr	r3, .L9
+ 123 0002 0022     		mov	r2, #0
+ 124 0004 5A60     		str	r2, [r3, #4]
+ 101:..\source/encoder.c ****     enc_velocity = 0;    
+ 125              		.loc 1 101 0
+ 126 0006 1A81     		strh	r2, [r3, #8]
+ 102:..\source/encoder.c ****     last_velocity_time = 0;
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 5
+
+
+ 127              		.loc 1 102 0
+ 128 0008 DA60     		str	r2, [r3, #12]
+ 103:..\source/encoder.c ****     last_enc_count = 0;
+ 129              		.loc 1 103 0
+ 130 000a 1A61     		str	r2, [r3, #16]
+ 104:..\source/encoder.c **** }
+ 131              		.loc 1 104 0
+ 132              		@ sp needed
+ 133 000c 7047     		bx	lr
+ 134              	.L10:
+ 135 000e C046     		.align	2
+ 136              	.L9:
+ 137 0010 00000000 		.word	.LANCHOR0
+ 138              		.cfi_endproc
+ 139              	.LFE36:
+ 140              		.size	Encoder_Init, .-Encoder_Init
+ 141              		.section	.text.Encoder_Start,"ax",%progbits
+ 142              		.align	2
+ 143              		.global	Encoder_Start
+ 144              		.code	16
+ 145              		.thumb_func
+ 146              		.type	Encoder_Start, %function
+ 147              	Encoder_Start:
+ 148              	.LFB37:
+ 105:..\source/encoder.c **** 
+ 106:..\source/encoder.c **** void Encoder_Start()
+ 107:..\source/encoder.c **** {
+ 149              		.loc 1 107 0
+ 150              		.cfi_startproc
+ 151 0000 08B5     		push	{r3, lr}
+ 152              		.cfi_def_cfa_offset 8
+ 153              		.cfi_offset 3, -8
+ 154              		.cfi_offset 14, -4
+ 108:..\source/encoder.c ****     Encoder_Intr_StartEx( Encoder_Interrupt_Handler );    
+ 155              		.loc 1 108 0
+ 156 0002 0248     		ldr	r0, .L12
+ 157 0004 FFF7FEFF 		bl	Encoder_Intr_StartEx
+ 158              	.LVL11:
+ 109:..\source/encoder.c **** }
+ 159              		.loc 1 109 0
+ 160              		@ sp needed
+ 161 0008 08BD     		pop	{r3, pc}
+ 162              	.L13:
+ 163 000a C046     		.align	2
+ 164              	.L12:
+ 165 000c 00000000 		.word	Encoder_Interrupt_Handler
+ 166              		.cfi_endproc
+ 167              	.LFE37:
+ 168              		.size	Encoder_Start, .-Encoder_Start
+ 169              		.section	.text.Encoder_GetVelocity,"ax",%progbits
+ 170              		.align	2
+ 171              		.global	Encoder_GetVelocity
+ 172              		.code	16
+ 173              		.thumb_func
+ 174              		.type	Encoder_GetVelocity, %function
+ 175              	Encoder_GetVelocity:
+ 176              	.LFB38:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 6
+
+
+ 110:..\source/encoder.c **** 
+ 111:..\source/encoder.c **** int16 Encoder_GetVelocity()
+ 112:..\source/encoder.c **** {
+ 177              		.loc 1 112 0
+ 178              		.cfi_startproc
+ 113:..\source/encoder.c ****     return enc_velocity;
+ 179              		.loc 1 113 0
+ 180 0000 014B     		ldr	r3, .L15
+ 181 0002 1889     		ldrh	r0, [r3, #8]
+ 182 0004 00B2     		sxth	r0, r0
+ 114:..\source/encoder.c **** }
+ 183              		.loc 1 114 0
+ 184              		@ sp needed
+ 185 0006 7047     		bx	lr
+ 186              	.L16:
+ 187              		.align	2
+ 188              	.L15:
+ 189 0008 00000000 		.word	.LANCHOR0
+ 190              		.cfi_endproc
+ 191              	.LFE38:
+ 192              		.size	Encoder_GetVelocity, .-Encoder_GetVelocity
+ 193              		.section	.text.Encoder_GetCount,"ax",%progbits
+ 194              		.align	2
+ 195              		.global	Encoder_GetCount
+ 196              		.code	16
+ 197              		.thumb_func
+ 198              		.type	Encoder_GetCount, %function
+ 199              	Encoder_GetCount:
+ 200              	.LFB39:
+ 115:..\source/encoder.c **** 
+ 116:..\source/encoder.c **** int32 Encoder_GetCount()
+ 117:..\source/encoder.c **** {
+ 201              		.loc 1 117 0
+ 202              		.cfi_startproc
+ 118:..\source/encoder.c ****     return enc_count;
+ 203              		.loc 1 118 0
+ 204 0000 014B     		ldr	r3, .L18
+ 205 0002 5868     		ldr	r0, [r3, #4]
+ 119:..\source/encoder.c **** }
+ 206              		.loc 1 119 0
+ 207              		@ sp needed
+ 208 0004 7047     		bx	lr
+ 209              	.L19:
+ 210 0006 C046     		.align	2
+ 211              	.L18:
+ 212 0008 00000000 		.word	.LANCHOR0
+ 213              		.cfi_endproc
+ 214              	.LFE39:
+ 215              		.size	Encoder_GetCount, .-Encoder_GetCount
+ 216              		.section	.text.Encoder_Reset,"ax",%progbits
+ 217              		.align	2
+ 218              		.global	Encoder_Reset
+ 219              		.code	16
+ 220              		.thumb_func
+ 221              		.type	Encoder_Reset, %function
+ 222              	Encoder_Reset:
+ 223              	.LFB40:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 7
+
+
+ 120:..\source/encoder.c **** 
+ 121:..\source/encoder.c **** void Encoder_Reset()
+ 122:..\source/encoder.c **** {
+ 224              		.loc 1 122 0
+ 225              		.cfi_startproc
+ 226 0000 08B5     		push	{r3, lr}
+ 227              		.cfi_def_cfa_offset 8
+ 228              		.cfi_offset 3, -8
+ 229              		.cfi_offset 14, -4
+ 123:..\source/encoder.c ****     Encoder_Intr_Disable();
+ 230              		.loc 1 123 0
+ 231 0002 FFF7FEFF 		bl	Encoder_Intr_Disable
+ 232              	.LVL12:
+ 124:..\source/encoder.c ****     enc_count = 0;
+ 233              		.loc 1 124 0
+ 234 0006 0022     		mov	r2, #0
+ 235 0008 024B     		ldr	r3, .L21
+ 236 000a 5A60     		str	r2, [r3, #4]
+ 125:..\source/encoder.c ****     Encoder_Intr_Enable();
+ 237              		.loc 1 125 0
+ 238 000c FFF7FEFF 		bl	Encoder_Intr_Enable
+ 239              	.LVL13:
+ 126:..\source/encoder.c **** }
+ 240              		.loc 1 126 0
+ 241              		@ sp needed
+ 242 0010 08BD     		pop	{r3, pc}
+ 243              	.L22:
+ 244 0012 C046     		.align	2
+ 245              	.L21:
+ 246 0014 00000000 		.word	.LANCHOR0
+ 247              		.cfi_endproc
+ 248              	.LFE40:
+ 249              		.size	Encoder_Reset, .-Encoder_Reset
+ 250              		.global	__aeabi_idiv
+ 251              		.section	.text.Encoder_Update,"ax",%progbits
+ 252              		.align	2
+ 253              		.global	Encoder_Update
+ 254              		.code	16
+ 255              		.thumb_func
+ 256              		.type	Encoder_Update, %function
+ 257              	Encoder_Update:
+ 258              	.LFB41:
+ 127:..\source/encoder.c **** 
+ 128:..\source/encoder.c **** void Encoder_Update()
+ 129:..\source/encoder.c **** /* This routine is called as fast as the main loop can run, but we will only 
+ 130:..\source/encoder.c ****    update the velocity at a specific sample rate
+ 131:..\source/encoder.c ****  */
+ 132:..\source/encoder.c **** {
+ 259              		.loc 1 132 0
+ 260              		.cfi_startproc
+ 261 0000 10B5     		push	{r4, lr}
+ 262              		.cfi_def_cfa_offset 8
+ 263              		.cfi_offset 4, -8
+ 264              		.cfi_offset 14, -4
+ 133:..\source/encoder.c ****     int16 counts_per_second;
+ 134:..\source/encoder.c ****     
+ 135:..\source/encoder.c ****     if (DELTA_TIME(millis(), last_velocity_time, SAMPLE_PERIOD))
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 8
+
+
+ 265              		.loc 1 135 0
+ 266 0002 FFF7FEFF 		bl	millis
+ 267              	.LVL14:
+ 268 0006 0D4B     		ldr	r3, .L25
+ 269 0008 DB68     		ldr	r3, [r3, #12]
+ 270 000a C01A     		sub	r0, r0, r3
+ 271 000c 3228     		cmp	r0, #50
+ 272 000e 13D9     		bls	.L23
+ 273              	.LBB2:
+ 136:..\source/encoder.c ****     {           
+ 137:..\source/encoder.c ****         last_velocity_time = millis();
+ 274              		.loc 1 137 0
+ 275 0010 FFF7FEFF 		bl	millis
+ 276              	.LVL15:
+ 277 0014 094C     		ldr	r4, .L25
+ 278 0016 E060     		str	r0, [r4, #12]
+ 138:..\source/encoder.c ****         
+ 139:..\source/encoder.c ****         int32 delta_count = enc_count - last_enc_count;
+ 279              		.loc 1 139 0
+ 280 0018 6368     		ldr	r3, [r4, #4]
+ 281 001a 2069     		ldr	r0, [r4, #16]
+ 282 001c 181A     		sub	r0, r3, r0
+ 283              	.LVL16:
+ 140:..\source/encoder.c ****         counts_per_second = delta_count * MILLIS_PER_SECOND / SAMPLE_PERIOD;        
+ 284              		.loc 1 140 0
+ 285 001e FA23     		mov	r3, #250
+ 286 0020 9B00     		lsl	r3, r3, #2
+ 287 0022 5843     		mul	r0, r3
+ 288              	.LVL17:
+ 289 0024 3221     		mov	r1, #50
+ 290 0026 FFF7FEFF 		bl	__aeabi_idiv
+ 291              	.LVL18:
+ 141:..\source/encoder.c ****         enc_velocity = MILLIMETERS_PER_COUNT * counts_per_second;
+ 292              		.loc 1 141 0
+ 293 002a 4300     		lsl	r3, r0, #1
+ 294 002c C018     		add	r0, r0, r3
+ 295              	.LVL19:
+ 296 002e 4300     		lsl	r3, r0, #1
+ 297 0030 9BB2     		uxth	r3, r3
+ 298 0032 2381     		strh	r3, [r4, #8]
+ 142:..\source/encoder.c ****         last_enc_count = enc_count;        
+ 299              		.loc 1 142 0
+ 300 0034 6368     		ldr	r3, [r4, #4]
+ 301 0036 2361     		str	r3, [r4, #16]
+ 302              	.L23:
+ 303              	.LBE2:
+ 143:..\source/encoder.c ****     }
+ 144:..\source/encoder.c **** }
+ 304              		.loc 1 144 0
+ 305              		@ sp needed
+ 306 0038 10BD     		pop	{r4, pc}
+ 307              	.L26:
+ 308 003a C046     		.align	2
+ 309              	.L25:
+ 310 003c 00000000 		.word	.LANCHOR0
+ 311              		.cfi_endproc
+ 312              	.LFE41:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 9
+
+
+ 313              		.size	Encoder_Update, .-Encoder_Update
+ 314              		.comm	formatted_string,256,4
+ 315              		.section	.rodata
+ 316              		.align	2
+ 317              		.set	.LANCHOR1,. + 0
+ 318              		.type	enc_states, %object
+ 319              		.size	enc_states, 16
+ 320              	enc_states:
+ 321 0000 00       		.byte	0
+ 322 0001 FF       		.byte	-1
+ 323 0002 01       		.byte	1
+ 324 0003 00       		.byte	0
+ 325 0004 01       		.byte	1
+ 326 0005 00       		.byte	0
+ 327 0006 00       		.byte	0
+ 328 0007 FF       		.byte	-1
+ 329 0008 FF       		.byte	-1
+ 330 0009 00       		.byte	0
+ 331 000a 00       		.byte	0
+ 332 000b 01       		.byte	1
+ 333 000c 00       		.byte	0
+ 334 000d 01       		.byte	1
+ 335 000e FF       		.byte	-1
+ 336 000f 00       		.byte	0
+ 337              		.bss
+ 338              		.align	2
+ 339              		.set	.LANCHOR0,. + 0
+ 340              		.type	old_ab, %object
+ 341              		.size	old_ab, 1
+ 342              	old_ab:
+ 343 0000 00       		.space	1
+ 344 0001 000000   		.space	3
+ 345              		.type	enc_count, %object
+ 346              		.size	enc_count, 4
+ 347              	enc_count:
+ 348 0004 00000000 		.space	4
+ 349              		.type	enc_velocity, %object
+ 350              		.size	enc_velocity, 2
+ 351              	enc_velocity:
+ 352 0008 0000     		.space	2
+ 353 000a 0000     		.space	2
+ 354              		.type	last_velocity_time, %object
+ 355              		.size	last_velocity_time, 4
+ 356              	last_velocity_time:
+ 357 000c 00000000 		.space	4
+ 358              		.type	last_enc_count, %object
+ 359              		.size	last_enc_count, 4
+ 360              	last_enc_count:
+ 361 0010 00000000 		.space	4
+ 362              		.text
+ 363              	.Letext0:
+ 364              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 365              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 366              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 367              		.file 5 "Generated_Source\\PSoC4/Encoder_Pins.h"
+ 368              		.file 6 "Generated_Source\\PSoC4/Encoder_Intr.h"
+ 369              		.file 7 "..\\source\\debug.h"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 10
+
+
+ 370              		.file 8 "..\\source\\time.h"
+ 371              		.section	.debug_info,"",%progbits
+ 372              	.Ldebug_info0:
+ 373 0000 63030000 		.4byte	0x363
+ 374 0004 0400     		.2byte	0x4
+ 375 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 376 000a 04       		.byte	0x4
+ 377 000b 01       		.uleb128 0x1
+ 378 000c 61020000 		.4byte	.LASF42
+ 379 0010 01       		.byte	0x1
+ 380 0011 69000000 		.4byte	.LASF43
+ 381 0015 27020000 		.4byte	.LASF44
+ 382 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 383 001d 00000000 		.4byte	0
+ 384 0021 00000000 		.4byte	.Ldebug_line0
+ 385 0025 02       		.uleb128 0x2
+ 386 0026 04       		.byte	0x4
+ 387 0027 07       		.byte	0x7
+ 388 0028 98010000 		.4byte	.LASF0
+ 389 002c 03       		.uleb128 0x3
+ 390 002d 04       		.byte	0x4
+ 391 002e 05       		.byte	0x5
+ 392 002f 696E7400 		.ascii	"int\000"
+ 393 0033 04       		.uleb128 0x4
+ 394 0034 0F000000 		.4byte	.LASF5
+ 395 0038 02       		.byte	0x2
+ 396 0039 1B       		.byte	0x1b
+ 397 003a 3E000000 		.4byte	0x3e
+ 398 003e 02       		.uleb128 0x2
+ 399 003f 01       		.byte	0x1
+ 400 0040 06       		.byte	0x6
+ 401 0041 0B030000 		.4byte	.LASF1
+ 402 0045 02       		.uleb128 0x2
+ 403 0046 01       		.byte	0x1
+ 404 0047 08       		.byte	0x8
+ 405 0048 F5000000 		.4byte	.LASF2
+ 406 004c 02       		.uleb128 0x2
+ 407 004d 02       		.byte	0x2
+ 408 004e 05       		.byte	0x5
+ 409 004f 87010000 		.4byte	.LASF3
+ 410 0053 02       		.uleb128 0x2
+ 411 0054 02       		.byte	0x2
+ 412 0055 07       		.byte	0x7
+ 413 0056 7D000000 		.4byte	.LASF4
+ 414 005a 04       		.uleb128 0x4
+ 415 005b 4A000000 		.4byte	.LASF6
+ 416 005f 02       		.byte	0x2
+ 417 0060 3F       		.byte	0x3f
+ 418 0061 65000000 		.4byte	0x65
+ 419 0065 02       		.uleb128 0x2
+ 420 0066 04       		.byte	0x4
+ 421 0067 05       		.byte	0x5
+ 422 0068 FB020000 		.4byte	.LASF7
+ 423 006c 02       		.uleb128 0x2
+ 424 006d 04       		.byte	0x4
+ 425 006e 07       		.byte	0x7
+ 426 006f 18010000 		.4byte	.LASF8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 11
+
+
+ 427 0073 02       		.uleb128 0x2
+ 428 0074 08       		.byte	0x8
+ 429 0075 05       		.byte	0x5
+ 430 0076 03020000 		.4byte	.LASF9
+ 431 007a 02       		.uleb128 0x2
+ 432 007b 08       		.byte	0x8
+ 433 007c 07       		.byte	0x7
+ 434 007d AA010000 		.4byte	.LASF10
+ 435 0081 02       		.uleb128 0x2
+ 436 0082 04       		.byte	0x4
+ 437 0083 07       		.byte	0x7
+ 438 0084 E7010000 		.4byte	.LASF11
+ 439 0088 05       		.uleb128 0x5
+ 440 0089 04       		.byte	0x4
+ 441 008a 8E000000 		.4byte	0x8e
+ 442 008e 06       		.uleb128 0x6
+ 443 008f 02       		.uleb128 0x2
+ 444 0090 01       		.byte	0x1
+ 445 0091 08       		.byte	0x8
+ 446 0092 11020000 		.4byte	.LASF12
+ 447 0096 04       		.uleb128 0x4
+ 448 0097 C4000000 		.4byte	.LASF13
+ 449 009b 03       		.byte	0x3
+ 450 009c 14       		.byte	0x14
+ 451 009d 33000000 		.4byte	0x33
+ 452 00a1 04       		.uleb128 0x4
+ 453 00a2 DF010000 		.4byte	.LASF14
+ 454 00a6 03       		.byte	0x3
+ 455 00a7 2C       		.byte	0x2c
+ 456 00a8 5A000000 		.4byte	0x5a
+ 457 00ac 04       		.uleb128 0x4
+ 458 00ad F5020000 		.4byte	.LASF15
+ 459 00b1 04       		.byte	0x4
+ 460 00b2 C2       		.byte	0xc2
+ 461 00b3 45000000 		.4byte	0x45
+ 462 00b7 04       		.uleb128 0x4
+ 463 00b8 91010000 		.4byte	.LASF16
+ 464 00bc 04       		.byte	0x4
+ 465 00bd C4       		.byte	0xc4
+ 466 00be 6C000000 		.4byte	0x6c
+ 467 00c2 04       		.uleb128 0x4
+ 468 00c3 12010000 		.4byte	.LASF17
+ 469 00c7 04       		.byte	0x4
+ 470 00c8 C6       		.byte	0xc6
+ 471 00c9 4C000000 		.4byte	0x4c
+ 472 00cd 04       		.uleb128 0x4
+ 473 00ce 2A010000 		.4byte	.LASF18
+ 474 00d2 04       		.byte	0x4
+ 475 00d3 C7       		.byte	0xc7
+ 476 00d4 65000000 		.4byte	0x65
+ 477 00d8 02       		.uleb128 0x2
+ 478 00d9 04       		.byte	0x4
+ 479 00da 04       		.byte	0x4
+ 480 00db DD000000 		.4byte	.LASF19
+ 481 00df 02       		.uleb128 0x2
+ 482 00e0 08       		.byte	0x8
+ 483 00e1 04       		.byte	0x4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 12
+
+
+ 484 00e2 9C000000 		.4byte	.LASF20
+ 485 00e6 07       		.uleb128 0x7
+ 486 00e7 B7000000 		.4byte	0xb7
+ 487 00eb 08       		.uleb128 0x8
+ 488 00ec C1010000 		.4byte	.LASF21
+ 489 00f0 04       		.byte	0x4
+ 490 00f1 7E01     		.2byte	0x17e
+ 491 00f3 88000000 		.4byte	0x88
+ 492 00f7 09       		.uleb128 0x9
+ 493 00f8 D5010000 		.4byte	.LASF45
+ 494 00fc 01       		.byte	0x1
+ 495 00fd 3E       		.byte	0x3e
+ 496 00fe CD000000 		.4byte	0xcd
+ 497 0102 00000000 		.4byte	.LFB34
+ 498 0106 28000000 		.4byte	.LFE34-.LFB34
+ 499 010a 01       		.uleb128 0x1
+ 500 010b 9C       		.byte	0x9c
+ 501 010c 2B010000 		.4byte	0x12b
+ 502 0110 0A       		.uleb128 0xa
+ 503 0111 6100     		.ascii	"a\000"
+ 504 0113 01       		.byte	0x1
+ 505 0114 3E       		.byte	0x3e
+ 506 0115 AC000000 		.4byte	0xac
+ 507 0119 00000000 		.4byte	.LLST0
+ 508 011d 0A       		.uleb128 0xa
+ 509 011e 6200     		.ascii	"b\000"
+ 510 0120 01       		.byte	0x1
+ 511 0121 3E       		.byte	0x3e
+ 512 0122 AC000000 		.4byte	0xac
+ 513 0126 21000000 		.4byte	.LLST1
+ 514 012a 00       		.byte	0
+ 515 012b 0B       		.uleb128 0xb
+ 516 012c 17030000 		.4byte	.LASF46
+ 517 0130 01       		.byte	0x1
+ 518 0131 4B       		.byte	0x4b
+ 519 0132 00000000 		.4byte	.LFB35
+ 520 0136 30000000 		.4byte	.LFE35-.LFB35
+ 521 013a 01       		.uleb128 0x1
+ 522 013b 9C       		.byte	0x9c
+ 523 013c 99010000 		.4byte	0x199
+ 524 0140 0C       		.uleb128 0xc
+ 525 0141 A5010000 		.4byte	.LASF22
+ 526 0145 01       		.byte	0x1
+ 527 0146 53       		.byte	0x53
+ 528 0147 AC000000 		.4byte	0xac
+ 529 014b 42000000 		.4byte	.LLST2
+ 530 014f 0C       		.uleb128 0xc
+ 531 0150 EF020000 		.4byte	.LASF23
+ 532 0154 01       		.byte	0x1
+ 533 0155 54       		.byte	0x54
+ 534 0156 AC000000 		.4byte	0xac
+ 535 015a 61000000 		.4byte	.LLST3
+ 536 015e 0C       		.uleb128 0xc
+ 537 015f 26000000 		.4byte	.LASF24
+ 538 0163 01       		.byte	0x1
+ 539 0164 55       		.byte	0x55
+ 540 0165 AC000000 		.4byte	0xac
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 13
+
+
+ 541 0169 80000000 		.4byte	.LLST4
+ 542 016d 0D       		.uleb128 0xd
+ 543 016e 06000000 		.4byte	.LVL4
+ 544 0172 24030000 		.4byte	0x324
+ 545 0176 0D       		.uleb128 0xd
+ 546 0177 0E000000 		.4byte	.LVL5
+ 547 017b 2F030000 		.4byte	0x32f
+ 548 017f 0D       		.uleb128 0xd
+ 549 0180 16000000 		.4byte	.LVL7
+ 550 0184 2F030000 		.4byte	0x32f
+ 551 0188 0E       		.uleb128 0xe
+ 552 0189 20000000 		.4byte	.LVL9
+ 553 018d F7000000 		.4byte	0xf7
+ 554 0191 0F       		.uleb128 0xf
+ 555 0192 01       		.uleb128 0x1
+ 556 0193 50       		.byte	0x50
+ 557 0194 02       		.uleb128 0x2
+ 558 0195 74       		.byte	0x74
+ 559 0196 00       		.sleb128 0
+ 560 0197 00       		.byte	0
+ 561 0198 00       		.byte	0
+ 562 0199 10       		.uleb128 0x10
+ 563 019a B7000000 		.4byte	.LASF47
+ 564 019e 01       		.byte	0x1
+ 565 019f 62       		.byte	0x62
+ 566 01a0 00000000 		.4byte	.LFB36
+ 567 01a4 14000000 		.4byte	.LFE36-.LFB36
+ 568 01a8 01       		.uleb128 0x1
+ 569 01a9 9C       		.byte	0x9c
+ 570 01aa 11       		.uleb128 0x11
+ 571 01ab 6C010000 		.4byte	.LASF27
+ 572 01af 01       		.byte	0x1
+ 573 01b0 6A       		.byte	0x6a
+ 574 01b1 00000000 		.4byte	.LFB37
+ 575 01b5 10000000 		.4byte	.LFE37-.LFB37
+ 576 01b9 01       		.uleb128 0x1
+ 577 01ba 9C       		.byte	0x9c
+ 578 01bb D3010000 		.4byte	0x1d3
+ 579 01bf 0E       		.uleb128 0xe
+ 580 01c0 08000000 		.4byte	.LVL11
+ 581 01c4 3A030000 		.4byte	0x33a
+ 582 01c8 0F       		.uleb128 0xf
+ 583 01c9 01       		.uleb128 0x1
+ 584 01ca 50       		.byte	0x50
+ 585 01cb 05       		.uleb128 0x5
+ 586 01cc 03       		.byte	0x3
+ 587 01cd 00000000 		.4byte	Encoder_Interrupt_Handler
+ 588 01d1 00       		.byte	0
+ 589 01d2 00       		.byte	0
+ 590 01d3 12       		.uleb128 0x12
+ 591 01d4 A3000000 		.4byte	.LASF25
+ 592 01d8 01       		.byte	0x1
+ 593 01d9 6F       		.byte	0x6f
+ 594 01da C2000000 		.4byte	0xc2
+ 595 01de 00000000 		.4byte	.LFB38
+ 596 01e2 0C000000 		.4byte	.LFE38-.LFB38
+ 597 01e6 01       		.uleb128 0x1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 14
+
+
+ 598 01e7 9C       		.byte	0x9c
+ 599 01e8 12       		.uleb128 0x12
+ 600 01e9 16020000 		.4byte	.LASF26
+ 601 01ed 01       		.byte	0x1
+ 602 01ee 74       		.byte	0x74
+ 603 01ef CD000000 		.4byte	0xcd
+ 604 01f3 00000000 		.4byte	.LFB39
+ 605 01f7 0C000000 		.4byte	.LFE39-.LFB39
+ 606 01fb 01       		.uleb128 0x1
+ 607 01fc 9C       		.byte	0x9c
+ 608 01fd 11       		.uleb128 0x11
+ 609 01fe 18000000 		.4byte	.LASF28
+ 610 0202 01       		.byte	0x1
+ 611 0203 79       		.byte	0x79
+ 612 0204 00000000 		.4byte	.LFB40
+ 613 0208 18000000 		.4byte	.LFE40-.LFB40
+ 614 020c 01       		.uleb128 0x1
+ 615 020d 9C       		.byte	0x9c
+ 616 020e 25020000 		.4byte	0x225
+ 617 0212 0D       		.uleb128 0xd
+ 618 0213 06000000 		.4byte	.LVL12
+ 619 0217 4B030000 		.4byte	0x34b
+ 620 021b 0D       		.uleb128 0xd
+ 621 021c 10000000 		.4byte	.LVL13
+ 622 0220 52030000 		.4byte	0x352
+ 623 0224 00       		.byte	0
+ 624 0225 13       		.uleb128 0x13
+ 625 0226 03010000 		.4byte	.LASF29
+ 626 022a 01       		.byte	0x1
+ 627 022b 80       		.byte	0x80
+ 628 022c 00000000 		.4byte	.LFB41
+ 629 0230 40000000 		.4byte	.LFE41-.LFB41
+ 630 0234 01       		.uleb128 0x1
+ 631 0235 9C       		.byte	0x9c
+ 632 0236 79020000 		.4byte	0x279
+ 633 023a 0C       		.uleb128 0xc
+ 634 023b E3000000 		.4byte	.LASF30
+ 635 023f 01       		.byte	0x1
+ 636 0240 85       		.byte	0x85
+ 637 0241 C2000000 		.4byte	0xc2
+ 638 0245 9F000000 		.4byte	.LLST5
+ 639 0249 14       		.uleb128 0x14
+ 640 024a 10000000 		.4byte	.LBB2
+ 641 024e 28000000 		.4byte	.LBE2-.LBB2
+ 642 0252 6F020000 		.4byte	0x26f
+ 643 0256 0C       		.uleb128 0xc
+ 644 0257 90000000 		.4byte	.LASF31
+ 645 025b 01       		.byte	0x1
+ 646 025c 8B       		.byte	0x8b
+ 647 025d CD000000 		.4byte	0xcd
+ 648 0261 B2000000 		.4byte	.LLST6
+ 649 0265 0D       		.uleb128 0xd
+ 650 0266 14000000 		.4byte	.LVL15
+ 651 026a 59030000 		.4byte	0x359
+ 652 026e 00       		.byte	0
+ 653 026f 0D       		.uleb128 0xd
+ 654 0270 06000000 		.4byte	.LVL14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 15
+
+
+ 655 0274 59030000 		.4byte	0x359
+ 656 0278 00       		.byte	0
+ 657 0279 15       		.uleb128 0x15
+ 658 027a 2C000000 		.4byte	.LASF32
+ 659 027e 01       		.byte	0x1
+ 660 027f 24       		.byte	0x24
+ 661 0280 8A020000 		.4byte	0x28a
+ 662 0284 05       		.uleb128 0x5
+ 663 0285 03       		.byte	0x3
+ 664 0286 04000000 		.4byte	enc_count
+ 665 028a 07       		.uleb128 0x7
+ 666 028b A1000000 		.4byte	0xa1
+ 667 028f 15       		.uleb128 0x15
+ 668 0290 00000000 		.4byte	.LASF33
+ 669 0294 01       		.byte	0x1
+ 670 0295 25       		.byte	0x25
+ 671 0296 A0020000 		.4byte	0x2a0
+ 672 029a 05       		.uleb128 0x5
+ 673 029b 03       		.byte	0x3
+ 674 029c 10000000 		.4byte	last_enc_count
+ 675 02a0 07       		.uleb128 0x7
+ 676 02a1 CD000000 		.4byte	0xcd
+ 677 02a5 15       		.uleb128 0x15
+ 678 02a6 7A010000 		.4byte	.LASF34
+ 679 02aa 01       		.byte	0x1
+ 680 02ab 26       		.byte	0x26
+ 681 02ac B6020000 		.4byte	0x2b6
+ 682 02b0 05       		.uleb128 0x5
+ 683 02b1 03       		.byte	0x3
+ 684 02b2 08000000 		.4byte	enc_velocity
+ 685 02b6 07       		.uleb128 0x7
+ 686 02b7 C2000000 		.4byte	0xc2
+ 687 02bb 15       		.uleb128 0x15
+ 688 02bc F0010000 		.4byte	.LASF35
+ 689 02c0 01       		.byte	0x1
+ 690 02c1 27       		.byte	0x27
+ 691 02c2 E6000000 		.4byte	0xe6
+ 692 02c6 05       		.uleb128 0x5
+ 693 02c7 03       		.byte	0x3
+ 694 02c8 0C000000 		.4byte	last_velocity_time
+ 695 02cc 16       		.uleb128 0x16
+ 696 02cd 96000000 		.4byte	0x96
+ 697 02d1 DC020000 		.4byte	0x2dc
+ 698 02d5 17       		.uleb128 0x17
+ 699 02d6 81000000 		.4byte	0x81
+ 700 02da 0F       		.byte	0xf
+ 701 02db 00       		.byte	0
+ 702 02dc 15       		.uleb128 0x15
+ 703 02dd 30010000 		.4byte	.LASF36
+ 704 02e1 01       		.byte	0x1
+ 705 02e2 2B       		.byte	0x2b
+ 706 02e3 ED020000 		.4byte	0x2ed
+ 707 02e7 05       		.uleb128 0x5
+ 708 02e8 03       		.byte	0x3
+ 709 02e9 00000000 		.4byte	enc_states
+ 710 02ed 18       		.uleb128 0x18
+ 711 02ee CC020000 		.4byte	0x2cc
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 16
+
+
+ 712 02f2 15       		.uleb128 0x15
+ 713 02f3 CE010000 		.4byte	.LASF37
+ 714 02f7 01       		.byte	0x1
+ 715 02f8 3C       		.byte	0x3c
+ 716 02f9 AC000000 		.4byte	0xac
+ 717 02fd 05       		.uleb128 0x5
+ 718 02fe 03       		.byte	0x3
+ 719 02ff 00000000 		.4byte	old_ab
+ 720 0303 16       		.uleb128 0x16
+ 721 0304 8F000000 		.4byte	0x8f
+ 722 0308 13030000 		.4byte	0x313
+ 723 030c 17       		.uleb128 0x17
+ 724 030d 81000000 		.4byte	0x81
+ 725 0311 FF       		.byte	0xff
+ 726 0312 00       		.byte	0
+ 727 0313 19       		.uleb128 0x19
+ 728 0314 31030000 		.4byte	.LASF48
+ 729 0318 07       		.byte	0x7
+ 730 0319 08       		.byte	0x8
+ 731 031a 03030000 		.4byte	0x303
+ 732 031e 05       		.uleb128 0x5
+ 733 031f 03       		.byte	0x3
+ 734 0320 00000000 		.4byte	formatted_string
+ 735 0324 1A       		.uleb128 0x1a
+ 736 0325 3B010000 		.4byte	.LASF38
+ 737 0329 05       		.byte	0x5
+ 738 032a 21       		.byte	0x21
+ 739 032b AC000000 		.4byte	0xac
+ 740 032f 1A       		.uleb128 0x1a
+ 741 0330 CB000000 		.4byte	.LASF39
+ 742 0334 05       		.byte	0x5
+ 743 0335 20       		.byte	0x20
+ 744 0336 AC000000 		.4byte	0xac
+ 745 033a 1B       		.uleb128 0x1b
+ 746 033b 54000000 		.4byte	.LASF49
+ 747 033f 06       		.byte	0x6
+ 748 0340 18       		.byte	0x18
+ 749 0341 4B030000 		.4byte	0x34b
+ 750 0345 1C       		.uleb128 0x1c
+ 751 0346 EB000000 		.4byte	0xeb
+ 752 034a 00       		.byte	0
+ 753 034b 1D       		.uleb128 0x1d
+ 754 034c 57010000 		.4byte	.LASF40
+ 755 0350 06       		.byte	0x6
+ 756 0351 25       		.byte	0x25
+ 757 0352 1D       		.uleb128 0x1d
+ 758 0353 36000000 		.4byte	.LASF41
+ 759 0357 06       		.byte	0x6
+ 760 0358 23       		.byte	0x23
+ 761 0359 1E       		.uleb128 0x1e
+ 762 035a 04030000 		.4byte	.LASF50
+ 763 035e 08       		.byte	0x8
+ 764 035f 16       		.byte	0x16
+ 765 0360 B7000000 		.4byte	0xb7
+ 766 0364 1F       		.uleb128 0x1f
+ 767 0365 00       		.byte	0
+ 768 0366 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 17
+
+
+ 769              		.section	.debug_abbrev,"",%progbits
+ 770              	.Ldebug_abbrev0:
+ 771 0000 01       		.uleb128 0x1
+ 772 0001 11       		.uleb128 0x11
+ 773 0002 01       		.byte	0x1
+ 774 0003 25       		.uleb128 0x25
+ 775 0004 0E       		.uleb128 0xe
+ 776 0005 13       		.uleb128 0x13
+ 777 0006 0B       		.uleb128 0xb
+ 778 0007 03       		.uleb128 0x3
+ 779 0008 0E       		.uleb128 0xe
+ 780 0009 1B       		.uleb128 0x1b
+ 781 000a 0E       		.uleb128 0xe
+ 782 000b 55       		.uleb128 0x55
+ 783 000c 17       		.uleb128 0x17
+ 784 000d 11       		.uleb128 0x11
+ 785 000e 01       		.uleb128 0x1
+ 786 000f 10       		.uleb128 0x10
+ 787 0010 17       		.uleb128 0x17
+ 788 0011 00       		.byte	0
+ 789 0012 00       		.byte	0
+ 790 0013 02       		.uleb128 0x2
+ 791 0014 24       		.uleb128 0x24
+ 792 0015 00       		.byte	0
+ 793 0016 0B       		.uleb128 0xb
+ 794 0017 0B       		.uleb128 0xb
+ 795 0018 3E       		.uleb128 0x3e
+ 796 0019 0B       		.uleb128 0xb
+ 797 001a 03       		.uleb128 0x3
+ 798 001b 0E       		.uleb128 0xe
+ 799 001c 00       		.byte	0
+ 800 001d 00       		.byte	0
+ 801 001e 03       		.uleb128 0x3
+ 802 001f 24       		.uleb128 0x24
+ 803 0020 00       		.byte	0
+ 804 0021 0B       		.uleb128 0xb
+ 805 0022 0B       		.uleb128 0xb
+ 806 0023 3E       		.uleb128 0x3e
+ 807 0024 0B       		.uleb128 0xb
+ 808 0025 03       		.uleb128 0x3
+ 809 0026 08       		.uleb128 0x8
+ 810 0027 00       		.byte	0
+ 811 0028 00       		.byte	0
+ 812 0029 04       		.uleb128 0x4
+ 813 002a 16       		.uleb128 0x16
+ 814 002b 00       		.byte	0
+ 815 002c 03       		.uleb128 0x3
+ 816 002d 0E       		.uleb128 0xe
+ 817 002e 3A       		.uleb128 0x3a
+ 818 002f 0B       		.uleb128 0xb
+ 819 0030 3B       		.uleb128 0x3b
+ 820 0031 0B       		.uleb128 0xb
+ 821 0032 49       		.uleb128 0x49
+ 822 0033 13       		.uleb128 0x13
+ 823 0034 00       		.byte	0
+ 824 0035 00       		.byte	0
+ 825 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 18
+
+
+ 826 0037 0F       		.uleb128 0xf
+ 827 0038 00       		.byte	0
+ 828 0039 0B       		.uleb128 0xb
+ 829 003a 0B       		.uleb128 0xb
+ 830 003b 49       		.uleb128 0x49
+ 831 003c 13       		.uleb128 0x13
+ 832 003d 00       		.byte	0
+ 833 003e 00       		.byte	0
+ 834 003f 06       		.uleb128 0x6
+ 835 0040 15       		.uleb128 0x15
+ 836 0041 00       		.byte	0
+ 837 0042 27       		.uleb128 0x27
+ 838 0043 19       		.uleb128 0x19
+ 839 0044 00       		.byte	0
+ 840 0045 00       		.byte	0
+ 841 0046 07       		.uleb128 0x7
+ 842 0047 35       		.uleb128 0x35
+ 843 0048 00       		.byte	0
+ 844 0049 49       		.uleb128 0x49
+ 845 004a 13       		.uleb128 0x13
+ 846 004b 00       		.byte	0
+ 847 004c 00       		.byte	0
+ 848 004d 08       		.uleb128 0x8
+ 849 004e 16       		.uleb128 0x16
+ 850 004f 00       		.byte	0
+ 851 0050 03       		.uleb128 0x3
+ 852 0051 0E       		.uleb128 0xe
+ 853 0052 3A       		.uleb128 0x3a
+ 854 0053 0B       		.uleb128 0xb
+ 855 0054 3B       		.uleb128 0x3b
+ 856 0055 05       		.uleb128 0x5
+ 857 0056 49       		.uleb128 0x49
+ 858 0057 13       		.uleb128 0x13
+ 859 0058 00       		.byte	0
+ 860 0059 00       		.byte	0
+ 861 005a 09       		.uleb128 0x9
+ 862 005b 2E       		.uleb128 0x2e
+ 863 005c 01       		.byte	0x1
+ 864 005d 03       		.uleb128 0x3
+ 865 005e 0E       		.uleb128 0xe
+ 866 005f 3A       		.uleb128 0x3a
+ 867 0060 0B       		.uleb128 0xb
+ 868 0061 3B       		.uleb128 0x3b
+ 869 0062 0B       		.uleb128 0xb
+ 870 0063 27       		.uleb128 0x27
+ 871 0064 19       		.uleb128 0x19
+ 872 0065 49       		.uleb128 0x49
+ 873 0066 13       		.uleb128 0x13
+ 874 0067 11       		.uleb128 0x11
+ 875 0068 01       		.uleb128 0x1
+ 876 0069 12       		.uleb128 0x12
+ 877 006a 06       		.uleb128 0x6
+ 878 006b 40       		.uleb128 0x40
+ 879 006c 18       		.uleb128 0x18
+ 880 006d 9742     		.uleb128 0x2117
+ 881 006f 19       		.uleb128 0x19
+ 882 0070 01       		.uleb128 0x1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 19
+
+
+ 883 0071 13       		.uleb128 0x13
+ 884 0072 00       		.byte	0
+ 885 0073 00       		.byte	0
+ 886 0074 0A       		.uleb128 0xa
+ 887 0075 05       		.uleb128 0x5
+ 888 0076 00       		.byte	0
+ 889 0077 03       		.uleb128 0x3
+ 890 0078 08       		.uleb128 0x8
+ 891 0079 3A       		.uleb128 0x3a
+ 892 007a 0B       		.uleb128 0xb
+ 893 007b 3B       		.uleb128 0x3b
+ 894 007c 0B       		.uleb128 0xb
+ 895 007d 49       		.uleb128 0x49
+ 896 007e 13       		.uleb128 0x13
+ 897 007f 02       		.uleb128 0x2
+ 898 0080 17       		.uleb128 0x17
+ 899 0081 00       		.byte	0
+ 900 0082 00       		.byte	0
+ 901 0083 0B       		.uleb128 0xb
+ 902 0084 2E       		.uleb128 0x2e
+ 903 0085 01       		.byte	0x1
+ 904 0086 3F       		.uleb128 0x3f
+ 905 0087 19       		.uleb128 0x19
+ 906 0088 03       		.uleb128 0x3
+ 907 0089 0E       		.uleb128 0xe
+ 908 008a 3A       		.uleb128 0x3a
+ 909 008b 0B       		.uleb128 0xb
+ 910 008c 3B       		.uleb128 0x3b
+ 911 008d 0B       		.uleb128 0xb
+ 912 008e 27       		.uleb128 0x27
+ 913 008f 19       		.uleb128 0x19
+ 914 0090 11       		.uleb128 0x11
+ 915 0091 01       		.uleb128 0x1
+ 916 0092 12       		.uleb128 0x12
+ 917 0093 06       		.uleb128 0x6
+ 918 0094 40       		.uleb128 0x40
+ 919 0095 18       		.uleb128 0x18
+ 920 0096 9742     		.uleb128 0x2117
+ 921 0098 19       		.uleb128 0x19
+ 922 0099 01       		.uleb128 0x1
+ 923 009a 13       		.uleb128 0x13
+ 924 009b 00       		.byte	0
+ 925 009c 00       		.byte	0
+ 926 009d 0C       		.uleb128 0xc
+ 927 009e 34       		.uleb128 0x34
+ 928 009f 00       		.byte	0
+ 929 00a0 03       		.uleb128 0x3
+ 930 00a1 0E       		.uleb128 0xe
+ 931 00a2 3A       		.uleb128 0x3a
+ 932 00a3 0B       		.uleb128 0xb
+ 933 00a4 3B       		.uleb128 0x3b
+ 934 00a5 0B       		.uleb128 0xb
+ 935 00a6 49       		.uleb128 0x49
+ 936 00a7 13       		.uleb128 0x13
+ 937 00a8 02       		.uleb128 0x2
+ 938 00a9 17       		.uleb128 0x17
+ 939 00aa 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 20
+
+
+ 940 00ab 00       		.byte	0
+ 941 00ac 0D       		.uleb128 0xd
+ 942 00ad 898201   		.uleb128 0x4109
+ 943 00b0 00       		.byte	0
+ 944 00b1 11       		.uleb128 0x11
+ 945 00b2 01       		.uleb128 0x1
+ 946 00b3 31       		.uleb128 0x31
+ 947 00b4 13       		.uleb128 0x13
+ 948 00b5 00       		.byte	0
+ 949 00b6 00       		.byte	0
+ 950 00b7 0E       		.uleb128 0xe
+ 951 00b8 898201   		.uleb128 0x4109
+ 952 00bb 01       		.byte	0x1
+ 953 00bc 11       		.uleb128 0x11
+ 954 00bd 01       		.uleb128 0x1
+ 955 00be 31       		.uleb128 0x31
+ 956 00bf 13       		.uleb128 0x13
+ 957 00c0 00       		.byte	0
+ 958 00c1 00       		.byte	0
+ 959 00c2 0F       		.uleb128 0xf
+ 960 00c3 8A8201   		.uleb128 0x410a
+ 961 00c6 00       		.byte	0
+ 962 00c7 02       		.uleb128 0x2
+ 963 00c8 18       		.uleb128 0x18
+ 964 00c9 9142     		.uleb128 0x2111
+ 965 00cb 18       		.uleb128 0x18
+ 966 00cc 00       		.byte	0
+ 967 00cd 00       		.byte	0
+ 968 00ce 10       		.uleb128 0x10
+ 969 00cf 2E       		.uleb128 0x2e
+ 970 00d0 00       		.byte	0
+ 971 00d1 3F       		.uleb128 0x3f
+ 972 00d2 19       		.uleb128 0x19
+ 973 00d3 03       		.uleb128 0x3
+ 974 00d4 0E       		.uleb128 0xe
+ 975 00d5 3A       		.uleb128 0x3a
+ 976 00d6 0B       		.uleb128 0xb
+ 977 00d7 3B       		.uleb128 0x3b
+ 978 00d8 0B       		.uleb128 0xb
+ 979 00d9 11       		.uleb128 0x11
+ 980 00da 01       		.uleb128 0x1
+ 981 00db 12       		.uleb128 0x12
+ 982 00dc 06       		.uleb128 0x6
+ 983 00dd 40       		.uleb128 0x40
+ 984 00de 18       		.uleb128 0x18
+ 985 00df 9742     		.uleb128 0x2117
+ 986 00e1 19       		.uleb128 0x19
+ 987 00e2 00       		.byte	0
+ 988 00e3 00       		.byte	0
+ 989 00e4 11       		.uleb128 0x11
+ 990 00e5 2E       		.uleb128 0x2e
+ 991 00e6 01       		.byte	0x1
+ 992 00e7 3F       		.uleb128 0x3f
+ 993 00e8 19       		.uleb128 0x19
+ 994 00e9 03       		.uleb128 0x3
+ 995 00ea 0E       		.uleb128 0xe
+ 996 00eb 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 21
+
+
+ 997 00ec 0B       		.uleb128 0xb
+ 998 00ed 3B       		.uleb128 0x3b
+ 999 00ee 0B       		.uleb128 0xb
+ 1000 00ef 11       		.uleb128 0x11
+ 1001 00f0 01       		.uleb128 0x1
+ 1002 00f1 12       		.uleb128 0x12
+ 1003 00f2 06       		.uleb128 0x6
+ 1004 00f3 40       		.uleb128 0x40
+ 1005 00f4 18       		.uleb128 0x18
+ 1006 00f5 9742     		.uleb128 0x2117
+ 1007 00f7 19       		.uleb128 0x19
+ 1008 00f8 01       		.uleb128 0x1
+ 1009 00f9 13       		.uleb128 0x13
+ 1010 00fa 00       		.byte	0
+ 1011 00fb 00       		.byte	0
+ 1012 00fc 12       		.uleb128 0x12
+ 1013 00fd 2E       		.uleb128 0x2e
+ 1014 00fe 00       		.byte	0
+ 1015 00ff 3F       		.uleb128 0x3f
+ 1016 0100 19       		.uleb128 0x19
+ 1017 0101 03       		.uleb128 0x3
+ 1018 0102 0E       		.uleb128 0xe
+ 1019 0103 3A       		.uleb128 0x3a
+ 1020 0104 0B       		.uleb128 0xb
+ 1021 0105 3B       		.uleb128 0x3b
+ 1022 0106 0B       		.uleb128 0xb
+ 1023 0107 49       		.uleb128 0x49
+ 1024 0108 13       		.uleb128 0x13
+ 1025 0109 11       		.uleb128 0x11
+ 1026 010a 01       		.uleb128 0x1
+ 1027 010b 12       		.uleb128 0x12
+ 1028 010c 06       		.uleb128 0x6
+ 1029 010d 40       		.uleb128 0x40
+ 1030 010e 18       		.uleb128 0x18
+ 1031 010f 9742     		.uleb128 0x2117
+ 1032 0111 19       		.uleb128 0x19
+ 1033 0112 00       		.byte	0
+ 1034 0113 00       		.byte	0
+ 1035 0114 13       		.uleb128 0x13
+ 1036 0115 2E       		.uleb128 0x2e
+ 1037 0116 01       		.byte	0x1
+ 1038 0117 3F       		.uleb128 0x3f
+ 1039 0118 19       		.uleb128 0x19
+ 1040 0119 03       		.uleb128 0x3
+ 1041 011a 0E       		.uleb128 0xe
+ 1042 011b 3A       		.uleb128 0x3a
+ 1043 011c 0B       		.uleb128 0xb
+ 1044 011d 3B       		.uleb128 0x3b
+ 1045 011e 0B       		.uleb128 0xb
+ 1046 011f 11       		.uleb128 0x11
+ 1047 0120 01       		.uleb128 0x1
+ 1048 0121 12       		.uleb128 0x12
+ 1049 0122 06       		.uleb128 0x6
+ 1050 0123 40       		.uleb128 0x40
+ 1051 0124 18       		.uleb128 0x18
+ 1052 0125 9642     		.uleb128 0x2116
+ 1053 0127 19       		.uleb128 0x19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 22
+
+
+ 1054 0128 01       		.uleb128 0x1
+ 1055 0129 13       		.uleb128 0x13
+ 1056 012a 00       		.byte	0
+ 1057 012b 00       		.byte	0
+ 1058 012c 14       		.uleb128 0x14
+ 1059 012d 0B       		.uleb128 0xb
+ 1060 012e 01       		.byte	0x1
+ 1061 012f 11       		.uleb128 0x11
+ 1062 0130 01       		.uleb128 0x1
+ 1063 0131 12       		.uleb128 0x12
+ 1064 0132 06       		.uleb128 0x6
+ 1065 0133 01       		.uleb128 0x1
+ 1066 0134 13       		.uleb128 0x13
+ 1067 0135 00       		.byte	0
+ 1068 0136 00       		.byte	0
+ 1069 0137 15       		.uleb128 0x15
+ 1070 0138 34       		.uleb128 0x34
+ 1071 0139 00       		.byte	0
+ 1072 013a 03       		.uleb128 0x3
+ 1073 013b 0E       		.uleb128 0xe
+ 1074 013c 3A       		.uleb128 0x3a
+ 1075 013d 0B       		.uleb128 0xb
+ 1076 013e 3B       		.uleb128 0x3b
+ 1077 013f 0B       		.uleb128 0xb
+ 1078 0140 49       		.uleb128 0x49
+ 1079 0141 13       		.uleb128 0x13
+ 1080 0142 02       		.uleb128 0x2
+ 1081 0143 18       		.uleb128 0x18
+ 1082 0144 00       		.byte	0
+ 1083 0145 00       		.byte	0
+ 1084 0146 16       		.uleb128 0x16
+ 1085 0147 01       		.uleb128 0x1
+ 1086 0148 01       		.byte	0x1
+ 1087 0149 49       		.uleb128 0x49
+ 1088 014a 13       		.uleb128 0x13
+ 1089 014b 01       		.uleb128 0x1
+ 1090 014c 13       		.uleb128 0x13
+ 1091 014d 00       		.byte	0
+ 1092 014e 00       		.byte	0
+ 1093 014f 17       		.uleb128 0x17
+ 1094 0150 21       		.uleb128 0x21
+ 1095 0151 00       		.byte	0
+ 1096 0152 49       		.uleb128 0x49
+ 1097 0153 13       		.uleb128 0x13
+ 1098 0154 2F       		.uleb128 0x2f
+ 1099 0155 0B       		.uleb128 0xb
+ 1100 0156 00       		.byte	0
+ 1101 0157 00       		.byte	0
+ 1102 0158 18       		.uleb128 0x18
+ 1103 0159 26       		.uleb128 0x26
+ 1104 015a 00       		.byte	0
+ 1105 015b 49       		.uleb128 0x49
+ 1106 015c 13       		.uleb128 0x13
+ 1107 015d 00       		.byte	0
+ 1108 015e 00       		.byte	0
+ 1109 015f 19       		.uleb128 0x19
+ 1110 0160 34       		.uleb128 0x34
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 23
+
+
+ 1111 0161 00       		.byte	0
+ 1112 0162 03       		.uleb128 0x3
+ 1113 0163 0E       		.uleb128 0xe
+ 1114 0164 3A       		.uleb128 0x3a
+ 1115 0165 0B       		.uleb128 0xb
+ 1116 0166 3B       		.uleb128 0x3b
+ 1117 0167 0B       		.uleb128 0xb
+ 1118 0168 49       		.uleb128 0x49
+ 1119 0169 13       		.uleb128 0x13
+ 1120 016a 3F       		.uleb128 0x3f
+ 1121 016b 19       		.uleb128 0x19
+ 1122 016c 02       		.uleb128 0x2
+ 1123 016d 18       		.uleb128 0x18
+ 1124 016e 00       		.byte	0
+ 1125 016f 00       		.byte	0
+ 1126 0170 1A       		.uleb128 0x1a
+ 1127 0171 2E       		.uleb128 0x2e
+ 1128 0172 00       		.byte	0
+ 1129 0173 3F       		.uleb128 0x3f
+ 1130 0174 19       		.uleb128 0x19
+ 1131 0175 03       		.uleb128 0x3
+ 1132 0176 0E       		.uleb128 0xe
+ 1133 0177 3A       		.uleb128 0x3a
+ 1134 0178 0B       		.uleb128 0xb
+ 1135 0179 3B       		.uleb128 0x3b
+ 1136 017a 0B       		.uleb128 0xb
+ 1137 017b 27       		.uleb128 0x27
+ 1138 017c 19       		.uleb128 0x19
+ 1139 017d 49       		.uleb128 0x49
+ 1140 017e 13       		.uleb128 0x13
+ 1141 017f 3C       		.uleb128 0x3c
+ 1142 0180 19       		.uleb128 0x19
+ 1143 0181 00       		.byte	0
+ 1144 0182 00       		.byte	0
+ 1145 0183 1B       		.uleb128 0x1b
+ 1146 0184 2E       		.uleb128 0x2e
+ 1147 0185 01       		.byte	0x1
+ 1148 0186 3F       		.uleb128 0x3f
+ 1149 0187 19       		.uleb128 0x19
+ 1150 0188 03       		.uleb128 0x3
+ 1151 0189 0E       		.uleb128 0xe
+ 1152 018a 3A       		.uleb128 0x3a
+ 1153 018b 0B       		.uleb128 0xb
+ 1154 018c 3B       		.uleb128 0x3b
+ 1155 018d 0B       		.uleb128 0xb
+ 1156 018e 27       		.uleb128 0x27
+ 1157 018f 19       		.uleb128 0x19
+ 1158 0190 3C       		.uleb128 0x3c
+ 1159 0191 19       		.uleb128 0x19
+ 1160 0192 01       		.uleb128 0x1
+ 1161 0193 13       		.uleb128 0x13
+ 1162 0194 00       		.byte	0
+ 1163 0195 00       		.byte	0
+ 1164 0196 1C       		.uleb128 0x1c
+ 1165 0197 05       		.uleb128 0x5
+ 1166 0198 00       		.byte	0
+ 1167 0199 49       		.uleb128 0x49
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 24
+
+
+ 1168 019a 13       		.uleb128 0x13
+ 1169 019b 00       		.byte	0
+ 1170 019c 00       		.byte	0
+ 1171 019d 1D       		.uleb128 0x1d
+ 1172 019e 2E       		.uleb128 0x2e
+ 1173 019f 00       		.byte	0
+ 1174 01a0 3F       		.uleb128 0x3f
+ 1175 01a1 19       		.uleb128 0x19
+ 1176 01a2 03       		.uleb128 0x3
+ 1177 01a3 0E       		.uleb128 0xe
+ 1178 01a4 3A       		.uleb128 0x3a
+ 1179 01a5 0B       		.uleb128 0xb
+ 1180 01a6 3B       		.uleb128 0x3b
+ 1181 01a7 0B       		.uleb128 0xb
+ 1182 01a8 27       		.uleb128 0x27
+ 1183 01a9 19       		.uleb128 0x19
+ 1184 01aa 3C       		.uleb128 0x3c
+ 1185 01ab 19       		.uleb128 0x19
+ 1186 01ac 00       		.byte	0
+ 1187 01ad 00       		.byte	0
+ 1188 01ae 1E       		.uleb128 0x1e
+ 1189 01af 2E       		.uleb128 0x2e
+ 1190 01b0 01       		.byte	0x1
+ 1191 01b1 3F       		.uleb128 0x3f
+ 1192 01b2 19       		.uleb128 0x19
+ 1193 01b3 03       		.uleb128 0x3
+ 1194 01b4 0E       		.uleb128 0xe
+ 1195 01b5 3A       		.uleb128 0x3a
+ 1196 01b6 0B       		.uleb128 0xb
+ 1197 01b7 3B       		.uleb128 0x3b
+ 1198 01b8 0B       		.uleb128 0xb
+ 1199 01b9 49       		.uleb128 0x49
+ 1200 01ba 13       		.uleb128 0x13
+ 1201 01bb 3C       		.uleb128 0x3c
+ 1202 01bc 19       		.uleb128 0x19
+ 1203 01bd 00       		.byte	0
+ 1204 01be 00       		.byte	0
+ 1205 01bf 1F       		.uleb128 0x1f
+ 1206 01c0 18       		.uleb128 0x18
+ 1207 01c1 00       		.byte	0
+ 1208 01c2 00       		.byte	0
+ 1209 01c3 00       		.byte	0
+ 1210 01c4 00       		.byte	0
+ 1211              		.section	.debug_loc,"",%progbits
+ 1212              	.Ldebug_loc0:
+ 1213              	.LLST0:
+ 1214 0000 00000000 		.4byte	.LVL0
+ 1215 0004 0A000000 		.4byte	.LVL1
+ 1216 0008 0100     		.2byte	0x1
+ 1217 000a 50       		.byte	0x50
+ 1218 000b 0A000000 		.4byte	.LVL1
+ 1219 000f 28000000 		.4byte	.LFE34
+ 1220 0013 0400     		.2byte	0x4
+ 1221 0015 F3       		.byte	0xf3
+ 1222 0016 01       		.uleb128 0x1
+ 1223 0017 50       		.byte	0x50
+ 1224 0018 9F       		.byte	0x9f
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 25
+
+
+ 1225 0019 00000000 		.4byte	0
+ 1226 001d 00000000 		.4byte	0
+ 1227              	.LLST1:
+ 1228 0021 00000000 		.4byte	.LVL0
+ 1229 0025 0E000000 		.4byte	.LVL2
+ 1230 0029 0100     		.2byte	0x1
+ 1231 002b 51       		.byte	0x51
+ 1232 002c 0E000000 		.4byte	.LVL2
+ 1233 0030 28000000 		.4byte	.LFE34
+ 1234 0034 0400     		.2byte	0x4
+ 1235 0036 F3       		.byte	0xf3
+ 1236 0037 01       		.uleb128 0x1
+ 1237 0038 51       		.byte	0x51
+ 1238 0039 9F       		.byte	0x9f
+ 1239 003a 00000000 		.4byte	0
+ 1240 003e 00000000 		.4byte	0
+ 1241              	.LLST2:
+ 1242 0042 02000000 		.4byte	.LVL3
+ 1243 0046 06000000 		.4byte	.LVL4
+ 1244 004a 0200     		.2byte	0x2
+ 1245 004c 30       		.byte	0x30
+ 1246 004d 9F       		.byte	0x9f
+ 1247 004e 06000000 		.4byte	.LVL4
+ 1248 0052 0D000000 		.4byte	.LVL5-1
+ 1249 0056 0100     		.2byte	0x1
+ 1250 0058 50       		.byte	0x50
+ 1251 0059 00000000 		.4byte	0
+ 1252 005d 00000000 		.4byte	0
+ 1253              	.LLST3:
+ 1254 0061 02000000 		.4byte	.LVL3
+ 1255 0065 12000000 		.4byte	.LVL6
+ 1256 0069 0200     		.2byte	0x2
+ 1257 006b 30       		.byte	0x30
+ 1258 006c 9F       		.byte	0x9f
+ 1259 006d 12000000 		.4byte	.LVL6
+ 1260 0071 28000000 		.4byte	.LVL10
+ 1261 0075 0100     		.2byte	0x1
+ 1262 0077 54       		.byte	0x54
+ 1263 0078 00000000 		.4byte	0
+ 1264 007c 00000000 		.4byte	0
+ 1265              	.LLST4:
+ 1266 0080 02000000 		.4byte	.LVL3
+ 1267 0084 1A000000 		.4byte	.LVL8
+ 1268 0088 0200     		.2byte	0x2
+ 1269 008a 30       		.byte	0x30
+ 1270 008b 9F       		.byte	0x9f
+ 1271 008c 1A000000 		.4byte	.LVL8
+ 1272 0090 1F000000 		.4byte	.LVL9-1
+ 1273 0094 0100     		.2byte	0x1
+ 1274 0096 51       		.byte	0x51
+ 1275 0097 00000000 		.4byte	0
+ 1276 009b 00000000 		.4byte	0
+ 1277              	.LLST5:
+ 1278 009f 2A000000 		.4byte	.LVL18
+ 1279 00a3 2E000000 		.4byte	.LVL19
+ 1280 00a7 0100     		.2byte	0x1
+ 1281 00a9 50       		.byte	0x50
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 26
+
+
+ 1282 00aa 00000000 		.4byte	0
+ 1283 00ae 00000000 		.4byte	0
+ 1284              	.LLST6:
+ 1285 00b2 1E000000 		.4byte	.LVL16
+ 1286 00b6 24000000 		.4byte	.LVL17
+ 1287 00ba 0100     		.2byte	0x1
+ 1288 00bc 50       		.byte	0x50
+ 1289 00bd 00000000 		.4byte	0
+ 1290 00c1 00000000 		.4byte	0
+ 1291              		.section	.debug_aranges,"",%progbits
+ 1292 0000 54000000 		.4byte	0x54
+ 1293 0004 0200     		.2byte	0x2
+ 1294 0006 00000000 		.4byte	.Ldebug_info0
+ 1295 000a 04       		.byte	0x4
+ 1296 000b 00       		.byte	0
+ 1297 000c 0000     		.2byte	0
+ 1298 000e 0000     		.2byte	0
+ 1299 0010 00000000 		.4byte	.LFB34
+ 1300 0014 28000000 		.4byte	.LFE34-.LFB34
+ 1301 0018 00000000 		.4byte	.LFB35
+ 1302 001c 30000000 		.4byte	.LFE35-.LFB35
+ 1303 0020 00000000 		.4byte	.LFB36
+ 1304 0024 14000000 		.4byte	.LFE36-.LFB36
+ 1305 0028 00000000 		.4byte	.LFB37
+ 1306 002c 10000000 		.4byte	.LFE37-.LFB37
+ 1307 0030 00000000 		.4byte	.LFB38
+ 1308 0034 0C000000 		.4byte	.LFE38-.LFB38
+ 1309 0038 00000000 		.4byte	.LFB39
+ 1310 003c 0C000000 		.4byte	.LFE39-.LFB39
+ 1311 0040 00000000 		.4byte	.LFB40
+ 1312 0044 18000000 		.4byte	.LFE40-.LFB40
+ 1313 0048 00000000 		.4byte	.LFB41
+ 1314 004c 40000000 		.4byte	.LFE41-.LFB41
+ 1315 0050 00000000 		.4byte	0
+ 1316 0054 00000000 		.4byte	0
+ 1317              		.section	.debug_ranges,"",%progbits
+ 1318              	.Ldebug_ranges0:
+ 1319 0000 00000000 		.4byte	.LFB34
+ 1320 0004 28000000 		.4byte	.LFE34
+ 1321 0008 00000000 		.4byte	.LFB35
+ 1322 000c 30000000 		.4byte	.LFE35
+ 1323 0010 00000000 		.4byte	.LFB36
+ 1324 0014 14000000 		.4byte	.LFE36
+ 1325 0018 00000000 		.4byte	.LFB37
+ 1326 001c 10000000 		.4byte	.LFE37
+ 1327 0020 00000000 		.4byte	.LFB38
+ 1328 0024 0C000000 		.4byte	.LFE38
+ 1329 0028 00000000 		.4byte	.LFB39
+ 1330 002c 0C000000 		.4byte	.LFE39
+ 1331 0030 00000000 		.4byte	.LFB40
+ 1332 0034 18000000 		.4byte	.LFE40
+ 1333 0038 00000000 		.4byte	.LFB41
+ 1334 003c 40000000 		.4byte	.LFE41
+ 1335 0040 00000000 		.4byte	0
+ 1336 0044 00000000 		.4byte	0
+ 1337              		.section	.debug_line,"",%progbits
+ 1338              	.Ldebug_line0:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 27
+
+
+ 1339 0000 24020000 		.section	.debug_str,"MS",%progbits,1
+ 1339      02007F01 
+ 1339      00000201 
+ 1339      FB0E0D00 
+ 1339      01010101 
+ 1340              	.LASF33:
+ 1341 0000 6C617374 		.ascii	"last_enc_count\000"
+ 1341      5F656E63 
+ 1341      5F636F75 
+ 1341      6E7400
+ 1342              	.LASF5:
+ 1343 000f 5F5F696E 		.ascii	"__int8_t\000"
+ 1343      74385F74 
+ 1343      00
+ 1344              	.LASF28:
+ 1345 0018 456E636F 		.ascii	"Encoder_Reset\000"
+ 1345      6465725F 
+ 1345      52657365 
+ 1345      7400
+ 1346              	.LASF24:
+ 1347 0026 625F7069 		.ascii	"b_pin\000"
+ 1347      6E00
+ 1348              	.LASF32:
+ 1349 002c 656E635F 		.ascii	"enc_count\000"
+ 1349      636F756E 
+ 1349      7400
+ 1350              	.LASF41:
+ 1351 0036 456E636F 		.ascii	"Encoder_Intr_Enable\000"
+ 1351      6465725F 
+ 1351      496E7472 
+ 1351      5F456E61 
+ 1351      626C6500 
+ 1352              	.LASF6:
+ 1353 004a 5F5F696E 		.ascii	"__int32_t\000"
+ 1353      7433325F 
+ 1353      7400
+ 1354              	.LASF49:
+ 1355 0054 456E636F 		.ascii	"Encoder_Intr_StartEx\000"
+ 1355      6465725F 
+ 1355      496E7472 
+ 1355      5F537461 
+ 1355      72744578 
+ 1356              	.LASF43:
+ 1357 0069 2E2E5C73 		.ascii	"..\\source\\encoder.c\000"
+ 1357      6F757263 
+ 1357      655C656E 
+ 1357      636F6465 
+ 1357      722E6300 
+ 1358              	.LASF4:
+ 1359 007d 73686F72 		.ascii	"short unsigned int\000"
+ 1359      7420756E 
+ 1359      7369676E 
+ 1359      65642069 
+ 1359      6E7400
+ 1360              	.LASF31:
+ 1361 0090 64656C74 		.ascii	"delta_count\000"
+ 1361      615F636F 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 28
+
+
+ 1361      756E7400 
+ 1362              	.LASF20:
+ 1363 009c 646F7562 		.ascii	"double\000"
+ 1363      6C6500
+ 1364              	.LASF25:
+ 1365 00a3 456E636F 		.ascii	"Encoder_GetVelocity\000"
+ 1365      6465725F 
+ 1365      47657456 
+ 1365      656C6F63 
+ 1365      69747900 
+ 1366              	.LASF47:
+ 1367 00b7 456E636F 		.ascii	"Encoder_Init\000"
+ 1367      6465725F 
+ 1367      496E6974 
+ 1367      00
+ 1368              	.LASF13:
+ 1369 00c4 696E7438 		.ascii	"int8_t\000"
+ 1369      5F7400
+ 1370              	.LASF39:
+ 1371 00cb 456E636F 		.ascii	"Encoder_Pins_Read\000"
+ 1371      6465725F 
+ 1371      50696E73 
+ 1371      5F526561 
+ 1371      6400
+ 1372              	.LASF19:
+ 1373 00dd 666C6F61 		.ascii	"float\000"
+ 1373      7400
+ 1374              	.LASF30:
+ 1375 00e3 636F756E 		.ascii	"counts_per_second\000"
+ 1375      74735F70 
+ 1375      65725F73 
+ 1375      65636F6E 
+ 1375      6400
+ 1376              	.LASF2:
+ 1377 00f5 756E7369 		.ascii	"unsigned char\000"
+ 1377      676E6564 
+ 1377      20636861 
+ 1377      7200
+ 1378              	.LASF29:
+ 1379 0103 456E636F 		.ascii	"Encoder_Update\000"
+ 1379      6465725F 
+ 1379      55706461 
+ 1379      746500
+ 1380              	.LASF17:
+ 1381 0112 696E7431 		.ascii	"int16\000"
+ 1381      3600
+ 1382              	.LASF8:
+ 1383 0118 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1383      20756E73 
+ 1383      69676E65 
+ 1383      6420696E 
+ 1383      7400
+ 1384              	.LASF18:
+ 1385 012a 696E7433 		.ascii	"int32\000"
+ 1385      3200
+ 1386              	.LASF36:
+ 1387 0130 656E635F 		.ascii	"enc_states\000"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 29
+
+
+ 1387      73746174 
+ 1387      657300
+ 1388              	.LASF38:
+ 1389 013b 456E636F 		.ascii	"Encoder_Pins_ClearInterrupt\000"
+ 1389      6465725F 
+ 1389      50696E73 
+ 1389      5F436C65 
+ 1389      6172496E 
+ 1390              	.LASF40:
+ 1391 0157 456E636F 		.ascii	"Encoder_Intr_Disable\000"
+ 1391      6465725F 
+ 1391      496E7472 
+ 1391      5F446973 
+ 1391      61626C65 
+ 1392              	.LASF27:
+ 1393 016c 456E636F 		.ascii	"Encoder_Start\000"
+ 1393      6465725F 
+ 1393      53746172 
+ 1393      7400
+ 1394              	.LASF34:
+ 1395 017a 656E635F 		.ascii	"enc_velocity\000"
+ 1395      76656C6F 
+ 1395      63697479 
+ 1395      00
+ 1396              	.LASF3:
+ 1397 0187 73686F72 		.ascii	"short int\000"
+ 1397      7420696E 
+ 1397      7400
+ 1398              	.LASF16:
+ 1399 0191 75696E74 		.ascii	"uint32\000"
+ 1399      333200
+ 1400              	.LASF0:
+ 1401 0198 756E7369 		.ascii	"unsigned int\000"
+ 1401      676E6564 
+ 1401      20696E74 
+ 1401      00
+ 1402              	.LASF22:
+ 1403 01a5 70696E73 		.ascii	"pins\000"
+ 1403      00
+ 1404              	.LASF10:
+ 1405 01aa 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1405      206C6F6E 
+ 1405      6720756E 
+ 1405      7369676E 
+ 1405      65642069 
+ 1406              	.LASF21:
+ 1407 01c1 63796973 		.ascii	"cyisraddress\000"
+ 1407      72616464 
+ 1407      72657373 
+ 1407      00
+ 1408              	.LASF37:
+ 1409 01ce 6F6C645F 		.ascii	"old_ab\000"
+ 1409      616200
+ 1410              	.LASF45:
+ 1411 01d5 43616C63 		.ascii	"CalcCount\000"
+ 1411      436F756E 
+ 1411      7400
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 30
+
+
+ 1412              	.LASF14:
+ 1413 01df 696E7433 		.ascii	"int32_t\000"
+ 1413      325F7400 
+ 1414              	.LASF11:
+ 1415 01e7 73697A65 		.ascii	"sizetype\000"
+ 1415      74797065 
+ 1415      00
+ 1416              	.LASF35:
+ 1417 01f0 6C617374 		.ascii	"last_velocity_time\000"
+ 1417      5F76656C 
+ 1417      6F636974 
+ 1417      795F7469 
+ 1417      6D6500
+ 1418              	.LASF9:
+ 1419 0203 6C6F6E67 		.ascii	"long long int\000"
+ 1419      206C6F6E 
+ 1419      6720696E 
+ 1419      7400
+ 1420              	.LASF12:
+ 1421 0211 63686172 		.ascii	"char\000"
+ 1421      00
+ 1422              	.LASF26:
+ 1423 0216 456E636F 		.ascii	"Encoder_GetCount\000"
+ 1423      6465725F 
+ 1423      47657443 
+ 1423      6F756E74 
+ 1423      00
+ 1424              	.LASF44:
+ 1425 0227 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\Arlobot\\Board-Ki"
+ 1425      726F6A65 
+ 1425      6374735C 
+ 1425      41726C6F 
+ 1425      426F745C 
+ 1426 0255 7450726F 		.ascii	"tProg.cydsn\000"
+ 1426      672E6379 
+ 1426      64736E00 
+ 1427              	.LASF42:
+ 1428 0261 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1428      4320342E 
+ 1428      392E3320 
+ 1428      32303135 
+ 1428      30333033 
+ 1429 0294 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1429      20726576 
+ 1429      6973696F 
+ 1429      6E203232 
+ 1429      31323230 
+ 1430 02c7 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1430      66756E63 
+ 1430      74696F6E 
+ 1430      2D736563 
+ 1430      74696F6E 
+ 1431              	.LASF23:
+ 1432 02ef 615F7069 		.ascii	"a_pin\000"
+ 1432      6E00
+ 1433              	.LASF15:
+ 1434 02f5 75696E74 		.ascii	"uint8\000"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccIkYHGZ.s 			page 31
+
+
+ 1434      3800
+ 1435              	.LASF7:
+ 1436 02fb 6C6F6E67 		.ascii	"long int\000"
+ 1436      20696E74 
+ 1436      00
+ 1437              	.LASF50:
+ 1438 0304 6D696C6C 		.ascii	"millis\000"
+ 1438      697300
+ 1439              	.LASF1:
+ 1440 030b 7369676E 		.ascii	"signed char\000"
+ 1440      65642063 
+ 1440      68617200 
+ 1441              	.LASF46:
+ 1442 0317 456E636F 		.ascii	"Encoder_Interrupt_Handler\000"
+ 1442      6465725F 
+ 1442      496E7465 
+ 1442      72727570 
+ 1442      745F4861 
+ 1443              	.LASF48:
+ 1444 0331 666F726D 		.ascii	"formatted_string\000"
+ 1444      61747465 
+ 1444      645F7374 
+ 1444      72696E67 
+ 1444      00
+ 1445              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

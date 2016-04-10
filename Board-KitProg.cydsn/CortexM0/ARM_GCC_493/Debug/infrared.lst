@@ -1,0 +1,1883 @@
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"infrared.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Infrared_Init,"ax",%progbits
+  18              		.align	2
+  19              		.global	Infrared_Init
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	Infrared_Init, %function
+  23              	Infrared_Init:
+  24              	.LFB34:
+  25              		.file 1 "..\\source\\infrared.c"
+   1:..\source/infrared.c **** /* ========================================
+   2:..\source/infrared.c ****  *
+   3:..\source/infrared.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:..\source/infrared.c ****  * All Rights Reserved
+   5:..\source/infrared.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:..\source/infrared.c ****  *
+   7:..\source/infrared.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:..\source/infrared.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:..\source/infrared.c ****  *
+  10:..\source/infrared.c ****  * ========================================
+  11:..\source/infrared.c **** */
+  12:..\source/infrared.c **** 
+  13:..\source/infrared.c **** #include <math.h>
+  14:..\source/infrared.c **** #include <stdio.h>
+  15:..\source/infrared.c **** #include "infrared.h"
+  16:..\source/infrared.c **** #include "debug.h"
+  17:..\source/infrared.c **** #include "time.h"
+  18:..\source/infrared.c **** #include "i2c.h"
+  19:..\source/infrared.c **** #include "utils.h"
+  20:..\source/infrared.c **** #include "hwconfig.h"
+  21:..\source/infrared.c **** 
+  22:..\source/infrared.c **** /* The Sharp IR sensors have a range of 10 to 80 cm.  Working backward, this limits the ADC values 
+  23:..\source/infrared.c **** 
+  24:..\source/infrared.c **** ADC    Voltage        Pow          cm           mm
+  25:..\source/infrared.c **** 327  0.399169922  2.875203044  80.10315682  801.0315682
+  26:..\source/infrared.c **** 350  0.427246094  2.659011307  74.08005503  740.8005503
+  27:..\source/infrared.c **** 375  0.457763672  2.456192932  68.42953508  684.2953508
+  28:..\source/infrared.c **** ...
+  29:..\source/infrared.c **** 1950 2.380371094  0.368857512  10.27637027  102.7637027
+  30:..\source/infrared.c **** 1995 2.435302734  0.359305694  10.01025665  100.1025665
+  31:..\source/infrared.c ****  */
+  32:..\source/infrared.c **** #define ADC_MIN_VALUE (327)
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 2
+
+
+  33:..\source/infrared.c **** #define ADC_MAX_VALUE (1995)
+  34:..\source/infrared.c **** 
+  35:..\source/infrared.c **** /* External voltage reference */
+  36:..\source/infrared.c **** #define ADC_REFERENCE (2.5)
+  37:..\source/infrared.c **** /* ADC range is 2 * Vref */
+  38:..\source/infrared.c **** #define ADC_FULL_RANGE (ADC_REFERENCE * 2)
+  39:..\source/infrared.c **** /* ADC 16-bit resolution */
+  40:..\source/infrared.c **** #define ADC_RESOLUTION (4096.0)
+  41:..\source/infrared.c **** /* Interpolation equation and constants taken from here: 
+  42:..\source/infrared.c ****        https://www.tindie.com/products/upgradeindustries/sharp-10-80cm-infrared-distance-sensor-gp2
+  43:..\source/infrared.c ****  */
+  44:..\source/infrared.c **** #define SHARP_IR_SENSOR_INTERPOLATION_CONST_1 (27.86)
+  45:..\source/infrared.c **** #define SHARP_IR_SENSOR_INTERPOLATION_CONST_2 (-1.15)
+  46:..\source/infrared.c **** 
+  47:..\source/infrared.c **** /* ADC measurements are taken continuously.  Sampling (or reporting) is done every 100ms */
+  48:..\source/infrared.c **** #define SAMPLE_PERIOD (100) /* ms */
+  49:..\source/infrared.c **** 
+  50:..\source/infrared.c **** static uint32 last_time;
+  51:..\source/infrared.c **** 
+  52:..\source/infrared.c **** void Infrared_Init()
+  53:..\source/infrared.c **** {
+  26              		.loc 1 53 0
+  27              		.cfi_startproc
+  54:..\source/infrared.c ****     last_time = 0;
+  28              		.loc 1 54 0
+  29 0000 0022     		mov	r2, #0
+  30 0002 014B     		ldr	r3, .L2
+  31 0004 1A60     		str	r2, [r3]
+  55:..\source/infrared.c **** }
+  32              		.loc 1 55 0
+  33              		@ sp needed
+  34 0006 7047     		bx	lr
+  35              	.L3:
+  36              		.align	2
+  37              	.L2:
+  38 0008 00000000 		.word	.LANCHOR0
+  39              		.cfi_endproc
+  40              	.LFE34:
+  41              		.size	Infrared_Init, .-Infrared_Init
+  42              		.section	.text.Infrared_Start,"ax",%progbits
+  43              		.align	2
+  44              		.global	Infrared_Start
+  45              		.code	16
+  46              		.thumb_func
+  47              		.type	Infrared_Start, %function
+  48              	Infrared_Start:
+  49              	.LFB35:
+  56:..\source/infrared.c **** 
+  57:..\source/infrared.c **** void Infrared_Start()
+  58:..\source/infrared.c **** {
+  50              		.loc 1 58 0
+  51              		.cfi_startproc
+  52 0000 08B5     		push	{r3, lr}
+  53              		.cfi_def_cfa_offset 8
+  54              		.cfi_offset 3, -8
+  55              		.cfi_offset 14, -4
+  59:..\source/infrared.c ****     ADC_Infrared_Start();
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 3
+
+
+  56              		.loc 1 59 0
+  57 0002 FFF7FEFF 		bl	ADC_Infrared_Start
+  58              	.LVL0:
+  60:..\source/infrared.c **** }
+  59              		.loc 1 60 0
+  60              		@ sp needed
+  61 0006 08BD     		pop	{r3, pc}
+  62              		.cfi_endproc
+  63              	.LFE35:
+  64              		.size	Infrared_Start, .-Infrared_Start
+  65              		.global	__aeabi_i2d
+  66              		.global	__aeabi_dmul
+  67              		.global	__aeabi_d2f
+  68              		.global	__aeabi_f2d
+  69              		.section	.rodata.cst2,"aM",%progbits,2
+  70              		.align	1
+  71              	.LC2:
+  72 0000 4701     		.short	327
+  73              		.section	.text.Infrared_Measure,"ax",%progbits
+  74              		.align	2
+  75              		.global	Infrared_Measure
+  76              		.code	16
+  77              		.thumb_func
+  78              		.type	Infrared_Measure, %function
+  79              	Infrared_Measure:
+  80              	.LFB36:
+  61:..\source/infrared.c **** 
+  62:..\source/infrared.c **** void Infrared_Measure()
+  63:..\source/infrared.c **** {
+  81              		.loc 1 63 0
+  82              		.cfi_startproc
+  83 0000 10B5     		push	{r4, lr}
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 4, -8
+  86              		.cfi_offset 14, -4
+  64:..\source/infrared.c ****     int8 ii;
+  65:..\source/infrared.c ****     uint16 result;
+  66:..\source/infrared.c ****     float voltage;
+  67:..\source/infrared.c ****     float distance;
+  68:..\source/infrared.c ****     uint32 adc_result;
+  69:..\source/infrared.c ****     
+  70:..\source/infrared.c ****     ADC_Infrared_StartConvert();
+  87              		.loc 1 70 0
+  88 0002 FFF7FEFF 		bl	ADC_Infrared_StartConvert
+  89              	.LVL1:
+  71:..\source/infrared.c ****     /* The way this should work is that the call will block until all channels are read which shoul
+  72:..\source/infrared.c ****        Running without any connected hardware causes this routine to hang forever, so maybe its bec
+  73:..\source/infrared.c ****        hardware or there may be something else.  For now, using RETURN_STATUS -- revisit when hardw
+  74:..\source/infrared.c ****      */
+  75:..\source/infrared.c ****     //ADC_Infrared_IsEndConversion(ADC_Infrared_WAIT_FOR_RESULT);
+  76:..\source/infrared.c ****     adc_result = ADC_Infrared_IsEndConversion(ADC_Infrared_RETURN_STATUS);
+  90              		.loc 1 76 0
+  91 0006 0120     		mov	r0, #1
+  92 0008 FFF7FEFF 		bl	ADC_Infrared_IsEndConversion
+  93              	.LVL2:
+  77:..\source/infrared.c ****     if (!adc_result)
+  94              		.loc 1 77 0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 4
+
+
+  95 000c 0028     		cmp	r0, #0
+  96 000e 37D0     		beq	.L5
+  78:..\source/infrared.c ****     {
+  79:..\source/infrared.c ****         return;
+  80:..\source/infrared.c ****     }
+  81:..\source/infrared.c ****     
+  82:..\source/infrared.c ****     if (millis() - last_time > SAMPLE_PERIOD)
+  97              		.loc 1 82 0
+  98 0010 FFF7FEFF 		bl	millis
+  99              	.LVL3:
+ 100 0014 1B4B     		ldr	r3, .L12
+ 101 0016 1B68     		ldr	r3, [r3]
+ 102 0018 C01A     		sub	r0, r0, r3
+ 103 001a 6428     		cmp	r0, #100
+ 104 001c 30D9     		bls	.L5
+  83:..\source/infrared.c ****     {
+  84:..\source/infrared.c ****         last_time = millis();
+ 105              		.loc 1 84 0
+ 106 001e FFF7FEFF 		bl	millis
+ 107              	.LVL4:
+ 108 0022 184B     		ldr	r3, .L12
+ 109 0024 1860     		str	r0, [r3]
+ 110              	.LVL5:
+  85:..\source/infrared.c ****         for (ii = 0; ii < NUM_INFRARED_SENSORS; ++ii)
+ 111              		.loc 1 85 0
+ 112 0026 0024     		mov	r4, #0
+ 113 0028 27E0     		b	.L7
+ 114              	.LVL6:
+ 115              	.L10:
+  86:..\source/infrared.c ****         {
+  87:..\source/infrared.c ****             result = ADC_Infrared_GetResult16(ii);
+ 116              		.loc 1 87 0
+ 117 002a 60B2     		sxtb	r0, r4
+ 118 002c FFF7FEFF 		bl	ADC_Infrared_GetResult16
+ 119              	.LVL7:
+ 120 0030 80B2     		uxth	r0, r0
+ 121              	.LVL8:
+  88:..\source/infrared.c ****             result = constrain(result, ADC_MIN_VALUE, ADC_MAX_VALUE);
+ 122              		.loc 1 88 0
+ 123 0032 154B     		ldr	r3, .L12+4
+ 124 0034 C318     		add	r3, r0, r3
+ 125 0036 9BB2     		uxth	r3, r3
+ 126 0038 144A     		ldr	r2, .L12+8
+ 127 003a 9342     		cmp	r3, r2
+ 128 003c 08D9     		bls	.L11
+ 129              		.loc 1 88 0 is_stmt 0 discriminator 1
+ 130 003e 031C     		add	r3, r0, #0
+ 131 0040 4822     		mov	r2, #72
+ 132 0042 FF32     		add	r2, r2, #255
+ 133 0044 9042     		cmp	r0, r2
+ 134 0046 01D2     		bcs	.L9
+ 135 0048 114B     		ldr	r3, .L12+12
+ 136 004a 1B88     		ldrh	r3, [r3]
+ 137              	.L9:
+ 138 004c 98B2     		uxth	r0, r3
+ 139              	.LVL9:
+ 140 004e 00E0     		b	.L8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 5
+
+
+ 141              	.LVL10:
+ 142              	.L11:
+ 143              		.loc 1 88 0
+ 144 0050 1048     		ldr	r0, .L12+16
+ 145              	.LVL11:
+ 146              	.L8:
+  89:..\source/infrared.c ****             voltage = (result * ADC_FULL_RANGE) / ADC_RESOLUTION;
+ 147              		.loc 1 89 0 is_stmt 1 discriminator 4
+ 148 0052 FFF7FEFF 		bl	__aeabi_i2d
+ 149              	.LVL12:
+ 150 0056 0022     		mov	r2, #0
+ 151 0058 0F4B     		ldr	r3, .L12+20
+ 152 005a FFF7FEFF 		bl	__aeabi_dmul
+ 153              	.LVL13:
+ 154 005e 0022     		mov	r2, #0
+ 155 0060 0E4B     		ldr	r3, .L12+24
+ 156 0062 FFF7FEFF 		bl	__aeabi_dmul
+ 157              	.LVL14:
+ 158 0066 FFF7FEFF 		bl	__aeabi_d2f
+ 159              	.LVL15:
+  90:..\source/infrared.c ****             distance = SHARP_IR_SENSOR_INTERPOLATION_CONST_1 * pow(voltage, SHARP_IR_SENSOR_INTERPO
+ 160              		.loc 1 90 0 discriminator 4
+ 161 006a FFF7FEFF 		bl	__aeabi_f2d
+ 162              	.LVL16:
+ 163 006e 0C4A     		ldr	r2, .L12+28
+ 164 0070 0C4B     		ldr	r3, .L12+32
+ 165 0072 FFF7FEFF 		bl	pow
+ 166              	.LVL17:
+  85:..\source/infrared.c ****         {
+ 167              		.loc 1 85 0 discriminator 4
+ 168 0076 0134     		add	r4, r4, #1
+ 169              	.LVL18:
+ 170 0078 E4B2     		uxtb	r4, r4
+ 171              	.LVL19:
+ 172              	.L7:
+  85:..\source/infrared.c ****         {
+ 173              		.loc 1 85 0 is_stmt 0 discriminator 2
+ 174 007a 63B2     		sxtb	r3, r4
+ 175 007c 032B     		cmp	r3, #3
+ 176 007e D4DD     		ble	.L10
+ 177              	.LVL20:
+ 178              	.L5:
+  91:..\source/infrared.c ****             //COMMS_DEBUG_PRINT(0, "ir distance %f\n\r", distance);
+  92:..\source/infrared.c ****             //I2c_WriteInfraredDistance(ii, distance);
+  93:..\source/infrared.c ****         }
+  94:..\source/infrared.c ****     }
+  95:..\source/infrared.c **** }
+ 179              		.loc 1 95 0 is_stmt 1
+ 180              		@ sp needed
+ 181 0080 10BD     		pop	{r4, pc}
+ 182              	.L13:
+ 183 0082 C046     		.align	2
+ 184              	.L12:
+ 185 0084 00000000 		.word	.LANCHOR0
+ 186 0088 35F8FFFF 		.word	-1995
+ 187 008c 34F80000 		.word	63540
+ 188 0090 00000000 		.word	.LC2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 6
+
+
+ 189 0094 CB070000 		.word	1995
+ 190 0098 00001440 		.word	1075052544
+ 191 009c 0000303F 		.word	1060110336
+ 192 00a0 66666666 		.word	1717986918
+ 193 00a4 6666F2BF 		.word	-1074633114
+ 194              		.cfi_endproc
+ 195              	.LFE36:
+ 196              		.size	Infrared_Measure, .-Infrared_Measure
+ 197              		.global	__aeabi_f2uiz
+ 198              		.section	.rodata.cst2
+ 199              		.align	1
+ 200              	.LC10:
+ 201 0002 4701     		.short	327
+ 202              		.section	.text.Infrared_Test,"ax",%progbits
+ 203              		.align	2
+ 204              		.global	Infrared_Test
+ 205              		.code	16
+ 206              		.thumb_func
+ 207              		.type	Infrared_Test, %function
+ 208              	Infrared_Test:
+ 209              	.LFB37:
+  96:..\source/infrared.c **** 
+  97:..\source/infrared.c **** void Infrared_Test()
+  98:..\source/infrared.c **** {
+ 210              		.loc 1 98 0
+ 211              		.cfi_startproc
+ 212 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 213              		.cfi_def_cfa_offset 20
+ 214              		.cfi_offset 4, -20
+ 215              		.cfi_offset 5, -16
+ 216              		.cfi_offset 6, -12
+ 217              		.cfi_offset 7, -8
+ 218              		.cfi_offset 14, -4
+ 219 0002 87B0     		sub	sp, sp, #28
+ 220              		.cfi_def_cfa_offset 48
+  99:..\source/infrared.c ****     int8 ii;
+ 100:..\source/infrared.c ****     uint16 result;
+ 101:..\source/infrared.c ****     float voltage;
+ 102:..\source/infrared.c ****     float distance;
+ 103:..\source/infrared.c ****     static uint32 last_time;
+ 104:..\source/infrared.c ****     
+ 105:..\source/infrared.c ****     
+ 106:..\source/infrared.c ****     ADC_Infrared_StartConvert();
+ 221              		.loc 1 106 0
+ 222 0004 FFF7FEFF 		bl	ADC_Infrared_StartConvert
+ 223              	.LVL21:
+ 107:..\source/infrared.c ****     ADC_Infrared_IsEndConversion(ADC_Infrared_WAIT_FOR_RESULT);
+ 224              		.loc 1 107 0
+ 225 0008 0220     		mov	r0, #2
+ 226 000a FFF7FEFF 		bl	ADC_Infrared_IsEndConversion
+ 227              	.LVL22:
+ 108:..\source/infrared.c **** 
+ 109:..\source/infrared.c ****     if (millis() - last_time > 500)
+ 228              		.loc 1 109 0
+ 229 000e FFF7FEFF 		bl	millis
+ 230              	.LVL23:
+ 231 0012 324B     		ldr	r3, .L21
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 7
+
+
+ 232 0014 5B68     		ldr	r3, [r3, #4]
+ 233 0016 C01A     		sub	r0, r0, r3
+ 234 0018 FA23     		mov	r3, #250
+ 235 001a 5B00     		lsl	r3, r3, #1
+ 236 001c 9842     		cmp	r0, r3
+ 237 001e 5AD9     		bls	.L14
+ 110:..\source/infrared.c ****     {
+ 111:..\source/infrared.c ****         last_time = millis();
+ 238              		.loc 1 111 0
+ 239 0020 FFF7FEFF 		bl	millis
+ 240              	.LVL24:
+ 241 0024 2D4B     		ldr	r3, .L21
+ 242 0026 5860     		str	r0, [r3, #4]
+ 243              	.LVL25:
+ 112:..\source/infrared.c ****         for (ii = 0; ii < 1; ++ii)
+ 244              		.loc 1 112 0
+ 245 0028 0024     		mov	r4, #0
+ 246 002a 51E0     		b	.L16
+ 247              	.LVL26:
+ 248              	.L19:
+ 113:..\source/infrared.c ****         {
+ 114:..\source/infrared.c ****             result = ADC_Infrared_GetResult16(ii);
+ 249              		.loc 1 114 0
+ 250 002c 60B2     		sxtb	r0, r4
+ 251 002e FFF7FEFF 		bl	ADC_Infrared_GetResult16
+ 252              	.LVL27:
+ 253 0032 80B2     		uxth	r0, r0
+ 254              	.LVL28:
+ 115:..\source/infrared.c ****             result = constrain(result, 327, 1995);
+ 255              		.loc 1 115 0
+ 256 0034 2A4B     		ldr	r3, .L21+4
+ 257 0036 C318     		add	r3, r0, r3
+ 258 0038 9BB2     		uxth	r3, r3
+ 259 003a 2A4A     		ldr	r2, .L21+8
+ 260 003c 9342     		cmp	r3, r2
+ 261 003e 08D9     		bls	.L20
+ 262              		.loc 1 115 0 is_stmt 0 discriminator 1
+ 263 0040 061C     		add	r6, r0, #0
+ 264 0042 4823     		mov	r3, #72
+ 265 0044 FF33     		add	r3, r3, #255
+ 266 0046 9842     		cmp	r0, r3
+ 267 0048 01D2     		bcs	.L18
+ 268 004a 274B     		ldr	r3, .L21+12
+ 269 004c 1E88     		ldrh	r6, [r3]
+ 270              	.L18:
+ 271 004e B6B2     		uxth	r6, r6
+ 272 0050 00E0     		b	.L17
+ 273              	.L20:
+ 274              		.loc 1 115 0
+ 275 0052 264E     		ldr	r6, .L21+16
+ 276              	.L17:
+ 277              	.LVL29:
+ 116:..\source/infrared.c ****             
+ 117:..\source/infrared.c ****             voltage = (result * 5.0) / 4096.0;
+ 278              		.loc 1 117 0 is_stmt 1 discriminator 4
+ 279 0054 301C     		mov	r0, r6
+ 280 0056 FFF7FEFF 		bl	__aeabi_i2d
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 8
+
+
+ 281              	.LVL30:
+ 282 005a 0022     		mov	r2, #0
+ 283 005c 244B     		ldr	r3, .L21+20
+ 284 005e FFF7FEFF 		bl	__aeabi_dmul
+ 285              	.LVL31:
+ 286 0062 0022     		mov	r2, #0
+ 287 0064 234B     		ldr	r3, .L21+24
+ 288 0066 FFF7FEFF 		bl	__aeabi_dmul
+ 289              	.LVL32:
+ 290 006a FFF7FEFF 		bl	__aeabi_d2f
+ 291              	.LVL33:
+ 292 006e 071C     		add	r7, r0, #0
+ 293              	.LVL34:
+ 118:..\source/infrared.c ****             distance = 27.86 * pow(voltage, -1.15);
+ 294              		.loc 1 118 0 discriminator 4
+ 295 0070 FFF7FEFF 		bl	__aeabi_f2d
+ 296              	.LVL35:
+ 297 0074 204A     		ldr	r2, .L21+28
+ 298 0076 214B     		ldr	r3, .L21+32
+ 299 0078 FFF7FEFF 		bl	pow
+ 300              	.LVL36:
+ 301 007c 204A     		ldr	r2, .L21+36
+ 302 007e 214B     		ldr	r3, .L21+40
+ 303 0080 FFF7FEFF 		bl	__aeabi_dmul
+ 304              	.LVL37:
+ 305 0084 FFF7FEFF 		bl	__aeabi_d2f
+ 306              	.LVL38:
+ 307 0088 051C     		add	r5, r0, #0
+ 308              	.LVL39:
+ 309              	.LBB2:
+ 119:..\source/infrared.c ****             COMMS_DEBUG_PRINT(0, "%d:%d,%d,%d\n\r", ii, result, (uint16)voltage*100, (uint16)distan
+ 310              		.loc 1 119 0 discriminator 4
+ 311 008a 381C     		add	r0, r7, #0
+ 312              	.LVL40:
+ 313 008c FFF7FEFF 		bl	__aeabi_f2uiz
+ 314              	.LVL41:
+ 315 0090 87B2     		uxth	r7, r0
+ 316              	.LVL42:
+ 317 0092 281C     		add	r0, r5, #0
+ 318 0094 FFF7FEFF 		bl	__aeabi_f2uiz
+ 319              	.LVL43:
+ 320 0098 83B2     		uxth	r3, r0
+ 321 009a 1B4D     		ldr	r5, .L21+44
+ 322              	.LVL44:
+ 323 009c 1B4A     		ldr	r2, .L21+48
+ 324 009e 0092     		str	r2, [sp]
+ 325 00a0 7722     		mov	r2, #119
+ 326 00a2 0192     		str	r2, [sp, #4]
+ 327 00a4 62B2     		sxtb	r2, r4
+ 328 00a6 0292     		str	r2, [sp, #8]
+ 329 00a8 0396     		str	r6, [sp, #12]
+ 330 00aa 6420     		mov	r0, #100
+ 331 00ac 7843     		mul	r0, r7
+ 332 00ae 0490     		str	r0, [sp, #16]
+ 333 00b0 9800     		lsl	r0, r3, #2
+ 334 00b2 C018     		add	r0, r0, r3
+ 335 00b4 4000     		lsl	r0, r0, #1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 9
+
+
+ 336 00b6 0590     		str	r0, [sp, #20]
+ 337 00b8 281C     		mov	r0, r5
+ 338 00ba 8021     		mov	r1, #128
+ 339 00bc 4900     		lsl	r1, r1, #1
+ 340 00be 144A     		ldr	r2, .L21+52
+ 341 00c0 144B     		ldr	r3, .L21+56
+ 342 00c2 FFF7FEFF 		bl	snprintf
+ 343              	.LVL45:
+ 344 00c6 281C     		mov	r0, r5
+ 345 00c8 FFF7FEFF 		bl	UARTCOMMS_UartPutString
+ 346              	.LVL46:
+ 347              	.LBE2:
+ 112:..\source/infrared.c ****         {
+ 348              		.loc 1 112 0 discriminator 4
+ 349 00cc 0134     		add	r4, r4, #1
+ 350              	.LVL47:
+ 351 00ce E4B2     		uxtb	r4, r4
+ 352              	.LVL48:
+ 353              	.L16:
+ 112:..\source/infrared.c ****         {
+ 354              		.loc 1 112 0 is_stmt 0 discriminator 1
+ 355 00d0 63B2     		sxtb	r3, r4
+ 356 00d2 002B     		cmp	r3, #0
+ 357 00d4 AADD     		ble	.L19
+ 358              	.LVL49:
+ 359              	.L14:
+ 120:..\source/infrared.c ****         }
+ 121:..\source/infrared.c ****     }
+ 122:..\source/infrared.c ****     
+ 123:..\source/infrared.c **** }
+ 360              		.loc 1 123 0 is_stmt 1
+ 361 00d6 07B0     		add	sp, sp, #28
+ 362              		@ sp needed
+ 363 00d8 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 364              	.L22:
+ 365 00da C046     		.align	2
+ 366              	.L21:
+ 367 00dc 00000000 		.word	.LANCHOR0
+ 368 00e0 35F8FFFF 		.word	-1995
+ 369 00e4 34F80000 		.word	63540
+ 370 00e8 02000000 		.word	.LC10
+ 371 00ec CB070000 		.word	1995
+ 372 00f0 00001440 		.word	1075052544
+ 373 00f4 0000303F 		.word	1060110336
+ 374 00f8 66666666 		.word	1717986918
+ 375 00fc 6666F2BF 		.word	-1074633114
+ 376 0100 5C8FC2F5 		.word	-171798692
+ 377 0104 28DC3B40 		.word	1077664808
+ 378 0108 00000000 		.word	formatted_string
+ 379 010c 00000000 		.word	.LANCHOR1
+ 380 0110 00000000 		.word	.LC5
+ 381 0114 34000000 		.word	.LC7
+ 382              		.cfi_endproc
+ 383              	.LFE37:
+ 384              		.size	Infrared_Test, .-Infrared_Test
+ 385              		.comm	formatted_string,256,4
+ 386              		.section	.rodata
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 10
+
+
+ 387              		.align	2
+ 388              		.set	.LANCHOR1,. + 0
+ 389              		.type	__func__.7431, %object
+ 390              		.size	__func__.7431, 14
+ 391              	__func__.7431:
+ 392 0000 496E6672 		.ascii	"Infrared_Test\000"
+ 392      61726564 
+ 392      5F546573 
+ 392      7400
+ 393 000e 0000     		.section	.rodata.str1.4,"aMS",%progbits,1
+ 394              		.align	2
+ 395              	.LC5:
+ 396 0000 5B46494C 		.ascii	"[FILE : %s, FUNC : %s, LINE : %d]: %d:%d,%d,%d\012\015"
+ 396      45203A20 
+ 396      25732C20 
+ 396      46554E43 
+ 396      203A2025 
+ 397 0030 00       		.ascii	"\000"
+ 398 0031 000000   		.space	3
+ 399              	.LC7:
+ 400 0034 2E2E5C73 		.ascii	"..\\source\\infrared.c\000"
+ 400      6F757263 
+ 400      655C696E 
+ 400      66726172 
+ 400      65642E63 
+ 401 0049 000000   		.bss
+ 402              		.align	2
+ 403              		.set	.LANCHOR0,. + 0
+ 404              		.type	last_time, %object
+ 405              		.size	last_time, 4
+ 406              	last_time:
+ 407 0000 00000000 		.space	4
+ 408              		.type	last_time.7430, %object
+ 409              		.size	last_time.7430, 4
+ 410              	last_time.7430:
+ 411 0004 00000000 		.space	4
+ 412              		.text
+ 413              	.Letext0:
+ 414              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 415              		.file 3 "Generated_Source\\PSoC4/cytypes.h"
+ 416              		.file 4 "Generated_Source\\PSoC4/ADC_Infrared.h"
+ 417              		.file 5 "..\\source\\time.h"
+ 418              		.file 6 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 419              		.file 7 "..\\source\\debug.h"
+ 420              		.file 8 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 421              		.section	.debug_info,"",%progbits
+ 422              	.Ldebug_info0:
+ 423 0000 CF030000 		.4byte	0x3cf
+ 424 0004 0400     		.2byte	0x4
+ 425 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 426 000a 04       		.byte	0x4
+ 427 000b 01       		.uleb128 0x1
+ 428 000c 5D010000 		.4byte	.LASF35
+ 429 0010 01       		.byte	0x1
+ 430 0011 07000000 		.4byte	.LASF36
+ 431 0015 FE010000 		.4byte	.LASF37
+ 432 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 11
+
+
+ 433 001d 00000000 		.4byte	0
+ 434 0021 00000000 		.4byte	.Ldebug_line0
+ 435 0025 02       		.uleb128 0x2
+ 436 0026 04       		.byte	0x4
+ 437 0027 05       		.byte	0x5
+ 438 0028 696E7400 		.ascii	"int\000"
+ 439 002c 03       		.uleb128 0x3
+ 440 002d 00000000 		.4byte	.LASF14
+ 441 0031 02       		.byte	0x2
+ 442 0032 D4       		.byte	0xd4
+ 443 0033 37000000 		.4byte	0x37
+ 444 0037 04       		.uleb128 0x4
+ 445 0038 04       		.byte	0x4
+ 446 0039 07       		.byte	0x7
+ 447 003a 1B010000 		.4byte	.LASF0
+ 448 003e 04       		.uleb128 0x4
+ 449 003f 01       		.byte	0x1
+ 450 0040 06       		.byte	0x6
+ 451 0041 4B000000 		.4byte	.LASF1
+ 452 0045 04       		.uleb128 0x4
+ 453 0046 01       		.byte	0x1
+ 454 0047 08       		.byte	0x8
+ 455 0048 57000000 		.4byte	.LASF2
+ 456 004c 04       		.uleb128 0x4
+ 457 004d 02       		.byte	0x2
+ 458 004e 05       		.byte	0x5
+ 459 004f 38020000 		.4byte	.LASF3
+ 460 0053 04       		.uleb128 0x4
+ 461 0054 02       		.byte	0x2
+ 462 0055 07       		.byte	0x7
+ 463 0056 7D000000 		.4byte	.LASF4
+ 464 005a 04       		.uleb128 0x4
+ 465 005b 04       		.byte	0x4
+ 466 005c 05       		.byte	0x5
+ 467 005d 51020000 		.4byte	.LASF5
+ 468 0061 04       		.uleb128 0x4
+ 469 0062 04       		.byte	0x4
+ 470 0063 07       		.byte	0x7
+ 471 0064 6B000000 		.4byte	.LASF6
+ 472 0068 04       		.uleb128 0x4
+ 473 0069 08       		.byte	0x8
+ 474 006a 05       		.byte	0x5
+ 475 006b EB010000 		.4byte	.LASF7
+ 476 006f 04       		.uleb128 0x4
+ 477 0070 08       		.byte	0x8
+ 478 0071 07       		.byte	0x7
+ 479 0072 28010000 		.4byte	.LASF8
+ 480 0076 04       		.uleb128 0x4
+ 481 0077 04       		.byte	0x4
+ 482 0078 07       		.byte	0x7
+ 483 0079 54010000 		.4byte	.LASF9
+ 484 007d 05       		.uleb128 0x5
+ 485 007e 04       		.byte	0x4
+ 486 007f 83000000 		.4byte	0x83
+ 487 0083 04       		.uleb128 0x4
+ 488 0084 01       		.byte	0x1
+ 489 0085 08       		.byte	0x8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 12
+
+
+ 490 0086 F9010000 		.4byte	.LASF10
+ 491 008a 05       		.uleb128 0x5
+ 492 008b 04       		.byte	0x4
+ 493 008c 90000000 		.4byte	0x90
+ 494 0090 06       		.uleb128 0x6
+ 495 0091 83000000 		.4byte	0x83
+ 496 0095 04       		.uleb128 0x4
+ 497 0096 08       		.byte	0x8
+ 498 0097 04       		.byte	0x4
+ 499 0098 B0000000 		.4byte	.LASF11
+ 500 009c 04       		.uleb128 0x4
+ 501 009d 04       		.byte	0x4
+ 502 009e 04       		.byte	0x4
+ 503 009f 45000000 		.4byte	.LASF12
+ 504 00a3 04       		.uleb128 0x4
+ 505 00a4 08       		.byte	0x8
+ 506 00a5 04       		.byte	0x4
+ 507 00a6 61020000 		.4byte	.LASF13
+ 508 00aa 03       		.uleb128 0x3
+ 509 00ab F7000000 		.4byte	.LASF15
+ 510 00af 03       		.byte	0x3
+ 511 00b0 C3       		.byte	0xc3
+ 512 00b1 53000000 		.4byte	0x53
+ 513 00b5 03       		.uleb128 0x3
+ 514 00b6 03010000 		.4byte	.LASF16
+ 515 00ba 03       		.byte	0x3
+ 516 00bb C4       		.byte	0xc4
+ 517 00bc 61000000 		.4byte	0x61
+ 518 00c0 03       		.uleb128 0x3
+ 519 00c1 FE000000 		.4byte	.LASF17
+ 520 00c5 03       		.byte	0x3
+ 521 00c6 C5       		.byte	0xc5
+ 522 00c7 3E000000 		.4byte	0x3e
+ 523 00cb 03       		.uleb128 0x3
+ 524 00cc 65000000 		.4byte	.LASF18
+ 525 00d0 03       		.byte	0x3
+ 526 00d1 C6       		.byte	0xc6
+ 527 00d2 4C000000 		.4byte	0x4c
+ 528 00d6 07       		.uleb128 0x7
+ 529 00d7 1C000000 		.4byte	.LASF38
+ 530 00db 01       		.byte	0x1
+ 531 00dc 34       		.byte	0x34
+ 532 00dd 00000000 		.4byte	.LFB34
+ 533 00e1 0C000000 		.4byte	.LFE34-.LFB34
+ 534 00e5 01       		.uleb128 0x1
+ 535 00e6 9C       		.byte	0x9c
+ 536 00e7 08       		.uleb128 0x8
+ 537 00e8 42020000 		.4byte	.LASF19
+ 538 00ec 01       		.byte	0x1
+ 539 00ed 39       		.byte	0x39
+ 540 00ee 00000000 		.4byte	.LFB35
+ 541 00f2 08000000 		.4byte	.LFE35-.LFB35
+ 542 00f6 01       		.uleb128 0x1
+ 543 00f7 9C       		.byte	0x9c
+ 544 00f8 06010000 		.4byte	0x106
+ 545 00fc 09       		.uleb128 0x9
+ 546 00fd 06000000 		.4byte	.LVL0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 13
+
+
+ 547 0101 41030000 		.4byte	0x341
+ 548 0105 00       		.byte	0
+ 549 0106 0A       		.uleb128 0xa
+ 550 0107 0A010000 		.4byte	.LASF20
+ 551 010b 01       		.byte	0x1
+ 552 010c 3E       		.byte	0x3e
+ 553 010d 00000000 		.4byte	.LFB36
+ 554 0111 A8000000 		.4byte	.LFE36-.LFB36
+ 555 0115 01       		.uleb128 0x1
+ 556 0116 9C       		.byte	0x9c
+ 557 0117 B1010000 		.4byte	0x1b1
+ 558 011b 0B       		.uleb128 0xb
+ 559 011c 696900   		.ascii	"ii\000"
+ 560 011f 01       		.byte	0x1
+ 561 0120 40       		.byte	0x40
+ 562 0121 C0000000 		.4byte	0xc0
+ 563 0125 00000000 		.4byte	.LLST0
+ 564 0129 0C       		.uleb128 0xc
+ 565 012a 4D010000 		.4byte	.LASF21
+ 566 012e 01       		.byte	0x1
+ 567 012f 41       		.byte	0x41
+ 568 0130 AA000000 		.4byte	0xaa
+ 569 0134 2A000000 		.4byte	.LLST1
+ 570 0138 0C       		.uleb128 0xc
+ 571 0139 90000000 		.4byte	.LASF22
+ 572 013d 01       		.byte	0x1
+ 573 013e 42       		.byte	0x42
+ 574 013f 9C000000 		.4byte	0x9c
+ 575 0143 48000000 		.4byte	.LLST2
+ 576 0147 0D       		.uleb128 0xd
+ 577 0148 3C000000 		.4byte	.LASF25
+ 578 014c 01       		.byte	0x1
+ 579 014d 43       		.byte	0x43
+ 580 014e 9C000000 		.4byte	0x9c
+ 581 0152 0C       		.uleb128 0xc
+ 582 0153 9A020000 		.4byte	.LASF23
+ 583 0157 01       		.byte	0x1
+ 584 0158 44       		.byte	0x44
+ 585 0159 B5000000 		.4byte	0xb5
+ 586 015d 5B000000 		.4byte	.LLST3
+ 587 0161 09       		.uleb128 0x9
+ 588 0162 06000000 		.4byte	.LVL1
+ 589 0166 48030000 		.4byte	0x348
+ 590 016a 0E       		.uleb128 0xe
+ 591 016b 0C000000 		.4byte	.LVL2
+ 592 016f 4F030000 		.4byte	0x34f
+ 593 0173 7D010000 		.4byte	0x17d
+ 594 0177 0F       		.uleb128 0xf
+ 595 0178 01       		.uleb128 0x1
+ 596 0179 50       		.byte	0x50
+ 597 017a 01       		.uleb128 0x1
+ 598 017b 31       		.byte	0x31
+ 599 017c 00       		.byte	0
+ 600 017d 09       		.uleb128 0x9
+ 601 017e 14000000 		.4byte	.LVL3
+ 602 0182 64030000 		.4byte	0x364
+ 603 0186 09       		.uleb128 0x9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 14
+
+
+ 604 0187 22000000 		.4byte	.LVL4
+ 605 018b 64030000 		.4byte	0x364
+ 606 018f 0E       		.uleb128 0xe
+ 607 0190 30000000 		.4byte	.LVL7
+ 608 0194 75030000 		.4byte	0x375
+ 609 0198 A7010000 		.4byte	0x1a7
+ 610 019c 0F       		.uleb128 0xf
+ 611 019d 01       		.uleb128 0x1
+ 612 019e 50       		.byte	0x50
+ 613 019f 06       		.uleb128 0x6
+ 614 01a0 74       		.byte	0x74
+ 615 01a1 00       		.sleb128 0
+ 616 01a2 48       		.byte	0x48
+ 617 01a3 24       		.byte	0x24
+ 618 01a4 48       		.byte	0x48
+ 619 01a5 26       		.byte	0x26
+ 620 01a6 00       		.byte	0
+ 621 01a7 09       		.uleb128 0x9
+ 622 01a8 76000000 		.4byte	.LVL17
+ 623 01ac 8A030000 		.4byte	0x38a
+ 624 01b0 00       		.byte	0
+ 625 01b1 0A       		.uleb128 0xa
+ 626 01b2 3F010000 		.4byte	.LASF24
+ 627 01b6 01       		.byte	0x1
+ 628 01b7 61       		.byte	0x61
+ 629 01b8 00000000 		.4byte	.LFB37
+ 630 01bc 18010000 		.4byte	.LFE37-.LFB37
+ 631 01c0 01       		.uleb128 0x1
+ 632 01c1 9C       		.byte	0x9c
+ 633 01c2 FA020000 		.4byte	0x2fa
+ 634 01c6 0B       		.uleb128 0xb
+ 635 01c7 696900   		.ascii	"ii\000"
+ 636 01ca 01       		.byte	0x1
+ 637 01cb 63       		.byte	0x63
+ 638 01cc C0000000 		.4byte	0xc0
+ 639 01d0 6E000000 		.4byte	.LLST4
+ 640 01d4 0C       		.uleb128 0xc
+ 641 01d5 4D010000 		.4byte	.LASF21
+ 642 01d9 01       		.byte	0x1
+ 643 01da 64       		.byte	0x64
+ 644 01db AA000000 		.4byte	0xaa
+ 645 01df 98000000 		.4byte	.LLST5
+ 646 01e3 0C       		.uleb128 0xc
+ 647 01e4 90000000 		.4byte	.LASF22
+ 648 01e8 01       		.byte	0x1
+ 649 01e9 65       		.byte	0x65
+ 650 01ea 9C000000 		.4byte	0x9c
+ 651 01ee B6000000 		.4byte	.LLST6
+ 652 01f2 0C       		.uleb128 0xc
+ 653 01f3 3C000000 		.4byte	.LASF25
+ 654 01f7 01       		.byte	0x1
+ 655 01f8 66       		.byte	0x66
+ 656 01f9 9C000000 		.4byte	0x9c
+ 657 01fd D4000000 		.4byte	.LLST7
+ 658 0201 10       		.uleb128 0x10
+ 659 0202 ED000000 		.4byte	.LASF26
+ 660 0206 01       		.byte	0x1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 15
+
+
+ 661 0207 67       		.byte	0x67
+ 662 0208 B5000000 		.4byte	0xb5
+ 663 020c 05       		.uleb128 0x5
+ 664 020d 03       		.byte	0x3
+ 665 020e 04000000 		.4byte	last_time.7430
+ 666 0212 11       		.uleb128 0x11
+ 667 0213 2A000000 		.4byte	.LASF27
+ 668 0217 0A030000 		.4byte	0x30a
+ 669 021b 05       		.uleb128 0x5
+ 670 021c 03       		.byte	0x3
+ 671 021d 00000000 		.4byte	__func__.7431
+ 672 0221 12       		.uleb128 0x12
+ 673 0222 8A000000 		.4byte	.LBB2
+ 674 0226 42000000 		.4byte	.LBE2-.LBB2
+ 675 022a AA020000 		.4byte	0x2aa
+ 676 022e 13       		.uleb128 0x13
+ 677 022f 98000000 		.4byte	.LASF30
+ 678 0233 01       		.byte	0x1
+ 679 0234 77       		.byte	0x77
+ 680 0235 25000000 		.4byte	0x25
+ 681 0239 3F020000 		.4byte	0x23f
+ 682 023d 14       		.uleb128 0x14
+ 683 023e 00       		.byte	0
+ 684 023f 0E       		.uleb128 0xe
+ 685 0240 C6000000 		.4byte	.LVL45
+ 686 0244 A4030000 		.4byte	0x3a4
+ 687 0248 99020000 		.4byte	0x299
+ 688 024c 0F       		.uleb128 0xf
+ 689 024d 01       		.uleb128 0x1
+ 690 024e 53       		.byte	0x53
+ 691 024f 05       		.uleb128 0x5
+ 692 0250 03       		.byte	0x3
+ 693 0251 34000000 		.4byte	.LC7
+ 694 0255 0F       		.uleb128 0xf
+ 695 0256 01       		.uleb128 0x1
+ 696 0257 52       		.byte	0x52
+ 697 0258 05       		.uleb128 0x5
+ 698 0259 03       		.byte	0x3
+ 699 025a 00000000 		.4byte	.LC5
+ 700 025e 0F       		.uleb128 0xf
+ 701 025f 01       		.uleb128 0x1
+ 702 0260 51       		.byte	0x51
+ 703 0261 03       		.uleb128 0x3
+ 704 0262 0A       		.byte	0xa
+ 705 0263 0001     		.2byte	0x100
+ 706 0265 0F       		.uleb128 0xf
+ 707 0266 01       		.uleb128 0x1
+ 708 0267 50       		.byte	0x50
+ 709 0268 02       		.uleb128 0x2
+ 710 0269 75       		.byte	0x75
+ 711 026a 00       		.sleb128 0
+ 712 026b 0F       		.uleb128 0xf
+ 713 026c 02       		.uleb128 0x2
+ 714 026d 7D       		.byte	0x7d
+ 715 026e 10       		.sleb128 16
+ 716 026f 05       		.uleb128 0x5
+ 717 0270 77       		.byte	0x77
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 16
+
+
+ 718 0271 00       		.sleb128 0
+ 719 0272 08       		.byte	0x8
+ 720 0273 64       		.byte	0x64
+ 721 0274 1E       		.byte	0x1e
+ 722 0275 0F       		.uleb128 0xf
+ 723 0276 02       		.uleb128 0x2
+ 724 0277 7D       		.byte	0x7d
+ 725 0278 0C       		.sleb128 12
+ 726 0279 02       		.uleb128 0x2
+ 727 027a 76       		.byte	0x76
+ 728 027b 00       		.sleb128 0
+ 729 027c 0F       		.uleb128 0xf
+ 730 027d 02       		.uleb128 0x2
+ 731 027e 7D       		.byte	0x7d
+ 732 027f 08       		.sleb128 8
+ 733 0280 06       		.uleb128 0x6
+ 734 0281 74       		.byte	0x74
+ 735 0282 00       		.sleb128 0
+ 736 0283 48       		.byte	0x48
+ 737 0284 24       		.byte	0x24
+ 738 0285 48       		.byte	0x48
+ 739 0286 26       		.byte	0x26
+ 740 0287 0F       		.uleb128 0xf
+ 741 0288 02       		.uleb128 0x2
+ 742 0289 7D       		.byte	0x7d
+ 743 028a 04       		.sleb128 4
+ 744 028b 02       		.uleb128 0x2
+ 745 028c 08       		.byte	0x8
+ 746 028d 77       		.byte	0x77
+ 747 028e 0F       		.uleb128 0xf
+ 748 028f 02       		.uleb128 0x2
+ 749 0290 7D       		.byte	0x7d
+ 750 0291 00       		.sleb128 0
+ 751 0292 05       		.uleb128 0x5
+ 752 0293 03       		.byte	0x3
+ 753 0294 00000000 		.4byte	.LANCHOR1
+ 754 0298 00       		.byte	0
+ 755 0299 15       		.uleb128 0x15
+ 756 029a CC000000 		.4byte	.LVL46
+ 757 029e C5030000 		.4byte	0x3c5
+ 758 02a2 0F       		.uleb128 0xf
+ 759 02a3 01       		.uleb128 0x1
+ 760 02a4 50       		.byte	0x50
+ 761 02a5 02       		.uleb128 0x2
+ 762 02a6 75       		.byte	0x75
+ 763 02a7 00       		.sleb128 0
+ 764 02a8 00       		.byte	0
+ 765 02a9 00       		.byte	0
+ 766 02aa 09       		.uleb128 0x9
+ 767 02ab 08000000 		.4byte	.LVL21
+ 768 02af 48030000 		.4byte	0x348
+ 769 02b3 0E       		.uleb128 0xe
+ 770 02b4 0E000000 		.4byte	.LVL22
+ 771 02b8 4F030000 		.4byte	0x34f
+ 772 02bc C6020000 		.4byte	0x2c6
+ 773 02c0 0F       		.uleb128 0xf
+ 774 02c1 01       		.uleb128 0x1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 17
+
+
+ 775 02c2 50       		.byte	0x50
+ 776 02c3 01       		.uleb128 0x1
+ 777 02c4 32       		.byte	0x32
+ 778 02c5 00       		.byte	0
+ 779 02c6 09       		.uleb128 0x9
+ 780 02c7 12000000 		.4byte	.LVL23
+ 781 02cb 64030000 		.4byte	0x364
+ 782 02cf 09       		.uleb128 0x9
+ 783 02d0 24000000 		.4byte	.LVL24
+ 784 02d4 64030000 		.4byte	0x364
+ 785 02d8 0E       		.uleb128 0xe
+ 786 02d9 32000000 		.4byte	.LVL27
+ 787 02dd 75030000 		.4byte	0x375
+ 788 02e1 F0020000 		.4byte	0x2f0
+ 789 02e5 0F       		.uleb128 0xf
+ 790 02e6 01       		.uleb128 0x1
+ 791 02e7 50       		.byte	0x50
+ 792 02e8 06       		.uleb128 0x6
+ 793 02e9 74       		.byte	0x74
+ 794 02ea 00       		.sleb128 0
+ 795 02eb 48       		.byte	0x48
+ 796 02ec 24       		.byte	0x24
+ 797 02ed 48       		.byte	0x48
+ 798 02ee 26       		.byte	0x26
+ 799 02ef 00       		.byte	0
+ 800 02f0 09       		.uleb128 0x9
+ 801 02f1 7C000000 		.4byte	.LVL36
+ 802 02f5 8A030000 		.4byte	0x38a
+ 803 02f9 00       		.byte	0
+ 804 02fa 16       		.uleb128 0x16
+ 805 02fb 83000000 		.4byte	0x83
+ 806 02ff 0A030000 		.4byte	0x30a
+ 807 0303 17       		.uleb128 0x17
+ 808 0304 76000000 		.4byte	0x76
+ 809 0308 0D       		.byte	0xd
+ 810 0309 00       		.byte	0
+ 811 030a 06       		.uleb128 0x6
+ 812 030b FA020000 		.4byte	0x2fa
+ 813 030f 10       		.uleb128 0x10
+ 814 0310 ED000000 		.4byte	.LASF26
+ 815 0314 01       		.byte	0x1
+ 816 0315 32       		.byte	0x32
+ 817 0316 B5000000 		.4byte	0xb5
+ 818 031a 05       		.uleb128 0x5
+ 819 031b 03       		.byte	0x3
+ 820 031c 00000000 		.4byte	last_time
+ 821 0320 16       		.uleb128 0x16
+ 822 0321 83000000 		.4byte	0x83
+ 823 0325 30030000 		.4byte	0x330
+ 824 0329 17       		.uleb128 0x17
+ 825 032a 76000000 		.4byte	0x76
+ 826 032e FF       		.byte	0xff
+ 827 032f 00       		.byte	0
+ 828 0330 18       		.uleb128 0x18
+ 829 0331 A5020000 		.4byte	.LASF39
+ 830 0335 07       		.byte	0x7
+ 831 0336 08       		.byte	0x8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 18
+
+
+ 832 0337 20030000 		.4byte	0x320
+ 833 033b 05       		.uleb128 0x5
+ 834 033c 03       		.byte	0x3
+ 835 033d 00000000 		.4byte	formatted_string
+ 836 0341 19       		.uleb128 0x19
+ 837 0342 87020000 		.4byte	.LASF28
+ 838 0346 04       		.byte	0x4
+ 839 0347 98       		.byte	0x98
+ 840 0348 19       		.uleb128 0x19
+ 841 0349 6D020000 		.4byte	.LASF29
+ 842 034d 04       		.byte	0x4
+ 843 034e 9C       		.byte	0x9c
+ 844 034f 1A       		.uleb128 0x1a
+ 845 0350 B7000000 		.4byte	.LASF32
+ 846 0354 04       		.byte	0x4
+ 847 0355 9E       		.byte	0x9e
+ 848 0356 B5000000 		.4byte	0xb5
+ 849 035a 64030000 		.4byte	0x364
+ 850 035e 1B       		.uleb128 0x1b
+ 851 035f B5000000 		.4byte	0xb5
+ 852 0363 00       		.byte	0
+ 853 0364 13       		.uleb128 0x13
+ 854 0365 5A020000 		.4byte	.LASF31
+ 855 0369 05       		.byte	0x5
+ 856 036a 16       		.byte	0x16
+ 857 036b B5000000 		.4byte	0xb5
+ 858 036f 75030000 		.4byte	0x375
+ 859 0373 14       		.uleb128 0x14
+ 860 0374 00       		.byte	0
+ 861 0375 1A       		.uleb128 0x1a
+ 862 0376 D4000000 		.4byte	.LASF33
+ 863 037a 04       		.byte	0x4
+ 864 037b 9F       		.byte	0x9f
+ 865 037c CB000000 		.4byte	0xcb
+ 866 0380 8A030000 		.4byte	0x38a
+ 867 0384 1B       		.uleb128 0x1b
+ 868 0385 B5000000 		.4byte	0xb5
+ 869 0389 00       		.byte	0
+ 870 038a 1C       		.uleb128 0x1c
+ 871 038b 706F7700 		.ascii	"pow\000"
+ 872 038f 08       		.byte	0x8
+ 873 0390 85       		.byte	0x85
+ 874 0391 95000000 		.4byte	0x95
+ 875 0395 A4030000 		.4byte	0x3a4
+ 876 0399 1B       		.uleb128 0x1b
+ 877 039a 95000000 		.4byte	0x95
+ 878 039e 1B       		.uleb128 0x1b
+ 879 039f 95000000 		.4byte	0x95
+ 880 03a3 00       		.byte	0
+ 881 03a4 1D       		.uleb128 0x1d
+ 882 03a5 33000000 		.4byte	.LASF34
+ 883 03a9 06       		.byte	0x6
+ 884 03aa 0C01     		.2byte	0x10c
+ 885 03ac 25000000 		.4byte	0x25
+ 886 03b0 C5030000 		.4byte	0x3c5
+ 887 03b4 1B       		.uleb128 0x1b
+ 888 03b5 7D000000 		.4byte	0x7d
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 19
+
+
+ 889 03b9 1B       		.uleb128 0x1b
+ 890 03ba 2C000000 		.4byte	0x2c
+ 891 03be 1B       		.uleb128 0x1b
+ 892 03bf 8A000000 		.4byte	0x8a
+ 893 03c3 14       		.uleb128 0x14
+ 894 03c4 00       		.byte	0
+ 895 03c5 1E       		.uleb128 0x1e
+ 896 03c6 98000000 		.4byte	.LASF30
+ 897 03ca 01       		.byte	0x1
+ 898 03cb 77       		.byte	0x77
+ 899 03cc 25000000 		.4byte	0x25
+ 900 03d0 14       		.uleb128 0x14
+ 901 03d1 00       		.byte	0
+ 902 03d2 00       		.byte	0
+ 903              		.section	.debug_abbrev,"",%progbits
+ 904              	.Ldebug_abbrev0:
+ 905 0000 01       		.uleb128 0x1
+ 906 0001 11       		.uleb128 0x11
+ 907 0002 01       		.byte	0x1
+ 908 0003 25       		.uleb128 0x25
+ 909 0004 0E       		.uleb128 0xe
+ 910 0005 13       		.uleb128 0x13
+ 911 0006 0B       		.uleb128 0xb
+ 912 0007 03       		.uleb128 0x3
+ 913 0008 0E       		.uleb128 0xe
+ 914 0009 1B       		.uleb128 0x1b
+ 915 000a 0E       		.uleb128 0xe
+ 916 000b 55       		.uleb128 0x55
+ 917 000c 17       		.uleb128 0x17
+ 918 000d 11       		.uleb128 0x11
+ 919 000e 01       		.uleb128 0x1
+ 920 000f 10       		.uleb128 0x10
+ 921 0010 17       		.uleb128 0x17
+ 922 0011 00       		.byte	0
+ 923 0012 00       		.byte	0
+ 924 0013 02       		.uleb128 0x2
+ 925 0014 24       		.uleb128 0x24
+ 926 0015 00       		.byte	0
+ 927 0016 0B       		.uleb128 0xb
+ 928 0017 0B       		.uleb128 0xb
+ 929 0018 3E       		.uleb128 0x3e
+ 930 0019 0B       		.uleb128 0xb
+ 931 001a 03       		.uleb128 0x3
+ 932 001b 08       		.uleb128 0x8
+ 933 001c 00       		.byte	0
+ 934 001d 00       		.byte	0
+ 935 001e 03       		.uleb128 0x3
+ 936 001f 16       		.uleb128 0x16
+ 937 0020 00       		.byte	0
+ 938 0021 03       		.uleb128 0x3
+ 939 0022 0E       		.uleb128 0xe
+ 940 0023 3A       		.uleb128 0x3a
+ 941 0024 0B       		.uleb128 0xb
+ 942 0025 3B       		.uleb128 0x3b
+ 943 0026 0B       		.uleb128 0xb
+ 944 0027 49       		.uleb128 0x49
+ 945 0028 13       		.uleb128 0x13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 20
+
+
+ 946 0029 00       		.byte	0
+ 947 002a 00       		.byte	0
+ 948 002b 04       		.uleb128 0x4
+ 949 002c 24       		.uleb128 0x24
+ 950 002d 00       		.byte	0
+ 951 002e 0B       		.uleb128 0xb
+ 952 002f 0B       		.uleb128 0xb
+ 953 0030 3E       		.uleb128 0x3e
+ 954 0031 0B       		.uleb128 0xb
+ 955 0032 03       		.uleb128 0x3
+ 956 0033 0E       		.uleb128 0xe
+ 957 0034 00       		.byte	0
+ 958 0035 00       		.byte	0
+ 959 0036 05       		.uleb128 0x5
+ 960 0037 0F       		.uleb128 0xf
+ 961 0038 00       		.byte	0
+ 962 0039 0B       		.uleb128 0xb
+ 963 003a 0B       		.uleb128 0xb
+ 964 003b 49       		.uleb128 0x49
+ 965 003c 13       		.uleb128 0x13
+ 966 003d 00       		.byte	0
+ 967 003e 00       		.byte	0
+ 968 003f 06       		.uleb128 0x6
+ 969 0040 26       		.uleb128 0x26
+ 970 0041 00       		.byte	0
+ 971 0042 49       		.uleb128 0x49
+ 972 0043 13       		.uleb128 0x13
+ 973 0044 00       		.byte	0
+ 974 0045 00       		.byte	0
+ 975 0046 07       		.uleb128 0x7
+ 976 0047 2E       		.uleb128 0x2e
+ 977 0048 00       		.byte	0
+ 978 0049 3F       		.uleb128 0x3f
+ 979 004a 19       		.uleb128 0x19
+ 980 004b 03       		.uleb128 0x3
+ 981 004c 0E       		.uleb128 0xe
+ 982 004d 3A       		.uleb128 0x3a
+ 983 004e 0B       		.uleb128 0xb
+ 984 004f 3B       		.uleb128 0x3b
+ 985 0050 0B       		.uleb128 0xb
+ 986 0051 11       		.uleb128 0x11
+ 987 0052 01       		.uleb128 0x1
+ 988 0053 12       		.uleb128 0x12
+ 989 0054 06       		.uleb128 0x6
+ 990 0055 40       		.uleb128 0x40
+ 991 0056 18       		.uleb128 0x18
+ 992 0057 9742     		.uleb128 0x2117
+ 993 0059 19       		.uleb128 0x19
+ 994 005a 00       		.byte	0
+ 995 005b 00       		.byte	0
+ 996 005c 08       		.uleb128 0x8
+ 997 005d 2E       		.uleb128 0x2e
+ 998 005e 01       		.byte	0x1
+ 999 005f 3F       		.uleb128 0x3f
+ 1000 0060 19       		.uleb128 0x19
+ 1001 0061 03       		.uleb128 0x3
+ 1002 0062 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 21
+
+
+ 1003 0063 3A       		.uleb128 0x3a
+ 1004 0064 0B       		.uleb128 0xb
+ 1005 0065 3B       		.uleb128 0x3b
+ 1006 0066 0B       		.uleb128 0xb
+ 1007 0067 11       		.uleb128 0x11
+ 1008 0068 01       		.uleb128 0x1
+ 1009 0069 12       		.uleb128 0x12
+ 1010 006a 06       		.uleb128 0x6
+ 1011 006b 40       		.uleb128 0x40
+ 1012 006c 18       		.uleb128 0x18
+ 1013 006d 9742     		.uleb128 0x2117
+ 1014 006f 19       		.uleb128 0x19
+ 1015 0070 01       		.uleb128 0x1
+ 1016 0071 13       		.uleb128 0x13
+ 1017 0072 00       		.byte	0
+ 1018 0073 00       		.byte	0
+ 1019 0074 09       		.uleb128 0x9
+ 1020 0075 898201   		.uleb128 0x4109
+ 1021 0078 00       		.byte	0
+ 1022 0079 11       		.uleb128 0x11
+ 1023 007a 01       		.uleb128 0x1
+ 1024 007b 31       		.uleb128 0x31
+ 1025 007c 13       		.uleb128 0x13
+ 1026 007d 00       		.byte	0
+ 1027 007e 00       		.byte	0
+ 1028 007f 0A       		.uleb128 0xa
+ 1029 0080 2E       		.uleb128 0x2e
+ 1030 0081 01       		.byte	0x1
+ 1031 0082 3F       		.uleb128 0x3f
+ 1032 0083 19       		.uleb128 0x19
+ 1033 0084 03       		.uleb128 0x3
+ 1034 0085 0E       		.uleb128 0xe
+ 1035 0086 3A       		.uleb128 0x3a
+ 1036 0087 0B       		.uleb128 0xb
+ 1037 0088 3B       		.uleb128 0x3b
+ 1038 0089 0B       		.uleb128 0xb
+ 1039 008a 11       		.uleb128 0x11
+ 1040 008b 01       		.uleb128 0x1
+ 1041 008c 12       		.uleb128 0x12
+ 1042 008d 06       		.uleb128 0x6
+ 1043 008e 40       		.uleb128 0x40
+ 1044 008f 18       		.uleb128 0x18
+ 1045 0090 9642     		.uleb128 0x2116
+ 1046 0092 19       		.uleb128 0x19
+ 1047 0093 01       		.uleb128 0x1
+ 1048 0094 13       		.uleb128 0x13
+ 1049 0095 00       		.byte	0
+ 1050 0096 00       		.byte	0
+ 1051 0097 0B       		.uleb128 0xb
+ 1052 0098 34       		.uleb128 0x34
+ 1053 0099 00       		.byte	0
+ 1054 009a 03       		.uleb128 0x3
+ 1055 009b 08       		.uleb128 0x8
+ 1056 009c 3A       		.uleb128 0x3a
+ 1057 009d 0B       		.uleb128 0xb
+ 1058 009e 3B       		.uleb128 0x3b
+ 1059 009f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 22
+
+
+ 1060 00a0 49       		.uleb128 0x49
+ 1061 00a1 13       		.uleb128 0x13
+ 1062 00a2 02       		.uleb128 0x2
+ 1063 00a3 17       		.uleb128 0x17
+ 1064 00a4 00       		.byte	0
+ 1065 00a5 00       		.byte	0
+ 1066 00a6 0C       		.uleb128 0xc
+ 1067 00a7 34       		.uleb128 0x34
+ 1068 00a8 00       		.byte	0
+ 1069 00a9 03       		.uleb128 0x3
+ 1070 00aa 0E       		.uleb128 0xe
+ 1071 00ab 3A       		.uleb128 0x3a
+ 1072 00ac 0B       		.uleb128 0xb
+ 1073 00ad 3B       		.uleb128 0x3b
+ 1074 00ae 0B       		.uleb128 0xb
+ 1075 00af 49       		.uleb128 0x49
+ 1076 00b0 13       		.uleb128 0x13
+ 1077 00b1 02       		.uleb128 0x2
+ 1078 00b2 17       		.uleb128 0x17
+ 1079 00b3 00       		.byte	0
+ 1080 00b4 00       		.byte	0
+ 1081 00b5 0D       		.uleb128 0xd
+ 1082 00b6 34       		.uleb128 0x34
+ 1083 00b7 00       		.byte	0
+ 1084 00b8 03       		.uleb128 0x3
+ 1085 00b9 0E       		.uleb128 0xe
+ 1086 00ba 3A       		.uleb128 0x3a
+ 1087 00bb 0B       		.uleb128 0xb
+ 1088 00bc 3B       		.uleb128 0x3b
+ 1089 00bd 0B       		.uleb128 0xb
+ 1090 00be 49       		.uleb128 0x49
+ 1091 00bf 13       		.uleb128 0x13
+ 1092 00c0 00       		.byte	0
+ 1093 00c1 00       		.byte	0
+ 1094 00c2 0E       		.uleb128 0xe
+ 1095 00c3 898201   		.uleb128 0x4109
+ 1096 00c6 01       		.byte	0x1
+ 1097 00c7 11       		.uleb128 0x11
+ 1098 00c8 01       		.uleb128 0x1
+ 1099 00c9 31       		.uleb128 0x31
+ 1100 00ca 13       		.uleb128 0x13
+ 1101 00cb 01       		.uleb128 0x1
+ 1102 00cc 13       		.uleb128 0x13
+ 1103 00cd 00       		.byte	0
+ 1104 00ce 00       		.byte	0
+ 1105 00cf 0F       		.uleb128 0xf
+ 1106 00d0 8A8201   		.uleb128 0x410a
+ 1107 00d3 00       		.byte	0
+ 1108 00d4 02       		.uleb128 0x2
+ 1109 00d5 18       		.uleb128 0x18
+ 1110 00d6 9142     		.uleb128 0x2111
+ 1111 00d8 18       		.uleb128 0x18
+ 1112 00d9 00       		.byte	0
+ 1113 00da 00       		.byte	0
+ 1114 00db 10       		.uleb128 0x10
+ 1115 00dc 34       		.uleb128 0x34
+ 1116 00dd 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 23
+
+
+ 1117 00de 03       		.uleb128 0x3
+ 1118 00df 0E       		.uleb128 0xe
+ 1119 00e0 3A       		.uleb128 0x3a
+ 1120 00e1 0B       		.uleb128 0xb
+ 1121 00e2 3B       		.uleb128 0x3b
+ 1122 00e3 0B       		.uleb128 0xb
+ 1123 00e4 49       		.uleb128 0x49
+ 1124 00e5 13       		.uleb128 0x13
+ 1125 00e6 02       		.uleb128 0x2
+ 1126 00e7 18       		.uleb128 0x18
+ 1127 00e8 00       		.byte	0
+ 1128 00e9 00       		.byte	0
+ 1129 00ea 11       		.uleb128 0x11
+ 1130 00eb 34       		.uleb128 0x34
+ 1131 00ec 00       		.byte	0
+ 1132 00ed 03       		.uleb128 0x3
+ 1133 00ee 0E       		.uleb128 0xe
+ 1134 00ef 49       		.uleb128 0x49
+ 1135 00f0 13       		.uleb128 0x13
+ 1136 00f1 34       		.uleb128 0x34
+ 1137 00f2 19       		.uleb128 0x19
+ 1138 00f3 02       		.uleb128 0x2
+ 1139 00f4 18       		.uleb128 0x18
+ 1140 00f5 00       		.byte	0
+ 1141 00f6 00       		.byte	0
+ 1142 00f7 12       		.uleb128 0x12
+ 1143 00f8 0B       		.uleb128 0xb
+ 1144 00f9 01       		.byte	0x1
+ 1145 00fa 11       		.uleb128 0x11
+ 1146 00fb 01       		.uleb128 0x1
+ 1147 00fc 12       		.uleb128 0x12
+ 1148 00fd 06       		.uleb128 0x6
+ 1149 00fe 01       		.uleb128 0x1
+ 1150 00ff 13       		.uleb128 0x13
+ 1151 0100 00       		.byte	0
+ 1152 0101 00       		.byte	0
+ 1153 0102 13       		.uleb128 0x13
+ 1154 0103 2E       		.uleb128 0x2e
+ 1155 0104 01       		.byte	0x1
+ 1156 0105 3F       		.uleb128 0x3f
+ 1157 0106 19       		.uleb128 0x19
+ 1158 0107 03       		.uleb128 0x3
+ 1159 0108 0E       		.uleb128 0xe
+ 1160 0109 3A       		.uleb128 0x3a
+ 1161 010a 0B       		.uleb128 0xb
+ 1162 010b 3B       		.uleb128 0x3b
+ 1163 010c 0B       		.uleb128 0xb
+ 1164 010d 49       		.uleb128 0x49
+ 1165 010e 13       		.uleb128 0x13
+ 1166 010f 3C       		.uleb128 0x3c
+ 1167 0110 19       		.uleb128 0x19
+ 1168 0111 01       		.uleb128 0x1
+ 1169 0112 13       		.uleb128 0x13
+ 1170 0113 00       		.byte	0
+ 1171 0114 00       		.byte	0
+ 1172 0115 14       		.uleb128 0x14
+ 1173 0116 18       		.uleb128 0x18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 24
+
+
+ 1174 0117 00       		.byte	0
+ 1175 0118 00       		.byte	0
+ 1176 0119 00       		.byte	0
+ 1177 011a 15       		.uleb128 0x15
+ 1178 011b 898201   		.uleb128 0x4109
+ 1179 011e 01       		.byte	0x1
+ 1180 011f 11       		.uleb128 0x11
+ 1181 0120 01       		.uleb128 0x1
+ 1182 0121 31       		.uleb128 0x31
+ 1183 0122 13       		.uleb128 0x13
+ 1184 0123 00       		.byte	0
+ 1185 0124 00       		.byte	0
+ 1186 0125 16       		.uleb128 0x16
+ 1187 0126 01       		.uleb128 0x1
+ 1188 0127 01       		.byte	0x1
+ 1189 0128 49       		.uleb128 0x49
+ 1190 0129 13       		.uleb128 0x13
+ 1191 012a 01       		.uleb128 0x1
+ 1192 012b 13       		.uleb128 0x13
+ 1193 012c 00       		.byte	0
+ 1194 012d 00       		.byte	0
+ 1195 012e 17       		.uleb128 0x17
+ 1196 012f 21       		.uleb128 0x21
+ 1197 0130 00       		.byte	0
+ 1198 0131 49       		.uleb128 0x49
+ 1199 0132 13       		.uleb128 0x13
+ 1200 0133 2F       		.uleb128 0x2f
+ 1201 0134 0B       		.uleb128 0xb
+ 1202 0135 00       		.byte	0
+ 1203 0136 00       		.byte	0
+ 1204 0137 18       		.uleb128 0x18
+ 1205 0138 34       		.uleb128 0x34
+ 1206 0139 00       		.byte	0
+ 1207 013a 03       		.uleb128 0x3
+ 1208 013b 0E       		.uleb128 0xe
+ 1209 013c 3A       		.uleb128 0x3a
+ 1210 013d 0B       		.uleb128 0xb
+ 1211 013e 3B       		.uleb128 0x3b
+ 1212 013f 0B       		.uleb128 0xb
+ 1213 0140 49       		.uleb128 0x49
+ 1214 0141 13       		.uleb128 0x13
+ 1215 0142 3F       		.uleb128 0x3f
+ 1216 0143 19       		.uleb128 0x19
+ 1217 0144 02       		.uleb128 0x2
+ 1218 0145 18       		.uleb128 0x18
+ 1219 0146 00       		.byte	0
+ 1220 0147 00       		.byte	0
+ 1221 0148 19       		.uleb128 0x19
+ 1222 0149 2E       		.uleb128 0x2e
+ 1223 014a 00       		.byte	0
+ 1224 014b 3F       		.uleb128 0x3f
+ 1225 014c 19       		.uleb128 0x19
+ 1226 014d 03       		.uleb128 0x3
+ 1227 014e 0E       		.uleb128 0xe
+ 1228 014f 3A       		.uleb128 0x3a
+ 1229 0150 0B       		.uleb128 0xb
+ 1230 0151 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 25
+
+
+ 1231 0152 0B       		.uleb128 0xb
+ 1232 0153 27       		.uleb128 0x27
+ 1233 0154 19       		.uleb128 0x19
+ 1234 0155 3C       		.uleb128 0x3c
+ 1235 0156 19       		.uleb128 0x19
+ 1236 0157 00       		.byte	0
+ 1237 0158 00       		.byte	0
+ 1238 0159 1A       		.uleb128 0x1a
+ 1239 015a 2E       		.uleb128 0x2e
+ 1240 015b 01       		.byte	0x1
+ 1241 015c 3F       		.uleb128 0x3f
+ 1242 015d 19       		.uleb128 0x19
+ 1243 015e 03       		.uleb128 0x3
+ 1244 015f 0E       		.uleb128 0xe
+ 1245 0160 3A       		.uleb128 0x3a
+ 1246 0161 0B       		.uleb128 0xb
+ 1247 0162 3B       		.uleb128 0x3b
+ 1248 0163 0B       		.uleb128 0xb
+ 1249 0164 27       		.uleb128 0x27
+ 1250 0165 19       		.uleb128 0x19
+ 1251 0166 49       		.uleb128 0x49
+ 1252 0167 13       		.uleb128 0x13
+ 1253 0168 3C       		.uleb128 0x3c
+ 1254 0169 19       		.uleb128 0x19
+ 1255 016a 01       		.uleb128 0x1
+ 1256 016b 13       		.uleb128 0x13
+ 1257 016c 00       		.byte	0
+ 1258 016d 00       		.byte	0
+ 1259 016e 1B       		.uleb128 0x1b
+ 1260 016f 05       		.uleb128 0x5
+ 1261 0170 00       		.byte	0
+ 1262 0171 49       		.uleb128 0x49
+ 1263 0172 13       		.uleb128 0x13
+ 1264 0173 00       		.byte	0
+ 1265 0174 00       		.byte	0
+ 1266 0175 1C       		.uleb128 0x1c
+ 1267 0176 2E       		.uleb128 0x2e
+ 1268 0177 01       		.byte	0x1
+ 1269 0178 3F       		.uleb128 0x3f
+ 1270 0179 19       		.uleb128 0x19
+ 1271 017a 03       		.uleb128 0x3
+ 1272 017b 08       		.uleb128 0x8
+ 1273 017c 3A       		.uleb128 0x3a
+ 1274 017d 0B       		.uleb128 0xb
+ 1275 017e 3B       		.uleb128 0x3b
+ 1276 017f 0B       		.uleb128 0xb
+ 1277 0180 27       		.uleb128 0x27
+ 1278 0181 19       		.uleb128 0x19
+ 1279 0182 49       		.uleb128 0x49
+ 1280 0183 13       		.uleb128 0x13
+ 1281 0184 3C       		.uleb128 0x3c
+ 1282 0185 19       		.uleb128 0x19
+ 1283 0186 01       		.uleb128 0x1
+ 1284 0187 13       		.uleb128 0x13
+ 1285 0188 00       		.byte	0
+ 1286 0189 00       		.byte	0
+ 1287 018a 1D       		.uleb128 0x1d
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 26
+
+
+ 1288 018b 2E       		.uleb128 0x2e
+ 1289 018c 01       		.byte	0x1
+ 1290 018d 3F       		.uleb128 0x3f
+ 1291 018e 19       		.uleb128 0x19
+ 1292 018f 03       		.uleb128 0x3
+ 1293 0190 0E       		.uleb128 0xe
+ 1294 0191 3A       		.uleb128 0x3a
+ 1295 0192 0B       		.uleb128 0xb
+ 1296 0193 3B       		.uleb128 0x3b
+ 1297 0194 05       		.uleb128 0x5
+ 1298 0195 27       		.uleb128 0x27
+ 1299 0196 19       		.uleb128 0x19
+ 1300 0197 49       		.uleb128 0x49
+ 1301 0198 13       		.uleb128 0x13
+ 1302 0199 3C       		.uleb128 0x3c
+ 1303 019a 19       		.uleb128 0x19
+ 1304 019b 01       		.uleb128 0x1
+ 1305 019c 13       		.uleb128 0x13
+ 1306 019d 00       		.byte	0
+ 1307 019e 00       		.byte	0
+ 1308 019f 1E       		.uleb128 0x1e
+ 1309 01a0 2E       		.uleb128 0x2e
+ 1310 01a1 01       		.byte	0x1
+ 1311 01a2 3F       		.uleb128 0x3f
+ 1312 01a3 19       		.uleb128 0x19
+ 1313 01a4 03       		.uleb128 0x3
+ 1314 01a5 0E       		.uleb128 0xe
+ 1315 01a6 3A       		.uleb128 0x3a
+ 1316 01a7 0B       		.uleb128 0xb
+ 1317 01a8 3B       		.uleb128 0x3b
+ 1318 01a9 0B       		.uleb128 0xb
+ 1319 01aa 49       		.uleb128 0x49
+ 1320 01ab 13       		.uleb128 0x13
+ 1321 01ac 3C       		.uleb128 0x3c
+ 1322 01ad 19       		.uleb128 0x19
+ 1323 01ae 00       		.byte	0
+ 1324 01af 00       		.byte	0
+ 1325 01b0 00       		.byte	0
+ 1326              		.section	.debug_loc,"",%progbits
+ 1327              	.Ldebug_loc0:
+ 1328              	.LLST0:
+ 1329 0000 26000000 		.4byte	.LVL5
+ 1330 0004 2A000000 		.4byte	.LVL6
+ 1331 0008 0200     		.2byte	0x2
+ 1332 000a 30       		.byte	0x30
+ 1333 000b 9F       		.byte	0x9f
+ 1334 000c 2A000000 		.4byte	.LVL6
+ 1335 0010 78000000 		.4byte	.LVL18
+ 1336 0014 0100     		.2byte	0x1
+ 1337 0016 54       		.byte	0x54
+ 1338 0017 7A000000 		.4byte	.LVL19
+ 1339 001b 80000000 		.4byte	.LVL20
+ 1340 001f 0100     		.2byte	0x1
+ 1341 0021 54       		.byte	0x54
+ 1342 0022 00000000 		.4byte	0
+ 1343 0026 00000000 		.4byte	0
+ 1344              	.LLST1:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 27
+
+
+ 1345 002a 32000000 		.4byte	.LVL8
+ 1346 002e 4E000000 		.4byte	.LVL9
+ 1347 0032 0100     		.2byte	0x1
+ 1348 0034 50       		.byte	0x50
+ 1349 0035 50000000 		.4byte	.LVL10
+ 1350 0039 55000000 		.4byte	.LVL12-1
+ 1351 003d 0100     		.2byte	0x1
+ 1352 003f 50       		.byte	0x50
+ 1353 0040 00000000 		.4byte	0
+ 1354 0044 00000000 		.4byte	0
+ 1355              	.LLST2:
+ 1356 0048 6A000000 		.4byte	.LVL15
+ 1357 004c 6D000000 		.4byte	.LVL16-1
+ 1358 0050 0100     		.2byte	0x1
+ 1359 0052 50       		.byte	0x50
+ 1360 0053 00000000 		.4byte	0
+ 1361 0057 00000000 		.4byte	0
+ 1362              	.LLST3:
+ 1363 005b 0C000000 		.4byte	.LVL2
+ 1364 005f 13000000 		.4byte	.LVL3-1
+ 1365 0063 0100     		.2byte	0x1
+ 1366 0065 50       		.byte	0x50
+ 1367 0066 00000000 		.4byte	0
+ 1368 006a 00000000 		.4byte	0
+ 1369              	.LLST4:
+ 1370 006e 28000000 		.4byte	.LVL25
+ 1371 0072 2C000000 		.4byte	.LVL26
+ 1372 0076 0200     		.2byte	0x2
+ 1373 0078 30       		.byte	0x30
+ 1374 0079 9F       		.byte	0x9f
+ 1375 007a 2C000000 		.4byte	.LVL26
+ 1376 007e CE000000 		.4byte	.LVL47
+ 1377 0082 0100     		.2byte	0x1
+ 1378 0084 54       		.byte	0x54
+ 1379 0085 D0000000 		.4byte	.LVL48
+ 1380 0089 D6000000 		.4byte	.LVL49
+ 1381 008d 0100     		.2byte	0x1
+ 1382 008f 54       		.byte	0x54
+ 1383 0090 00000000 		.4byte	0
+ 1384 0094 00000000 		.4byte	0
+ 1385              	.LLST5:
+ 1386 0098 34000000 		.4byte	.LVL28
+ 1387 009c 54000000 		.4byte	.LVL29
+ 1388 00a0 0100     		.2byte	0x1
+ 1389 00a2 50       		.byte	0x50
+ 1390 00a3 54000000 		.4byte	.LVL29
+ 1391 00a7 D0000000 		.4byte	.LVL48
+ 1392 00ab 0100     		.2byte	0x1
+ 1393 00ad 56       		.byte	0x56
+ 1394 00ae 00000000 		.4byte	0
+ 1395 00b2 00000000 		.4byte	0
+ 1396              	.LLST6:
+ 1397 00b6 70000000 		.4byte	.LVL34
+ 1398 00ba 73000000 		.4byte	.LVL35-1
+ 1399 00be 0100     		.2byte	0x1
+ 1400 00c0 50       		.byte	0x50
+ 1401 00c1 73000000 		.4byte	.LVL35-1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 28
+
+
+ 1402 00c5 92000000 		.4byte	.LVL42
+ 1403 00c9 0100     		.2byte	0x1
+ 1404 00cb 57       		.byte	0x57
+ 1405 00cc 00000000 		.4byte	0
+ 1406 00d0 00000000 		.4byte	0
+ 1407              	.LLST7:
+ 1408 00d4 8A000000 		.4byte	.LVL39
+ 1409 00d8 8C000000 		.4byte	.LVL40
+ 1410 00dc 0100     		.2byte	0x1
+ 1411 00de 50       		.byte	0x50
+ 1412 00df 8C000000 		.4byte	.LVL40
+ 1413 00e3 9C000000 		.4byte	.LVL44
+ 1414 00e7 0100     		.2byte	0x1
+ 1415 00e9 55       		.byte	0x55
+ 1416 00ea 00000000 		.4byte	0
+ 1417 00ee 00000000 		.4byte	0
+ 1418              		.section	.debug_aranges,"",%progbits
+ 1419 0000 34000000 		.4byte	0x34
+ 1420 0004 0200     		.2byte	0x2
+ 1421 0006 00000000 		.4byte	.Ldebug_info0
+ 1422 000a 04       		.byte	0x4
+ 1423 000b 00       		.byte	0
+ 1424 000c 0000     		.2byte	0
+ 1425 000e 0000     		.2byte	0
+ 1426 0010 00000000 		.4byte	.LFB34
+ 1427 0014 0C000000 		.4byte	.LFE34-.LFB34
+ 1428 0018 00000000 		.4byte	.LFB35
+ 1429 001c 08000000 		.4byte	.LFE35-.LFB35
+ 1430 0020 00000000 		.4byte	.LFB36
+ 1431 0024 A8000000 		.4byte	.LFE36-.LFB36
+ 1432 0028 00000000 		.4byte	.LFB37
+ 1433 002c 18010000 		.4byte	.LFE37-.LFB37
+ 1434 0030 00000000 		.4byte	0
+ 1435 0034 00000000 		.4byte	0
+ 1436              		.section	.debug_ranges,"",%progbits
+ 1437              	.Ldebug_ranges0:
+ 1438 0000 00000000 		.4byte	.LFB34
+ 1439 0004 0C000000 		.4byte	.LFE34
+ 1440 0008 00000000 		.4byte	.LFB35
+ 1441 000c 08000000 		.4byte	.LFE35
+ 1442 0010 00000000 		.4byte	.LFB36
+ 1443 0014 A8000000 		.4byte	.LFE36
+ 1444 0018 00000000 		.4byte	.LFB37
+ 1445 001c 18010000 		.4byte	.LFE37
+ 1446 0020 00000000 		.4byte	0
+ 1447 0024 00000000 		.4byte	0
+ 1448              		.section	.debug_line,"",%progbits
+ 1449              	.Ldebug_line0:
+ 1450 0000 15020000 		.section	.debug_str,"MS",%progbits,1
+ 1450      02007501 
+ 1450      00000201 
+ 1450      FB0E0D00 
+ 1450      01010101 
+ 1451              	.LASF14:
+ 1452 0000 73697A65 		.ascii	"size_t\000"
+ 1452      5F7400
+ 1453              	.LASF36:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 29
+
+
+ 1454 0007 2E2E5C73 		.ascii	"..\\source\\infrared.c\000"
+ 1454      6F757263 
+ 1454      655C696E 
+ 1454      66726172 
+ 1454      65642E63 
+ 1455              	.LASF38:
+ 1456 001c 496E6672 		.ascii	"Infrared_Init\000"
+ 1456      61726564 
+ 1456      5F496E69 
+ 1456      7400
+ 1457              	.LASF27:
+ 1458 002a 5F5F6675 		.ascii	"__func__\000"
+ 1458      6E635F5F 
+ 1458      00
+ 1459              	.LASF34:
+ 1460 0033 736E7072 		.ascii	"snprintf\000"
+ 1460      696E7466 
+ 1460      00
+ 1461              	.LASF25:
+ 1462 003c 64697374 		.ascii	"distance\000"
+ 1462      616E6365 
+ 1462      00
+ 1463              	.LASF12:
+ 1464 0045 666C6F61 		.ascii	"float\000"
+ 1464      7400
+ 1465              	.LASF1:
+ 1466 004b 7369676E 		.ascii	"signed char\000"
+ 1466      65642063 
+ 1466      68617200 
+ 1467              	.LASF2:
+ 1468 0057 756E7369 		.ascii	"unsigned char\000"
+ 1468      676E6564 
+ 1468      20636861 
+ 1468      7200
+ 1469              	.LASF18:
+ 1470 0065 696E7431 		.ascii	"int16\000"
+ 1470      3600
+ 1471              	.LASF6:
+ 1472 006b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1472      20756E73 
+ 1472      69676E65 
+ 1472      6420696E 
+ 1472      7400
+ 1473              	.LASF4:
+ 1474 007d 73686F72 		.ascii	"short unsigned int\000"
+ 1474      7420756E 
+ 1474      7369676E 
+ 1474      65642069 
+ 1474      6E7400
+ 1475              	.LASF22:
+ 1476 0090 766F6C74 		.ascii	"voltage\000"
+ 1476      61676500 
+ 1477              	.LASF30:
+ 1478 0098 55415254 		.ascii	"UARTCOMMS_UartPutString\000"
+ 1478      434F4D4D 
+ 1478      535F5561 
+ 1478      72745075 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 30
+
+
+ 1478      74537472 
+ 1479              	.LASF11:
+ 1480 00b0 646F7562 		.ascii	"double\000"
+ 1480      6C6500
+ 1481              	.LASF32:
+ 1482 00b7 4144435F 		.ascii	"ADC_Infrared_IsEndConversion\000"
+ 1482      496E6672 
+ 1482      61726564 
+ 1482      5F497345 
+ 1482      6E64436F 
+ 1483              	.LASF33:
+ 1484 00d4 4144435F 		.ascii	"ADC_Infrared_GetResult16\000"
+ 1484      496E6672 
+ 1484      61726564 
+ 1484      5F476574 
+ 1484      52657375 
+ 1485              	.LASF26:
+ 1486 00ed 6C617374 		.ascii	"last_time\000"
+ 1486      5F74696D 
+ 1486      6500
+ 1487              	.LASF15:
+ 1488 00f7 75696E74 		.ascii	"uint16\000"
+ 1488      313600
+ 1489              	.LASF17:
+ 1490 00fe 696E7438 		.ascii	"int8\000"
+ 1490      00
+ 1491              	.LASF16:
+ 1492 0103 75696E74 		.ascii	"uint32\000"
+ 1492      333200
+ 1493              	.LASF20:
+ 1494 010a 496E6672 		.ascii	"Infrared_Measure\000"
+ 1494      61726564 
+ 1494      5F4D6561 
+ 1494      73757265 
+ 1494      00
+ 1495              	.LASF0:
+ 1496 011b 756E7369 		.ascii	"unsigned int\000"
+ 1496      676E6564 
+ 1496      20696E74 
+ 1496      00
+ 1497              	.LASF8:
+ 1498 0128 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1498      206C6F6E 
+ 1498      6720756E 
+ 1498      7369676E 
+ 1498      65642069 
+ 1499              	.LASF24:
+ 1500 013f 496E6672 		.ascii	"Infrared_Test\000"
+ 1500      61726564 
+ 1500      5F546573 
+ 1500      7400
+ 1501              	.LASF21:
+ 1502 014d 72657375 		.ascii	"result\000"
+ 1502      6C7400
+ 1503              	.LASF9:
+ 1504 0154 73697A65 		.ascii	"sizetype\000"
+ 1504      74797065 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 31
+
+
+ 1504      00
+ 1505              	.LASF35:
+ 1506 015d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1506      4320342E 
+ 1506      392E3320 
+ 1506      32303135 
+ 1506      30333033 
+ 1507 0190 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1507      20726576 
+ 1507      6973696F 
+ 1507      6E203232 
+ 1507      31323230 
+ 1508 01c3 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1508      66756E63 
+ 1508      74696F6E 
+ 1508      2D736563 
+ 1508      74696F6E 
+ 1509              	.LASF7:
+ 1510 01eb 6C6F6E67 		.ascii	"long long int\000"
+ 1510      206C6F6E 
+ 1510      6720696E 
+ 1510      7400
+ 1511              	.LASF10:
+ 1512 01f9 63686172 		.ascii	"char\000"
+ 1512      00
+ 1513              	.LASF37:
+ 1514 01fe 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\Arlobot\\Board-Ki"
+ 1514      726F6A65 
+ 1514      6374735C 
+ 1514      41726C6F 
+ 1514      426F745C 
+ 1515 022c 7450726F 		.ascii	"tProg.cydsn\000"
+ 1515      672E6379 
+ 1515      64736E00 
+ 1516              	.LASF3:
+ 1517 0238 73686F72 		.ascii	"short int\000"
+ 1517      7420696E 
+ 1517      7400
+ 1518              	.LASF19:
+ 1519 0242 496E6672 		.ascii	"Infrared_Start\000"
+ 1519      61726564 
+ 1519      5F537461 
+ 1519      727400
+ 1520              	.LASF5:
+ 1521 0251 6C6F6E67 		.ascii	"long int\000"
+ 1521      20696E74 
+ 1521      00
+ 1522              	.LASF31:
+ 1523 025a 6D696C6C 		.ascii	"millis\000"
+ 1523      697300
+ 1524              	.LASF13:
+ 1525 0261 6C6F6E67 		.ascii	"long double\000"
+ 1525      20646F75 
+ 1525      626C6500 
+ 1526              	.LASF29:
+ 1527 026d 4144435F 		.ascii	"ADC_Infrared_StartConvert\000"
+ 1527      496E6672 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccG8x0fy.s 			page 32
+
+
+ 1527      61726564 
+ 1527      5F537461 
+ 1527      7274436F 
+ 1528              	.LASF28:
+ 1529 0287 4144435F 		.ascii	"ADC_Infrared_Start\000"
+ 1529      496E6672 
+ 1529      61726564 
+ 1529      5F537461 
+ 1529      727400
+ 1530              	.LASF23:
+ 1531 029a 6164635F 		.ascii	"adc_result\000"
+ 1531      72657375 
+ 1531      6C7400
+ 1532              	.LASF39:
+ 1533 02a5 666F726D 		.ascii	"formatted_string\000"
+ 1533      61747465 
+ 1533      645F7374 
+ 1533      72696E67 
+ 1533      00
+ 1534              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

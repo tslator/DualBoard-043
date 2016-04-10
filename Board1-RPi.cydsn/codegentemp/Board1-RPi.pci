@@ -1,0 +1,16 @@
+# Board1-RPi
+# 2016-04-10 18:13:40Z
+
+# IO_2@[IOP=(3)][IoId=(2)] is reserved: SWDDebugEnabled
+dont_use_io iocell 3 2
+# IO_3@[IOP=(3)][IoId=(3)] is reserved: SWDDebugEnabled
+dont_use_io iocell 3 3
+dont_use_location p4csidac8cell -1 -1 1
+dont_use_location p4csidac7cell -1 -1 1
+set_location "ClockGenBlock" m0s8clockgenblockcell -1 -1 0
+set_io "Pin_InfraredDistance_1(0)" iocell 2 6
+set_io "Pin_InfraredDistance_2(0)" iocell 2 5
+set_io "Pin_InfraredDistance_3(0)" iocell 2 4
+set_io "Pin_InfraredDistance_0(0)" iocell 2 3
+set_io "\ADC_Infrared:ExtVref(0)\" iocell 1 7
+set_location "\ADC_Infrared:cy_psoc4_sar\" p4sarcell -1 -1 0

@@ -1,0 +1,808 @@
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"control.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Control_Init,"ax",%progbits
+  18              		.align	2
+  19              		.global	Control_Init
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	Control_Init, %function
+  23              	Control_Init:
+  24              	.LFB34:
+  25              		.file 1 "..\\source\\control.c"
+   1:..\source/control.c **** /* ========================================
+   2:..\source/control.c ****  *
+   3:..\source/control.c ****  * Copyright YOUR COMPANY, THE YEAR
+   4:..\source/control.c ****  * All Rights Reserved
+   5:..\source/control.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:..\source/control.c ****  *
+   7:..\source/control.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:..\source/control.c ****  * WHICH IS THE PROPERTY OF your company.
+   9:..\source/control.c ****  *
+  10:..\source/control.c ****  * ========================================
+  11:..\source/control.c **** */
+  12:..\source/control.c **** 
+  13:..\source/control.c **** #include "control.h"
+  14:..\source/control.c **** #include "i2c.h"
+  15:..\source/control.c **** #include "encoder.h"
+  16:..\source/control.c **** #include "motor.h"
+  17:..\source/control.c **** #include "time.h"
+  18:..\source/control.c **** 
+  19:..\source/control.c **** /* The purpose of this module is to handle control changes to the system.
+  20:..\source/control.c ****    The only thing considered at this point is shutting down the motors properly.
+  21:..\source/control.c ****  */
+  22:..\source/control.c **** 
+  23:..\source/control.c **** #define POWER_ON_MOTOR (0x0001)
+  24:..\source/control.c **** #define SPEED_TIMEOUT  (2000) // millisecond
+  25:..\source/control.c **** 
+  26:..\source/control.c **** static uint32 last_time;
+  27:..\source/control.c **** 
+  28:..\source/control.c **** void Control_Init()
+  29:..\source/control.c **** {
+  26              		.loc 1 29 0
+  27              		.cfi_startproc
+  28 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 2
+
+
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 3, -8
+  31              		.cfi_offset 14, -4
+  30:..\source/control.c ****     last_time = millis();
+  32              		.loc 1 30 0
+  33 0002 FFF7FEFF 		bl	millis
+  34              	.LVL0:
+  35 0006 014B     		ldr	r3, .L2
+  36 0008 1860     		str	r0, [r3]
+  31:..\source/control.c **** }
+  37              		.loc 1 31 0
+  38              		@ sp needed
+  39 000a 08BD     		pop	{r3, pc}
+  40              	.L3:
+  41              		.align	2
+  42              	.L2:
+  43 000c 00000000 		.word	.LANCHOR0
+  44              		.cfi_endproc
+  45              	.LFE34:
+  46              		.size	Control_Init, .-Control_Init
+  47              		.section	.text.Control_Start,"ax",%progbits
+  48              		.align	2
+  49              		.global	Control_Start
+  50              		.code	16
+  51              		.thumb_func
+  52              		.type	Control_Start, %function
+  53              	Control_Start:
+  54              	.LFB35:
+  32:..\source/control.c **** 
+  33:..\source/control.c **** void Control_Start()
+  34:..\source/control.c **** {    
+  55              		.loc 1 34 0
+  56              		.cfi_startproc
+  57 0000 08B5     		push	{r3, lr}
+  58              		.cfi_def_cfa_offset 8
+  59              		.cfi_offset 3, -8
+  60              		.cfi_offset 14, -4
+  35:..\source/control.c ****     /* Note: I'm not sure what to do here, was thinking that this could be a way to enabled/disable
+  36:..\source/control.c ****     uint16 control = I2c_ReadControl();
+  61              		.loc 1 36 0
+  62 0002 FFF7FEFF 		bl	I2c_ReadControl
+  63              	.LVL1:
+  37:..\source/control.c **** }
+  64              		.loc 1 37 0
+  65              		@ sp needed
+  66 0006 08BD     		pop	{r3, pc}
+  67              		.cfi_endproc
+  68              	.LFE35:
+  69              		.size	Control_Start, .-Control_Start
+  70              		.section	.text.Control_Update,"ax",%progbits
+  71              		.align	2
+  72              		.global	Control_Update
+  73              		.code	16
+  74              		.thumb_func
+  75              		.type	Control_Update, %function
+  76              	Control_Update:
+  77              	.LFB36:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 3
+
+
+  38:..\source/control.c **** 
+  39:..\source/control.c **** void Control_Update()
+  40:..\source/control.c **** {
+  78              		.loc 1 40 0
+  79              		.cfi_startproc
+  80 0000 10B5     		push	{r4, lr}
+  81              		.cfi_def_cfa_offset 8
+  82              		.cfi_offset 4, -8
+  83              		.cfi_offset 14, -4
+  41:..\source/control.c ****     uint8 motor_state;
+  42:..\source/control.c ****     uint16 control;
+  43:..\source/control.c ****     
+  44:..\source/control.c ****     control = I2c_ReadControl();
+  84              		.loc 1 44 0
+  85 0002 FFF7FEFF 		bl	I2c_ReadControl
+  86              	.LVL2:
+  87 0006 041C     		mov	r4, r0
+  88              	.LVL3:
+  45:..\source/control.c ****     
+  46:..\source/control.c ****     /* If a speed command hasn't been received within the given threshold, stop the motor
+  47:..\source/control.c ****         
+  48:..\source/control.c ****        Recommendation from Parallax:
+  49:..\source/control.c ****         The HB-25 has a selectable Timeout mode. When this mode is enabled, the HB-25 will shut off
+  50:..\source/control.c ****         after 4 seconds if it does not receive pulses from the microcontroller. Once the motor is s
+  51:..\source/control.c ****         HB-25 receives a valid pulse again, it will restart the motor. Timeout mode should always b
+  52:..\source/control.c ****         applications where a failure of your microcontroller could cause a dangerous situation or s
+  53:..\source/control.c ****         potentially cause damage to your application. 
+  54:..\source/control.c ****      */
+  55:..\source/control.c ****     if ((millis() - last_time) > SPEED_TIMEOUT)
+  89              		.loc 1 55 0
+  90 0008 FFF7FEFF 		bl	millis
+  91              	.LVL4:
+  56:..\source/control.c ****     {
+  57:..\source/control.c ****     //    Motor_SetOutput(0);
+  58:..\source/control.c ****     }
+  59:..\source/control.c ****     
+  60:..\source/control.c ****     /* Along the same lines as Control_Start() this could be a way to disable or shutdown features,
+  61:..\source/control.c ****        motor drivers or the motors via a relay */
+  62:..\source/control.c ****     
+  63:..\source/control.c ****     motor_state = control & POWER_ON_MOTOR;
+  64:..\source/control.c ****     if ( motor_state )
+  92              		.loc 1 64 0
+  93 000c E307     		lsl	r3, r4, #31
+  94 000e 02D5     		bpl	.L6
+  65:..\source/control.c ****     {
+  66:..\source/control.c ****         Motor_Start();
+  95              		.loc 1 66 0
+  96 0010 FFF7FEFF 		bl	Motor_Start
+  97              	.LVL5:
+  98 0014 01E0     		b	.L5
+  99              	.L6:
+  67:..\source/control.c ****     }
+  68:..\source/control.c ****     else
+  69:..\source/control.c ****     {
+  70:..\source/control.c ****         Motor_Stop();
+ 100              		.loc 1 70 0
+ 101 0016 FFF7FEFF 		bl	Motor_Stop
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 4
+
+
+ 102              	.LVL6:
+ 103              	.L5:
+  71:..\source/control.c ****     }
+  72:..\source/control.c ****     
+  73:..\source/control.c **** }
+ 104              		.loc 1 73 0
+ 105              		@ sp needed
+ 106              	.LVL7:
+ 107 001a 10BD     		pop	{r4, pc}
+ 108              		.cfi_endproc
+ 109              	.LFE36:
+ 110              		.size	Control_Update, .-Control_Update
+ 111              		.bss
+ 112              		.align	2
+ 113              		.set	.LANCHOR0,. + 0
+ 114              		.type	last_time, %object
+ 115              		.size	last_time, 4
+ 116              	last_time:
+ 117 0000 00000000 		.space	4
+ 118              		.text
+ 119              	.Letext0:
+ 120              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 121              		.file 3 "..\\source\\time.h"
+ 122              		.file 4 "..\\source\\i2c.h"
+ 123              		.file 5 "..\\source\\motor.h"
+ 124              		.section	.debug_info,"",%progbits
+ 125              	.Ldebug_info0:
+ 126 0000 8F010000 		.4byte	0x18f
+ 127 0004 0400     		.2byte	0x4
+ 128 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 129 000a 04       		.byte	0x4
+ 130 000b 01       		.uleb128 0x1
+ 131 000c 52010000 		.4byte	.LASF24
+ 132 0010 01       		.byte	0x1
+ 133 0011 3E010000 		.4byte	.LASF25
+ 134 0015 97000000 		.4byte	.LASF26
+ 135 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 136 001d 00000000 		.4byte	0
+ 137 0021 00000000 		.4byte	.Ldebug_line0
+ 138 0025 02       		.uleb128 0x2
+ 139 0026 01       		.byte	0x1
+ 140 0027 06       		.byte	0x6
+ 141 0028 26010000 		.4byte	.LASF0
+ 142 002c 02       		.uleb128 0x2
+ 143 002d 01       		.byte	0x1
+ 144 002e 08       		.byte	0x8
+ 145 002f 7B000000 		.4byte	.LASF1
+ 146 0033 02       		.uleb128 0x2
+ 147 0034 02       		.byte	0x2
+ 148 0035 05       		.byte	0x5
+ 149 0036 DA000000 		.4byte	.LASF2
+ 150 003a 02       		.uleb128 0x2
+ 151 003b 02       		.byte	0x2
+ 152 003c 07       		.byte	0x7
+ 153 003d 13010000 		.4byte	.LASF3
+ 154 0041 02       		.uleb128 0x2
+ 155 0042 04       		.byte	0x4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 5
+
+
+ 156 0043 05       		.byte	0x5
+ 157 0044 D1000000 		.4byte	.LASF4
+ 158 0048 02       		.uleb128 0x2
+ 159 0049 04       		.byte	0x4
+ 160 004a 07       		.byte	0x7
+ 161 004b EB000000 		.4byte	.LASF5
+ 162 004f 02       		.uleb128 0x2
+ 163 0050 08       		.byte	0x8
+ 164 0051 05       		.byte	0x5
+ 165 0052 00000000 		.4byte	.LASF6
+ 166 0056 02       		.uleb128 0x2
+ 167 0057 08       		.byte	0x8
+ 168 0058 07       		.byte	0x7
+ 169 0059 4F000000 		.4byte	.LASF7
+ 170 005d 03       		.uleb128 0x3
+ 171 005e 04       		.byte	0x4
+ 172 005f 05       		.byte	0x5
+ 173 0060 696E7400 		.ascii	"int\000"
+ 174 0064 02       		.uleb128 0x2
+ 175 0065 04       		.byte	0x4
+ 176 0066 07       		.byte	0x7
+ 177 0067 15000000 		.4byte	.LASF8
+ 178 006b 04       		.uleb128 0x4
+ 179 006c 2E000000 		.4byte	.LASF9
+ 180 0070 02       		.byte	0x2
+ 181 0071 C2       		.byte	0xc2
+ 182 0072 2C000000 		.4byte	0x2c
+ 183 0076 04       		.uleb128 0x4
+ 184 0077 ED010000 		.4byte	.LASF10
+ 185 007b 02       		.byte	0x2
+ 186 007c C3       		.byte	0xc3
+ 187 007d 3A000000 		.4byte	0x3a
+ 188 0081 04       		.uleb128 0x4
+ 189 0082 0E000000 		.4byte	.LASF11
+ 190 0086 02       		.byte	0x2
+ 191 0087 C4       		.byte	0xc4
+ 192 0088 48000000 		.4byte	0x48
+ 193 008c 02       		.uleb128 0x2
+ 194 008d 04       		.byte	0x4
+ 195 008e 04       		.byte	0x4
+ 196 008f 66000000 		.4byte	.LASF12
+ 197 0093 02       		.uleb128 0x2
+ 198 0094 08       		.byte	0x8
+ 199 0095 04       		.byte	0x4
+ 200 0096 FD000000 		.4byte	.LASF13
+ 201 009a 02       		.uleb128 0x2
+ 202 009b 01       		.byte	0x1
+ 203 009c 08       		.byte	0x8
+ 204 009d 76000000 		.4byte	.LASF14
+ 205 00a1 02       		.uleb128 0x2
+ 206 00a2 04       		.byte	0x4
+ 207 00a3 07       		.byte	0x7
+ 208 00a4 FC010000 		.4byte	.LASF15
+ 209 00a8 05       		.uleb128 0x5
+ 210 00a9 E0010000 		.4byte	.LASF16
+ 211 00ad 01       		.byte	0x1
+ 212 00ae 1C       		.byte	0x1c
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 6
+
+
+ 213 00af 00000000 		.4byte	.LFB34
+ 214 00b3 10000000 		.4byte	.LFE34-.LFB34
+ 215 00b7 01       		.uleb128 0x1
+ 216 00b8 9C       		.byte	0x9c
+ 217 00b9 C7000000 		.4byte	0xc7
+ 218 00bd 06       		.uleb128 0x6
+ 219 00be 06000000 		.4byte	.LVL0
+ 220 00c2 5A010000 		.4byte	0x15a
+ 221 00c6 00       		.byte	0
+ 222 00c7 05       		.uleb128 0x5
+ 223 00c8 89000000 		.4byte	.LASF17
+ 224 00cc 01       		.byte	0x1
+ 225 00cd 21       		.byte	0x21
+ 226 00ce 00000000 		.4byte	.LFB35
+ 227 00d2 08000000 		.4byte	.LFE35-.LFB35
+ 228 00d6 01       		.uleb128 0x1
+ 229 00d7 9C       		.byte	0x9c
+ 230 00d8 F1000000 		.4byte	0xf1
+ 231 00dc 07       		.uleb128 0x7
+ 232 00dd F4010000 		.4byte	.LASF20
+ 233 00e1 01       		.byte	0x1
+ 234 00e2 24       		.byte	0x24
+ 235 00e3 76000000 		.4byte	0x76
+ 236 00e7 06       		.uleb128 0x6
+ 237 00e8 06000000 		.4byte	.LVL1
+ 238 00ec 6B010000 		.4byte	0x16b
+ 239 00f0 00       		.byte	0
+ 240 00f1 05       		.uleb128 0x5
+ 241 00f2 04010000 		.4byte	.LASF18
+ 242 00f6 01       		.byte	0x1
+ 243 00f7 27       		.byte	0x27
+ 244 00f8 00000000 		.4byte	.LFB36
+ 245 00fc 1C000000 		.4byte	.LFE36-.LFB36
+ 246 0100 01       		.uleb128 0x1
+ 247 0101 9C       		.byte	0x9c
+ 248 0102 49010000 		.4byte	0x149
+ 249 0106 08       		.uleb128 0x8
+ 250 0107 22000000 		.4byte	.LASF19
+ 251 010b 01       		.byte	0x1
+ 252 010c 29       		.byte	0x29
+ 253 010d 6B000000 		.4byte	0x6b
+ 254 0111 00000000 		.4byte	.LLST0
+ 255 0115 08       		.uleb128 0x8
+ 256 0116 F4010000 		.4byte	.LASF20
+ 257 011a 01       		.byte	0x1
+ 258 011b 2A       		.byte	0x2a
+ 259 011c 76000000 		.4byte	0x76
+ 260 0120 17000000 		.4byte	.LLST1
+ 261 0124 06       		.uleb128 0x6
+ 262 0125 06000000 		.4byte	.LVL2
+ 263 0129 6B010000 		.4byte	0x16b
+ 264 012d 06       		.uleb128 0x6
+ 265 012e 0C000000 		.4byte	.LVL4
+ 266 0132 5A010000 		.4byte	0x15a
+ 267 0136 06       		.uleb128 0x6
+ 268 0137 14000000 		.4byte	.LVL5
+ 269 013b 7C010000 		.4byte	0x17c
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 7
+
+
+ 270 013f 06       		.uleb128 0x6
+ 271 0140 1A000000 		.4byte	.LVL6
+ 272 0144 89010000 		.4byte	0x189
+ 273 0148 00       		.byte	0
+ 274 0149 09       		.uleb128 0x9
+ 275 014a 6C000000 		.4byte	.LASF21
+ 276 014e 01       		.byte	0x1
+ 277 014f 1A       		.byte	0x1a
+ 278 0150 81000000 		.4byte	0x81
+ 279 0154 05       		.uleb128 0x5
+ 280 0155 03       		.byte	0x3
+ 281 0156 00000000 		.4byte	last_time
+ 282 015a 0A       		.uleb128 0xa
+ 283 015b E4000000 		.4byte	.LASF22
+ 284 015f 03       		.byte	0x3
+ 285 0160 16       		.byte	0x16
+ 286 0161 81000000 		.4byte	0x81
+ 287 0165 6B010000 		.4byte	0x16b
+ 288 0169 0B       		.uleb128 0xb
+ 289 016a 00       		.byte	0
+ 290 016b 0A       		.uleb128 0xa
+ 291 016c 34000000 		.4byte	.LASF23
+ 292 0170 04       		.byte	0x4
+ 293 0171 15       		.byte	0x15
+ 294 0172 76000000 		.4byte	0x76
+ 295 0176 7C010000 		.4byte	0x17c
+ 296 017a 0B       		.uleb128 0xb
+ 297 017b 00       		.byte	0
+ 298 017c 0C       		.uleb128 0xc
+ 299 017d 32010000 		.4byte	.LASF27
+ 300 0181 05       		.byte	0x5
+ 301 0182 13       		.byte	0x13
+ 302 0183 89010000 		.4byte	0x189
+ 303 0187 0B       		.uleb128 0xb
+ 304 0188 00       		.byte	0
+ 305 0189 0D       		.uleb128 0xd
+ 306 018a 44000000 		.4byte	.LASF28
+ 307 018e 05       		.byte	0x5
+ 308 018f 15       		.byte	0x15
+ 309 0190 0B       		.uleb128 0xb
+ 310 0191 00       		.byte	0
+ 311 0192 00       		.byte	0
+ 312              		.section	.debug_abbrev,"",%progbits
+ 313              	.Ldebug_abbrev0:
+ 314 0000 01       		.uleb128 0x1
+ 315 0001 11       		.uleb128 0x11
+ 316 0002 01       		.byte	0x1
+ 317 0003 25       		.uleb128 0x25
+ 318 0004 0E       		.uleb128 0xe
+ 319 0005 13       		.uleb128 0x13
+ 320 0006 0B       		.uleb128 0xb
+ 321 0007 03       		.uleb128 0x3
+ 322 0008 0E       		.uleb128 0xe
+ 323 0009 1B       		.uleb128 0x1b
+ 324 000a 0E       		.uleb128 0xe
+ 325 000b 55       		.uleb128 0x55
+ 326 000c 17       		.uleb128 0x17
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 8
+
+
+ 327 000d 11       		.uleb128 0x11
+ 328 000e 01       		.uleb128 0x1
+ 329 000f 10       		.uleb128 0x10
+ 330 0010 17       		.uleb128 0x17
+ 331 0011 00       		.byte	0
+ 332 0012 00       		.byte	0
+ 333 0013 02       		.uleb128 0x2
+ 334 0014 24       		.uleb128 0x24
+ 335 0015 00       		.byte	0
+ 336 0016 0B       		.uleb128 0xb
+ 337 0017 0B       		.uleb128 0xb
+ 338 0018 3E       		.uleb128 0x3e
+ 339 0019 0B       		.uleb128 0xb
+ 340 001a 03       		.uleb128 0x3
+ 341 001b 0E       		.uleb128 0xe
+ 342 001c 00       		.byte	0
+ 343 001d 00       		.byte	0
+ 344 001e 03       		.uleb128 0x3
+ 345 001f 24       		.uleb128 0x24
+ 346 0020 00       		.byte	0
+ 347 0021 0B       		.uleb128 0xb
+ 348 0022 0B       		.uleb128 0xb
+ 349 0023 3E       		.uleb128 0x3e
+ 350 0024 0B       		.uleb128 0xb
+ 351 0025 03       		.uleb128 0x3
+ 352 0026 08       		.uleb128 0x8
+ 353 0027 00       		.byte	0
+ 354 0028 00       		.byte	0
+ 355 0029 04       		.uleb128 0x4
+ 356 002a 16       		.uleb128 0x16
+ 357 002b 00       		.byte	0
+ 358 002c 03       		.uleb128 0x3
+ 359 002d 0E       		.uleb128 0xe
+ 360 002e 3A       		.uleb128 0x3a
+ 361 002f 0B       		.uleb128 0xb
+ 362 0030 3B       		.uleb128 0x3b
+ 363 0031 0B       		.uleb128 0xb
+ 364 0032 49       		.uleb128 0x49
+ 365 0033 13       		.uleb128 0x13
+ 366 0034 00       		.byte	0
+ 367 0035 00       		.byte	0
+ 368 0036 05       		.uleb128 0x5
+ 369 0037 2E       		.uleb128 0x2e
+ 370 0038 01       		.byte	0x1
+ 371 0039 3F       		.uleb128 0x3f
+ 372 003a 19       		.uleb128 0x19
+ 373 003b 03       		.uleb128 0x3
+ 374 003c 0E       		.uleb128 0xe
+ 375 003d 3A       		.uleb128 0x3a
+ 376 003e 0B       		.uleb128 0xb
+ 377 003f 3B       		.uleb128 0x3b
+ 378 0040 0B       		.uleb128 0xb
+ 379 0041 11       		.uleb128 0x11
+ 380 0042 01       		.uleb128 0x1
+ 381 0043 12       		.uleb128 0x12
+ 382 0044 06       		.uleb128 0x6
+ 383 0045 40       		.uleb128 0x40
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 9
+
+
+ 384 0046 18       		.uleb128 0x18
+ 385 0047 9742     		.uleb128 0x2117
+ 386 0049 19       		.uleb128 0x19
+ 387 004a 01       		.uleb128 0x1
+ 388 004b 13       		.uleb128 0x13
+ 389 004c 00       		.byte	0
+ 390 004d 00       		.byte	0
+ 391 004e 06       		.uleb128 0x6
+ 392 004f 898201   		.uleb128 0x4109
+ 393 0052 00       		.byte	0
+ 394 0053 11       		.uleb128 0x11
+ 395 0054 01       		.uleb128 0x1
+ 396 0055 31       		.uleb128 0x31
+ 397 0056 13       		.uleb128 0x13
+ 398 0057 00       		.byte	0
+ 399 0058 00       		.byte	0
+ 400 0059 07       		.uleb128 0x7
+ 401 005a 34       		.uleb128 0x34
+ 402 005b 00       		.byte	0
+ 403 005c 03       		.uleb128 0x3
+ 404 005d 0E       		.uleb128 0xe
+ 405 005e 3A       		.uleb128 0x3a
+ 406 005f 0B       		.uleb128 0xb
+ 407 0060 3B       		.uleb128 0x3b
+ 408 0061 0B       		.uleb128 0xb
+ 409 0062 49       		.uleb128 0x49
+ 410 0063 13       		.uleb128 0x13
+ 411 0064 00       		.byte	0
+ 412 0065 00       		.byte	0
+ 413 0066 08       		.uleb128 0x8
+ 414 0067 34       		.uleb128 0x34
+ 415 0068 00       		.byte	0
+ 416 0069 03       		.uleb128 0x3
+ 417 006a 0E       		.uleb128 0xe
+ 418 006b 3A       		.uleb128 0x3a
+ 419 006c 0B       		.uleb128 0xb
+ 420 006d 3B       		.uleb128 0x3b
+ 421 006e 0B       		.uleb128 0xb
+ 422 006f 49       		.uleb128 0x49
+ 423 0070 13       		.uleb128 0x13
+ 424 0071 02       		.uleb128 0x2
+ 425 0072 17       		.uleb128 0x17
+ 426 0073 00       		.byte	0
+ 427 0074 00       		.byte	0
+ 428 0075 09       		.uleb128 0x9
+ 429 0076 34       		.uleb128 0x34
+ 430 0077 00       		.byte	0
+ 431 0078 03       		.uleb128 0x3
+ 432 0079 0E       		.uleb128 0xe
+ 433 007a 3A       		.uleb128 0x3a
+ 434 007b 0B       		.uleb128 0xb
+ 435 007c 3B       		.uleb128 0x3b
+ 436 007d 0B       		.uleb128 0xb
+ 437 007e 49       		.uleb128 0x49
+ 438 007f 13       		.uleb128 0x13
+ 439 0080 02       		.uleb128 0x2
+ 440 0081 18       		.uleb128 0x18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 10
+
+
+ 441 0082 00       		.byte	0
+ 442 0083 00       		.byte	0
+ 443 0084 0A       		.uleb128 0xa
+ 444 0085 2E       		.uleb128 0x2e
+ 445 0086 01       		.byte	0x1
+ 446 0087 3F       		.uleb128 0x3f
+ 447 0088 19       		.uleb128 0x19
+ 448 0089 03       		.uleb128 0x3
+ 449 008a 0E       		.uleb128 0xe
+ 450 008b 3A       		.uleb128 0x3a
+ 451 008c 0B       		.uleb128 0xb
+ 452 008d 3B       		.uleb128 0x3b
+ 453 008e 0B       		.uleb128 0xb
+ 454 008f 49       		.uleb128 0x49
+ 455 0090 13       		.uleb128 0x13
+ 456 0091 3C       		.uleb128 0x3c
+ 457 0092 19       		.uleb128 0x19
+ 458 0093 01       		.uleb128 0x1
+ 459 0094 13       		.uleb128 0x13
+ 460 0095 00       		.byte	0
+ 461 0096 00       		.byte	0
+ 462 0097 0B       		.uleb128 0xb
+ 463 0098 18       		.uleb128 0x18
+ 464 0099 00       		.byte	0
+ 465 009a 00       		.byte	0
+ 466 009b 00       		.byte	0
+ 467 009c 0C       		.uleb128 0xc
+ 468 009d 2E       		.uleb128 0x2e
+ 469 009e 01       		.byte	0x1
+ 470 009f 3F       		.uleb128 0x3f
+ 471 00a0 19       		.uleb128 0x19
+ 472 00a1 03       		.uleb128 0x3
+ 473 00a2 0E       		.uleb128 0xe
+ 474 00a3 3A       		.uleb128 0x3a
+ 475 00a4 0B       		.uleb128 0xb
+ 476 00a5 3B       		.uleb128 0x3b
+ 477 00a6 0B       		.uleb128 0xb
+ 478 00a7 3C       		.uleb128 0x3c
+ 479 00a8 19       		.uleb128 0x19
+ 480 00a9 01       		.uleb128 0x1
+ 481 00aa 13       		.uleb128 0x13
+ 482 00ab 00       		.byte	0
+ 483 00ac 00       		.byte	0
+ 484 00ad 0D       		.uleb128 0xd
+ 485 00ae 2E       		.uleb128 0x2e
+ 486 00af 01       		.byte	0x1
+ 487 00b0 3F       		.uleb128 0x3f
+ 488 00b1 19       		.uleb128 0x19
+ 489 00b2 03       		.uleb128 0x3
+ 490 00b3 0E       		.uleb128 0xe
+ 491 00b4 3A       		.uleb128 0x3a
+ 492 00b5 0B       		.uleb128 0xb
+ 493 00b6 3B       		.uleb128 0x3b
+ 494 00b7 0B       		.uleb128 0xb
+ 495 00b8 3C       		.uleb128 0x3c
+ 496 00b9 19       		.uleb128 0x19
+ 497 00ba 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 11
+
+
+ 498 00bb 00       		.byte	0
+ 499 00bc 00       		.byte	0
+ 500              		.section	.debug_loc,"",%progbits
+ 501              	.Ldebug_loc0:
+ 502              	.LLST0:
+ 503 0000 0C000000 		.4byte	.LVL4
+ 504 0004 1A000000 		.4byte	.LVL7
+ 505 0008 0500     		.2byte	0x5
+ 506 000a 74       		.byte	0x74
+ 507 000b 00       		.sleb128 0
+ 508 000c 31       		.byte	0x31
+ 509 000d 1A       		.byte	0x1a
+ 510 000e 9F       		.byte	0x9f
+ 511 000f 00000000 		.4byte	0
+ 512 0013 00000000 		.4byte	0
+ 513              	.LLST1:
+ 514 0017 08000000 		.4byte	.LVL3
+ 515 001b 1A000000 		.4byte	.LVL7
+ 516 001f 0100     		.2byte	0x1
+ 517 0021 54       		.byte	0x54
+ 518 0022 00000000 		.4byte	0
+ 519 0026 00000000 		.4byte	0
+ 520              		.section	.debug_aranges,"",%progbits
+ 521 0000 2C000000 		.4byte	0x2c
+ 522 0004 0200     		.2byte	0x2
+ 523 0006 00000000 		.4byte	.Ldebug_info0
+ 524 000a 04       		.byte	0x4
+ 525 000b 00       		.byte	0
+ 526 000c 0000     		.2byte	0
+ 527 000e 0000     		.2byte	0
+ 528 0010 00000000 		.4byte	.LFB34
+ 529 0014 10000000 		.4byte	.LFE34-.LFB34
+ 530 0018 00000000 		.4byte	.LFB35
+ 531 001c 08000000 		.4byte	.LFE35-.LFB35
+ 532 0020 00000000 		.4byte	.LFB36
+ 533 0024 1C000000 		.4byte	.LFE36-.LFB36
+ 534 0028 00000000 		.4byte	0
+ 535 002c 00000000 		.4byte	0
+ 536              		.section	.debug_ranges,"",%progbits
+ 537              	.Ldebug_ranges0:
+ 538 0000 00000000 		.4byte	.LFB34
+ 539 0004 10000000 		.4byte	.LFE34
+ 540 0008 00000000 		.4byte	.LFB35
+ 541 000c 08000000 		.4byte	.LFE35
+ 542 0010 00000000 		.4byte	.LFB36
+ 543 0014 1C000000 		.4byte	.LFE36
+ 544 0018 00000000 		.4byte	0
+ 545 001c 00000000 		.4byte	0
+ 546              		.section	.debug_line,"",%progbits
+ 547              	.Ldebug_line0:
+ 548 0000 AD000000 		.section	.debug_str,"MS",%progbits,1
+ 548      02006C00 
+ 548      00000201 
+ 548      FB0E0D00 
+ 548      01010101 
+ 549              	.LASF6:
+ 550 0000 6C6F6E67 		.ascii	"long long int\000"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 12
+
+
+ 550      206C6F6E 
+ 550      6720696E 
+ 550      7400
+ 551              	.LASF11:
+ 552 000e 75696E74 		.ascii	"uint32\000"
+ 552      333200
+ 553              	.LASF8:
+ 554 0015 756E7369 		.ascii	"unsigned int\000"
+ 554      676E6564 
+ 554      20696E74 
+ 554      00
+ 555              	.LASF19:
+ 556 0022 6D6F746F 		.ascii	"motor_state\000"
+ 556      725F7374 
+ 556      61746500 
+ 557              	.LASF9:
+ 558 002e 75696E74 		.ascii	"uint8\000"
+ 558      3800
+ 559              	.LASF23:
+ 560 0034 4932635F 		.ascii	"I2c_ReadControl\000"
+ 560      52656164 
+ 560      436F6E74 
+ 560      726F6C00 
+ 561              	.LASF28:
+ 562 0044 4D6F746F 		.ascii	"Motor_Stop\000"
+ 562      725F5374 
+ 562      6F7000
+ 563              	.LASF7:
+ 564 004f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 564      206C6F6E 
+ 564      6720756E 
+ 564      7369676E 
+ 564      65642069 
+ 565              	.LASF12:
+ 566 0066 666C6F61 		.ascii	"float\000"
+ 566      7400
+ 567              	.LASF21:
+ 568 006c 6C617374 		.ascii	"last_time\000"
+ 568      5F74696D 
+ 568      6500
+ 569              	.LASF14:
+ 570 0076 63686172 		.ascii	"char\000"
+ 570      00
+ 571              	.LASF1:
+ 572 007b 756E7369 		.ascii	"unsigned char\000"
+ 572      676E6564 
+ 572      20636861 
+ 572      7200
+ 573              	.LASF17:
+ 574 0089 436F6E74 		.ascii	"Control_Start\000"
+ 574      726F6C5F 
+ 574      53746172 
+ 574      7400
+ 575              	.LASF26:
+ 576 0097 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\Arlobot\\Board-Ki"
+ 576      726F6A65 
+ 576      6374735C 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 13
+
+
+ 576      41726C6F 
+ 576      426F745C 
+ 577 00c5 7450726F 		.ascii	"tProg.cydsn\000"
+ 577      672E6379 
+ 577      64736E00 
+ 578              	.LASF4:
+ 579 00d1 6C6F6E67 		.ascii	"long int\000"
+ 579      20696E74 
+ 579      00
+ 580              	.LASF2:
+ 581 00da 73686F72 		.ascii	"short int\000"
+ 581      7420696E 
+ 581      7400
+ 582              	.LASF22:
+ 583 00e4 6D696C6C 		.ascii	"millis\000"
+ 583      697300
+ 584              	.LASF5:
+ 585 00eb 6C6F6E67 		.ascii	"long unsigned int\000"
+ 585      20756E73 
+ 585      69676E65 
+ 585      6420696E 
+ 585      7400
+ 586              	.LASF13:
+ 587 00fd 646F7562 		.ascii	"double\000"
+ 587      6C6500
+ 588              	.LASF18:
+ 589 0104 436F6E74 		.ascii	"Control_Update\000"
+ 589      726F6C5F 
+ 589      55706461 
+ 589      746500
+ 590              	.LASF3:
+ 591 0113 73686F72 		.ascii	"short unsigned int\000"
+ 591      7420756E 
+ 591      7369676E 
+ 591      65642069 
+ 591      6E7400
+ 592              	.LASF0:
+ 593 0126 7369676E 		.ascii	"signed char\000"
+ 593      65642063 
+ 593      68617200 
+ 594              	.LASF27:
+ 595 0132 4D6F746F 		.ascii	"Motor_Start\000"
+ 595      725F5374 
+ 595      61727400 
+ 596              	.LASF25:
+ 597 013e 2E2E5C73 		.ascii	"..\\source\\control.c\000"
+ 597      6F757263 
+ 597      655C636F 
+ 597      6E74726F 
+ 597      6C2E6300 
+ 598              	.LASF24:
+ 599 0152 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 599      4320342E 
+ 599      392E3320 
+ 599      32303135 
+ 599      30333033 
+ 600 0185 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccNu8WiX.s 			page 14
+
+
+ 600      20726576 
+ 600      6973696F 
+ 600      6E203232 
+ 600      31323230 
+ 601 01b8 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 601      66756E63 
+ 601      74696F6E 
+ 601      2D736563 
+ 601      74696F6E 
+ 602              	.LASF16:
+ 603 01e0 436F6E74 		.ascii	"Control_Init\000"
+ 603      726F6C5F 
+ 603      496E6974 
+ 603      00
+ 604              	.LASF10:
+ 605 01ed 75696E74 		.ascii	"uint16\000"
+ 605      313600
+ 606              	.LASF20:
+ 607 01f4 636F6E74 		.ascii	"control\000"
+ 607      726F6C00 
+ 608              	.LASF15:
+ 609 01fc 73697A65 		.ascii	"sizetype\000"
+ 609      74797065 
+ 609      00
+ 610              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
