@@ -25,9 +25,13 @@
 #define MIN_SAMPLE_RATE (0)
 #define MAX_SAMPLE_RATE (1)
 
-#define DEFAULT_KP (2.0)
-#define DEFAULT_KI (0.5)
-#define DEFAULT_KD (0.001)
+// Ziegler Nichols Method
+#define T   (0.1)
+#define L   (0.4)
+
+#define DEFAULT_KP (1.2*T/L)
+#define DEFAULT_KI (2*L)
+#define DEFAULT_KD (0.5*L)
 
 static float Kp;
 static float Ki;
@@ -46,7 +50,7 @@ typedef struct {
     float control;
 } PID;
 
-static PID pid = {0.1, DEFAULT_KP, DEFAULT_KI, DEFAULT_KD, 0.0, 0.0, 0.0};
+static PID pid = {0.0, DEFAULT_KP, DEFAULT_KI, DEFAULT_KD, 0.0, 0.0, 0.0};
 
 void pid_calc(PID* pid, float curr_error)
 {
@@ -113,7 +117,6 @@ static void PrintPid(PID *pid, int16 velocity)
 
 void PID_Update()
 {
-#ifndef PID_BYPASS
     static uint32 last_time = 0;
     static int16 new_velocity = 0;
     int16 velocity;
@@ -129,18 +132,18 @@ void PID_Update()
     {    
         last_time = millis();
         
-        input = Encoder_GetWheelSpeed();       
-        pid_calc(&pid, velocity - input);
-        
+#ifdef PID_BYPASS
+        new_velocity = velocity;
+#else
+        input = Encoder_GetWheelSpeed();      
+        pid_calc(&pid, velocity - input);        
         new_velocity = velocity + (int16)pid.control;                
+        //PrintPid(&pid, new_velocity);
+#endif
         
         Motor_SetOutput(new_velocity);
-        //PrintPid(&pid, new_velocity);
     }
     
-#else
-    Motor_SetOutput(velocity);
-#endif
 }
 
 

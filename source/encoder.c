@@ -72,7 +72,7 @@ static int32 RightCounterWrapper()
 #elif defined RIGHT_BOARD
 static int32 RightCounterWrapper()
 {
-    return (int32) Phase_Counter_ReadCounter();
+    return - ( (int32) Phase_Counter_ReadCounter() );
 }
 static int32 LeftCounterWrapper()
 {
@@ -153,7 +153,7 @@ void Encoder_Update()
         I2c_WriteWheelVelocity(left_wheel_velocity);
 #elif defined RIGHT_BOARD
         I2c_WriteCount(RightCounterWrapper());
-        I2c_WriteDeltaCount(right_count_per_second);
+        I2c_WriteCountPerSecond(right_count_per_second);
         I2c_WriteWheelVelocity(right_wheel_velocity);
 #else
     #error "You haven't defined a board, e.g. LEFT_BOARD or RIGHT_BOARD"
@@ -177,6 +177,11 @@ int16 Encoder_GetWheelSpeed()
 #else
     #error "You haven't defined a board, e.g. LEFT_BOARD or RIGHT_BOARD"
 #endif
+}
+
+int32 Encoder_GetCount()
+{
+    return ReadCounter();
 }
 
 void Encoder_GetLRCount(int32* left, int32* right)

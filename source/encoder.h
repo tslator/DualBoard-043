@@ -27,6 +27,9 @@ void Encoder_GetLRSpeed(int16* left, int16* right);
  */
 int16 Encoder_GetWheelSpeed();
 
+/* Returns the encoder count */
+int32 Encoder_GetCount();
+
 /* Returns the encoder count for both left and right wheels
  */
 void Encoder_GetLRCount(int32* left, int32* right);

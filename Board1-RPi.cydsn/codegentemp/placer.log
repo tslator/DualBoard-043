@@ -6,7 +6,7 @@
 
 #Build Date:         Oct  1 2015 13:46:59
 
-#File Generated:     Apr 15 2016 22:44:33
+#File Generated:     Apr 18 2016 15:20:58
 
 #Purpose:            
 
@@ -231,7 +231,7 @@ Clock: \HB25_PWM:cy_m0s8_tcpwm_1\/line_out | Frequency: N/A       | Target:   0.
 ======================================================================
                      End of Clock Summary
 ######################################################################
-D2088: Phase 7, elapsed time : 0.0 (sec)
+D2088: Phase 7, elapsed time : 0.1 (sec)
 
 Final Design Statistics
     Number of Combinational MCs 	:	5
@@ -292,5 +292,5 @@ D2088: Phase 8, elapsed time : 0.0 (sec)
 
 D2054: Placement of the design completed successfully
 
-I2076: Total run-time: 0.4 sec.
+I2076: Total run-time: 0.5 sec.
 

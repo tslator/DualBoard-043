@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
   30:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c **** 
   31:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c **** #if(UARTCOMMS_INTERNAL_TX_SW_BUFFER_CONST)
   32:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     volatile uint32 UARTCOMMS_txBufferHead;
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     volatile uint32 UARTCOMMS_txBufferTail;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
   87:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 {
   88:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                     locTail = 0u;
   89:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 }
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 3
 
 
   90:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  144:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     #if (UARTCOMMS_INTERNAL_RX_SW_BUFFER_CONST)
  145:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****         uint32 locHead;
  146:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     #endif /* (UARTCOMMS_INTERNAL_RX_SW_BUFFER_CONST) */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 4
 
 
  147:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c **** 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  201:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 /* Enable RX Not Empty interrupt source to continue receiving
  202:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 * data into software buffer.
  203:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 5
 
 
  204:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 UARTCOMMS_INTR_RX_MASK_REG |= UARTCOMMS_INTR_RX_NOT_EMPTY;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
   35 000a 08D1     		bne	.L2
  249:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 (UARTCOMMS_SPI_UART_FIFO_SIZE != UARTCOMMS_GET_TX_FIFO_ENTRIES))
   36              		.loc 1 249 0 discriminator 1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 6
 
 
   37 000c 134B     		ldr	r3, .L7+8
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  273:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 /* Clear old status of INTR_TX_NOT_FULL. It sets at the end of transfer when TX FIF
  274:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****                 UARTCOMMS_ClearTxInterruptSource(UARTCOMMS_INTR_TX_NOT_FULL);
   67              		.loc 1 274 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 7
 
 
   68 0032 0223     		mov	r3, #2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
   98 0054 00000000 		.word	UARTCOMMS_txBufferHead
   99 0058 00000000 		.word	UARTCOMMS_txBufferTail
  100 005c 08022540 		.word	1076167176
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 8
 
 
  101 0060 40022540 		.word	1076167232
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  130 0008 03E0     		b	.L10
  131              	.LVL9:
  132              	.L11:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 9
 
 
  324:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****         {
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  348:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     *
  349:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     *******************************************************************************/
  350:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     uint32 UARTCOMMS_SpiUartGetTxBufferSize(void)
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 10
 
 
  351:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     {
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  377:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****         return (size);
  378:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART.c ****     }
  189              		.loc 1 378 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 11
 
 
  190              		@ sp needed
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  219 0008 0C4B     		ldr	r3, .L18
  220 000a 1A68     		ldr	r2, [r3]
  221 000c 0C4B     		ldr	r3, .L18+4
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 12
 
 
  222 000e 1A60     		str	r2, [r3]
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  262              	.LFE4:
  263              		.size	UARTCOMMS_SpiUartClearTxBuffer, .-UARTCOMMS_SpiUartClearTxBuffer
  264              		.section	.text.UARTCOMMS_SpiUartDisableIntRx,"ax",%progbits
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 13
 
 
  265              		.align	2
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  291              		.section	.text.UARTCOMMS_SpiUartDisableIntTx,"ax",%progbits
  292              		.align	2
  293              		.global	UARTCOMMS_SpiUartDisableIntTx
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 14
 
 
  294              		.code	16
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  322              	.Letext0:
  323              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
  324              		.file 3 "Generated_Source\\PSoC4/CyLib.h"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 15
 
 
  325              		.section	.debug_info,"",%progbits
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  379 006b 04       		.uleb128 0x4
  380 006c AF000000 		.4byte	.LASF9
  381 0070 02       		.byte	0x2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 16
 
 
  382 0071 3801     		.2byte	0x138
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  436 00e9 01       		.byte	0x1
  437 00ea 3F01     		.2byte	0x13f
  438 00ec 00000000 		.4byte	.LFB2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 17
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 17
 
 
  439 00f0 18000000 		.4byte	.LFE2-.LFB2
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  493 0178 09       		.uleb128 0x9
  494 0179 06000000 		.4byte	.LASF24
  495 017d 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 18
 
 
  496 017e 8B01     		.2byte	0x18b
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  550 01f4 14       		.uleb128 0x14
  551 01f5 34010000 		.4byte	.LASF29
  552 01f9 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 19
 
 
  553 01fa D001     		.2byte	0x1d0
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  607              		.section	.debug_abbrev,"",%progbits
  608              	.Ldebug_abbrev0:
  609 0000 01       		.uleb128 0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 20
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 20
 
 
  610 0001 11       		.uleb128 0x11
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  664 0037 35       		.uleb128 0x35
  665 0038 00       		.byte	0
  666 0039 49       		.uleb128 0x49
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 21
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 21
 
 
  667 003a 13       		.uleb128 0x13
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  721 0071 02       		.uleb128 0x2
  722 0072 17       		.uleb128 0x17
  723 0073 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 22
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 22
 
 
  724 0074 00       		.byte	0
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  778 00ab 00       		.byte	0
  779 00ac 00       		.byte	0
  780 00ad 0C       		.uleb128 0xc
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 23
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 23
 
 
  781 00ae 898201   		.uleb128 0x4109
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  835 00e7 03       		.uleb128 0x3
  836 00e8 0E       		.uleb128 0xe
  837 00e9 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 24
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 24
 
 
  838 00ea 0B       		.uleb128 0xb
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  892 0127 34       		.uleb128 0x34
  893 0128 00       		.byte	0
  894 0129 03       		.uleb128 0x3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 25
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 25
 
 
  895 012a 0E       		.uleb128 0xe
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  949 0160 13       		.uleb128 0x13
  950 0161 00       		.byte	0
  951 0162 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 26
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 26
 
 
  952 0163 1A       		.uleb128 0x1a
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  1006 0054 0A000000 		.4byte	.LVL9
  1007 0058 0100     		.2byte	0x1
  1008 005a 50       		.byte	0x50
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 27
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 27
 
 
  1009 005b 0A000000 		.4byte	.LVL9
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  1063              	.LLST6:
  1064 00e5 04000000 		.4byte	.LVL15
  1065 00e9 12000000 		.4byte	.LVL16
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 28
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 28
 
 
  1066 00ed 0100     		.2byte	0x1
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  1116 0000 72656733 		.ascii	"reg32\000"
  1116      3200
  1117              	.LASF24:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 29
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 29
 
 
  1118 0006 55415254 		.ascii	"UARTCOMMS_SpiUartClearTxBuffer\000"
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  1142      434F4D4D 
  1142      535F5370 
  1142      69556172 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 30
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 30
 
 
  1142      74446973 
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  1166      61696C00 
  1167              	.LASF15:
  1168 0185 73697A65 		.ascii	"sizetype\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 31
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 31
 
 
  1168      74797065 
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 1
  1187      626C6500 
  1188              	.LASF0:
  1189 02af 7369676E 		.ascii	"signed char\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5Mg8zV.s 			page 32
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWVOrTB.s 			page 32
 
 
  1189      65642063 
