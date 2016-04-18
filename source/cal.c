@@ -157,4 +157,13 @@ void Cal_Upload()
     /* Write to the serial that we are done: LOAD COMPLETE !!!! */
 }
 
+void Cal_Validate()
+{
+    /* Write to the serial port that we are validating calibration: VALIDATING CALIBRATION !!! */
+    
+    Motor_ValidateCalibration();
+    
+    /* Write to the serial port that we are done: VALIDATION COMPLETE !!! */
+}
+
 /* [] END OF FILE */

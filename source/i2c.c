@@ -25,6 +25,7 @@
                                                                 - Bit 2: calibrate - requests the Psoc to start calibrating
                                                                 - Bit 3: upload calibration
                                                                 - Bit 4: download calibration
+                                                                - Bit 5: validate calibration
       02           2         [commanded velocity]           commanded velocity is in units of millimeters/second
       04           2         [commanded accel]              commanded velocity in in units of millimeters/second^2
       06           2         [calibration port]             the register through which calibration is passed to the Psoc
@@ -152,7 +153,9 @@ uint16 I2c_ReadControl()
     value = i2c_buf.read_write.control;
     i2c_buf.read_write.control = 0;
     
-    value |= CONTROL_ENABLE_CALIBRATION_BIT;
+    //value |= CONTROL_ENABLE_CALIBRATION_BIT;
+    //value |= CONTROL_VALIDATE_CALIBRATION_BIT;
+    
     return value;
 }
 

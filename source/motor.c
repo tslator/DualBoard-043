@@ -81,7 +81,7 @@
     More generally, 2 * PWM_STOP - pwm
     
  */
-#define PWM_REFLECT(value) ((value < 0) ? 2 * PWM_STOP - value : value)
+#define PWM_REFLECT(mms, pwm) ((mms < 0) ? 2 * PWM_STOP - pwm : pwm)
 #elif defined RIGHT_BOARD
 #define PWM_FULL_FORWARD (1000)
 #define PWM_STOP         (1500)
@@ -90,7 +90,7 @@
 #define PWM_INCREMENT    (-1)
 #define PWM_MIN          (PWM_STOP)
 #define PWM_MAX          (PWM_FULL_FORWARD)
-#define PWM_REFLECT(value) ((value < 0) ? 2 * PWM_STOP + value : value)
+#define PWM_REFLECT(mms, pwm) ((mms < 0) ? 2 * PWM_STOP + pwm : pwm)
 #else
     #error "You haven't defined a board, e.g. LEFT_BOARD or RIGHT_BOARD"
 #endif
@@ -120,7 +120,10 @@
 #define CAL_PWM_END (PWM_STOP)
 #define CAL_PWM_STEP (PWM_DECREMENT*PWM_CAL_STEP)
 
-
+#define CAL_VAL_CPS_START (20)
+#define CAL_VAL_STEP (10)
+#define CAL_VAL_NUM_SAMPLES (2)
+#define CAL_VAL_SAMPLE_PERIOD (250) // milliseconds
 
 /* Structure used to capture pwm and cps samples during calibration
  */
@@ -141,8 +144,9 @@ static CALIBRATION_ENTRY cal_cps_to_pwm[MAX_NUM_CAL_ENTRY];
         Encoder Resolution: 36 position (quadrature encoding yields 144 counts per revolution)
         Wheel Circumference: 479 mm
 
-    From the above, the motor has a max count/sec of 228 and max speed of 733 mm/s.  Empirical measurement gives a 
-    usable range of 0 .. 150 count/s and 499 mm/s.  Your mileage may vary :-)
+    From the above, the motor has a max count/sec of 228 and max speed of 733 mm/s.  
+    Empirical measurement gives a usable range of 0 .. 200 count/s and 655 mm/s.  Typically, the calibration captures a
+    max count/sec between 180-190.  Your mileage may vary :-)
 
  */
 #define MIN_CPS_VALUE (1)
@@ -179,7 +183,7 @@ static uint16 map_cps_to_pwm[MAX_NUM_CPS_ENTRY] = {1500, 1504, 1508, 1512, 1516,
                                                    1810, 1811, 1812, 1813, 1814, 1815, 1816, 1817, 1818, 1819, 
                                                    1820, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500
                                                    };
-
+static uint8 cps_to_pwm_last_entry;
 
 void Motor_Init()
 {
@@ -194,8 +198,19 @@ void Motor_Init()
         cal_cps_to_pwm[ii].pwm = PWM_MIN;
         cal_cps_to_pwm[ii].cps = -1;
     }
-
+    
     // Note: map_cps_to_pwm contains default pwm values and so it should not be initialized
+    
+    // Find the last non-stop value entry in the cps-to-pwm map
+    for (ii = MAX_CPS_ENTRY; ii > MIN_CPS_ENTRY; --ii)
+    {
+        if (map_cps_to_pwm[ii] != PWM_STOP)
+        {
+            cps_to_pwm_last_entry = ii;
+            break;
+        }
+    }
+        
 }
 
 void Motor_Start()
@@ -215,6 +230,8 @@ void Motor_SetOutput(int16 value)
  */
 {
     int16 cps;
+    uint16 pwm;
+    
     
     /* 
                  mm      count
@@ -223,18 +240,15 @@ void Motor_SetOutput(int16 value)
     */
     cps = abs(value * COUNT_PER_MILLIMETER);
     
-    // Limit CPS to usable range as it is an index
-    if (cps >= MIN_CPS_ENTRY && cps <= MAX_CPS_ENTRY)
-    {
-        uint16 pwm;
-        
-        /* Note: PWM_REFLECT handles forward/reverse mapping and is defined appropriately for each board, i.e., BOARD_1,
-           BOARD_2, and motor, i.e., LEFT_BOARD, RIGHT_BOARD
-         */
-        pwm = PWM_REFLECT(map_cps_to_pwm[cps]);
-        
-        HB25_PWM_WriteCompare(pwm);
-    }
+    /* Constrain the CPS to the calibrated values */
+    cps = constrain(cps, MIN_CPS_ENTRY, cps_to_pwm_last_entry);
+    
+    /* Note: PWM_REFLECT handles forward/reverse mapping and is defined appropriately for each board, i.e., BOARD_1,
+       BOARD_2, and motor, i.e., LEFT_BOARD, RIGHT_BOARD
+     */
+    pwm = PWM_REFLECT(value, map_cps_to_pwm[cps]);
+    
+    HB25_PWM_WriteCompare(pwm);
 }
 
 void Motor_Stop()
@@ -243,17 +257,22 @@ void Motor_Stop()
     HB25_Enable_Pin_Write(HB25_DISABLE);
 }
 
-static int16 CalculateAverageCountPerSec(uint16 delay)
+static int16 CalculateAverageCountPerSec(uint8 samples, uint16 delay)
 {
+    uint8 ii;
     int32 count_start;
     int32 count_end;
-    int32 delta;
+    int32 deltas = 0;
     
-    count_start = (int32) Phase_Counter_ReadCounter();
-    CyDelay(delay);
-    count_end = (int32) Phase_Counter_ReadCounter();
-    delta = count_end - count_start;
-    return (delta*MS_IN_SEC)/delay;
+    for (ii = 0; ii < samples; ++ii)
+    {
+        count_start = (int32) Phase_Counter_ReadCounter();
+        CyDelay(delay);
+        count_end = (int32) Phase_Counter_ReadCounter();
+        deltas += count_end - count_start;
+    }
+    deltas /= samples;
+    return (deltas * MS_IN_SEC) / delay;
 }
 
 void Motor_Calibrate()
@@ -345,7 +364,7 @@ void Motor_Calibrate()
             }
         }        
     }
-        
+    
     HB25_PWM_WriteCompare(PWM_STOP);
     
     /* The first entry in the calibration array will always be where the motor stops, so set the min/max pwm values to
@@ -353,13 +372,15 @@ void Motor_Calibrate()
      */
     cal_cps_to_pwm[cal_cps_index].pwm = PWM_STOP;
     cal_cps_to_pwm[cal_cps_index].cps = 0;
-    
+
+    /* 
+        Capture the last (largest) cps entry       
+     */
+    cps_to_pwm_last_entry = cal_cps_to_pwm[0].cps;
+            
     /* Linear interpolate the values 
         1. Loop over the markers array creating a delta, span and step between each sample
         2. Fill in the spaces between each sample with the interpolated values  
-    
-        
-    
     */
     
     for (ii = cal_cps_index; ii > MIN_CAL_ENTRY + 1; --ii)
@@ -421,38 +442,29 @@ void Motor_Calibrate()
 void Motor_ValidateCalibration()
 {
     int ii;
-    int jj;
     int16 meas_cps;
-    int32 deltas;
-    int32 count_start;
-    int32 count_end;
-    uint32 delay = 100;
+    int16 values[20] = {0};
+    uint8 index = 0;
     
     
     /* The following code tests that each entry selects a pwm value and results in a matching count/s wheel speed 
      */
     
-    for (ii = MIN_CPS_ENTRY; ii <= MAX_CPS_ENTRY; ++ii)
+    Encoder_Reset();
+    
+    for (ii = CAL_VAL_CPS_START; ii <= cps_to_pwm_last_entry; ii += CAL_VAL_STEP)
     {
-        meas_cps = 0;
         HB25_PWM_WriteCompare(map_cps_to_pwm[ii]);
         CyDelay(PWM_SETTLE_TIME);
-        for (jj = 0; jj < MAX_SPEED_SAMPLES; ++jj)
-        {
-            //meas_cps += CalculateAverageCountPerSec(250);
-            
-            count_start = (int32) Phase_Counter_ReadCounter();
-            CyDelay(delay);
-            count_end = (int32) Phase_Counter_ReadCounter();
-            deltas += count_end - count_start;
-        }
-        deltas /= MAX_SPEED_SAMPLES;
-        meas_cps = (deltas*MS_IN_SEC)/delay;
+        
+        meas_cps = CalculateAverageCountPerSec(CAL_VAL_NUM_SAMPLES, CAL_VAL_SAMPLE_PERIOD);
         
         /* Report via the serial port the commanded cps and the meas_cps
           Commanded       Measured
             <cps>   ->   <meas_cps>
          */
+        values[index] = meas_cps;
+        index++;
     }
     
     HB25_PWM_WriteCompare(PWM_STOP);      
@@ -461,7 +473,7 @@ void Motor_ValidateCalibration()
 void Motor_GetCalValues(int16** cal_values, uint16* num_entries)
 {
     *cal_values = (int16 *) map_cps_to_pwm;
-    *num_entries = 150;
+    *num_entries = cps_to_pwm_last_entry + 1;
 }
 
 /* [] END OF FILE */

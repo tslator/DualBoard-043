@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
   30:..\source/ultrasonic.c **** {
   31:..\source/ultrasonic.c ****     uint16 min_pulse;
   32:..\source/ultrasonic.c ****     uint16 max_pulse;
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 2
 
 
   33:..\source/ultrasonic.c ****     uint32 average;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
   48 001c 9342     		cmp	r3, r2
   49 001e 03D8     		bhi	.L4
   50              		.loc 1 64 0 is_stmt 0 discriminator 1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 3
 
 
   51 0020 064B     		ldr	r3, .L5
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
   89              		.loc 1 80 0
   90              		.cfi_startproc
   91 0000 08B5     		push	{r3, lr}
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 4
 
 
   92              		.cfi_def_cfa_offset 8
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  138              	.LVL4:
  139 0000 38B5     		push	{r3, r4, r5, lr}
  140              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 5
 
 
  141              		.cfi_offset 3, -16
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  187              	.LVL11:
  188 0000 10B5     		push	{r4, lr}
  189              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 6
 
 
  190              		.cfi_offset 4, -8
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  238              	.LVL14:
  239 004a 80B2     		uxth	r0, r0
   97:..\source/ultrasonic.c **** }
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 7
 
 
  240              		.loc 1 97 0 discriminator 4
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  108:..\source/ultrasonic.c ****         sensors[ii].moving_average.n = AVG_SAMPLES;
  284              		.loc 1 108 0 discriminator 3
  285 001a 0A31     		add	r1, r1, #10
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 8
 
 
  286 001c 1961     		str	r1, [r3, #16]
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  330 000c 08BD     		pop	{r3, pc}
  331              	.L27:
  332 000e C046     		.align	2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 9
 
 
  333              	.L26:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  370              	.LVL24:
  134:..\source/ultrasonic.c ****         
  135:..\source/ultrasonic.c ****         /* Wait for the timer to count the input width */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 10
 
 
  136:..\source/ultrasonic.c ****         result = WaitForPulseIn();
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  146:..\source/ultrasonic.c ****                 //COMMS_DEBUG_PRINT(0, "N: %d, X: %d, C: %ld\n\r", sensors[ii].min_pulse, sensors[i
  147:..\source/ultrasonic.c ****             }
  148:..\source/ultrasonic.c ****             
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 11
 
 
  149:..\source/ultrasonic.c ****         }
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  448              		.loc 1 167 0 discriminator 3
  449 000c 201C     		mov	r0, r4
  450 000e FFF7FEFF 		bl	HCSR04_Control_Write
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 12
 
 
  451              	.LVL37:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  472              	.LVL42:
  473 0028 10BD     		pop	{r4, pc}
  474              	.L38:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 13
 
 
  475 002a C046     		.align	2
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  525              		.file 9 "..\\source\\i2c.h"
  526              		.file 10 "..\\source\\debug.h"
  527              		.section	.debug_info,"",%progbits
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 14
 
 
  528              	.Ldebug_info0:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  582 006c C4000000 		.4byte	.LASF9
  583 0070 02       		.byte	0x2
  584 0071 3801     		.2byte	0x138
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 15
 
 
  585 0073 2C000000 		.4byte	0x2c
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  639 00e4 1C       		.byte	0x1c
  640 00e5 8F000000 		.4byte	0x8f
  641 00e9 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 16
 
 
  642 00ea 0A       		.uleb128 0xa
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  696 0156 04       		.byte	0x4
  697 0157 5B010000 		.4byte	0x15b
  698 015b 0C       		.uleb128 0xc
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 17
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 17
 
 
  699 015c 66010000 		.4byte	0x166
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  753 01da 01       		.byte	0x1
  754 01db 47       		.byte	0x47
  755 01dc 77000000 		.4byte	0x77
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 18
 
 
  756 01e0 00000000 		.4byte	.LLST0
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  810 023a 18       		.uleb128 0x18
  811 023b 87020000 		.4byte	.LASF55
  812 023f 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 19
 
 
  813 0240 59       		.byte	0x59
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  867 02ba F0040000 		.4byte	0x4f0
  868 02be 11       		.uleb128 0x11
  869 02bf 01       		.uleb128 0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 20
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 20
 
 
  870 02c0 50       		.byte	0x50
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  924 0331 11       		.uleb128 0x11
  925 0332 01       		.uleb128 0x1
  926 0333 50       		.byte	0x50
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 21
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 21
 
 
  927 0334 01       		.uleb128 0x1
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  981 03ab 11       		.uleb128 0x11
  982 03ac 01       		.uleb128 0x1
  983 03ad 50       		.byte	0x50
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 22
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 22
 
 
  984 03ae 02       		.uleb128 0x2
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1038 040b 04000000 		.4byte	last_time
  1039 040f 1C       		.uleb128 0x1c
  1040 0410 65030000 		.4byte	.LASF42
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 23
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 23
 
 
  1041 0414 01       		.byte	0x1
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1095 0489 6B000000 		.4byte	.LASF57
  1096 048d 04       		.byte	0x4
  1097 048e 4B01     		.2byte	0x14b
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 24
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 24
 
 
  1098 0490 83000000 		.4byte	0x83
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1152 0507 27       		.byte	0x27
  1153 0508 12050000 		.4byte	0x512
  1154 050c 0D       		.uleb128 0xd
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 25
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 25
 
 
  1155 050d 6B000000 		.4byte	0x6b
@@ -1446,7 +1446,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1157 0512 25       		.uleb128 0x25
  1158 0513 92000000 		.4byte	.LASF50
  1159 0517 09       		.byte	0x9
- 1160 0518 2D       		.byte	0x2d
+ 1160 0518 30       		.byte	0x30
  1161 0519 28050000 		.4byte	0x528
  1162 051d 0D       		.uleb128 0xd
  1163 051e 6B000000 		.4byte	0x6b
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1209 0020 00       		.byte	0
  1210 0021 0B       		.uleb128 0xb
  1211 0022 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 26
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 26
 
 
  1212 0023 3E       		.uleb128 0x3e
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1266 0059 13       		.uleb128 0x13
  1267 005a 00       		.byte	0
  1268 005b 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 27
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 27
 
 
  1269 005c 09       		.uleb128 0x9
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1323 0092 00       		.byte	0
  1324 0093 49       		.uleb128 0x49
  1325 0094 13       		.uleb128 0x13
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 28
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 28
 
 
  1326 0095 00       		.byte	0
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1380 00d3 12       		.uleb128 0x12
  1381 00d4 2E       		.uleb128 0x2e
  1382 00d5 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 29
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 29
 
 
  1383 00d6 03       		.uleb128 0x3
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1437 010e 02       		.uleb128 0x2
  1438 010f 17       		.uleb128 0x17
  1439 0110 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 30
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 30
 
 
  1440 0111 00       		.byte	0
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1494 0150 13       		.uleb128 0x13
  1495 0151 00       		.byte	0
  1496 0152 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 31
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 31
 
 
  1497 0153 19       		.uleb128 0x19
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1551 018a 34       		.uleb128 0x34
  1552 018b 00       		.byte	0
  1553 018c 03       		.uleb128 0x3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 32
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 32
 
 
  1554 018d 0E       		.uleb128 0xe
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1608 01c3 2E       		.uleb128 0x2e
  1609 01c4 00       		.byte	0
  1610 01c5 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 33
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 33
 
 
  1611 01c6 19       		.uleb128 0x19
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1665 01fc 18       		.uleb128 0x18
  1666 01fd 00       		.byte	0
  1667 01fe 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 34
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 34
 
 
  1668 01ff 00       		.byte	0
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1722 0235 3C       		.uleb128 0x3c
  1723 0236 19       		.uleb128 0x19
  1724 0237 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 35
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 35
 
 
  1725 0238 00       		.byte	0
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1779 004d 30000000 		.4byte	.LVL12
  1780 0051 54000000 		.4byte	.LFE39
  1781 0055 0400     		.2byte	0x4
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 36
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 36
 
 
  1782 0057 F3       		.byte	0xf3
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1836 00e1 0C000000 		.4byte	.LVL36
  1837 00e5 0200     		.2byte	0x2
  1838 00e7 30       		.byte	0x30
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 37
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 37
 
 
  1839 00e8 9F       		.byte	0x9f
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1893 003c 30000000 		.4byte	.LFE43
  1894 0040 00000000 		.4byte	0
  1895 0044 00000000 		.4byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 38
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 38
 
 
  1896              		.section	.debug_line,"",%progbits
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1918      6500
  1919              	.LASF50:
  1920 0092 4932635F 		.ascii	"I2c_WriteUltrasonicDistance\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 39
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 39
 
 
  1920      57726974 
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1945              	.LASF46:
  1946 0134 6D696C6C 		.ascii	"millis\000"
  1946      697300
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 40
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 40
 
 
  1947              	.LASF31:
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1968 0234 6C6F6E67 		.ascii	"long long unsigned int\000"
  1968      206C6F6E 
  1968      6720756E 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 41
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 41
 
 
  1968      7369676E 
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  1992      6374735C 
  1992      41726C6F 
  1992      426F745C 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 42
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 42
 
 
  1993 02fc 61726431 		.ascii	"ard1-RPi.cydsn\000"
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 1
  2017      654F7574 
  2017      00
  2018              	.LASF24:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccAFfYro.s 			page 43
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc5qse36.s 			page 43
 
 
  2019 039d 61766572 		.ascii	"average\000"

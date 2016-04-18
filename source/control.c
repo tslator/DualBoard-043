@@ -32,7 +32,8 @@ void Control_Update()
     uint16 control;
     
     /* Clear Encoder Counts */
-    control = I2c_ReadControl();    
+    control = I2c_ReadControl();
+    
     if (control & CONTROL_CLEAR_ENCODER_COUNT_BIT)
     {
         Encoder_Reset();
@@ -49,6 +50,17 @@ void Control_Update()
     {
         Cal_Upload();
     }
+
+    if (control & CONTROL_DOWNLOAD_CALIBRATION_BIT)
+    {
+        Cal_Download();
+    }
+    
+    if (control & CONTROL_VALIDATE_CALIBRATION_BIT)
+    {
+        Cal_Validate();
+    }
+    
 }
 
 /* [] END OF FILE */

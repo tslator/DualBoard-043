@@ -19,6 +19,8 @@ void Cal_Init();
 void Cal_Start();
 void Cal_Update();
 void Cal_Upload();
+void Cal_Download();
+void Cal_Validate();
     
 #endif
 

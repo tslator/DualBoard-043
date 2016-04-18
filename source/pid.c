@@ -22,18 +22,12 @@
 #define SAMPLE_RATE (20) // Hz
 #define SAMPLE_PERIOD (1000/SAMPLE_RATE) /* milliseconds */
 
-#define MIN_KP (0)
-#define MAX_KP (1)
-#define MIN_KI (0)
-#define MAX_KI (1)
-#define MIN_KD (0)
-#define MAX_KD (1)
 #define MIN_SAMPLE_RATE (0)
 #define MAX_SAMPLE_RATE (1)
 
-#define DEFAULT_KP (1.0)
+#define DEFAULT_KP (2.0)
 #define DEFAULT_KI (0.5)
-#define DEFAULT_KD (0.0)
+#define DEFAULT_KD (0.001)
 
 static float Kp;
 static float Ki;
@@ -43,30 +37,34 @@ static float Kd;
 
 
 typedef struct {
-    double windup_guard;
-    double proportional_gain;
-    double integral_gain;
-    double derivative_gain;
-    double prev_error;
-    double int_error;
-    double control;
+    float windup_guard;
+    float proportional_gain;
+    float integral_gain;
+    float derivative_gain;
+    float prev_error;
+    float int_error;
+    float control;
 } PID;
 
-static PID pid = {0.1, DEFAULT_KP, DEFAULT_KI, DEFAULT_KD, 0.0, 0.01, 0.0};
+static PID pid = {0.1, DEFAULT_KP, DEFAULT_KI, DEFAULT_KD, 0.0, 0.0, 0.0};
 
-void pid_calc(PID* pid, double curr_error)
+void pid_calc(PID* pid, float curr_error)
 {
-    double diff;
-    double p_term;
-    double i_term;
-    double d_term;
+    float diff;
+    float p_term;
+    float i_term;
+    float d_term;
  
     // integration with windup guarding
     pid->int_error += curr_error;
     if (pid->int_error < -(pid->windup_guard))
+    {
         pid->int_error = -(pid->windup_guard);
+    }
     else if (pid->int_error > pid->windup_guard)
+    {
         pid->int_error = pid->windup_guard;
+    }
  
     // differentiation
     diff = curr_error - pid->prev_error;
@@ -124,17 +122,18 @@ void PID_Update()
     
     /* Read the velocity command */
     I2c_ReadVelocity(&velocity);
-    //velocity = -200;
+    //velocity = 200;
     
     delta_time = millis() - last_time;
-    //if (DELTA_TIME(millis(), last_time, SAMPLE_PERIOD))
     if (delta_time > SAMPLE_PERIOD)
     {    
         last_time = millis();
         
         input = Encoder_GetWheelSpeed();       
-        pid_calc(&pid, velocity - input); 
-        new_velocity = input + pid.control;        
+        pid_calc(&pid, velocity - input);
+        
+        new_velocity = velocity + (int16)pid.control;                
+        
         Motor_SetOutput(new_velocity);
         //PrintPid(&pid, new_velocity);
     }
