@@ -124,9 +124,17 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_49
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_scl.c : 
 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/EZI2C_Slave_scl_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_scl.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_scl_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_scl_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_scl_PM.c : 
+
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/EZI2C_Slave_sda.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda.c : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/EZI2C_Slave_sda_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/EZI2C_Slave_sda_PM.c : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Encoder_A.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_A.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_A.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_A_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
@@ -151,6 +159,18 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Encoder_B_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_B.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_B_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_B_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_B_PM.c : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Encoder_Count_Pin.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin.c : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Encoder_Count_Pin_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Encoder_Count_Pin_PM.c : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HB25_Enable_Pin.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_Enable_Pin.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_Enable_Pin.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_Enable_Pin_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
@@ -182,6 +202,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_PWM_Pin_aliases.h : 
 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HB25_PWM_Pin_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_PWM_Pin.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_PWM_Pin_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_PWM_Pin_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HB25_PWM_Pin_PM.c : 
+
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Clock.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Clock.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Clock.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Clock.c : 
@@ -206,6 +230,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_0_aliases.h : 
 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Echo_0_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_0.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_0_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_0_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_0_PM.c : 
+
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Echo_1.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1.c : 
@@ -213,6 +241,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1.h : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Echo_1_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_1_PM.c : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Echo_2.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
@@ -222,6 +254,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2_aliases.h : 
 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Echo_2_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_2_PM.c : 
+
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Echo_3.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3.c : 
@@ -229,6 +265,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3.h : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Echo_3_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Echo_3_PM.c : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/HCSR04_Timeout_Intr.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/CyLFClk.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/CyLib.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Timeout_Intr.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/HCSR04_Timeout_Intr.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/cyapicallbacks.h 
 
@@ -370,6 +410,18 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_49
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/I2C_Master_sda_PM.c : 
 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/MainLoop_Pin.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin.c : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/MainLoop_Pin_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/MainLoop_Pin_PM.c : 
+
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/PWM_1MHz.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/PWM_1MHz.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/PWM_1MHz.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/PWM_1MHz.c : 
@@ -400,6 +452,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_0_aliases.h : 
 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Pin_InfraredDistance_0_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_0.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_0_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_0_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_0_PM.c : 
+
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Pin_InfraredDistance_1.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1.c : 
@@ -407,6 +463,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1.h : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Pin_InfraredDistance_1_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_1_PM.c : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Pin_InfraredDistance_2.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
@@ -416,6 +476,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2_aliases.h : 
 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Pin_InfraredDistance_2_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_2_PM.c : 
+
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Pin_InfraredDistance_3.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3.c : 
@@ -423,6 +487,10 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PS
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3.h : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Pin_InfraredDistance_3_PM.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3_PM.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Pin_InfraredDistance_3_PM.c : 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/Quadrature_Decode_Clock.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Quadrature_Decode_Clock.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/Quadrature_Decode_Clock.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
@@ -498,7 +566,7 @@ D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_49
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/UARTCOMMS_tx_PM.c : 
 
-D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/cyPm.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/CyLFClk.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/CyLib.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyPm.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyPm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/CortexM0/ARM_GCC_493/Debug/cyPm.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/CyLFClk.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/CyLib.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyPm.c D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyPm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cytypes.h 
 
 D:/projects/ArloBot/ArlobotHw/DualBoard-043/Board1-RPi.cydsn/Generated_Source/PSoC4/cyPm.c : 
 

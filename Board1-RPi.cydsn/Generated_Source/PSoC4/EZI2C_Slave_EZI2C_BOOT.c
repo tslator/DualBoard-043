@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: EZI2C_Slave_EZI2C_BOOT.c
-* Version 3.0
+* Version 3.10
 *
 * Description:
 *  This file provides the source code of the bootloader communication APIs

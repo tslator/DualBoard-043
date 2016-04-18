@@ -25,7 +25,7 @@
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
   </Toolchains>
-  <Project Name="Board1-RPi" Path="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn" Version="5.20" Type="Normal">
+  <Project Name="Board1-RPi" Path="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn" Version="5.30" Type="Normal">
     <CMSIS_SVD_File>Board1-RPi.svd</CMSIS_SVD_File>
     <Datasheet />
     <LinkerFiles>
@@ -48,6 +48,8 @@
           <File BuildType="BUILD" Toolchain="">..\source\utils.c</File>
           <File BuildType="BUILD" Toolchain="">..\source\debug.c</File>
           <File BuildType="BUILD" Toolchain="">..\source\odom.c</File>
+          <File BuildType="BUILD" Toolchain="">..\source\cal.c</File>
+          <File BuildType="BUILD" Toolchain="">..\source\diag.c</File>
           <File BuildType="BUILD" Toolchain="">..\source\control.h</File>
           <File BuildType="BUILD" Toolchain="">..\source\encoder.h</File>
           <File BuildType="BUILD" Toolchain="">..\source\motor.h</File>
@@ -60,6 +62,8 @@
           <File BuildType="BUILD" Toolchain="">..\source\time.h</File>
           <File BuildType="BUILD" Toolchain="">..\source\debug.h</File>
           <File BuildType="BUILD" Toolchain="">..\source\odom.h</File>
+          <File BuildType="BUILD" Toolchain="">..\source\cal.h</File>
+          <File BuildType="BUILD" Toolchain="">..\source\diag.h</File>
         </Files>
       </Folder>
       <Folder BuildType="BUILD" Path="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn">
@@ -116,18 +120,23 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HB25_PWM_Pin.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HB25_PWM_Pin.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HB25_PWM_Pin_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HB25_PWM_Pin_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_0.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_0.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_0_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_0_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_1.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_1.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_1_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_1_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_2.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_2.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_2_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_2_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_3.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_3.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_3_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Pin_InfraredDistance_3_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\ADC_Infrared.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\ADC_Infrared.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\ADC_Infrared_PM.c</File>
@@ -150,15 +159,19 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_0.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_0.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_0_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_0_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_3.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_3.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_3_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_3_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_2.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_2.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_2_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_2_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_1.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_1.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_1_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Echo_1_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Trigger_0.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Trigger_0.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\HCSR04_Trigger_0_aliases.h</File>
@@ -230,9 +243,11 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_sda.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_sda.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_sda_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_sda_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_scl.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_scl.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_scl_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_scl_PM.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_SCB_IRQ.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\EZI2C_Slave_SCB_IRQ.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\I2C_Master_SCBCLK.c</File>
@@ -262,6 +277,14 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\PhaseCounter_Intr.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Quadrature_Decode_Clock.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Quadrature_Decode_Clock.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\MainLoop_Pin.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\MainLoop_Pin.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\MainLoop_Pin_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\MainLoop_Pin_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Count_Pin.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Count_Pin.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Count_Pin_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\Encoder_Count_Pin_PM.c</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\Export\ARM_GCC_Generic">

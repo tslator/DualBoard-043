@@ -22,40 +22,53 @@
       00           2         [control register]             the control register supports 
                                                                 - Bit 0: enable/disable of the HB25 motors
                                                                 - Bit 1: clear encoder count
+                                                                - Bit 2: calibrate - requests the Psoc to start calibrating
+                                                                - Bit 3: upload calibration
+                                                                - Bit 4: download calibration
       02           2         [commanded velocity]           commanded velocity is in units of millimeters/second
       04           2         [commanded accel]              commanded velocity in in units of millimeters/second^2
+      06           2         [calibration port]             the register through which calibration is passed to the Psoc
+                                                            when loading calibration from the Raspberry Pi and also how
+                                                            calibration data is passed from the Psoc to the Raspberry Pi
+                                                            for storage in a file
     ------------------------------ Read/Write Boundary --------------------------------------------
-      06           2         [device status]                contains bits that represent the status of the Psoc device
+      08           2         [device status]                contains bits that represent the status of the Psoc device
                                                                - Bit 0: HB25 Motor Controller Initialized
-                                                               - Bit 1: M4-ATX Power Off
+                                                               - Bit 1: Calibrated - indicates whether the calibration
+                                                                        values have been loaded; 0 - no, 1 - yes
+                                                               - Bit 2: Calibrating - indicates when the Psoc is in
+                                                                        calibration; 0 - no, 1 - yes
            <------ Encoder ------>
-      08           4         [encoder count]                contains the encoder count.  It will be written to by the
+      10           4         [encoder count]                contains the encoder count.  It will be written to by the
                                                             board that is measuring the encoder and read from by the 
                                                             other board to calculate odometry
+        <---- Left/Right Velocity ---->
+                   2         [wheel velocity]
+                   2         [count per second]
            <------ Odometry ------>
-      12           4         [x distance]                   measured x distance
-      16           4         [y distance]                   measured y distance
-      20           4         [heading]                      measured heading
-      24           4         [linear velocity]              measured linear velocity
-      28           4         [angular velocity]             measured angular velocity
+      14           4         [x distance]                   measured x distance
+      18           4         [y distance]                   measured y distance
+      22           4         [heading]                      measured heading
+      26           4         [linear velocity]              measured linear velocity
+      30           4         [angular velocity]             measured angular velocity
           <------ Ultrasonic ------>
-      32          16         [ultrasonic distance]          ultrasonic distance is an array of 
+      34          16         [ultrasonic distance]          ultrasonic distance is an array of 
                                                             distances from the ultrasonic sensors in 
                                                             centimeters, range 2 to 500
            <------ Infrared ------>
-      48           8         [infrared distance]            infrared distance is an array of distances 
+      50           8         [infrared distance]            infrared distance is an array of distances 
                                                             from the infrared sensors in centimeters, 
                                                             range 10 to 80
-      55           1         [test]                         used for testing the i2c communication
-      56        [empty]
+      58           1         [test]                         used for testing the i2c communication
  */
 
 typedef struct
 {
     uint16 control;
     int16  cmd_velocity;
-    int16  cmd_acceleration;    
-} __attribute__ ((packed)) WRITEONLY_TYPE;
+    int16  cmd_acceleration;
+    int16  calibration_port;
+} __attribute__ ((packed)) READWRITE_TYPE;
 
 typedef struct
 {
@@ -78,19 +91,21 @@ typedef struct
 
 typedef struct
 {
-    uint16 status;
-    int32  encoder_count;
+    uint16     status;
+    int32      encoder_count;
+    int16      wheel_velocity;
+    uint16     count_per_sec;
     ODOMETRY   odom;
     ULTRASONIC us;
     INFRARED   ir;
     uint8      test;
-} __attribute__ ((packed)) READWRITE_TYPE;
+} __attribute__ ((packed)) READONLY_TYPE;
 
 typedef struct
 {
-    WRITEONLY_TYPE write_only;
-    /*---------R/W Boundary -----------*/
     READWRITE_TYPE read_write;
+    /*---------R/W Boundary -----------*/
+    READONLY_TYPE read_only;
 } __attribute__ ((packed)) I2C_DATASTRUCT;
 
 
@@ -104,6 +119,9 @@ typedef struct
  */
 typedef struct
 {
+    uint16 control;
+    uint16 velocity;
+    uint16 acceleration;
     uint16 status;
     int32  count;
 } __attribute__((packed)) SLAVE_DATA_TYPE;
@@ -111,97 +129,118 @@ typedef struct
 
 static I2C_DATASTRUCT i2c_buf;
 static uint16 i2c_status;
-static SLAVE_DATA_TYPE i2c_slave_data;
 
 void I2c_Init()
 {
     memset( &i2c_buf, 0, sizeof(i2c_buf));
-    I2C_Master_Init();
+    i2c_status = 0;
 }
 
 void I2c_Start()
 {
     EZI2C_Slave_EzI2CSetAddress1(I2C_ADDRESS);
-    EZI2C_Slave_EzI2CSetBuffer1(sizeof(i2c_buf), sizeof(i2c_buf.write_only), (volatile uint8 *) &i2c_buf);
+    EZI2C_Slave_EzI2CSetBuffer1(sizeof(i2c_buf), sizeof(i2c_buf.read_only), (volatile uint8 *) &i2c_buf);
     EZI2C_Slave_Start();
     
-    //I2C_Master_I2CSlaveInitReadBuf((uint8 *) &i2c_slave_data, sizeof(i2c_slave_data)); 
-    I2C_Master_Start();
+    I2C_Master_Start();    
 }
 
 uint16 I2c_ReadControl()
 {
     uint16 value;
     
-    value = i2c_buf.write_only.control;
-    i2c_buf.write_only.control = 0;
+    value = i2c_buf.read_write.control;
+    i2c_buf.read_write.control = 0;
     
+    value |= CONTROL_ENABLE_CALIBRATION_BIT;
     return value;
 }
 
 void I2c_SetStatusBit(uint8 bit)
 {
     i2c_status |= bit;
-    i2c_buf.read_write.status = i2c_status;
+    i2c_buf.read_only.status = i2c_status;
 }
 
 void I2c_ClearStatusBit(uint8 bit)
 {
     i2c_status &= ~bit;
-    i2c_buf.read_write.status = i2c_status;
+    i2c_buf.read_only.status = i2c_status;
 }
 
 void I2c_ReadVelocity(int16* velocity)
 {
-    *velocity = i2c_buf.write_only.cmd_velocity;
+    *velocity = i2c_buf.read_write.cmd_velocity;
 }
 
 void I2c_ReadAcceleration(int16* accel)
 {
-    *accel = i2c_buf.write_only.cmd_acceleration;
+    *accel = i2c_buf.read_write.cmd_acceleration;
 }
 
 void I2c_WriteCount(int32 count)
 {
-    i2c_buf.read_write.encoder_count = count;
+    i2c_buf.read_only.encoder_count = count;
 }
 
 int32 I2c_ReadCount()
 {
-    uint32 time_remaining = 10;
+    uint32 retries_remaining = 10;
     SLAVE_DATA_TYPE slave;
-        
-    I2C_Master_I2CMasterReadBuf(OTHER_BOARD_ADDR, (uint8*) &i2c_slave_data, sizeof(i2c_slave_data), I2C_Master_I2C_MODE_COMPLETE_XFER);
 
-    while(0u == (I2C_Master_I2CMasterStatus() & I2C_Master_I2C_MSTAT_RD_CMPLT) && time_remaining)
+    I2C_Master_I2CMasterReadBuf(OTHER_BOARD_ADDR, (uint8*) &slave, sizeof(slave), I2C_Master_I2C_MODE_COMPLETE_XFER);
+
+    while(0u == (I2C_Master_I2CMasterStatus() & I2C_Master_I2C_MSTAT_RD_CMPLT) && retries_remaining)
     {
         // Wait read to be completed
-        --time_remaining;
+        --retries_remaining;
     }
     
     // Clear I2C Master status
     I2C_Master_I2CMasterClearStatus();
-        
+
+    // Temporary until the other board can be read
+    slave.count = 0;
     return slave.count;
 }
 
 void I2c_WriteUltrasonicDistance(uint8 offset, uint16 distance)
 {
-    i2c_buf.read_write.us.values[offset] = distance;
+    i2c_buf.read_only.us.values[offset] = distance;
 }
 
 void I2c_WriteInfraredDistance(uint8 offset, uint8 distance)
 {
-    i2c_buf.read_write.ir.values[offset] = distance;
+    i2c_buf.read_only.ir.values[offset] = distance;
+}
+
+void I2c_WriteCountPerSecond(int16 count_per_sec)
+{
+    i2c_buf.read_only.count_per_sec = count_per_sec;
+}
+
+void I2c_WriteWheelVelocity(int16 velocity)
+{
+    i2c_buf.read_only.wheel_velocity = velocity;
 }
 
 void I2c_WriteOdom(float x_dist, float y_dist, float heading, float linear_speed, float angular_speed)
 {
-    i2c_buf.read_write.odom.x_dist = x_dist;
-    i2c_buf.read_write.odom.y_dist = y_dist;
-    i2c_buf.read_write.odom.heading = heading;
-    i2c_buf.read_write.odom.linear_velocity = linear_speed;
-    i2c_buf.read_write.odom.angular_velocity = angular_speed;
+    i2c_buf.read_only.odom.x_dist = x_dist;
+    i2c_buf.read_only.odom.y_dist = y_dist;
+    i2c_buf.read_only.odom.heading = heading;
+    i2c_buf.read_only.odom.linear_velocity = linear_speed;
+    i2c_buf.read_only.odom.angular_velocity = angular_speed;
+}
+
+void I2c_WriteCalReg(uint16 value)
+{
+    i2c_buf.read_write.calibration_port = value;
+}
+
+uint16 I2c_ReadCalReg()
+{
+    return i2c_buf.read_write.calibration_port;
 }
 
 void I2c_WriteTest()
@@ -212,7 +251,7 @@ void I2c_WriteTest()
     if (millis() - last_time > 1000)
     {
         last_time = millis();
-        i2c_buf.read_write.test = test_count++;
+        i2c_buf.read_only.test = test_count++;
     }
 }
 

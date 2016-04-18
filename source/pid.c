@@ -18,7 +18,6 @@
 #include "utils.h"
 #include "debug.h"
 #include "time.h"
-#include "odom.h"
 
 #define SAMPLE_RATE (20) // Hz
 #define SAMPLE_PERIOD (1000/SAMPLE_RATE) /* milliseconds */
@@ -125,18 +124,19 @@ void PID_Update()
     
     /* Read the velocity command */
     I2c_ReadVelocity(&velocity);
-        
+    //velocity = -200;
+    
     delta_time = millis() - last_time;
     //if (DELTA_TIME(millis(), last_time, SAMPLE_PERIOD))
     if (delta_time > SAMPLE_PERIOD)
     {    
         last_time = millis();
         
-        input = Odom_GetVelocity();       
+        input = Encoder_GetWheelSpeed();       
         pid_calc(&pid, velocity - input); 
         new_velocity = input + pid.control;        
         Motor_SetOutput(new_velocity);
-        PrintPid(&pid, new_velocity);
+        //PrintPid(&pid, new_velocity);
     }
     
 #else

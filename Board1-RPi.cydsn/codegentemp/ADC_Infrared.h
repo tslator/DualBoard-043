@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: ADC_Infrared.h
-* Version 2.20
+* Version 2.30
 *
 * Description:
 *  This file contains the function prototypes and constants used in

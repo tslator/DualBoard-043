@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CyDMA.h
-* Version 1.0
+* Version 1.10
 *
 * Description:
 *  This file provides global DMA defines and API function definitions.
@@ -180,10 +180,13 @@ uint32 CyDmaGetPostCompletionActions(int32 channel, int32 descriptor);
 ***************************************/
 
 #define CYDMA_INTR_NUMBER               (CYDEV_INTR_NUMBER_DMA)
+#define CYDMA_INTR_PRIO                 (3u)
 
 #define CYDMA_INVALID_CHANNEL           (-1)
 
 #define CYDMA_TRIGGER_MASK              (0xC0020000U)
+#define CYDMA_TR_SEL_MASK               (0x00000007U)
+#define CYDMA_TR_GROUP_SHR              (3)
 
 #define CYDMA_MAX_DATA_NR               (65536)
 

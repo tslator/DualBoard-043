@@ -12,7 +12,7 @@
 
 #include "utils.h"
 
-uint32 MovingAverage(MOVING_AVERAGE_TYPE* ma, uint32 value)
+int32 MovingAverage(MOVING_AVERAGE_TYPE* ma, int32 value)
 /*
 MA*[i]= MA*[i-1] +X[i] - MA*[i-1]/N
 
@@ -21,7 +21,7 @@ where MA* is the moving average*N.
 MA[i]= MA*[i]/N
 */
 {
-    uint32 ma_curr;
+    int32 ma_curr;
     
     ma_curr = ma->last + value - ma->last/ma->n;
     ma->last = ma_curr;

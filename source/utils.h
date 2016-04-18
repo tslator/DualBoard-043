@@ -20,13 +20,16 @@
 #define scale_integer(x, x_range, y_range) ( (int32) (x * y_range) / (int32) x_range )
 #define scale_float(x, x_range, y_range) ( (float) (x * y_range) / (float) x_range )
 
+#define abs(x)  ( x < 0 ? -x : x )
+    
+    
 typedef struct _moving_average_tag
 {
-    uint32 n;
-    uint32 last;
+    int32 n;
+    int32 last;
 } MOVING_AVERAGE_TYPE;
     
-uint32 MovingAverage(MOVING_AVERAGE_TYPE* ma, uint32 value);
+int32 MovingAverage(MOVING_AVERAGE_TYPE* ma, int32 value);
 
 int16 TwoBytesToInt16(uint8* bytes);
 uint16 TwoBytesToUint16(uint8* bytes);

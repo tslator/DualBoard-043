@@ -17,8 +17,6 @@
 void Odom_Init();
 void Odom_Start();
 void Odom_Update();
-int16 Odom_GetVelocity();
-
 
 #endif
 

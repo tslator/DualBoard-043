@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -17,14 +17,14 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.Motor_Init,"ax",%progbits
-  18              		.align	2
-  19              		.global	Motor_Init
+  17              		.global	__aeabi_idiv
+  18              		.section	.text.CalculateAverageCountPerSec,"ax",%progbits
+  19              		.align	2
   20              		.code	16
   21              		.thumb_func
-  22              		.type	Motor_Init, %function
-  23              	Motor_Init:
-  24              	.LFB34:
+  22              		.type	CalculateAverageCountPerSec, %function
+  23              	CalculateAverageCountPerSec:
+  24              	.LFB41:
   25              		.file 1 "..\\source\\motor.c"
    1:..\source/motor.c **** /* ========================================
    2:..\source/motor.c ****  *
@@ -42,1095 +42,3430 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 1
   14:..\source/motor.c **** #include "utils.h"
   15:..\source/motor.c **** #include "debug.h"
   16:..\source/motor.c **** #include "hwconfig.h"
-  17:..\source/motor.c **** 
-  18:..\source/motor.c **** /* Add a link to the HB25 data sheet
-  19:..\source/motor.c ****    Ref:
-  20:..\source/motor.c ****  */
-  21:..\source/motor.c **** 
-  22:..\source/motor.c **** #define HB25_ENABLE_BIT (0)
-  23:..\source/motor.c **** #define HB25_PWM_BIT (1)
-  24:..\source/motor.c **** #define HB25_ENABLE (0)
-  25:..\source/motor.c **** #define HB25_DISABLE (1)
-  26:..\source/motor.c **** 
-  27:..\source/motor.c **** #define MIN_PWM_COUNT (800)
-  28:..\source/motor.c **** #define CNTR_PWM_COUNT (1500)
-  29:..\source/motor.c **** #define MAX_PWM_COUNT (2200)
-  30:..\source/motor.c **** 
-  31:..\source/motor.c **** #define PWM_PADDING (200)
-  32:..\source/motor.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 2
+  17:..\source/motor.c **** #include "encoder.h"
+  18:..\source/motor.c **** #include "time.h"
+  19:..\source/motor.c **** #include <math.h>
+  20:..\source/motor.c **** 
+  21:..\source/motor.c **** /* Add a link to the HB25 data sheet
+  22:..\source/motor.c ****    Ref: https://www.parallax.com/sites/default/files/downloads/HB-25-Motor-Controller-Guide-v1.3.pd
+  23:..\source/motor.c ****  */
+  24:..\source/motor.c **** 
+  25:..\source/motor.c **** #define HB25_ENABLE_BIT (0)
+  26:..\source/motor.c **** #define HB25_PWM_BIT (1)
+  27:..\source/motor.c **** #define HB25_ENABLE (0)
+  28:..\source/motor.c **** #define HB25_DISABLE (1)
+  29:..\source/motor.c **** 
+  30:..\source/motor.c **** /* Note: While technically the motors are reverse relative to each other, it is clearer to hide thi
+  31:..\source/motor.c ****    the code.  Therefore, while the pwm values will be different, for a code perspective the functio
+  32:..\source/motor.c ****    same between the boards driving the motors.  For example, the pwm constants refer to forward and
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 2
 
 
-  33:..\source/motor.c **** #define REVERSE_PWM_COUNT (MAX_PWM_COUNT - PWM_PADDING)
-  34:..\source/motor.c **** #define STOP_PWM_COUNT (CNTR_PWM_COUNT)
-  35:..\source/motor.c **** #define FORWARD_PWM_COUNT (MIN_PWM_COUNT + PWM_PADDING)
-  36:..\source/motor.c **** 
-  37:..\source/motor.c **** #define MOTOR_DRIVE_ABSOLUTE_VALUE (100)
-  38:..\source/motor.c **** #define MIN_MOTOR_DRIVE (-MOTOR_DRIVE_ABSOLUTE_VALUE)
-  39:..\source/motor.c **** #define MAX_MOTOR_DRIVE (+MOTOR_DRIVE_ABSOLUTE_VALUE)
-  40:..\source/motor.c **** #define MID_VALUE (0)
-  41:..\source/motor.c **** 
-  42:..\source/motor.c **** #define MOTOR_RANGE (2 * MOTOR_DRIVE_ABSOLUTE_VALUE)
-  43:..\source/motor.c **** #define PWM_RANGE   (REVERSE_PWM_COUNT - FORWARD_PWM_COUNT)
-  44:..\source/motor.c **** //#define COUNT_RESOLUTION ((REVERSE_PWM_COUNT - FORWARD_PWM_COUNT)/MOTOR_RANGE)
+  33:..\source/motor.c ****    the actual values are different and the motors are moving oppositely.
+  34:..\source/motor.c **** 
+  35:..\source/motor.c ****                             Left    Right
+  36:..\source/motor.c ****         PWM_FULL_FORWARD |  2000  | 1000  |
+  37:..\source/motor.c ****         PWM_STOP         |  1500  | 1500  |
+  38:..\source/motor.c ****         PWM_FULL_REVERSE |  1000  | 2000  |
+  39:..\source/motor.c ****         PWM_DECREMENT    |   -1   |   1   |
+  40:..\source/motor.c ****         PWM_INCREMENT    |    1   |  -1   |
+  41:..\source/motor.c ****         PWM_CAL_STEP     |   10   |  10   |
+  42:..\source/motor.c ****         PWM_MIN          |  2000  | 1500  |
+  43:..\source/motor.c ****         PWM_MAX          |  1500  | 1000  |
+  44:..\source/motor.c ****  */
   45:..\source/motor.c **** 
-  46:..\source/motor.c **** /*
-  47:..\source/motor.c ****     Recommendation by Parallax:
-  48:..\source/motor.c **** 
-  49:..\source/motor.c ****     Safe Power-Up and Power-Down
-  50:..\source/motor.c ****     Remember, because the HB-25 responds to pulses like a servo, changing states on your microcontr
-  51:..\source/motor.c ****     I/O pins at startup and shutdown can affect the HB-25 and set it into an unintended state. This
-  52:..\source/motor.c ****     the I/O pins changing between input and output as well as between output high and output low.
-  53:..\source/motor.c ****     If your microcontroller is powered up or powered down while the HB-25 is powered up, the
-  54:..\source/motor.c ****     HB-25 could receive a false trigger. To prevent this, use one of the following options:
-  55:..\source/motor.c ****     • Most reliable option:
-  56:..\source/motor.c ****     1. Power the microcontroller up first, using code that forces the program to wait until the
-  57:..\source/motor.c ****     HB-25 is powered up before sending pulses. Code examples are provided below.
-  58:..\source/motor.c ****     2. Power up the HB-25 for operation.
-  59:..\source/motor.c ****     3. When shutting down your application, cut off power to the HB-25 first.
-  60:..\source/motor.c ****     4. Power down your microcontroller last.
-  61:..\source/motor.c ****     • Or, power the HB-25 and the microcontroller at the same time using a double-post (dual-circ
-  62:..\source/motor.c ****     switch.
-  63:..\source/motor.c ****     • If there is the possibility that the HB-25 will be on before your microcontroller, use the 
-  64:..\source/motor.c ****     code as mentioned above to ensure that the HB-25 is properly initialized when the
-  65:..\source/motor.c ****     microcontroller is powered on. The I/O line connected to the HB-25 should be made LOW either
-  66:..\source/motor.c ****     before or immediately after the HB-25 powers up. If this does not happen the HB-25 may fail to
-  67:..\source/motor.c ****     respond to incoming pulses.
-  68:..\source/motor.c ****     If your application poses any potential safety risk and you need the HB-25 to shut off the moto
-  69:..\source/motor.c ****     the microcontroller has lost power or has malfunctioned, enable the Timeout Feature described b
-  70:..\source/motor.c ****     before operation.
-  71:..\source/motor.c **** 
-  72:..\source/motor.c ****  */
-  73:..\source/motor.c **** 
-  74:..\source/motor.c **** void Motor_Init()
-  75:..\source/motor.c **** {
-  26              		.loc 1 75 0
+  46:..\source/motor.c **** #ifdef LEFT_BOARD
+  47:..\source/motor.c **** /* Per the HB-25 data sheet: 
+  48:..\source/motor.c **** 	1.0 ms Full Reverse 
+  49:..\source/motor.c **** 	1.5 ms Neutral (Off) 
+  50:..\source/motor.c ****     2.0 ms Full Forward
+  51:..\source/motor.c ****     
+  52:..\source/motor.c ****    Note: The datasheet is in error, it should be 1000 ms, 1500 ms and 2000 ms
+  53:..\source/motor.c ****  */
+  54:..\source/motor.c **** #define PWM_FULL_FORWARD (2000)
+  55:..\source/motor.c **** #define PWM_STOP         (1500)
+  56:..\source/motor.c **** #define PWM_FULL_REVERSE (1000)
+  57:..\source/motor.c **** #define PWM_DECREMENT    (-1)
+  58:..\source/motor.c **** #define PWM_INCREMENT    (1)
+  59:..\source/motor.c **** #define PWM_MIN          (PWM_FULL_FORWARD)
+  60:..\source/motor.c **** #define PWM_MAX          (PWM_STOP)
+  61:..\source/motor.c ****     
+  62:..\source/motor.c **** /* Calibration is performed only in the forward direction.  This gives a mapping between count/sec 
+  63:..\source/motor.c ****    assumed that motor movement is symetric about the stop pwm between forward and reverse.  Therefo
+  64:..\source/motor.c ****    mapping generated by calibration in the forward direction can be used for generating reverse mot
+  65:..\source/motor.c ****    and time during calibration.
+  66:..\source/motor.c ****     
+  67:..\source/motor.c ****     If the direction is forward (positive) then index the array using cps.  
+  68:..\source/motor.c ****     If the direction is reverse (negative) then reflect the pwm selected by cps onto the reverse si
+  69:..\source/motor.c ****     
+  70:..\source/motor.c ****             delta = 1600 - 1500 = 100
+  71:..\source/motor.c ****             reverse pwm = 1500 - delta
+  72:..\source/motor.c ****     
+  73:..\source/motor.c ****        1000                            1500                           2000
+  74:..\source/motor.c ****          |                               |                              |
+  75:..\source/motor.c ****     |-------------------------------------------------------------------------|
+  76:..\source/motor.c ****                                 |                  |
+  77:..\source/motor.c ****                                 |                 cps yields 1600
+  78:..\source/motor.c ****                   corresponding reverse value
+  79:..\source/motor.c ****                               1400
+  80:..\source/motor.c ****     
+  81:..\source/motor.c ****     More generally, 2 * PWM_STOP - pwm
+  82:..\source/motor.c ****     
+  83:..\source/motor.c ****  */
+  84:..\source/motor.c **** #define PWM_REFLECT(value) ((value < 0) ? 2 * PWM_STOP - value : value)
+  85:..\source/motor.c **** #elif defined RIGHT_BOARD
+  86:..\source/motor.c **** #define PWM_FULL_FORWARD (1000)
+  87:..\source/motor.c **** #define PWM_STOP         (1500)
+  88:..\source/motor.c **** #define PWM_FULL_REVERSE (2000)
+  89:..\source/motor.c **** #define PWM_DECRMENT     (1)
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 3
+
+
+  90:..\source/motor.c **** #define PWM_INCREMENT    (-1)
+  91:..\source/motor.c **** #define PWM_MIN          (PWM_STOP)
+  92:..\source/motor.c **** #define PWM_MAX          (PWM_FULL_FORWARD)
+  93:..\source/motor.c **** #define PWM_REFLECT(value) ((value < 0) ? 2 * PWM_STOP + value : value)
+  94:..\source/motor.c **** #else
+  95:..\source/motor.c ****     #error "You haven't defined a board, e.g. LEFT_BOARD or RIGHT_BOARD"
+  96:..\source/motor.c **** #endif
+  97:..\source/motor.c **** 
+  98:..\source/motor.c **** #define PWM_RANGE        (500) // 2000 - 1500 = 500, 1500 - 1000 = 500
+  99:..\source/motor.c **** 
+ 100:..\source/motor.c **** // Empirical step value that balances time, space, and accuracy
+ 101:..\source/motor.c **** #define PWM_CAL_STEP     (10)
+ 102:..\source/motor.c **** /* Empirical values to allow the pwm to settle.  Probably not particularly relevant since the pwm i
+ 103:..\source/motor.c ****    but it doesn't hurt (just adds little more time to calibration
+ 104:..\source/motor.c ****  */
+ 105:..\source/motor.c **** #define PWM_SETTLE_TIME  (200)
+ 106:..\source/motor.c **** 
+ 107:..\source/motor.c **** /* 
+ 108:..\source/motor.c ****     Calibration Constants
+ 109:..\source/motor.c **** 
+ 110:..\source/motor.c ****     Number of entries depends on the range and step size, e.g., smaller step more values and vice v
+ 111:..\source/motor.c ****  */
+ 112:..\source/motor.c **** #define MAX_NUM_CAL_ENTRY (PWM_RANGE/PWM_CAL_STEP)
+ 113:..\source/motor.c **** #define MIN_CAL_ENTRY (0)
+ 114:..\source/motor.c **** #define MAX_CAL_ENTRY (MAX_NUM_CAL_ENTRY - 1)
+ 115:..\source/motor.c **** 
+ 116:..\source/motor.c **** /* The number of samples to take when measuring speed */
+ 117:..\source/motor.c **** #define MAX_SPEED_SAMPLES (5)
+ 118:..\source/motor.c **** 
+ 119:..\source/motor.c **** #define CAL_PWM_START (PWM_FULL_FORWARD)
+ 120:..\source/motor.c **** #define CAL_PWM_END (PWM_STOP)
+ 121:..\source/motor.c **** #define CAL_PWM_STEP (PWM_DECREMENT*PWM_CAL_STEP)
+ 122:..\source/motor.c **** 
+ 123:..\source/motor.c **** 
+ 124:..\source/motor.c **** 
+ 125:..\source/motor.c **** /* Structure used to capture pwm and cps samples during calibration
+ 126:..\source/motor.c ****  */
+ 127:..\source/motor.c **** typedef struct
+ 128:..\source/motor.c **** {
+ 129:..\source/motor.c ****     int16 cps;
+ 130:..\source/motor.c ****     uint16 pwm;
+ 131:..\source/motor.c **** } CALIBRATION_ENTRY;
+ 132:..\source/motor.c **** 
+ 133:..\source/motor.c **** /* Mapping between count/sec and pwm derived during calibration
+ 134:..\source/motor.c ****  */
+ 135:..\source/motor.c **** static CALIBRATION_ENTRY cal_cps_to_pwm[MAX_NUM_CAL_ENTRY];
+ 136:..\source/motor.c **** 
+ 137:..\source/motor.c **** /* Count/Second to PWM Map
+ 138:..\source/motor.c **** 
+ 139:..\source/motor.c ****     Per the motor specification (https://www.parallax.com/product/28962):
+ 140:..\source/motor.c ****         Approx. Max Speed: 95 RPM (1.53 RPS)
+ 141:..\source/motor.c ****         Encoder Resolution: 36 position (quadrature encoding yields 144 counts per revolution)
+ 142:..\source/motor.c ****         Wheel Circumference: 479 mm
+ 143:..\source/motor.c **** 
+ 144:..\source/motor.c ****     From the above, the motor has a max count/sec of 228 and max speed of 733 mm/s.  Empirical meas
+ 145:..\source/motor.c ****     usable range of 0 .. 150 count/s and 499 mm/s.  Your mileage may vary :-)
+ 146:..\source/motor.c **** 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 4
+
+
+ 147:..\source/motor.c ****  */
+ 148:..\source/motor.c **** #define MIN_CPS_VALUE (1)
+ 149:..\source/motor.c **** #define MAX_CPS_VALUE (200)
+ 150:..\source/motor.c **** 
+ 151:..\source/motor.c **** #define MAX_NUM_CPS_ENTRY (MAX_CPS_VALUE)
+ 152:..\source/motor.c **** #define MIN_CPS_ENTRY (0)
+ 153:..\source/motor.c **** #define MAX_CPS_ENTRY (MAX_NUM_CPS_ENTRY - 1)
+ 154:..\source/motor.c **** 
+ 155:..\source/motor.c **** 
+ 156:..\source/motor.c **** /* Note: The following array contains entries that were derived during calibration.  These values a
+ 157:..\source/motor.c ****    a particular wheel, encoder, and motor driver and stored in flash so there are defaults.  Calibr
+ 158:..\source/motor.c ****    values to be updated and stored on the Raspberry Pi, and uploaded on startup which will allow fo
+ 159:..\source/motor.c ****    mechanical differences.
+ 160:..\source/motor.c ****  */
+ 161:..\source/motor.c **** static uint16 map_cps_to_pwm[MAX_NUM_CPS_ENTRY] = {1500, 1505, 1510, 1515, 1520, 1525, 1530, 1531, 
+ 162:..\source/motor.c ****                                                    1534, 1535, 1536, 1540, 1542, 1544, 1546, 1548, 
+ 163:..\source/motor.c ****                                                    1552, 1554, 1556, 1558, 1560, 1560, 1561, 1562, 
+ 164:..\source/motor.c ****                                                    1565, 1566, 1570, 1573, 1576, 1579, 1580, 1581, 
+ 165:..\source/motor.c ****                                                    1584, 1585, 1586, 1590, 1592, 1594, 1596, 1598, 
+ 166:..\source/motor.c ****                                                    1603, 1606, 1609, 1610, 1611, 1612, 1613, 1614, 
+ 167:..\source/motor.c ****                                                    1620, 1623, 1626, 1629, 1630, 1632, 1634, 1636, 
+ 168:..\source/motor.c ****                                                    1642, 1644, 1646, 1648, 1650, 1651, 1652, 1653, 
+ 169:..\source/motor.c ****                                                    1656, 1657, 1660, 1663, 1666, 1670, 1671, 1672, 
+ 170:..\source/motor.c ****                                                    1675, 1676, 1677, 1680, 1682, 1684, 1686, 1688, 
+ 171:..\source/motor.c ****                                                    1694, 1696, 1698, 1700, 1700, 1702, 1704, 1706, 
+ 172:..\source/motor.c ****                                                    1712, 1714, 1716, 1718, 1720, 1723, 1726, 1729, 
+ 173:..\source/motor.c ****                                                    1736, 1737, 1738, 1739, 1740, 1741, 1742, 1743, 
+ 174:..\source/motor.c ****                                                    1750, 1751, 1752, 1753, 1754, 1755, 1756, 1760, 
+ 175:..\source/motor.c ****                                                    1769, 1770, 1771, 1772, 1773, 1774, 1775, 1776, 
+ 176:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 177:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 178:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 179:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 180:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 181:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 182:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 183:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 184:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 185:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 186:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 187:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 188:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 189:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 190:..\source/motor.c ****                                                    1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 
+ 191:..\source/motor.c ****                                                   };
+ 192:..\source/motor.c **** 
+ 193:..\source/motor.c **** 
+ 194:..\source/motor.c **** void Motor_Init()
+ 195:..\source/motor.c **** {
+ 196:..\source/motor.c ****     int ii;
+ 197:..\source/motor.c ****     
+ 198:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_DISABLE);
+ 199:..\source/motor.c ****     
+ 200:..\source/motor.c ****     // Initialize the balance of the array
+ 201:..\source/motor.c ****     for (ii = MIN_CAL_ENTRY; ii < MAX_NUM_CAL_ENTRY; ++ii)
+ 202:..\source/motor.c ****     {
+ 203:..\source/motor.c ****         /* Need to figure out how to handle min/max for right motor case */
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 5
+
+
+ 204:..\source/motor.c ****         cal_cps_to_pwm[ii].pwm = PWM_MIN;
+ 205:..\source/motor.c ****         cal_cps_to_pwm[ii].cps = -1;
+ 206:..\source/motor.c ****     }
+ 207:..\source/motor.c **** 
+ 208:..\source/motor.c ****     // Note: map_cps_to_pwm contains default pwm values and so it should not be initialized
+ 209:..\source/motor.c **** }
+ 210:..\source/motor.c **** 
+ 211:..\source/motor.c **** void Motor_Start()
+ 212:..\source/motor.c **** {
+ 213:..\source/motor.c ****     /* Enable the power on the HB-25 motor 
+ 214:..\source/motor.c ****        Note: The HB-25 has a specific initialization sequence that is handled in hardware (see HB-2
+ 215:..\source/motor.c ****        that is necessary in software is to enable power to the HB-25 motor controller and start the
+ 216:..\source/motor.c ****        be enabled on to the HB-25 signal pin when initialization completes.
+ 217:..\source/motor.c ****      */
+ 218:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_ENABLE);    
+ 219:..\source/motor.c ****     HB25_PWM_Start();
+ 220:..\source/motor.c ****     Motor_SetOutput(0);
+ 221:..\source/motor.c **** }
+ 222:..\source/motor.c **** 
+ 223:..\source/motor.c **** void Motor_SetOutput(int16 value)
+ 224:..\source/motor.c **** /* Translate value, in millimeter per second to pwm via count/sec mapping
+ 225:..\source/motor.c ****  */
+ 226:..\source/motor.c **** {
+ 227:..\source/motor.c ****     int16 cps;
+ 228:..\source/motor.c ****     
+ 229:..\source/motor.c ****     /* 
+ 230:..\source/motor.c ****                  mm      count
+ 231:..\source/motor.c ****           cps = ----- x -------
+ 232:..\source/motor.c ****                  sec      mm
+ 233:..\source/motor.c ****     */
+ 234:..\source/motor.c ****     cps = abs(value * COUNT_PER_MILLIMETER);
+ 235:..\source/motor.c ****     
+ 236:..\source/motor.c ****     // Limit CPS to usable range as it is an index
+ 237:..\source/motor.c ****     if (cps >= MIN_CPS_ENTRY && cps <= MAX_CPS_ENTRY)
+ 238:..\source/motor.c ****     {
+ 239:..\source/motor.c ****         uint16 pwm;
+ 240:..\source/motor.c ****         
+ 241:..\source/motor.c ****         /* Note: PWM_REFLECT handles forward/reverse mapping and is defined appropriately for each 
+ 242:..\source/motor.c ****            BOARD_2, and motor, i.e., LEFT_BOARD, RIGHT_BOARD
+ 243:..\source/motor.c ****          */
+ 244:..\source/motor.c ****         pwm = PWM_REFLECT(map_cps_to_pwm[cps]);
+ 245:..\source/motor.c ****         
+ 246:..\source/motor.c ****         HB25_PWM_WriteCompare(pwm);
+ 247:..\source/motor.c ****     }
+ 248:..\source/motor.c **** }
+ 249:..\source/motor.c **** 
+ 250:..\source/motor.c **** void Motor_Stop()
+ 251:..\source/motor.c **** {
+ 252:..\source/motor.c ****     HB25_PWM_Stop();
+ 253:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_DISABLE);
+ 254:..\source/motor.c **** }
+ 255:..\source/motor.c **** 
+ 256:..\source/motor.c **** void Motor_Test()
+ 257:..\source/motor.c **** {
+ 258:..\source/motor.c **** }
+ 259:..\source/motor.c **** 
+ 260:..\source/motor.c **** static int16 CalculateAverageCountPerSec(uint16 delay)
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 6
+
+
+ 261:..\source/motor.c **** {
+  26              		.loc 1 261 0
   27              		.cfi_startproc
-  28 0000 08B5     		push	{r3, lr}
-  29              		.cfi_def_cfa_offset 8
-  30              		.cfi_offset 3, -8
-  31              		.cfi_offset 14, -4
-  76:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_DISABLE);
-  32              		.loc 1 76 0
-  33 0002 0120     		mov	r0, #1
-  34 0004 FFF7FEFF 		bl	HB25_Enable_Pin_Write
-  35              	.LVL0:
-  77:..\source/motor.c **** }
-  36              		.loc 1 77 0
-  37              		@ sp needed
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 3
+  28              	.LVL0:
+  29 0000 38B5     		push	{r3, r4, r5, lr}
+  30              		.cfi_def_cfa_offset 16
+  31              		.cfi_offset 3, -16
+  32              		.cfi_offset 4, -12
+  33              		.cfi_offset 5, -8
+  34              		.cfi_offset 14, -4
+  35 0002 041C     		mov	r4, r0
+ 262:..\source/motor.c ****     int32 count_start;
+ 263:..\source/motor.c ****     int32 count_end;
+ 264:..\source/motor.c ****     int32 delta;
+ 265:..\source/motor.c ****     
+ 266:..\source/motor.c ****     count_start = (int32) Phase_Counter_ReadCounter();
+  36              		.loc 1 266 0
+  37 0004 FFF7FEFF 		bl	Phase_Counter_ReadCounter
+  38              	.LVL1:
+  39 0008 051C     		mov	r5, r0
+  40              	.LVL2:
+ 267:..\source/motor.c ****     CyDelay(delay);
+  41              		.loc 1 267 0
+  42 000a 201C     		mov	r0, r4
+  43              	.LVL3:
+  44 000c FFF7FEFF 		bl	CyDelay
+  45              	.LVL4:
+ 268:..\source/motor.c ****     count_end = (int32) Phase_Counter_ReadCounter();
+  46              		.loc 1 268 0
+  47 0010 FFF7FEFF 		bl	Phase_Counter_ReadCounter
+  48              	.LVL5:
+ 269:..\source/motor.c ****     delta = count_end - count_start;
+  49              		.loc 1 269 0
+  50 0014 401B     		sub	r0, r0, r5
+  51              	.LVL6:
+ 270:..\source/motor.c ****     return (delta*MS_IN_SEC)/delay;
+  52              		.loc 1 270 0
+  53 0016 FA23     		mov	r3, #250
+  54 0018 9B00     		lsl	r3, r3, #2
+  55 001a 5843     		mul	r0, r3
+  56              	.LVL7:
+  57 001c 211C     		mov	r1, r4
+  58 001e FFF7FEFF 		bl	__aeabi_idiv
+  59              	.LVL8:
+  60 0022 00B2     		sxth	r0, r0
+ 271:..\source/motor.c **** }
+  61              		.loc 1 271 0
+  62              		@ sp needed
+  63              	.LVL9:
+  64 0024 38BD     		pop	{r3, r4, r5, pc}
+  65              		.cfi_endproc
+  66              	.LFE41:
+  67              		.size	CalculateAverageCountPerSec, .-CalculateAverageCountPerSec
+  68 0026 C046     		.section	.text.Motor_Init,"ax",%progbits
+  69              		.align	2
+  70              		.global	Motor_Init
+  71              		.code	16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 7
 
 
-  38 0008 08BD     		pop	{r3, pc}
-  39              		.cfi_endproc
-  40              	.LFE34:
-  41              		.size	Motor_Init, .-Motor_Init
-  42              		.section	.text.Motor_Start,"ax",%progbits
-  43              		.align	2
-  44              		.global	Motor_Start
-  45              		.code	16
-  46              		.thumb_func
-  47              		.type	Motor_Start, %function
-  48              	Motor_Start:
-  49              	.LFB35:
-  78:..\source/motor.c **** 
-  79:..\source/motor.c **** void Motor_Start()
-  80:..\source/motor.c **** {
-  50              		.loc 1 80 0
-  51              		.cfi_startproc
-  52 0000 08B5     		push	{r3, lr}
-  53              		.cfi_def_cfa_offset 8
-  54              		.cfi_offset 3, -8
-  55              		.cfi_offset 14, -4
-  81:..\source/motor.c ****     /* Enable the power on the HB-25 motor 
-  82:..\source/motor.c ****        Note: The HB-25 has a specific initialization sequence that is handled in hardware.  All tha
-  83:..\source/motor.c ****        software is to enable power to the HB-25 motor controller and start the PWM.  The PWM will b
-  84:..\source/motor.c ****        HB-25 signal pin when initialization completes.
-  85:..\source/motor.c ****      */
-  86:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_ENABLE);    
-  56              		.loc 1 86 0
-  57 0002 0020     		mov	r0, #0
-  58 0004 FFF7FEFF 		bl	HB25_Enable_Pin_Write
-  59              	.LVL1:
-  87:..\source/motor.c ****     HB25_PWM_Start();
-  60              		.loc 1 87 0
-  61 0008 FFF7FEFF 		bl	HB25_PWM_Start
-  62              	.LVL2:
-  88:..\source/motor.c **** }
-  63              		.loc 1 88 0
-  64              		@ sp needed
-  65 000c 08BD     		pop	{r3, pc}
-  66              		.cfi_endproc
-  67              	.LFE35:
-  68              		.size	Motor_Start, .-Motor_Start
-  69              		.global	__aeabi_idiv
-  70 000e C046     		.section	.rodata.cst2,"aM",%progbits,2
-  71              		.align	1
-  72              	.LC0:
-  73 0000 2003     		.short	800
-  74              		.section	.text.Motor_SetOutput,"ax",%progbits
-  75              		.align	2
-  76              		.global	Motor_SetOutput
-  77              		.code	16
-  78              		.thumb_func
-  79              		.type	Motor_SetOutput, %function
-  80              	Motor_SetOutput:
-  81              	.LFB36:
-  89:..\source/motor.c **** 
-  90:..\source/motor.c **** void Motor_SetOutput(int16 value)
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 4
+  72              		.thumb_func
+  73              		.type	Motor_Init, %function
+  74              	Motor_Init:
+  75              	.LFB36:
+ 195:..\source/motor.c ****     int ii;
+  76              		.loc 1 195 0
+  77              		.cfi_startproc
+  78 0000 10B5     		push	{r4, lr}
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 4, -8
+  81              		.cfi_offset 14, -4
+ 198:..\source/motor.c ****     
+  82              		.loc 1 198 0
+  83 0002 0120     		mov	r0, #1
+  84 0004 FFF7FEFF 		bl	HB25_Enable_Pin_Write
+  85              	.LVL10:
+ 201:..\source/motor.c ****     {
+  86              		.loc 1 201 0
+  87 0008 0023     		mov	r3, #0
+  88 000a 09E0     		b	.L3
+  89              	.LVL11:
+  90              	.L4:
+ 204:..\source/motor.c ****         cal_cps_to_pwm[ii].cps = -1;
+  91              		.loc 1 204 0 discriminator 3
+  92 000c 064A     		ldr	r2, .L5
+  93 000e 9900     		lsl	r1, r3, #2
+  94 0010 5018     		add	r0, r2, r1
+  95 0012 FA24     		mov	r4, #250
+  96 0014 E400     		lsl	r4, r4, #3
+  97 0016 4480     		strh	r4, [r0, #2]
+ 205:..\source/motor.c ****     }
+  98              		.loc 1 205 0 discriminator 3
+  99 0018 0120     		mov	r0, #1
+ 100 001a 4042     		neg	r0, r0
+ 101 001c 8852     		strh	r0, [r1, r2]
+ 201:..\source/motor.c ****     {
+ 102              		.loc 1 201 0 discriminator 3
+ 103 001e 0133     		add	r3, r3, #1
+ 104              	.LVL12:
+ 105              	.L3:
+ 201:..\source/motor.c ****     {
+ 106              		.loc 1 201 0 is_stmt 0 discriminator 1
+ 107 0020 312B     		cmp	r3, #49
+ 108 0022 F3DD     		ble	.L4
+ 209:..\source/motor.c **** 
+ 109              		.loc 1 209 0 is_stmt 1
+ 110              		@ sp needed
+ 111 0024 10BD     		pop	{r4, pc}
+ 112              	.L6:
+ 113 0026 C046     		.align	2
+ 114              	.L5:
+ 115 0028 00000000 		.word	.LANCHOR0
+ 116              		.cfi_endproc
+ 117              	.LFE36:
+ 118              		.size	Motor_Init, .-Motor_Init
+ 119              		.global	__aeabi_i2d
+ 120              		.global	__aeabi_dmul
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 8
 
 
-  91:..\source/motor.c **** /* Incoming value units are millimeter per second.  It must be scaled to PWM range
-  92:..\source/motor.c ****  */
-  93:..\source/motor.c **** {
-  82              		.loc 1 93 0
-  83              		.cfi_startproc
-  84              	.LVL3:
-  85 0000 08B5     		push	{r3, lr}
-  86              		.cfi_def_cfa_offset 8
-  87              		.cfi_offset 3, -8
-  88              		.cfi_offset 14, -4
-  94:..\source/motor.c ****     uint16 pwm_compare;
-  95:..\source/motor.c ****     int32 scaled_value;
-  96:..\source/motor.c ****     
-  97:..\source/motor.c ****     scaled_value = DIRECTION * scale_integer(value, SPEED_RANGE, PWM_RANGE);    
-  89              		.loc 1 97 0
-  90 0002 FA23     		mov	r3, #250
-  91 0004 9B00     		lsl	r3, r3, #2
-  92 0006 5843     		mul	r0, r3
-  93              	.LVL4:
-  94 0008 FA21     		mov	r1, #250
-  95 000a C900     		lsl	r1, r1, #3
-  96 000c FFF7FEFF 		bl	__aeabi_idiv
-  97              	.LVL5:
-  98 0010 4042     		neg	r0, r0
-  99              	.LVL6:
-  98:..\source/motor.c ****     pwm_compare = constrain((uint16) (STOP_PWM_COUNT + scaled_value), (uint16) MIN_PWM_COUNT, (uint
- 100              		.loc 1 98 0
- 101 0012 80B2     		uxth	r0, r0
- 102              	.LVL7:
- 103 0014 0B4B     		ldr	r3, .L7
- 104 0016 C318     		add	r3, r0, r3
- 105 0018 9BB2     		uxth	r3, r3
- 106 001a 0B4A     		ldr	r2, .L7+4
- 107 001c 9342     		cmp	r3, r2
- 108 001e 0CD9     		bls	.L6
- 109              		.loc 1 98 0 is_stmt 0 discriminator 1
- 110 0020 0A4B     		ldr	r3, .L7+8
- 111 0022 9C46     		mov	ip, r3
- 112 0024 6044     		add	r0, r0, ip
- 113 0026 80B2     		uxth	r0, r0
- 114 0028 031C     		add	r3, r0, #0
- 115 002a C822     		mov	r2, #200
- 116 002c 9200     		lsl	r2, r2, #2
- 117 002e 9042     		cmp	r0, r2
- 118 0030 01D2     		bcs	.L5
- 119 0032 074B     		ldr	r3, .L7+12
- 120 0034 1B88     		ldrh	r3, [r3]
- 121              	.L5:
- 122 0036 98B2     		uxth	r0, r3
- 123 0038 00E0     		b	.L4
- 124              	.L6:
- 125              		.loc 1 98 0
- 126 003a 0648     		ldr	r0, .L7+16
- 127              	.L4:
- 128              	.LVL8:
-  99:..\source/motor.c ****     
- 100:..\source/motor.c ****     //COMMS_DEBUG_PRINT(0, "v: %d, s: %ld, p: %d\n\r", value, scaled_value, pwm_compare);
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 5
+ 121              		.global	__aeabi_dcmplt
+ 122              		.global	__aeabi_d2iz
+ 123              		.section	.text.Motor_SetOutput,"ax",%progbits
+ 124              		.align	2
+ 125              		.global	Motor_SetOutput
+ 126              		.code	16
+ 127              		.thumb_func
+ 128              		.type	Motor_SetOutput, %function
+ 129              	Motor_SetOutput:
+ 130              	.LFB38:
+ 226:..\source/motor.c ****     int16 cps;
+ 131              		.loc 1 226 0
+ 132              		.cfi_startproc
+ 133              	.LVL13:
+ 134 0000 D0B5     		push	{r4, r6, r7, lr}
+ 135              		.cfi_def_cfa_offset 16
+ 136              		.cfi_offset 4, -16
+ 137              		.cfi_offset 6, -12
+ 138              		.cfi_offset 7, -8
+ 139              		.cfi_offset 14, -4
+ 140 0002 041C     		mov	r4, r0
+ 234:..\source/motor.c ****     
+ 141              		.loc 1 234 0
+ 142 0004 FFF7FEFF 		bl	__aeabi_i2d
+ 143              	.LVL14:
+ 144 0008 124A     		ldr	r2, .L14
+ 145 000a 134B     		ldr	r3, .L14+4
+ 146 000c FFF7FEFF 		bl	__aeabi_dmul
+ 147              	.LVL15:
+ 148 0010 061C     		mov	r6, r0
+ 149 0012 0F1C     		mov	r7, r1
+ 150 0014 0022     		mov	r2, #0
+ 151 0016 0023     		mov	r3, #0
+ 152 0018 FFF7FEFF 		bl	__aeabi_dcmplt
+ 153              	.LVL16:
+ 154 001c 0028     		cmp	r0, #0
+ 155 001e 0AD0     		beq	.L13
+ 234:..\source/motor.c ****     
+ 156              		.loc 1 234 0 is_stmt 0 discriminator 1
+ 157 0020 6042     		neg	r0, r4
+ 158 0022 FFF7FEFF 		bl	__aeabi_i2d
+ 159              	.LVL17:
+ 160 0026 0B4A     		ldr	r2, .L14
+ 161 0028 0B4B     		ldr	r3, .L14+4
+ 162 002a FFF7FEFF 		bl	__aeabi_dmul
+ 163              	.LVL18:
+ 164 002e FFF7FEFF 		bl	__aeabi_d2iz
+ 165              	.LVL19:
+ 166 0032 80B2     		uxth	r0, r0
+ 167 0034 04E0     		b	.L10
+ 168              	.L13:
+ 234:..\source/motor.c ****     
+ 169              		.loc 1 234 0 discriminator 2
+ 170 0036 301C     		mov	r0, r6
+ 171 0038 391C     		mov	r1, r7
+ 172 003a FFF7FEFF 		bl	__aeabi_d2iz
+ 173              	.LVL20:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 9
 
 
- 101:..\source/motor.c ****     
- 102:..\source/motor.c ****     HB25_PWM_WriteCompare(pwm_compare);
- 129              		.loc 1 102 0 is_stmt 1 discriminator 4
- 130 003c FFF7FEFF 		bl	HB25_PWM_WriteCompare
- 131              	.LVL9:
- 103:..\source/motor.c **** }
- 132              		.loc 1 103 0 discriminator 4
- 133              		@ sp needed
- 134 0040 08BD     		pop	{r3, pc}
- 135              	.L8:
- 136 0042 C046     		.align	2
- 137              	.L7:
- 138 0044 44FDFFFF 		.word	-700
- 139 0048 67F70000 		.word	63335
- 140 004c DC050000 		.word	1500
- 141 0050 00000000 		.word	.LC0
- 142 0054 98080000 		.word	2200
- 143              		.cfi_endproc
- 144              	.LFE36:
- 145              		.size	Motor_SetOutput, .-Motor_SetOutput
- 146              		.section	.text.Motor_Stop,"ax",%progbits
- 147              		.align	2
- 148              		.global	Motor_Stop
- 149              		.code	16
- 150              		.thumb_func
- 151              		.type	Motor_Stop, %function
- 152              	Motor_Stop:
- 153              	.LFB37:
- 104:..\source/motor.c **** 
- 105:..\source/motor.c **** void Motor_Stop()
- 106:..\source/motor.c **** {
- 154              		.loc 1 106 0
- 155              		.cfi_startproc
- 156 0000 08B5     		push	{r3, lr}
- 157              		.cfi_def_cfa_offset 8
- 158              		.cfi_offset 3, -8
- 159              		.cfi_offset 14, -4
- 107:..\source/motor.c ****     /* Reverse sequence to start:
- 108:..\source/motor.c ****         - Stop the PWM
- 109:..\source/motor.c ****         - Disable power to the HB-25
- 110:..\source/motor.c ****      */
- 111:..\source/motor.c ****     HB25_PWM_Stop();
- 160              		.loc 1 111 0
- 161 0002 FFF7FEFF 		bl	HB25_PWM_Stop
- 162              	.LVL10:
- 112:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_DISABLE);
- 163              		.loc 1 112 0
- 164 0006 0120     		mov	r0, #1
- 165 0008 FFF7FEFF 		bl	HB25_Enable_Pin_Write
- 166              	.LVL11:
- 113:..\source/motor.c **** }
- 167              		.loc 1 113 0
- 168              		@ sp needed
- 169 000c 08BD     		pop	{r3, pc}
- 170              		.cfi_endproc
- 171              	.LFE37:
- 172              		.size	Motor_Stop, .-Motor_Stop
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 6
+ 174 003e 80B2     		uxth	r0, r0
+ 175              	.L10:
+ 176              	.LVL21:
+ 237:..\source/motor.c ****     {
+ 177              		.loc 1 237 0 is_stmt 1 discriminator 4
+ 178 0040 83B2     		uxth	r3, r0
+ 179 0042 C72B     		cmp	r3, #199
+ 180 0044 05D8     		bhi	.L7
+ 181              	.LBB2:
+ 244:..\source/motor.c ****         
+ 182              		.loc 1 244 0
+ 183 0046 00B2     		sxth	r0, r0
+ 184 0048 4000     		lsl	r0, r0, #1
+ 185              	.LVL22:
+ 186 004a 044B     		ldr	r3, .L14+8
+ 187              	.LVL23:
+ 188 004c C05A     		ldrh	r0, [r0, r3]
+ 189              	.LVL24:
+ 246:..\source/motor.c ****     }
+ 190              		.loc 1 246 0
+ 191 004e FFF7FEFF 		bl	HB25_PWM_WriteCompare
+ 192              	.LVL25:
+ 193              	.L7:
+ 194              	.LBE2:
+ 248:..\source/motor.c **** 
+ 195              		.loc 1 248 0
+ 196              		@ sp needed
+ 197 0052 D0BD     		pop	{r4, r6, r7, pc}
+ 198              	.L15:
+ 199              		.align	2
+ 200              	.L14:
+ 201 0054 2B31DC1C 		.word	484192555
+ 202 0058 763DD33F 		.word	1070808438
+ 203 005c 00000000 		.word	.LANCHOR1
+ 204              		.cfi_endproc
+ 205              	.LFE38:
+ 206              		.size	Motor_SetOutput, .-Motor_SetOutput
+ 207              		.section	.text.Motor_Start,"ax",%progbits
+ 208              		.align	2
+ 209              		.global	Motor_Start
+ 210              		.code	16
+ 211              		.thumb_func
+ 212              		.type	Motor_Start, %function
+ 213              	Motor_Start:
+ 214              	.LFB37:
+ 212:..\source/motor.c ****     /* Enable the power on the HB-25 motor 
+ 215              		.loc 1 212 0
+ 216              		.cfi_startproc
+ 217 0000 08B5     		push	{r3, lr}
+ 218              		.cfi_def_cfa_offset 8
+ 219              		.cfi_offset 3, -8
+ 220              		.cfi_offset 14, -4
+ 218:..\source/motor.c ****     HB25_PWM_Start();
+ 221              		.loc 1 218 0
+ 222 0002 0020     		mov	r0, #0
+ 223 0004 FFF7FEFF 		bl	HB25_Enable_Pin_Write
+ 224              	.LVL26:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 10
 
 
- 173 000e C046     		.section	.text.Motor_Test,"ax",%progbits
- 174              		.align	2
- 175              		.global	Motor_Test
- 176              		.code	16
- 177              		.thumb_func
- 178              		.type	Motor_Test, %function
- 179              	Motor_Test:
- 180              	.LFB38:
- 114:..\source/motor.c **** 
- 115:..\source/motor.c **** void Motor_Test()
- 116:..\source/motor.c **** {
- 181              		.loc 1 116 0
- 182              		.cfi_startproc
- 117:..\source/motor.c **** }
- 183              		.loc 1 117 0
- 184              		@ sp needed
- 185 0000 7047     		bx	lr
- 186              		.cfi_endproc
- 187              	.LFE38:
- 188              		.size	Motor_Test, .-Motor_Test
- 189              		.comm	formatted_string,256,4
- 190 0002 C046     		.text
- 191              	.Letext0:
- 192              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
- 193              		.file 3 "Generated_Source\\PSoC4/HB25_Enable_Pin.h"
- 194              		.file 4 "Generated_Source\\PSoC4/HB25_PWM.h"
- 195              		.file 5 "..\\source\\debug.h"
- 196              		.section	.debug_info,"",%progbits
- 197              	.Ldebug_info0:
- 198 0000 F1010000 		.4byte	0x1f1
- 199 0004 0400     		.2byte	0x4
- 200 0006 00000000 		.4byte	.Ldebug_abbrev0
- 201 000a 04       		.byte	0x4
- 202 000b 01       		.uleb128 0x1
- 203 000c 47010000 		.4byte	.LASF27
- 204 0010 01       		.byte	0x1
- 205 0011 2C010000 		.4byte	.LASF28
- 206 0015 00000000 		.4byte	.LASF29
- 207 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 208 001d 00000000 		.4byte	0
- 209 0021 00000000 		.4byte	.Ldebug_line0
- 210 0025 02       		.uleb128 0x2
- 211 0026 01       		.byte	0x1
- 212 0027 06       		.byte	0x6
- 213 0028 27020000 		.4byte	.LASF0
- 214 002c 02       		.uleb128 0x2
- 215 002d 01       		.byte	0x1
- 216 002e 08       		.byte	0x8
- 217 002f 86000000 		.4byte	.LASF1
- 218 0033 02       		.uleb128 0x2
- 219 0034 02       		.byte	0x2
- 220 0035 05       		.byte	0x5
- 221 0036 02020000 		.4byte	.LASF2
- 222 003a 02       		.uleb128 0x2
- 223 003b 02       		.byte	0x2
- 224 003c 07       		.byte	0x7
- 225 003d 5B000000 		.4byte	.LASF3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 7
+ 219:..\source/motor.c ****     Motor_SetOutput(0);
+ 225              		.loc 1 219 0
+ 226 0008 FFF7FEFF 		bl	HB25_PWM_Start
+ 227              	.LVL27:
+ 220:..\source/motor.c **** }
+ 228              		.loc 1 220 0
+ 229 000c 0020     		mov	r0, #0
+ 230 000e FFF7FEFF 		bl	Motor_SetOutput
+ 231              	.LVL28:
+ 221:..\source/motor.c **** 
+ 232              		.loc 1 221 0
+ 233              		@ sp needed
+ 234 0012 08BD     		pop	{r3, pc}
+ 235              		.cfi_endproc
+ 236              	.LFE37:
+ 237              		.size	Motor_Start, .-Motor_Start
+ 238              		.section	.text.Motor_Stop,"ax",%progbits
+ 239              		.align	2
+ 240              		.global	Motor_Stop
+ 241              		.code	16
+ 242              		.thumb_func
+ 243              		.type	Motor_Stop, %function
+ 244              	Motor_Stop:
+ 245              	.LFB39:
+ 251:..\source/motor.c ****     HB25_PWM_Stop();
+ 246              		.loc 1 251 0
+ 247              		.cfi_startproc
+ 248 0000 08B5     		push	{r3, lr}
+ 249              		.cfi_def_cfa_offset 8
+ 250              		.cfi_offset 3, -8
+ 251              		.cfi_offset 14, -4
+ 252:..\source/motor.c ****     HB25_Enable_Pin_Write(HB25_DISABLE);
+ 252              		.loc 1 252 0
+ 253 0002 FFF7FEFF 		bl	HB25_PWM_Stop
+ 254              	.LVL29:
+ 253:..\source/motor.c **** }
+ 255              		.loc 1 253 0
+ 256 0006 0120     		mov	r0, #1
+ 257 0008 FFF7FEFF 		bl	HB25_Enable_Pin_Write
+ 258              	.LVL30:
+ 254:..\source/motor.c **** 
+ 259              		.loc 1 254 0
+ 260              		@ sp needed
+ 261 000c 08BD     		pop	{r3, pc}
+ 262              		.cfi_endproc
+ 263              	.LFE39:
+ 264              		.size	Motor_Stop, .-Motor_Stop
+ 265 000e C046     		.section	.text.Motor_Test,"ax",%progbits
+ 266              		.align	2
+ 267              		.global	Motor_Test
+ 268              		.code	16
+ 269              		.thumb_func
+ 270              		.type	Motor_Test, %function
+ 271              	Motor_Test:
+ 272              	.LFB40:
+ 257:..\source/motor.c **** }
+ 273              		.loc 1 257 0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 11
 
 
- 226 0041 02       		.uleb128 0x2
- 227 0042 04       		.byte	0x4
- 228 0043 05       		.byte	0x5
- 229 0044 12020000 		.4byte	.LASF4
- 230 0048 02       		.uleb128 0x2
- 231 0049 04       		.byte	0x4
- 232 004a 07       		.byte	0x7
- 233 004b 9A000000 		.4byte	.LASF5
- 234 004f 02       		.uleb128 0x2
- 235 0050 08       		.byte	0x8
- 236 0051 05       		.byte	0x5
- 237 0052 D5010000 		.4byte	.LASF6
- 238 0056 02       		.uleb128 0x2
- 239 0057 08       		.byte	0x8
- 240 0058 07       		.byte	0x7
- 241 0059 09010000 		.4byte	.LASF7
- 242 005d 03       		.uleb128 0x3
- 243 005e 04       		.byte	0x4
- 244 005f 05       		.byte	0x5
- 245 0060 696E7400 		.ascii	"int\000"
- 246 0064 02       		.uleb128 0x2
- 247 0065 04       		.byte	0x4
- 248 0066 07       		.byte	0x7
- 249 0067 E6000000 		.4byte	.LASF8
- 250 006b 04       		.uleb128 0x4
- 251 006c 0C020000 		.4byte	.LASF9
- 252 0070 02       		.byte	0x2
- 253 0071 C2       		.byte	0xc2
- 254 0072 2C000000 		.4byte	0x2c
- 255 0076 04       		.uleb128 0x4
- 256 0077 D8000000 		.4byte	.LASF10
- 257 007b 02       		.byte	0x2
- 258 007c C3       		.byte	0xc3
- 259 007d 3A000000 		.4byte	0x3a
- 260 0081 04       		.uleb128 0x4
- 261 0082 DF000000 		.4byte	.LASF11
- 262 0086 02       		.byte	0x2
- 263 0087 C4       		.byte	0xc4
- 264 0088 48000000 		.4byte	0x48
- 265 008c 04       		.uleb128 0x4
- 266 008d 94000000 		.4byte	.LASF12
- 267 0091 02       		.byte	0x2
- 268 0092 C6       		.byte	0xc6
- 269 0093 33000000 		.4byte	0x33
- 270 0097 04       		.uleb128 0x4
- 271 0098 AC000000 		.4byte	.LASF13
- 272 009c 02       		.byte	0x2
- 273 009d C7       		.byte	0xc7
- 274 009e 41000000 		.4byte	0x41
- 275 00a2 02       		.uleb128 0x2
- 276 00a3 04       		.byte	0x4
- 277 00a4 04       		.byte	0x4
- 278 00a5 80000000 		.4byte	.LASF14
- 279 00a9 02       		.uleb128 0x2
- 280 00aa 08       		.byte	0x8
- 281 00ab 04       		.byte	0x4
- 282 00ac 6E000000 		.4byte	.LASF15
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 8
+ 274              		.cfi_startproc
+ 258:..\source/motor.c **** 
+ 275              		.loc 1 258 0
+ 276              		@ sp needed
+ 277 0000 7047     		bx	lr
+ 278              		.cfi_endproc
+ 279              	.LFE40:
+ 280              		.size	Motor_Test, .-Motor_Test
+ 281              		.global	__aeabi_uidiv
+ 282              		.global	__aeabi_i2f
+ 283              		.global	__aeabi_fdiv
+ 284              		.global	__aeabi_fadd
+ 285              		.global	__aeabi_f2d
+ 286              		.global	__aeabi_d2f
+ 287              		.global	__aeabi_f2iz
+ 288 0002 C046     		.section	.text.Motor_Calibrate,"ax",%progbits
+ 289              		.align	2
+ 290              		.global	Motor_Calibrate
+ 291              		.code	16
+ 292              		.thumb_func
+ 293              		.type	Motor_Calibrate, %function
+ 294              	Motor_Calibrate:
+ 295              	.LFB42:
+ 272:..\source/motor.c **** 
+ 273:..\source/motor.c **** void Motor_Calibrate()
+ 274:..\source/motor.c **** /* The purpose of calibration is to create a mapping between the speed of the motor (in count/sec) 
+ 275:..\source/motor.c ****    value that produces the same speed and measured via the encoder.
+ 276:..\source/motor.c **** 
+ 277:..\source/motor.c ****    Calibration is performed in three steps:
+ 278:..\source/motor.c **** 
+ 279:..\source/motor.c ****     1. Run the motor over the range of PWM values, calculating the speed at each pwm sample, storin
+ 280:..\source/motor.c ****        values for each count/sec calculation and the count/sec.
+ 281:..\source/motor.c ****         Note: Limit the count/sec range to a usable range
+ 282:..\source/motor.c ****     2. Calculate average pwm values from the min/max samples
+ 283:..\source/motor.c ****     3. Linear interpolate between each marker
+ 284:..\source/motor.c **** 
+ 285:..\source/motor.c ****  */
+ 286:..\source/motor.c **** {
+ 296              		.loc 1 286 0
+ 297              		.cfi_startproc
+ 298 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 299              		.cfi_def_cfa_offset 20
+ 300              		.cfi_offset 4, -20
+ 301              		.cfi_offset 5, -16
+ 302              		.cfi_offset 6, -12
+ 303              		.cfi_offset 7, -8
+ 304              		.cfi_offset 14, -4
+ 305 0002 4746     		mov	r7, r8
+ 306 0004 80B4     		push	{r7}
+ 307              		.cfi_def_cfa_offset 24
+ 308              		.cfi_offset 8, -24
+ 309 0006 82B0     		sub	sp, sp, #8
+ 310              		.cfi_def_cfa_offset 32
+ 311              	.LVL31:
+ 287:..\source/motor.c ****     uint16 pwm;
+ 288:..\source/motor.c ****     static int16 meas_cps;
+ 289:..\source/motor.c ****     int ii;
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 12
 
 
- 283 00b0 02       		.uleb128 0x2
- 284 00b1 01       		.byte	0x1
- 285 00b2 08       		.byte	0x8
- 286 00b3 E3010000 		.4byte	.LASF16
- 287 00b7 02       		.uleb128 0x2
- 288 00b8 04       		.byte	0x4
- 289 00b9 07       		.byte	0x7
- 290 00ba 3E010000 		.4byte	.LASF17
- 291 00be 05       		.uleb128 0x5
- 292 00bf E8010000 		.4byte	.LASF18
- 293 00c3 01       		.byte	0x1
- 294 00c4 4A       		.byte	0x4a
- 295 00c5 00000000 		.4byte	.LFB34
- 296 00c9 0A000000 		.4byte	.LFE34-.LFB34
- 297 00cd 01       		.uleb128 0x1
- 298 00ce 9C       		.byte	0x9c
- 299 00cf E3000000 		.4byte	0xe3
- 300 00d3 06       		.uleb128 0x6
- 301 00d4 08000000 		.4byte	.LVL0
- 302 00d8 C1010000 		.4byte	0x1c1
- 303 00dc 07       		.uleb128 0x7
- 304 00dd 01       		.uleb128 0x1
- 305 00de 50       		.byte	0x50
- 306 00df 01       		.uleb128 0x1
- 307 00e0 31       		.byte	0x31
- 308 00e1 00       		.byte	0
- 309 00e2 00       		.byte	0
- 310 00e3 05       		.uleb128 0x5
- 311 00e4 20010000 		.4byte	.LASF19
- 312 00e8 01       		.byte	0x1
- 313 00e9 4F       		.byte	0x4f
- 314 00ea 00000000 		.4byte	.LFB35
- 315 00ee 0E000000 		.4byte	.LFE35-.LFB35
- 316 00f2 01       		.uleb128 0x1
- 317 00f3 9C       		.byte	0x9c
- 318 00f4 15010000 		.4byte	0x115
- 319 00f8 08       		.uleb128 0x8
- 320 00f9 08000000 		.4byte	.LVL1
- 321 00fd C1010000 		.4byte	0x1c1
- 322 0101 0B010000 		.4byte	0x10b
- 323 0105 07       		.uleb128 0x7
- 324 0106 01       		.uleb128 0x1
- 325 0107 50       		.byte	0x50
- 326 0108 01       		.uleb128 0x1
- 327 0109 30       		.byte	0x30
- 328 010a 00       		.byte	0
- 329 010b 09       		.uleb128 0x9
- 330 010c 0C000000 		.4byte	.LVL2
- 331 0110 D2010000 		.4byte	0x1d2
- 332 0114 00       		.byte	0
- 333 0115 0A       		.uleb128 0xa
- 334 0116 B2000000 		.4byte	.LASF30
- 335 011a 01       		.byte	0x1
- 336 011b 5A       		.byte	0x5a
- 337 011c 00000000 		.4byte	.LFB36
- 338 0120 58000000 		.4byte	.LFE36-.LFB36
- 339 0124 01       		.uleb128 0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 9
+ 290:..\source/motor.c ****     int jj;
+ 291:..\source/motor.c ****     int cal_cps_index;
+ 292:..\source/motor.c ****     int32 count_start;
+ 293:..\source/motor.c ****     int32 count_end;
+ 294:..\source/motor.c ****     int32 deltas;
+ 295:..\source/motor.c ****     uint32 delay =  100;
+ 296:..\source/motor.c ****     
+ 297:..\source/motor.c ****     for (ii = 0; ii < MAX_CPS_ENTRY; ++ii)
+ 312              		.loc 1 297 0
+ 313 0008 0023     		mov	r3, #0
+ 314 000a 04E0     		b	.L20
+ 315              	.LVL32:
+ 316              	.L21:
+ 298:..\source/motor.c ****     {
+ 299:..\source/motor.c ****         map_cps_to_pwm[ii] = PWM_STOP;
+ 317              		.loc 1 299 0 discriminator 3
+ 318 000c 5900     		lsl	r1, r3, #1
+ 319 000e 6648     		ldr	r0, .L37
+ 320 0010 664A     		ldr	r2, .L37+4
+ 321 0012 8852     		strh	r0, [r1, r2]
+ 297:..\source/motor.c ****     {
+ 322              		.loc 1 297 0 discriminator 3
+ 323 0014 0133     		add	r3, r3, #1
+ 324              	.LVL33:
+ 325              	.L20:
+ 297:..\source/motor.c ****     {
+ 326              		.loc 1 297 0 is_stmt 0 discriminator 1
+ 327 0016 C62B     		cmp	r3, #198
+ 328 0018 F8DD     		ble	.L21
+ 329              	.LVL34:
+ 300:..\source/motor.c ****     }
+ 301:..\source/motor.c ****     
+ 302:..\source/motor.c ****     cal_cps_index = MIN_CAL_ENTRY - 1;
+ 303:..\source/motor.c ****     
+ 304:..\source/motor.c ****     /* STEP 1.
+ 305:..\source/motor.c ****         1. Run the motor from full forward to stop in steps of PWM_CAL_STEP
+ 306:..\source/motor.c ****         2. At each step, calculate an average count/sec
+ 307:..\source/motor.c ****         Note: More than one pwm may result in the same count/sec; therefore, we capture a min and m
+ 308:..\source/motor.c ****               count/sec so that an average can be taken later
+ 309:..\source/motor.c ****     
+ 310:..\source/motor.c ****         Result:
+ 311:..\source/motor.c ****     
+ 312:..\source/motor.c ****             (full forward PWM)
+ 313:..\source/motor.c ****             ...
+ 314:..\source/motor.c ****             1718 -
+ 315:..\source/motor.c ****             1719  |
+ 316:..\source/motor.c ****             1720  |--> cps: 135, min: 1718, max: 1722
+ 317:..\source/motor.c ****             1721  |
+ 318:..\source/motor.c ****             1722 - 
+ 319:..\source/motor.c ****             ...
+ 320:..\source/motor.c ****     
+ 321:..\source/motor.c ****         Note: This code works the same for both left and right motors in that forward is with respe
+ 322:..\source/motor.c ****               one more is actually running in reverse - just in case you get confused :-)
+ 323:..\source/motor.c ****      */
+ 324:..\source/motor.c ****     
+ 325:..\source/motor.c ****     HB25_PWM_WriteCompare(CAL_PWM_START);
+ 330              		.loc 1 325 0 is_stmt 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 13
 
 
- 340 0125 9C       		.byte	0x9c
- 341 0126 61010000 		.4byte	0x161
- 342 012a 0B       		.uleb128 0xb
- 343 012b 48000000 		.4byte	.LASF31
- 344 012f 01       		.byte	0x1
- 345 0130 5A       		.byte	0x5a
- 346 0131 8C000000 		.4byte	0x8c
- 347 0135 00000000 		.4byte	.LLST0
- 348 0139 0C       		.uleb128 0xc
- 349 013a 1B020000 		.4byte	.LASF20
- 350 013e 01       		.byte	0x1
- 351 013f 5E       		.byte	0x5e
- 352 0140 76000000 		.4byte	0x76
- 353 0144 21000000 		.4byte	.LLST1
- 354 0148 0C       		.uleb128 0xc
- 355 0149 4E000000 		.4byte	.LASF21
- 356 014d 01       		.byte	0x1
- 357 014e 5F       		.byte	0x5f
- 358 014f 97000000 		.4byte	0x97
- 359 0153 34000000 		.4byte	.LLST2
- 360 0157 09       		.uleb128 0x9
- 361 0158 40000000 		.4byte	.LVL9
- 362 015c DA010000 		.4byte	0x1da
- 363 0160 00       		.byte	0
- 364 0161 05       		.uleb128 0x5
- 365 0162 3D000000 		.4byte	.LASF22
- 366 0166 01       		.byte	0x1
- 367 0167 69       		.byte	0x69
- 368 0168 00000000 		.4byte	.LFB37
- 369 016c 0E000000 		.4byte	.LFE37-.LFB37
- 370 0170 01       		.uleb128 0x1
- 371 0171 9C       		.byte	0x9c
- 372 0172 8F010000 		.4byte	0x18f
- 373 0176 09       		.uleb128 0x9
- 374 0177 06000000 		.4byte	.LVL10
- 375 017b EC010000 		.4byte	0x1ec
- 376 017f 06       		.uleb128 0x6
- 377 0180 0C000000 		.4byte	.LVL11
- 378 0184 C1010000 		.4byte	0x1c1
- 379 0188 07       		.uleb128 0x7
- 380 0189 01       		.uleb128 0x1
- 381 018a 50       		.byte	0x50
- 382 018b 01       		.uleb128 0x1
- 383 018c 31       		.byte	0x31
- 384 018d 00       		.byte	0
- 385 018e 00       		.byte	0
- 386 018f 0D       		.uleb128 0xd
- 387 0190 75000000 		.4byte	.LASF32
- 388 0194 01       		.byte	0x1
- 389 0195 73       		.byte	0x73
- 390 0196 00000000 		.4byte	.LFB38
- 391 019a 02000000 		.4byte	.LFE38-.LFB38
- 392 019e 01       		.uleb128 0x1
- 393 019f 9C       		.byte	0x9c
- 394 01a0 0E       		.uleb128 0xe
- 395 01a1 B0000000 		.4byte	0xb0
- 396 01a5 B0010000 		.4byte	0x1b0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 10
+ 331 001a FA27     		mov	r7, #250
+ 332 001c FF00     		lsl	r7, r7, #3
+ 333 001e 381C     		mov	r0, r7
+ 334 0020 FFF7FEFF 		bl	HB25_PWM_WriteCompare
+ 335              	.LVL35:
+ 326:..\source/motor.c ****     CyDelay(1000);
+ 336              		.loc 1 326 0
+ 337 0024 FA20     		mov	r0, #250
+ 338 0026 8000     		lsl	r0, r0, #2
+ 339 0028 FFF7FEFF 		bl	CyDelay
+ 340              	.LVL36:
+ 302:..\source/motor.c ****     
+ 341              		.loc 1 302 0
+ 342 002c 0123     		mov	r3, #1
+ 343 002e 5B42     		neg	r3, r3
+ 344 0030 9846     		mov	r8, r3
+ 327:..\source/motor.c ****     
+ 328:..\source/motor.c ****     for (pwm = CAL_PWM_START; pwm > CAL_PWM_END; pwm += CAL_PWM_STEP)
+ 345              		.loc 1 328 0
+ 346 0032 42E0     		b	.L22
+ 347              	.LVL37:
+ 348              	.L28:
+ 329:..\source/motor.c ****     {   
+ 330:..\source/motor.c ****         HB25_PWM_WriteCompare(pwm);
+ 349              		.loc 1 330 0
+ 350 0034 381C     		mov	r0, r7
+ 351 0036 FFF7FEFF 		bl	HB25_PWM_WriteCompare
+ 352              	.LVL38:
+ 331:..\source/motor.c ****         CyDelay(1000); // Allow the motor to settle before measuing the speed
+ 353              		.loc 1 331 0
+ 354 003a FA20     		mov	r0, #250
+ 355 003c 8000     		lsl	r0, r0, #2
+ 356 003e FFF7FEFF 		bl	CyDelay
+ 357              	.LVL39:
+ 332:..\source/motor.c **** 
+ 333:..\source/motor.c ****         deltas = 0;
+ 358              		.loc 1 333 0
+ 359 0042 0025     		mov	r5, #0
+ 334:..\source/motor.c ****         // Measure the speed and calculate an average
+ 335:..\source/motor.c ****         for (ii = 0; ii < MAX_SPEED_SAMPLES; ++ii)
+ 360              		.loc 1 335 0
+ 361 0044 0024     		mov	r4, #0
+ 362 0046 0AE0     		b	.L23
+ 363              	.LVL40:
+ 364              	.L24:
+ 336:..\source/motor.c ****         {
+ 337:..\source/motor.c ****             //meas_cps += CalculateAverageCountPerSec(250);
+ 338:..\source/motor.c ****             
+ 339:..\source/motor.c ****             count_start = (int32) Phase_Counter_ReadCounter();
+ 365              		.loc 1 339 0 discriminator 3
+ 366 0048 FFF7FEFF 		bl	Phase_Counter_ReadCounter
+ 367              	.LVL41:
+ 368 004c 061C     		mov	r6, r0
+ 369              	.LVL42:
+ 340:..\source/motor.c ****             CyDelay(delay);
+ 370              		.loc 1 340 0 discriminator 3
+ 371 004e 6420     		mov	r0, #100
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 14
 
 
- 397 01a9 0F       		.uleb128 0xf
- 398 01aa B7000000 		.4byte	0xb7
- 399 01ae FF       		.byte	0xff
- 400 01af 00       		.byte	0
- 401 01b0 10       		.uleb128 0x10
- 402 01b1 41020000 		.4byte	.LASF33
- 403 01b5 05       		.byte	0x5
- 404 01b6 08       		.byte	0x8
- 405 01b7 A0010000 		.4byte	0x1a0
- 406 01bb 05       		.uleb128 0x5
- 407 01bc 03       		.byte	0x3
- 408 01bd 00000000 		.4byte	formatted_string
- 409 01c1 11       		.uleb128 0x11
- 410 01c2 F3000000 		.4byte	.LASF23
- 411 01c6 03       		.byte	0x3
- 412 01c7 33       		.byte	0x33
- 413 01c8 D2010000 		.4byte	0x1d2
- 414 01cc 12       		.uleb128 0x12
- 415 01cd 6B000000 		.4byte	0x6b
- 416 01d1 00       		.byte	0
- 417 01d2 13       		.uleb128 0x13
- 418 01d3 F3010000 		.4byte	.LASF25
- 419 01d7 04       		.byte	0x4
- 420 01d8 3101     		.2byte	0x131
- 421 01da 14       		.uleb128 0x14
- 422 01db C2000000 		.4byte	.LASF24
- 423 01df 04       		.byte	0x4
- 424 01e0 5401     		.2byte	0x154
- 425 01e2 EC010000 		.4byte	0x1ec
- 426 01e6 12       		.uleb128 0x12
- 427 01e7 81000000 		.4byte	0x81
- 428 01eb 00       		.byte	0
- 429 01ec 13       		.uleb128 0x13
- 430 01ed 33020000 		.4byte	.LASF26
- 431 01f1 04       		.byte	0x4
- 432 01f2 3201     		.2byte	0x132
- 433 01f4 00       		.byte	0
- 434              		.section	.debug_abbrev,"",%progbits
- 435              	.Ldebug_abbrev0:
- 436 0000 01       		.uleb128 0x1
- 437 0001 11       		.uleb128 0x11
- 438 0002 01       		.byte	0x1
- 439 0003 25       		.uleb128 0x25
- 440 0004 0E       		.uleb128 0xe
- 441 0005 13       		.uleb128 0x13
- 442 0006 0B       		.uleb128 0xb
- 443 0007 03       		.uleb128 0x3
- 444 0008 0E       		.uleb128 0xe
- 445 0009 1B       		.uleb128 0x1b
- 446 000a 0E       		.uleb128 0xe
- 447 000b 55       		.uleb128 0x55
- 448 000c 17       		.uleb128 0x17
- 449 000d 11       		.uleb128 0x11
- 450 000e 01       		.uleb128 0x1
- 451 000f 10       		.uleb128 0x10
- 452 0010 17       		.uleb128 0x17
- 453 0011 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 11
+ 372              	.LVL43:
+ 373 0050 FFF7FEFF 		bl	CyDelay
+ 374              	.LVL44:
+ 341:..\source/motor.c ****             count_end = (int32) Phase_Counter_ReadCounter();
+ 375              		.loc 1 341 0 discriminator 3
+ 376 0054 FFF7FEFF 		bl	Phase_Counter_ReadCounter
+ 377              	.LVL45:
+ 342:..\source/motor.c ****             deltas += count_end - count_start;
+ 378              		.loc 1 342 0 discriminator 3
+ 379 0058 801B     		sub	r0, r0, r6
+ 380              	.LVL46:
+ 381 005a 2D18     		add	r5, r5, r0
+ 382              	.LVL47:
+ 335:..\source/motor.c ****         {
+ 383              		.loc 1 335 0 discriminator 3
+ 384 005c 0134     		add	r4, r4, #1
+ 385              	.LVL48:
+ 386              	.L23:
+ 335:..\source/motor.c ****         {
+ 387              		.loc 1 335 0 is_stmt 0 discriminator 1
+ 388 005e 042C     		cmp	r4, #4
+ 389 0060 F2DD     		ble	.L24
+ 343:..\source/motor.c ****         }
+ 344:..\source/motor.c ****         deltas /= MAX_SPEED_SAMPLES;
+ 390              		.loc 1 344 0 is_stmt 1
+ 391 0062 281C     		mov	r0, r5
+ 392 0064 0521     		mov	r1, #5
+ 393 0066 FFF7FEFF 		bl	__aeabi_idiv
+ 394              	.LVL49:
+ 345:..\source/motor.c ****         meas_cps = (deltas*MS_IN_SEC)/delay;
+ 395              		.loc 1 345 0
+ 396 006a FA23     		mov	r3, #250
+ 397 006c 9B00     		lsl	r3, r3, #2
+ 398 006e 5843     		mul	r0, r3
+ 399              	.LVL50:
+ 400 0070 6421     		mov	r1, #100
+ 401 0072 FFF7FEFF 		bl	__aeabi_uidiv
+ 402              	.LVL51:
+ 403 0076 80B2     		uxth	r0, r0
+ 404 0078 4823     		mov	r3, #72
+ 405 007a 4D4A     		ldr	r2, .L37+8
+ 406 007c D052     		strh	r0, [r2, r3]
+ 346:..\source/motor.c ****         
+ 347:..\source/motor.c ****         // Constrain the measurement to the calibration range and store min/max pwm values
+ 348:..\source/motor.c ****         if (meas_cps >= MIN_CPS_VALUE && meas_cps < MAX_CPS_VALUE)
+ 407              		.loc 1 348 0
+ 408 007e 431E     		sub	r3, r0, #1
+ 409 0080 9BB2     		uxth	r3, r3
+ 410 0082 C62B     		cmp	r3, #198
+ 411 0084 17D8     		bhi	.L25
+ 349:..\source/motor.c ****         {   
+ 350:..\source/motor.c ****             if (cal_cps_index < 0 || cal_cps_to_pwm[cal_cps_index].cps != meas_cps)
+ 412              		.loc 1 350 0
+ 413 0086 4346     		mov	r3, r8
+ 414 0088 002B     		cmp	r3, #0
+ 415 008a 05DB     		blt	.L26
+ 416              	.LVL52:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 15
 
 
- 454 0012 00       		.byte	0
- 455 0013 02       		.uleb128 0x2
- 456 0014 24       		.uleb128 0x24
- 457 0015 00       		.byte	0
- 458 0016 0B       		.uleb128 0xb
- 459 0017 0B       		.uleb128 0xb
- 460 0018 3E       		.uleb128 0x3e
- 461 0019 0B       		.uleb128 0xb
- 462 001a 03       		.uleb128 0x3
- 463 001b 0E       		.uleb128 0xe
- 464 001c 00       		.byte	0
- 465 001d 00       		.byte	0
- 466 001e 03       		.uleb128 0x3
- 467 001f 24       		.uleb128 0x24
- 468 0020 00       		.byte	0
- 469 0021 0B       		.uleb128 0xb
- 470 0022 0B       		.uleb128 0xb
- 471 0023 3E       		.uleb128 0x3e
- 472 0024 0B       		.uleb128 0xb
- 473 0025 03       		.uleb128 0x3
- 474 0026 08       		.uleb128 0x8
- 475 0027 00       		.byte	0
- 476 0028 00       		.byte	0
- 477 0029 04       		.uleb128 0x4
- 478 002a 16       		.uleb128 0x16
- 479 002b 00       		.byte	0
- 480 002c 03       		.uleb128 0x3
- 481 002d 0E       		.uleb128 0xe
- 482 002e 3A       		.uleb128 0x3a
- 483 002f 0B       		.uleb128 0xb
- 484 0030 3B       		.uleb128 0x3b
- 485 0031 0B       		.uleb128 0xb
- 486 0032 49       		.uleb128 0x49
- 487 0033 13       		.uleb128 0x13
- 488 0034 00       		.byte	0
- 489 0035 00       		.byte	0
- 490 0036 05       		.uleb128 0x5
- 491 0037 2E       		.uleb128 0x2e
- 492 0038 01       		.byte	0x1
- 493 0039 3F       		.uleb128 0x3f
- 494 003a 19       		.uleb128 0x19
- 495 003b 03       		.uleb128 0x3
- 496 003c 0E       		.uleb128 0xe
- 497 003d 3A       		.uleb128 0x3a
- 498 003e 0B       		.uleb128 0xb
- 499 003f 3B       		.uleb128 0x3b
- 500 0040 0B       		.uleb128 0xb
- 501 0041 11       		.uleb128 0x11
- 502 0042 01       		.uleb128 0x1
- 503 0043 12       		.uleb128 0x12
- 504 0044 06       		.uleb128 0x6
- 505 0045 40       		.uleb128 0x40
- 506 0046 18       		.uleb128 0x18
- 507 0047 9742     		.uleb128 0x2117
- 508 0049 19       		.uleb128 0x19
- 509 004a 01       		.uleb128 0x1
- 510 004b 13       		.uleb128 0x13
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 12
+ 417              		.loc 1 350 0 is_stmt 0 discriminator 1
+ 418 008c 9A00     		lsl	r2, r3, #2
+ 419 008e 03B2     		sxth	r3, r0
+ 420              	.LVL53:
+ 421 0090 4849     		ldr	r1, .L37+12
+ 422 0092 8A5E     		ldrsh	r2, [r1, r2]
+ 423 0094 9342     		cmp	r3, r2
+ 424 0096 09D0     		beq	.L27
+ 425              	.L26:
+ 351:..\source/motor.c ****             {
+ 352:..\source/motor.c ****                 cal_cps_index++;
+ 426              		.loc 1 352 0 is_stmt 1
+ 427 0098 0123     		mov	r3, #1
+ 428 009a 9C46     		mov	ip, r3
+ 429 009c E044     		add	r8, r8, ip
+ 430              	.LVL54:
+ 353:..\source/motor.c ****                 cal_cps_to_pwm[cal_cps_index].cps = meas_cps;
+ 431              		.loc 1 353 0
+ 432 009e 454A     		ldr	r2, .L37+12
+ 433 00a0 4346     		mov	r3, r8
+ 434 00a2 9B00     		lsl	r3, r3, #2
+ 435 00a4 9852     		strh	r0, [r3, r2]
+ 354:..\source/motor.c ****                 cal_cps_to_pwm[cal_cps_index].pwm = pwm;
+ 436              		.loc 1 354 0
+ 437 00a6 D318     		add	r3, r2, r3
+ 438 00a8 5F80     		strh	r7, [r3, #2]
+ 439 00aa 04E0     		b	.L25
+ 440              	.L27:
+ 355:..\source/motor.c ****             }
+ 356:..\source/motor.c ****             else
+ 357:..\source/motor.c ****             {
+ 358:..\source/motor.c ****                 cal_cps_to_pwm[cal_cps_index].pwm = pwm;
+ 441              		.loc 1 358 0
+ 442 00ac 4346     		mov	r3, r8
+ 443 00ae 9B00     		lsl	r3, r3, #2
+ 444 00b0 404A     		ldr	r2, .L37+12
+ 445 00b2 D318     		add	r3, r2, r3
+ 446 00b4 5F80     		strh	r7, [r3, #2]
+ 447              	.L25:
+ 328:..\source/motor.c ****     {   
+ 448              		.loc 1 328 0 discriminator 2
+ 449 00b6 0A3F     		sub	r7, r7, #10
+ 450              	.LVL55:
+ 451 00b8 BFB2     		uxth	r7, r7
+ 452              	.LVL56:
+ 453              	.L22:
+ 328:..\source/motor.c ****     {   
+ 454              		.loc 1 328 0 is_stmt 0 discriminator 1
+ 455 00ba 3B4B     		ldr	r3, .L37
+ 456 00bc 9F42     		cmp	r7, r3
+ 457 00be B9D8     		bhi	.L28
+ 359:..\source/motor.c ****             }
+ 360:..\source/motor.c ****         }        
+ 361:..\source/motor.c ****     }
+ 362:..\source/motor.c ****         
+ 363:..\source/motor.c ****     HB25_PWM_WriteCompare(PWM_STOP);
+ 458              		.loc 1 363 0 is_stmt 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 16
 
 
- 511 004c 00       		.byte	0
- 512 004d 00       		.byte	0
- 513 004e 06       		.uleb128 0x6
- 514 004f 898201   		.uleb128 0x4109
- 515 0052 01       		.byte	0x1
- 516 0053 11       		.uleb128 0x11
- 517 0054 01       		.uleb128 0x1
- 518 0055 31       		.uleb128 0x31
- 519 0056 13       		.uleb128 0x13
- 520 0057 00       		.byte	0
- 521 0058 00       		.byte	0
- 522 0059 07       		.uleb128 0x7
- 523 005a 8A8201   		.uleb128 0x410a
- 524 005d 00       		.byte	0
- 525 005e 02       		.uleb128 0x2
- 526 005f 18       		.uleb128 0x18
- 527 0060 9142     		.uleb128 0x2111
- 528 0062 18       		.uleb128 0x18
- 529 0063 00       		.byte	0
- 530 0064 00       		.byte	0
- 531 0065 08       		.uleb128 0x8
- 532 0066 898201   		.uleb128 0x4109
- 533 0069 01       		.byte	0x1
- 534 006a 11       		.uleb128 0x11
- 535 006b 01       		.uleb128 0x1
- 536 006c 31       		.uleb128 0x31
- 537 006d 13       		.uleb128 0x13
- 538 006e 01       		.uleb128 0x1
- 539 006f 13       		.uleb128 0x13
- 540 0070 00       		.byte	0
- 541 0071 00       		.byte	0
- 542 0072 09       		.uleb128 0x9
- 543 0073 898201   		.uleb128 0x4109
- 544 0076 00       		.byte	0
- 545 0077 11       		.uleb128 0x11
- 546 0078 01       		.uleb128 0x1
- 547 0079 31       		.uleb128 0x31
- 548 007a 13       		.uleb128 0x13
- 549 007b 00       		.byte	0
- 550 007c 00       		.byte	0
- 551 007d 0A       		.uleb128 0xa
- 552 007e 2E       		.uleb128 0x2e
- 553 007f 01       		.byte	0x1
- 554 0080 3F       		.uleb128 0x3f
- 555 0081 19       		.uleb128 0x19
- 556 0082 03       		.uleb128 0x3
- 557 0083 0E       		.uleb128 0xe
- 558 0084 3A       		.uleb128 0x3a
- 559 0085 0B       		.uleb128 0xb
- 560 0086 3B       		.uleb128 0x3b
- 561 0087 0B       		.uleb128 0xb
- 562 0088 27       		.uleb128 0x27
- 563 0089 19       		.uleb128 0x19
- 564 008a 11       		.uleb128 0x11
- 565 008b 01       		.uleb128 0x1
- 566 008c 12       		.uleb128 0x12
- 567 008d 06       		.uleb128 0x6
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 13
+ 459 00c0 1C1C     		mov	r4, r3
+ 460 00c2 181C     		mov	r0, r3
+ 461 00c4 FFF7FEFF 		bl	HB25_PWM_WriteCompare
+ 462              	.LVL57:
+ 364:..\source/motor.c ****     
+ 365:..\source/motor.c ****     /* The first entry in the calibration array will always be where the motor stops, so set the mi
+ 366:..\source/motor.c ****        PWM_STOP and also set the CPS to 0
+ 367:..\source/motor.c ****      */
+ 368:..\source/motor.c ****     cal_cps_to_pwm[cal_cps_index].pwm = PWM_STOP;
+ 463              		.loc 1 368 0
+ 464 00c8 3A4B     		ldr	r3, .L37+12
+ 465 00ca 4246     		mov	r2, r8
+ 466 00cc 9200     		lsl	r2, r2, #2
+ 467 00ce 9918     		add	r1, r3, r2
+ 468 00d0 4C80     		strh	r4, [r1, #2]
+ 369:..\source/motor.c ****     cal_cps_to_pwm[cal_cps_index].cps = 0;
+ 469              		.loc 1 369 0
+ 470 00d2 0021     		mov	r1, #0
+ 471 00d4 D152     		strh	r1, [r2, r3]
+ 472              	.LVL58:
+ 370:..\source/motor.c ****     
+ 371:..\source/motor.c ****     
+ 372:..\source/motor.c ****     
+ 373:..\source/motor.c ****     /* 
+ 374:..\source/motor.c ****         1. Calculate the average value for each min/max pwm pair and store it to map_cps_to_pwm 
+ 375:..\source/motor.c ****      */
+ 376:..\source/motor.c ****     /*
+ 377:..\source/motor.c ****     for (ii = cal_cps_index; ii > MIN_CAL_ENTRY + 1; --ii)
+ 378:..\source/motor.c ****     {
+ 379:..\source/motor.c ****         if (cal_cps_to_pwm[ii].pwm_min != PWM_MIN && cal_cps_to_pwm[ii].pwm_max != PWM_MAX)
+ 380:..\source/motor.c ****         {
+ 381:..\source/motor.c ****             int16 cps;
+ 382:..\source/motor.c ****             uint16 pwm_min;
+ 383:..\source/motor.c ****             uint16 pwm_max;
+ 384:..\source/motor.c **** 
+ 385:..\source/motor.c ****             cps = cal_cps_to_pwm[ii].cps;
+ 386:..\source/motor.c ****             pwm_min = cal_cps_to_pwm[ii].pwm_min;
+ 387:..\source/motor.c ****             pwm_max = cal_cps_to_pwm[ii].pwm_max;
+ 388:..\source/motor.c ****             map_cps_to_pwm[cps] = (pwm_min + pwm_max)/2;
+ 389:..\source/motor.c ****         }
+ 390:..\source/motor.c ****     }
+ 391:..\source/motor.c ****     */
+ 392:..\source/motor.c ****     /* Linear interpolate the values 
+ 393:..\source/motor.c ****         1. Loop over the markers array creating a delta, span and step between each sample
+ 394:..\source/motor.c ****         2. Fill in the spaces between each sample with the interpolated values    
+ 395:..\source/motor.c ****     */
+ 396:..\source/motor.c ****     
+ 397:..\source/motor.c ****     for (ii = cal_cps_index; ii > MIN_CAL_ENTRY + 1; --ii)
+ 473              		.loc 1 397 0
+ 474 00d6 37E0     		b	.L29
+ 475              	.LVL59:
+ 476              	.L32:
+ 477              	.LBB3:
+ 398:..\source/motor.c ****     {
+ 399:..\source/motor.c ****         uint16 cps_i;
+ 400:..\source/motor.c ****         uint16 cps_i_plus_1;
+ 401:..\source/motor.c ****         
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 17
 
 
- 568 008e 40       		.uleb128 0x40
- 569 008f 18       		.uleb128 0x18
- 570 0090 9642     		.uleb128 0x2116
- 571 0092 19       		.uleb128 0x19
- 572 0093 01       		.uleb128 0x1
- 573 0094 13       		.uleb128 0x13
- 574 0095 00       		.byte	0
- 575 0096 00       		.byte	0
- 576 0097 0B       		.uleb128 0xb
- 577 0098 05       		.uleb128 0x5
- 578 0099 00       		.byte	0
- 579 009a 03       		.uleb128 0x3
- 580 009b 0E       		.uleb128 0xe
- 581 009c 3A       		.uleb128 0x3a
- 582 009d 0B       		.uleb128 0xb
- 583 009e 3B       		.uleb128 0x3b
- 584 009f 0B       		.uleb128 0xb
- 585 00a0 49       		.uleb128 0x49
- 586 00a1 13       		.uleb128 0x13
- 587 00a2 02       		.uleb128 0x2
- 588 00a3 17       		.uleb128 0x17
- 589 00a4 00       		.byte	0
- 590 00a5 00       		.byte	0
- 591 00a6 0C       		.uleb128 0xc
- 592 00a7 34       		.uleb128 0x34
- 593 00a8 00       		.byte	0
- 594 00a9 03       		.uleb128 0x3
- 595 00aa 0E       		.uleb128 0xe
- 596 00ab 3A       		.uleb128 0x3a
- 597 00ac 0B       		.uleb128 0xb
- 598 00ad 3B       		.uleb128 0x3b
- 599 00ae 0B       		.uleb128 0xb
- 600 00af 49       		.uleb128 0x49
- 601 00b0 13       		.uleb128 0x13
- 602 00b1 02       		.uleb128 0x2
- 603 00b2 17       		.uleb128 0x17
- 604 00b3 00       		.byte	0
- 605 00b4 00       		.byte	0
- 606 00b5 0D       		.uleb128 0xd
- 607 00b6 2E       		.uleb128 0x2e
- 608 00b7 00       		.byte	0
- 609 00b8 3F       		.uleb128 0x3f
- 610 00b9 19       		.uleb128 0x19
- 611 00ba 03       		.uleb128 0x3
- 612 00bb 0E       		.uleb128 0xe
- 613 00bc 3A       		.uleb128 0x3a
- 614 00bd 0B       		.uleb128 0xb
- 615 00be 3B       		.uleb128 0x3b
- 616 00bf 0B       		.uleb128 0xb
- 617 00c0 11       		.uleb128 0x11
- 618 00c1 01       		.uleb128 0x1
- 619 00c2 12       		.uleb128 0x12
- 620 00c3 06       		.uleb128 0x6
- 621 00c4 40       		.uleb128 0x40
- 622 00c5 18       		.uleb128 0x18
- 623 00c6 9742     		.uleb128 0x2117
- 624 00c8 19       		.uleb128 0x19
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 14
+ 402:..\source/motor.c ****         cps_i = cal_cps_to_pwm[ii].cps;
+ 478              		.loc 1 402 0
+ 479 00d8 364A     		ldr	r2, .L37+12
+ 480 00da 4346     		mov	r3, r8
+ 481              	.LVL60:
+ 482 00dc 9B00     		lsl	r3, r3, #2
+ 483 00de D45A     		ldrh	r4, [r2, r3]
+ 484              	.LVL61:
+ 403:..\source/motor.c ****         cps_i_plus_1 = cal_cps_to_pwm[ii+1].cps;
+ 485              		.loc 1 403 0
+ 486 00e0 4346     		mov	r3, r8
+ 487 00e2 0133     		add	r3, r3, #1
+ 488 00e4 9B00     		lsl	r3, r3, #2
+ 489 00e6 D35A     		ldrh	r3, [r2, r3]
+ 490              	.LVL62:
+ 404:..\source/motor.c ****         
+ 405:..\source/motor.c ****         // Get the ith and ith+1 samples
+ 406:..\source/motor.c ****         int curr_pwm = map_cps_to_pwm[cps_i];
+ 491              		.loc 1 406 0
+ 492 00e8 304A     		ldr	r2, .L37+4
+ 493 00ea 6100     		lsl	r1, r4, #1
+ 494 00ec 8D5A     		ldrh	r5, [r1, r2]
+ 495              	.LVL63:
+ 407:..\source/motor.c ****         int next_pwm = map_cps_to_pwm[cps_i_plus_1];
+ 496              		.loc 1 407 0
+ 497 00ee 1F1C     		mov	r7, r3
+ 498 00f0 5900     		lsl	r1, r3, #1
+ 499 00f2 885A     		ldrh	r0, [r1, r2]
+ 500              	.LVL64:
+ 408:..\source/motor.c ****         
+ 409:..\source/motor.c ****         // Calculate the delta
+ 410:..\source/motor.c ****         int delta = next_pwm - curr_pwm;
+ 501              		.loc 1 410 0
+ 502 00f4 401B     		sub	r0, r0, r5
+ 503              	.LVL65:
+ 411:..\source/motor.c ****         
+ 412:..\source/motor.c ****         // Calculate the span between samples
+ 413:..\source/motor.c ****         int span = cps_i_plus_1 - cps_i;
+ 504              		.loc 1 413 0
+ 505 00f6 1E1B     		sub	r6, r3, r4
+ 506              	.LVL66:
+ 414:..\source/motor.c ****         
+ 415:..\source/motor.c ****         // Calculate step for filling in blanks
+ 416:..\source/motor.c ****         // Note: Use float so we benefit from round up
+ 417:..\source/motor.c ****         float step = ((float) delta) / span;
+ 507              		.loc 1 417 0
+ 508 00f8 FFF7FEFF 		bl	__aeabi_i2f
+ 509              	.LVL67:
+ 510 00fc 0190     		str	r0, [sp, #4]
+ 511 00fe 301C     		mov	r0, r6
+ 512 0100 FFF7FEFF 		bl	__aeabi_i2f
+ 513              	.LVL68:
+ 514 0104 011C     		add	r1, r0, #0
+ 515 0106 0198     		ldr	r0, [sp, #4]
+ 516 0108 FFF7FEFF 		bl	__aeabi_fdiv
+ 517              	.LVL69:
+ 518 010c 061C     		add	r6, r0, #0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 18
 
 
- 625 00c9 00       		.byte	0
- 626 00ca 00       		.byte	0
- 627 00cb 0E       		.uleb128 0xe
- 628 00cc 01       		.uleb128 0x1
- 629 00cd 01       		.byte	0x1
- 630 00ce 49       		.uleb128 0x49
- 631 00cf 13       		.uleb128 0x13
- 632 00d0 01       		.uleb128 0x1
- 633 00d1 13       		.uleb128 0x13
- 634 00d2 00       		.byte	0
- 635 00d3 00       		.byte	0
- 636 00d4 0F       		.uleb128 0xf
- 637 00d5 21       		.uleb128 0x21
- 638 00d6 00       		.byte	0
- 639 00d7 49       		.uleb128 0x49
- 640 00d8 13       		.uleb128 0x13
- 641 00d9 2F       		.uleb128 0x2f
- 642 00da 0B       		.uleb128 0xb
- 643 00db 00       		.byte	0
- 644 00dc 00       		.byte	0
- 645 00dd 10       		.uleb128 0x10
- 646 00de 34       		.uleb128 0x34
- 647 00df 00       		.byte	0
- 648 00e0 03       		.uleb128 0x3
- 649 00e1 0E       		.uleb128 0xe
- 650 00e2 3A       		.uleb128 0x3a
- 651 00e3 0B       		.uleb128 0xb
- 652 00e4 3B       		.uleb128 0x3b
- 653 00e5 0B       		.uleb128 0xb
- 654 00e6 49       		.uleb128 0x49
- 655 00e7 13       		.uleb128 0x13
- 656 00e8 3F       		.uleb128 0x3f
- 657 00e9 19       		.uleb128 0x19
- 658 00ea 02       		.uleb128 0x2
- 659 00eb 18       		.uleb128 0x18
- 660 00ec 00       		.byte	0
- 661 00ed 00       		.byte	0
- 662 00ee 11       		.uleb128 0x11
- 663 00ef 2E       		.uleb128 0x2e
- 664 00f0 01       		.byte	0x1
- 665 00f1 3F       		.uleb128 0x3f
- 666 00f2 19       		.uleb128 0x19
- 667 00f3 03       		.uleb128 0x3
- 668 00f4 0E       		.uleb128 0xe
- 669 00f5 3A       		.uleb128 0x3a
- 670 00f6 0B       		.uleb128 0xb
- 671 00f7 3B       		.uleb128 0x3b
- 672 00f8 0B       		.uleb128 0xb
- 673 00f9 27       		.uleb128 0x27
- 674 00fa 19       		.uleb128 0x19
- 675 00fb 3C       		.uleb128 0x3c
- 676 00fc 19       		.uleb128 0x19
- 677 00fd 01       		.uleb128 0x1
- 678 00fe 13       		.uleb128 0x13
- 679 00ff 00       		.byte	0
- 680 0100 00       		.byte	0
- 681 0101 12       		.uleb128 0x12
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 15
+ 519              	.LVL70:
+ 418:..\source/motor.c ****         
+ 419:..\source/motor.c ****         /*
+ 420:..\source/motor.c ****             Example:
+ 421:..\source/motor.c ****         
+ 422:..\source/motor.c ****             cps         pwm     samples
+ 423:..\source/motor.c ****             ...
+ 424:..\source/motor.c ****             114
+ 425:..\source/motor.c ****             115        1700        ith
+ 426:..\source/motor.c ****             116      ->1702
+ 427:..\source/motor.c ****             117      ->1704
+ 428:..\source/motor.c ****             118      ->1705
+ 429:..\source/motor.c ****             119      ->1708
+ 430:..\source/motor.c ****             120        1710        ith + 1
+ 431:..\source/motor.c ****             121
+ 432:..\source/motor.c ****             ...
+ 433:..\source/motor.c ****         
+ 434:..\source/motor.c ****             Delta: 1710 - 1700 - 10
+ 435:..\source/motor.c ****             Span:  120 - 115 = 5
+ 436:..\source/motor.c ****             Step:  10 / 5 = 2
+ 437:..\source/motor.c ****         
+ 438:..\source/motor.c ****             Interpolated Values:
+ 439:..\source/motor.c ****             jj start = cps[i] + 1 <= 116
+ 440:..\source/motor.c ****             ...
+ 441:..\source/motor.c ****             jj end   = cps[i+1]   < 120
+ 442:..\source/motor.c ****          */        
+ 443:..\source/motor.c ****         float value = curr_pwm;
+ 520              		.loc 1 443 0
+ 521 010e 281C     		mov	r0, r5
+ 522              	.LVL71:
+ 523 0110 FFF7FEFF 		bl	__aeabi_i2f
+ 524              	.LVL72:
+ 525 0114 051C     		add	r5, r0, #0
+ 526              	.LVL73:
+ 444:..\source/motor.c ****         //for (jj = cps_i_plus_1 + 1; jj <= cps_i_plus_1 + span - 1; ++jj)
+ 445:..\source/motor.c ****         for (jj = cps_i + 1; jj < cps_i_plus_1; ++jj)
+ 527              		.loc 1 445 0
+ 528 0116 0134     		add	r4, r4, #1
+ 529              	.LVL74:
+ 530 0118 10E0     		b	.L30
+ 531              	.LVL75:
+ 532              	.L31:
+ 446:..\source/motor.c ****         {
+ 447:..\source/motor.c ****             // Round up so we don't lose significant digits
+ 448:..\source/motor.c ****             value = round(value + step);
+ 533              		.loc 1 448 0 discriminator 3
+ 534 011a 281C     		add	r0, r5, #0
+ 535 011c 311C     		add	r1, r6, #0
+ 536 011e FFF7FEFF 		bl	__aeabi_fadd
+ 537              	.LVL76:
+ 538 0122 FFF7FEFF 		bl	__aeabi_f2d
+ 539              	.LVL77:
+ 540 0126 FFF7FEFF 		bl	round
+ 541              	.LVL78:
+ 542 012a FFF7FEFF 		bl	__aeabi_d2f
+ 543              	.LVL79:
+ 544 012e 051C     		add	r5, r0, #0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 19
 
 
- 682 0102 05       		.uleb128 0x5
- 683 0103 00       		.byte	0
- 684 0104 49       		.uleb128 0x49
- 685 0105 13       		.uleb128 0x13
- 686 0106 00       		.byte	0
- 687 0107 00       		.byte	0
- 688 0108 13       		.uleb128 0x13
- 689 0109 2E       		.uleb128 0x2e
- 690 010a 00       		.byte	0
- 691 010b 3F       		.uleb128 0x3f
- 692 010c 19       		.uleb128 0x19
- 693 010d 03       		.uleb128 0x3
- 694 010e 0E       		.uleb128 0xe
- 695 010f 3A       		.uleb128 0x3a
- 696 0110 0B       		.uleb128 0xb
- 697 0111 3B       		.uleb128 0x3b
- 698 0112 05       		.uleb128 0x5
- 699 0113 27       		.uleb128 0x27
- 700 0114 19       		.uleb128 0x19
- 701 0115 3C       		.uleb128 0x3c
- 702 0116 19       		.uleb128 0x19
- 703 0117 00       		.byte	0
- 704 0118 00       		.byte	0
- 705 0119 14       		.uleb128 0x14
- 706 011a 2E       		.uleb128 0x2e
- 707 011b 01       		.byte	0x1
- 708 011c 3F       		.uleb128 0x3f
- 709 011d 19       		.uleb128 0x19
- 710 011e 03       		.uleb128 0x3
- 711 011f 0E       		.uleb128 0xe
- 712 0120 3A       		.uleb128 0x3a
- 713 0121 0B       		.uleb128 0xb
- 714 0122 3B       		.uleb128 0x3b
- 715 0123 05       		.uleb128 0x5
- 716 0124 27       		.uleb128 0x27
- 717 0125 19       		.uleb128 0x19
- 718 0126 3C       		.uleb128 0x3c
- 719 0127 19       		.uleb128 0x19
- 720 0128 01       		.uleb128 0x1
- 721 0129 13       		.uleb128 0x13
- 722 012a 00       		.byte	0
- 723 012b 00       		.byte	0
- 724 012c 00       		.byte	0
- 725              		.section	.debug_loc,"",%progbits
- 726              	.Ldebug_loc0:
- 727              	.LLST0:
- 728 0000 00000000 		.4byte	.LVL3
- 729 0004 08000000 		.4byte	.LVL4
- 730 0008 0100     		.2byte	0x1
- 731 000a 50       		.byte	0x50
- 732 000b 08000000 		.4byte	.LVL4
- 733 000f 58000000 		.4byte	.LFE36
- 734 0013 0400     		.2byte	0x4
- 735 0015 F3       		.byte	0xf3
- 736 0016 01       		.uleb128 0x1
- 737 0017 50       		.byte	0x50
- 738 0018 9F       		.byte	0x9f
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 16
+ 545              	.LVL80:
+ 449:..\source/motor.c ****             map_cps_to_pwm[jj] = (int) value;
+ 546              		.loc 1 449 0 discriminator 3
+ 547 0130 FFF7FEFF 		bl	__aeabi_f2iz
+ 548              	.LVL81:
+ 549 0134 6200     		lsl	r2, r4, #1
+ 550 0136 1D4B     		ldr	r3, .L37+4
+ 551 0138 D052     		strh	r0, [r2, r3]
+ 445:..\source/motor.c ****         {
+ 552              		.loc 1 445 0 discriminator 3
+ 553 013a 0134     		add	r4, r4, #1
+ 554              	.LVL82:
+ 555              	.L30:
+ 445:..\source/motor.c ****         {
+ 556              		.loc 1 445 0 is_stmt 0 discriminator 1
+ 557 013c BC42     		cmp	r4, r7
+ 558 013e ECDB     		blt	.L31
+ 559              	.LBE3:
+ 397:..\source/motor.c ****     {
+ 560              		.loc 1 397 0 is_stmt 1 discriminator 2
+ 561 0140 0123     		mov	r3, #1
+ 562 0142 5B42     		neg	r3, r3
+ 563 0144 9C46     		mov	ip, r3
+ 564 0146 E044     		add	r8, r8, ip
+ 565              	.LVL83:
+ 566              	.L29:
+ 397:..\source/motor.c ****     {
+ 567              		.loc 1 397 0 is_stmt 0 discriminator 1
+ 568 0148 4346     		mov	r3, r8
+ 569 014a 012B     		cmp	r3, #1
+ 570 014c C4DC     		bgt	.L32
+ 571              	.LVL84:
+ 572 014e 0025     		mov	r5, #0
+ 573 0150 21E0     		b	.L33
+ 574              	.LVL85:
+ 575              	.L36:
+ 450:..\source/motor.c ****         }
+ 451:..\source/motor.c ****     }
+ 452:..\source/motor.c ****     
+ 453:..\source/motor.c ****     /* The following code tests that each entry selects a pwm value and results in a matching count
+ 454:..\source/motor.c ****      */
+ 455:..\source/motor.c ****     
+ 456:..\source/motor.c ****     for (ii = MIN_CPS_ENTRY; ii <= MAX_CPS_ENTRY; ++ii)
+ 457:..\source/motor.c ****     {
+ 458:..\source/motor.c ****         meas_cps = 0;
+ 576              		.loc 1 458 0 is_stmt 1
+ 577 0152 0021     		mov	r1, #0
+ 578 0154 4823     		mov	r3, #72
+ 579 0156 164A     		ldr	r2, .L37+8
+ 580 0158 D152     		strh	r1, [r2, r3]
+ 459:..\source/motor.c ****         HB25_PWM_WriteCompare(map_cps_to_pwm[ii]);
+ 581              		.loc 1 459 0
+ 582 015a 6B00     		lsl	r3, r5, #1
+ 583 015c 134A     		ldr	r2, .L37+4
+ 584 015e 985A     		ldrh	r0, [r3, r2]
+ 585 0160 FFF7FEFF 		bl	HB25_PWM_WriteCompare
+ 586              	.LVL86:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 20
 
 
- 739 0019 00000000 		.4byte	0
- 740 001d 00000000 		.4byte	0
- 741              	.LLST1:
- 742 0021 3C000000 		.4byte	.LVL8
- 743 0025 3F000000 		.4byte	.LVL9-1
- 744 0029 0100     		.2byte	0x1
- 745 002b 50       		.byte	0x50
- 746 002c 00000000 		.4byte	0
- 747 0030 00000000 		.4byte	0
- 748              	.LLST2:
- 749 0034 12000000 		.4byte	.LVL6
- 750 0038 14000000 		.4byte	.LVL7
- 751 003c 0100     		.2byte	0x1
- 752 003e 50       		.byte	0x50
- 753 003f 00000000 		.4byte	0
- 754 0043 00000000 		.4byte	0
- 755              		.section	.debug_aranges,"",%progbits
- 756 0000 3C000000 		.4byte	0x3c
- 757 0004 0200     		.2byte	0x2
- 758 0006 00000000 		.4byte	.Ldebug_info0
- 759 000a 04       		.byte	0x4
- 760 000b 00       		.byte	0
- 761 000c 0000     		.2byte	0
- 762 000e 0000     		.2byte	0
- 763 0010 00000000 		.4byte	.LFB34
- 764 0014 0A000000 		.4byte	.LFE34-.LFB34
- 765 0018 00000000 		.4byte	.LFB35
- 766 001c 0E000000 		.4byte	.LFE35-.LFB35
- 767 0020 00000000 		.4byte	.LFB36
- 768 0024 58000000 		.4byte	.LFE36-.LFB36
- 769 0028 00000000 		.4byte	.LFB37
- 770 002c 0E000000 		.4byte	.LFE37-.LFB37
- 771 0030 00000000 		.4byte	.LFB38
- 772 0034 02000000 		.4byte	.LFE38-.LFB38
- 773 0038 00000000 		.4byte	0
- 774 003c 00000000 		.4byte	0
- 775              		.section	.debug_ranges,"",%progbits
- 776              	.Ldebug_ranges0:
- 777 0000 00000000 		.4byte	.LFB34
- 778 0004 0A000000 		.4byte	.LFE34
- 779 0008 00000000 		.4byte	.LFB35
- 780 000c 0E000000 		.4byte	.LFE35
- 781 0010 00000000 		.4byte	.LFB36
- 782 0014 58000000 		.4byte	.LFE36
- 783 0018 00000000 		.4byte	.LFB37
- 784 001c 0E000000 		.4byte	.LFE37
- 785 0020 00000000 		.4byte	.LFB38
- 786 0024 02000000 		.4byte	.LFE38
- 787 0028 00000000 		.4byte	0
- 788 002c 00000000 		.4byte	0
- 789              		.section	.debug_line,"",%progbits
- 790              	.Ldebug_line0:
- 791 0000 ED000000 		.section	.debug_str,"MS",%progbits,1
- 791      02007A00 
- 791      00000201 
- 791      FB0E0D00 
- 791      01010101 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 17
+ 460:..\source/motor.c ****         CyDelay(PWM_SETTLE_TIME);
+ 587              		.loc 1 460 0
+ 588 0164 C820     		mov	r0, #200
+ 589 0166 FFF7FEFF 		bl	CyDelay
+ 590              	.LVL87:
+ 461:..\source/motor.c ****         for (jj = 0; jj < 5; ++jj)
+ 591              		.loc 1 461 0
+ 592 016a 0024     		mov	r4, #0
+ 593 016c 09E0     		b	.L34
+ 594              	.LVL88:
+ 595              	.L35:
+ 462:..\source/motor.c ****         {
+ 463:..\source/motor.c ****             meas_cps += CalculateAverageCountPerSec(500);
+ 596              		.loc 1 463 0 discriminator 3
+ 597 016e FA20     		mov	r0, #250
+ 598 0170 4000     		lsl	r0, r0, #1
+ 599 0172 FFF7FEFF 		bl	CalculateAverageCountPerSec
+ 600              	.LVL89:
+ 601 0176 0E49     		ldr	r1, .L37+8
+ 602 0178 4822     		mov	r2, #72
+ 603 017a 8B5A     		ldrh	r3, [r1, r2]
+ 604 017c C018     		add	r0, r0, r3
+ 605 017e 8852     		strh	r0, [r1, r2]
+ 461:..\source/motor.c ****         for (jj = 0; jj < 5; ++jj)
+ 606              		.loc 1 461 0 discriminator 3
+ 607 0180 0134     		add	r4, r4, #1
+ 608              	.LVL90:
+ 609              	.L34:
+ 461:..\source/motor.c ****         for (jj = 0; jj < 5; ++jj)
+ 610              		.loc 1 461 0 is_stmt 0 discriminator 1
+ 611 0182 042C     		cmp	r4, #4
+ 612 0184 F3DD     		ble	.L35
+ 464:..\source/motor.c ****         }
+ 465:..\source/motor.c ****         meas_cps /= 5;
+ 613              		.loc 1 465 0 is_stmt 1 discriminator 2
+ 614 0186 0A4E     		ldr	r6, .L37+8
+ 615 0188 4824     		mov	r4, #72
+ 616              	.LVL91:
+ 617 018a 305F     		ldrsh	r0, [r6, r4]
+ 618 018c 0521     		mov	r1, #5
+ 619 018e FFF7FEFF 		bl	__aeabi_idiv
+ 620              	.LVL92:
+ 621 0192 3053     		strh	r0, [r6, r4]
+ 456:..\source/motor.c ****     {
+ 622              		.loc 1 456 0 discriminator 2
+ 623 0194 0135     		add	r5, r5, #1
+ 624              	.LVL93:
+ 625              	.L33:
+ 456:..\source/motor.c ****     {
+ 626              		.loc 1 456 0 is_stmt 0 discriminator 1
+ 627 0196 C72D     		cmp	r5, #199
+ 628 0198 DBDD     		ble	.L36
+ 466:..\source/motor.c ****     }
+ 467:..\source/motor.c ****     
+ 468:..\source/motor.c ****     HB25_PWM_WriteCompare(PWM_STOP);      
+ 629              		.loc 1 468 0 is_stmt 1
+ 630 019a 0348     		ldr	r0, .L37
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 21
 
 
- 792              	.LASF29:
- 793 0000 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
- 793      726F6A65 
- 793      6374735C 
- 793      41726C6F 
- 793      426F745C 
- 794 002e 61726431 		.ascii	"ard1-RPi.cydsn\000"
- 794      2D525069 
- 794      2E637964 
- 794      736E00
- 795              	.LASF22:
- 796 003d 4D6F746F 		.ascii	"Motor_Stop\000"
- 796      725F5374 
- 796      6F7000
- 797              	.LASF31:
- 798 0048 76616C75 		.ascii	"value\000"
- 798      6500
- 799              	.LASF21:
- 800 004e 7363616C 		.ascii	"scaled_value\000"
- 800      65645F76 
- 800      616C7565 
- 800      00
- 801              	.LASF3:
- 802 005b 73686F72 		.ascii	"short unsigned int\000"
- 802      7420756E 
- 802      7369676E 
- 802      65642069 
- 802      6E7400
- 803              	.LASF15:
- 804 006e 646F7562 		.ascii	"double\000"
- 804      6C6500
- 805              	.LASF32:
- 806 0075 4D6F746F 		.ascii	"Motor_Test\000"
- 806      725F5465 
- 806      737400
- 807              	.LASF14:
- 808 0080 666C6F61 		.ascii	"float\000"
- 808      7400
- 809              	.LASF1:
- 810 0086 756E7369 		.ascii	"unsigned char\000"
- 810      676E6564 
- 810      20636861 
- 810      7200
- 811              	.LASF12:
- 812 0094 696E7431 		.ascii	"int16\000"
- 812      3600
- 813              	.LASF5:
- 814 009a 6C6F6E67 		.ascii	"long unsigned int\000"
- 814      20756E73 
- 814      69676E65 
- 814      6420696E 
- 814      7400
- 815              	.LASF13:
- 816 00ac 696E7433 		.ascii	"int32\000"
- 816      3200
- 817              	.LASF30:
- 818 00b2 4D6F746F 		.ascii	"Motor_SetOutput\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 18
+ 631 019c FFF7FEFF 		bl	HB25_PWM_WriteCompare
+ 632              	.LVL94:
+ 469:..\source/motor.c **** }
+ 633              		.loc 1 469 0
+ 634 01a0 02B0     		add	sp, sp, #8
+ 635              		@ sp needed
+ 636              	.LVL95:
+ 637 01a2 04BC     		pop	{r2}
+ 638 01a4 9046     		mov	r8, r2
+ 639 01a6 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 640              	.L38:
+ 641              		.align	2
+ 642              	.L37:
+ 643 01a8 DC050000 		.word	1500
+ 644 01ac 00000000 		.word	.LANCHOR1
+ 645 01b0 80000000 		.word	.LANCHOR2
+ 646 01b4 00000000 		.word	.LANCHOR0
+ 647              		.cfi_endproc
+ 648              	.LFE42:
+ 649              		.size	Motor_Calibrate, .-Motor_Calibrate
+ 650              		.section	.text.Motor_GetCalValues,"ax",%progbits
+ 651              		.align	2
+ 652              		.global	Motor_GetCalValues
+ 653              		.code	16
+ 654              		.thumb_func
+ 655              		.type	Motor_GetCalValues, %function
+ 656              	Motor_GetCalValues:
+ 657              	.LFB43:
+ 470:..\source/motor.c **** 
+ 471:..\source/motor.c **** void Motor_GetCalValues(int16** cal_values, uint16* num_entries)
+ 472:..\source/motor.c **** {
+ 658              		.loc 1 472 0
+ 659              		.cfi_startproc
+ 660              	.LVL96:
+ 473:..\source/motor.c ****     *cal_values = (int16 *) map_cps_to_pwm;
+ 661              		.loc 1 473 0
+ 662 0000 024B     		ldr	r3, .L40
+ 663 0002 0360     		str	r3, [r0]
+ 474:..\source/motor.c ****     *num_entries = 150;
+ 664              		.loc 1 474 0
+ 665 0004 9623     		mov	r3, #150
+ 666 0006 0B80     		strh	r3, [r1]
+ 475:..\source/motor.c **** }
+ 667              		.loc 1 475 0
+ 668              		@ sp needed
+ 669 0008 7047     		bx	lr
+ 670              	.L41:
+ 671 000a C046     		.align	2
+ 672              	.L40:
+ 673 000c 00000000 		.word	.LANCHOR1
+ 674              		.cfi_endproc
+ 675              	.LFE43:
+ 676              		.size	Motor_GetCalValues, .-Motor_GetCalValues
+ 677              		.comm	formatted_string,256,4
+ 678              		.data
+ 679              		.align	2
+ 680              		.set	.LANCHOR1,. + 0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 22
 
 
- 818      725F5365 
- 818      744F7574 
- 818      70757400 
- 819              	.LASF24:
- 820 00c2 48423235 		.ascii	"HB25_PWM_WriteCompare\000"
- 820      5F50574D 
- 820      5F577269 
- 820      7465436F 
- 820      6D706172 
- 821              	.LASF10:
- 822 00d8 75696E74 		.ascii	"uint16\000"
- 822      313600
- 823              	.LASF11:
- 824 00df 75696E74 		.ascii	"uint32\000"
- 824      333200
- 825              	.LASF8:
- 826 00e6 756E7369 		.ascii	"unsigned int\000"
- 826      676E6564 
- 826      20696E74 
- 826      00
- 827              	.LASF23:
- 828 00f3 48423235 		.ascii	"HB25_Enable_Pin_Write\000"
- 828      5F456E61 
- 828      626C655F 
- 828      50696E5F 
- 828      57726974 
- 829              	.LASF7:
- 830 0109 6C6F6E67 		.ascii	"long long unsigned int\000"
- 830      206C6F6E 
- 830      6720756E 
- 830      7369676E 
- 830      65642069 
- 831              	.LASF19:
- 832 0120 4D6F746F 		.ascii	"Motor_Start\000"
- 832      725F5374 
- 832      61727400 
- 833              	.LASF28:
- 834 012c 2E2E5C73 		.ascii	"..\\source\\motor.c\000"
- 834      6F757263 
- 834      655C6D6F 
- 834      746F722E 
- 834      6300
- 835              	.LASF17:
- 836 013e 73697A65 		.ascii	"sizetype\000"
- 836      74797065 
- 836      00
- 837              	.LASF27:
- 838 0147 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 838      4320342E 
- 838      392E3320 
- 838      32303135 
- 838      30333033 
- 839 017a 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 839      20726576 
- 839      6973696F 
- 839      6E203232 
- 839      31323230 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccHxVpul.s 			page 19
+ 681              		.type	map_cps_to_pwm, %object
+ 682              		.size	map_cps_to_pwm, 400
+ 683              	map_cps_to_pwm:
+ 684 0000 DC05     		.short	1500
+ 685 0002 E105     		.short	1505
+ 686 0004 E605     		.short	1510
+ 687 0006 EB05     		.short	1515
+ 688 0008 F005     		.short	1520
+ 689 000a F505     		.short	1525
+ 690 000c FA05     		.short	1530
+ 691 000e FB05     		.short	1531
+ 692 0010 FC05     		.short	1532
+ 693 0012 FD05     		.short	1533
+ 694 0014 FE05     		.short	1534
+ 695 0016 FF05     		.short	1535
+ 696 0018 0006     		.short	1536
+ 697 001a 0406     		.short	1540
+ 698 001c 0606     		.short	1542
+ 699 001e 0806     		.short	1544
+ 700 0020 0A06     		.short	1546
+ 701 0022 0C06     		.short	1548
+ 702 0024 0E06     		.short	1550
+ 703 0026 0E06     		.short	1550
+ 704 0028 1006     		.short	1552
+ 705 002a 1206     		.short	1554
+ 706 002c 1406     		.short	1556
+ 707 002e 1606     		.short	1558
+ 708 0030 1806     		.short	1560
+ 709 0032 1806     		.short	1560
+ 710 0034 1906     		.short	1561
+ 711 0036 1A06     		.short	1562
+ 712 0038 1B06     		.short	1563
+ 713 003a 1C06     		.short	1564
+ 714 003c 1D06     		.short	1565
+ 715 003e 1E06     		.short	1566
+ 716 0040 2206     		.short	1570
+ 717 0042 2506     		.short	1573
+ 718 0044 2806     		.short	1576
+ 719 0046 2B06     		.short	1579
+ 720 0048 2C06     		.short	1580
+ 721 004a 2D06     		.short	1581
+ 722 004c 2E06     		.short	1582
+ 723 004e 2F06     		.short	1583
+ 724 0050 3006     		.short	1584
+ 725 0052 3106     		.short	1585
+ 726 0054 3206     		.short	1586
+ 727 0056 3606     		.short	1590
+ 728 0058 3806     		.short	1592
+ 729 005a 3A06     		.short	1594
+ 730 005c 3C06     		.short	1596
+ 731 005e 3E06     		.short	1598
+ 732 0060 4006     		.short	1600
+ 733 0062 4006     		.short	1600
+ 734 0064 4306     		.short	1603
+ 735 0066 4606     		.short	1606
+ 736 0068 4906     		.short	1609
+ 737 006a 4A06     		.short	1610
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 23
 
 
- 840 01ad 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 840      66756E63 
- 840      74696F6E 
- 840      2D736563 
- 840      74696F6E 
- 841              	.LASF6:
- 842 01d5 6C6F6E67 		.ascii	"long long int\000"
- 842      206C6F6E 
- 842      6720696E 
- 842      7400
- 843              	.LASF16:
- 844 01e3 63686172 		.ascii	"char\000"
- 844      00
- 845              	.LASF18:
- 846 01e8 4D6F746F 		.ascii	"Motor_Init\000"
- 846      725F496E 
- 846      697400
- 847              	.LASF25:
- 848 01f3 48423235 		.ascii	"HB25_PWM_Start\000"
- 848      5F50574D 
- 848      5F537461 
- 848      727400
- 849              	.LASF2:
- 850 0202 73686F72 		.ascii	"short int\000"
- 850      7420696E 
- 850      7400
- 851              	.LASF9:
- 852 020c 75696E74 		.ascii	"uint8\000"
- 852      3800
- 853              	.LASF4:
- 854 0212 6C6F6E67 		.ascii	"long int\000"
- 854      20696E74 
- 854      00
- 855              	.LASF20:
- 856 021b 70776D5F 		.ascii	"pwm_compare\000"
- 856      636F6D70 
- 856      61726500 
- 857              	.LASF0:
- 858 0227 7369676E 		.ascii	"signed char\000"
- 858      65642063 
- 858      68617200 
- 859              	.LASF26:
- 860 0233 48423235 		.ascii	"HB25_PWM_Stop\000"
- 860      5F50574D 
- 860      5F53746F 
- 860      7000
- 861              	.LASF33:
- 862 0241 666F726D 		.ascii	"formatted_string\000"
- 862      61747465 
- 862      645F7374 
- 862      72696E67 
- 862      00
- 863              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 738 006c 4B06     		.short	1611
+ 739 006e 4C06     		.short	1612
+ 740 0070 4D06     		.short	1613
+ 741 0072 4E06     		.short	1614
+ 742 0074 4F06     		.short	1615
+ 743 0076 5006     		.short	1616
+ 744 0078 5406     		.short	1620
+ 745 007a 5706     		.short	1623
+ 746 007c 5A06     		.short	1626
+ 747 007e 5D06     		.short	1629
+ 748 0080 5E06     		.short	1630
+ 749 0082 6006     		.short	1632
+ 750 0084 6206     		.short	1634
+ 751 0086 6406     		.short	1636
+ 752 0088 6606     		.short	1638
+ 753 008a 6806     		.short	1640
+ 754 008c 6A06     		.short	1642
+ 755 008e 6C06     		.short	1644
+ 756 0090 6E06     		.short	1646
+ 757 0092 7006     		.short	1648
+ 758 0094 7206     		.short	1650
+ 759 0096 7306     		.short	1651
+ 760 0098 7406     		.short	1652
+ 761 009a 7506     		.short	1653
+ 762 009c 7606     		.short	1654
+ 763 009e 7706     		.short	1655
+ 764 00a0 7806     		.short	1656
+ 765 00a2 7906     		.short	1657
+ 766 00a4 7C06     		.short	1660
+ 767 00a6 7F06     		.short	1663
+ 768 00a8 8206     		.short	1666
+ 769 00aa 8606     		.short	1670
+ 770 00ac 8706     		.short	1671
+ 771 00ae 8806     		.short	1672
+ 772 00b0 8906     		.short	1673
+ 773 00b2 8A06     		.short	1674
+ 774 00b4 8B06     		.short	1675
+ 775 00b6 8C06     		.short	1676
+ 776 00b8 8D06     		.short	1677
+ 777 00ba 9006     		.short	1680
+ 778 00bc 9206     		.short	1682
+ 779 00be 9406     		.short	1684
+ 780 00c0 9606     		.short	1686
+ 781 00c2 9806     		.short	1688
+ 782 00c4 9A06     		.short	1690
+ 783 00c6 9C06     		.short	1692
+ 784 00c8 9E06     		.short	1694
+ 785 00ca A006     		.short	1696
+ 786 00cc A206     		.short	1698
+ 787 00ce A406     		.short	1700
+ 788 00d0 A406     		.short	1700
+ 789 00d2 A606     		.short	1702
+ 790 00d4 A806     		.short	1704
+ 791 00d6 AA06     		.short	1706
+ 792 00d8 AC06     		.short	1708
+ 793 00da AE06     		.short	1710
+ 794 00dc B006     		.short	1712
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 24
+
+
+ 795 00de B206     		.short	1714
+ 796 00e0 B406     		.short	1716
+ 797 00e2 B606     		.short	1718
+ 798 00e4 B806     		.short	1720
+ 799 00e6 BB06     		.short	1723
+ 800 00e8 BE06     		.short	1726
+ 801 00ea C106     		.short	1729
+ 802 00ec C406     		.short	1732
+ 803 00ee C706     		.short	1735
+ 804 00f0 C806     		.short	1736
+ 805 00f2 C906     		.short	1737
+ 806 00f4 CA06     		.short	1738
+ 807 00f6 CB06     		.short	1739
+ 808 00f8 CC06     		.short	1740
+ 809 00fa CD06     		.short	1741
+ 810 00fc CE06     		.short	1742
+ 811 00fe CF06     		.short	1743
+ 812 0100 D006     		.short	1744
+ 813 0102 D106     		.short	1745
+ 814 0104 D606     		.short	1750
+ 815 0106 D706     		.short	1751
+ 816 0108 D806     		.short	1752
+ 817 010a D906     		.short	1753
+ 818 010c DA06     		.short	1754
+ 819 010e DB06     		.short	1755
+ 820 0110 DC06     		.short	1756
+ 821 0112 E006     		.short	1760
+ 822 0114 E306     		.short	1763
+ 823 0116 E606     		.short	1766
+ 824 0118 E906     		.short	1769
+ 825 011a EA06     		.short	1770
+ 826 011c EB06     		.short	1771
+ 827 011e EC06     		.short	1772
+ 828 0120 ED06     		.short	1773
+ 829 0122 EE06     		.short	1774
+ 830 0124 EF06     		.short	1775
+ 831 0126 F006     		.short	1776
+ 832 0128 F106     		.short	1777
+ 833 012a F406     		.short	1780
+ 834 012c DC05     		.short	1500
+ 835 012e DC05     		.short	1500
+ 836 0130 DC05     		.short	1500
+ 837 0132 DC05     		.short	1500
+ 838 0134 DC05     		.short	1500
+ 839 0136 DC05     		.short	1500
+ 840 0138 DC05     		.short	1500
+ 841 013a DC05     		.short	1500
+ 842 013c DC05     		.short	1500
+ 843 013e DC05     		.short	1500
+ 844 0140 DC05     		.short	1500
+ 845 0142 DC05     		.short	1500
+ 846 0144 DC05     		.short	1500
+ 847 0146 DC05     		.short	1500
+ 848 0148 DC05     		.short	1500
+ 849 014a DC05     		.short	1500
+ 850 014c DC05     		.short	1500
+ 851 014e DC05     		.short	1500
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 25
+
+
+ 852 0150 DC05     		.short	1500
+ 853 0152 DC05     		.short	1500
+ 854 0154 DC05     		.short	1500
+ 855 0156 DC05     		.short	1500
+ 856 0158 DC05     		.short	1500
+ 857 015a DC05     		.short	1500
+ 858 015c DC05     		.short	1500
+ 859 015e DC05     		.short	1500
+ 860 0160 DC05     		.short	1500
+ 861 0162 DC05     		.short	1500
+ 862 0164 DC05     		.short	1500
+ 863 0166 DC05     		.short	1500
+ 864 0168 DC05     		.short	1500
+ 865 016a DC05     		.short	1500
+ 866 016c DC05     		.short	1500
+ 867 016e DC05     		.short	1500
+ 868 0170 DC05     		.short	1500
+ 869 0172 DC05     		.short	1500
+ 870 0174 DC05     		.short	1500
+ 871 0176 DC05     		.short	1500
+ 872 0178 DC05     		.short	1500
+ 873 017a DC05     		.short	1500
+ 874 017c DC05     		.short	1500
+ 875 017e DC05     		.short	1500
+ 876 0180 DC05     		.short	1500
+ 877 0182 DC05     		.short	1500
+ 878 0184 DC05     		.short	1500
+ 879 0186 DC05     		.short	1500
+ 880 0188 DC05     		.short	1500
+ 881 018a DC05     		.short	1500
+ 882 018c DC05     		.short	1500
+ 883 018e DC05     		.short	1500
+ 884              		.bss
+ 885              		.align	2
+ 886              		.set	.LANCHOR0,. + 0
+ 887              		.set	.LANCHOR2,. + 128
+ 888              		.type	cal_cps_to_pwm, %object
+ 889              		.size	cal_cps_to_pwm, 200
+ 890              	cal_cps_to_pwm:
+ 891 0000 00000000 		.space	200
+ 891      00000000 
+ 891      00000000 
+ 891      00000000 
+ 891      00000000 
+ 892              		.type	meas_cps.7789, %object
+ 893              		.size	meas_cps.7789, 2
+ 894              	meas_cps.7789:
+ 895 00c8 0000     		.space	2
+ 896 00ca 0000     		.text
+ 897              	.Letext0:
+ 898              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 899              		.file 3 "Generated_Source\\PSoC4/CyLib.h"
+ 900              		.file 4 "Generated_Source\\PSoC4/HB25_Enable_Pin.h"
+ 901              		.file 5 "Generated_Source\\PSoC4/HB25_PWM.h"
+ 902              		.file 6 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 903              		.file 7 "..\\source\\debug.h"
+ 904              		.file 8 "Generated_Source\\PSoC4/Phase_Counter.h"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 26
+
+
+ 905              		.section	.debug_info,"",%progbits
+ 906              	.Ldebug_info0:
+ 907 0000 91050000 		.4byte	0x591
+ 908 0004 0400     		.2byte	0x4
+ 909 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 910 000a 04       		.byte	0x4
+ 911 000b 01       		.uleb128 0x1
+ 912 000c 06020000 		.4byte	.LASF50
+ 913 0010 01       		.byte	0x1
+ 914 0011 98000000 		.4byte	.LASF51
+ 915 0015 1A000000 		.4byte	.LASF52
+ 916 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 917 001d 00000000 		.4byte	0
+ 918 0021 00000000 		.4byte	.Ldebug_line0
+ 919 0025 02       		.uleb128 0x2
+ 920 0026 01       		.byte	0x1
+ 921 0027 06       		.byte	0x6
+ 922 0028 DD000000 		.4byte	.LASF0
+ 923 002c 02       		.uleb128 0x2
+ 924 002d 01       		.byte	0x1
+ 925 002e 08       		.byte	0x8
+ 926 002f 8D010000 		.4byte	.LASF1
+ 927 0033 02       		.uleb128 0x2
+ 928 0034 02       		.byte	0x2
+ 929 0035 05       		.byte	0x5
+ 930 0036 C1020000 		.4byte	.LASF2
+ 931 003a 02       		.uleb128 0x2
+ 932 003b 02       		.byte	0x2
+ 933 003c 07       		.byte	0x7
+ 934 003d 85000000 		.4byte	.LASF3
+ 935 0041 02       		.uleb128 0x2
+ 936 0042 04       		.byte	0x4
+ 937 0043 05       		.byte	0x5
+ 938 0044 DC020000 		.4byte	.LASF4
+ 939 0048 02       		.uleb128 0x2
+ 940 0049 04       		.byte	0x4
+ 941 004a 07       		.byte	0x7
+ 942 004b 16010000 		.4byte	.LASF5
+ 943 004f 02       		.uleb128 0x2
+ 944 0050 08       		.byte	0x8
+ 945 0051 05       		.byte	0x5
+ 946 0052 94020000 		.4byte	.LASF6
+ 947 0056 02       		.uleb128 0x2
+ 948 0057 08       		.byte	0x8
+ 949 0058 07       		.byte	0x7
+ 950 0059 C4010000 		.4byte	.LASF7
+ 951 005d 03       		.uleb128 0x3
+ 952 005e 04       		.byte	0x4
+ 953 005f 05       		.byte	0x5
+ 954 0060 696E7400 		.ascii	"int\000"
+ 955 0064 02       		.uleb128 0x2
+ 956 0065 04       		.byte	0x4
+ 957 0066 07       		.byte	0x7
+ 958 0067 9B010000 		.4byte	.LASF8
+ 959 006b 04       		.uleb128 0x4
+ 960 006c CB020000 		.4byte	.LASF9
+ 961 0070 02       		.byte	0x2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 27
+
+
+ 962 0071 3801     		.2byte	0x138
+ 963 0073 2C000000 		.4byte	0x2c
+ 964 0077 04       		.uleb128 0x4
+ 965 0078 69010000 		.4byte	.LASF10
+ 966 007c 02       		.byte	0x2
+ 967 007d 3901     		.2byte	0x139
+ 968 007f 3A000000 		.4byte	0x3a
+ 969 0083 04       		.uleb128 0x4
+ 970 0084 76010000 		.4byte	.LASF11
+ 971 0088 02       		.byte	0x2
+ 972 0089 3A01     		.2byte	0x13a
+ 973 008b 48000000 		.4byte	0x48
+ 974 008f 04       		.uleb128 0x4
+ 975 0090 10010000 		.4byte	.LASF12
+ 976 0094 02       		.byte	0x2
+ 977 0095 3C01     		.2byte	0x13c
+ 978 0097 33000000 		.4byte	0x33
+ 979 009b 04       		.uleb128 0x4
+ 980 009c 28010000 		.4byte	.LASF13
+ 981 00a0 02       		.byte	0x2
+ 982 00a1 3D01     		.2byte	0x13d
+ 983 00a3 41000000 		.4byte	0x41
+ 984 00a7 02       		.uleb128 0x2
+ 985 00a8 04       		.byte	0x4
+ 986 00a9 04       		.byte	0x4
+ 987 00aa D7000000 		.4byte	.LASF14
+ 988 00ae 02       		.uleb128 0x2
+ 989 00af 08       		.byte	0x8
+ 990 00b0 04       		.byte	0x4
+ 991 00b1 AA000000 		.4byte	.LASF15
+ 992 00b5 02       		.uleb128 0x2
+ 993 00b6 01       		.byte	0x1
+ 994 00b7 08       		.byte	0x8
+ 995 00b8 A2020000 		.4byte	.LASF16
+ 996 00bc 02       		.uleb128 0x2
+ 997 00bd 04       		.byte	0x4
+ 998 00be 07       		.byte	0x7
+ 999 00bf FD010000 		.4byte	.LASF17
+ 1000 00c3 02       		.uleb128 0x2
+ 1001 00c4 08       		.byte	0x8
+ 1002 00c5 04       		.byte	0x4
+ 1003 00c6 E5020000 		.4byte	.LASF18
+ 1004 00ca 05       		.uleb128 0x5
+ 1005 00cb 04       		.byte	0x4
+ 1006 00cc 01       		.byte	0x1
+ 1007 00cd 7F       		.byte	0x7f
+ 1008 00ce EB000000 		.4byte	0xeb
+ 1009 00d2 06       		.uleb128 0x6
+ 1010 00d3 63707300 		.ascii	"cps\000"
+ 1011 00d7 01       		.byte	0x1
+ 1012 00d8 81       		.byte	0x81
+ 1013 00d9 8F000000 		.4byte	0x8f
+ 1014 00dd 00       		.byte	0
+ 1015 00de 06       		.uleb128 0x6
+ 1016 00df 70776D00 		.ascii	"pwm\000"
+ 1017 00e3 01       		.byte	0x1
+ 1018 00e4 82       		.byte	0x82
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 28
+
+
+ 1019 00e5 77000000 		.4byte	0x77
+ 1020 00e9 02       		.byte	0x2
+ 1021 00ea 00       		.byte	0
+ 1022 00eb 07       		.uleb128 0x7
+ 1023 00ec 2E010000 		.4byte	.LASF19
+ 1024 00f0 01       		.byte	0x1
+ 1025 00f1 83       		.byte	0x83
+ 1026 00f2 CA000000 		.4byte	0xca
+ 1027 00f6 08       		.uleb128 0x8
+ 1028 00f7 F4000000 		.4byte	.LASF53
+ 1029 00fb 01       		.byte	0x1
+ 1030 00fc 0401     		.2byte	0x104
+ 1031 00fe 8F000000 		.4byte	0x8f
+ 1032 0102 00000000 		.4byte	.LFB41
+ 1033 0106 26000000 		.4byte	.LFE41-.LFB41
+ 1034 010a 01       		.uleb128 0x1
+ 1035 010b 9C       		.byte	0x9c
+ 1036 010c 77010000 		.4byte	0x177
+ 1037 0110 09       		.uleb128 0x9
+ 1038 0111 E9000000 		.4byte	.LASF23
+ 1039 0115 01       		.byte	0x1
+ 1040 0116 0401     		.2byte	0x104
+ 1041 0118 77000000 		.4byte	0x77
+ 1042 011c 00000000 		.4byte	.LLST0
+ 1043 0120 0A       		.uleb128 0xa
+ 1044 0121 35030000 		.4byte	.LASF20
+ 1045 0125 01       		.byte	0x1
+ 1046 0126 0601     		.2byte	0x106
+ 1047 0128 9B000000 		.4byte	0x9b
+ 1048 012c 21000000 		.4byte	.LLST1
+ 1049 0130 0A       		.uleb128 0xa
+ 1050 0131 49010000 		.4byte	.LASF21
+ 1051 0135 01       		.byte	0x1
+ 1052 0136 0701     		.2byte	0x107
+ 1053 0138 9B000000 		.4byte	0x9b
+ 1054 013c 3F000000 		.4byte	.LLST2
+ 1055 0140 0A       		.uleb128 0xa
+ 1056 0141 BE010000 		.4byte	.LASF22
+ 1057 0145 01       		.byte	0x1
+ 1058 0146 0801     		.2byte	0x108
+ 1059 0148 9B000000 		.4byte	0x9b
+ 1060 014c 52000000 		.4byte	.LLST3
+ 1061 0150 0B       		.uleb128 0xb
+ 1062 0151 08000000 		.4byte	.LVL1
+ 1063 0155 33050000 		.4byte	0x533
+ 1064 0159 0C       		.uleb128 0xc
+ 1065 015a 10000000 		.4byte	.LVL4
+ 1066 015e 3E050000 		.4byte	0x53e
+ 1067 0162 6D010000 		.4byte	0x16d
+ 1068 0166 0D       		.uleb128 0xd
+ 1069 0167 01       		.uleb128 0x1
+ 1070 0168 50       		.byte	0x50
+ 1071 0169 02       		.uleb128 0x2
+ 1072 016a 74       		.byte	0x74
+ 1073 016b 00       		.sleb128 0
+ 1074 016c 00       		.byte	0
+ 1075 016d 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 29
+
+
+ 1076 016e 14000000 		.4byte	.LVL5
+ 1077 0172 33050000 		.4byte	0x533
+ 1078 0176 00       		.byte	0
+ 1079 0177 0E       		.uleb128 0xe
+ 1080 0178 A7020000 		.4byte	.LASF25
+ 1081 017c 01       		.byte	0x1
+ 1082 017d C2       		.byte	0xc2
+ 1083 017e 00000000 		.4byte	.LFB36
+ 1084 0182 2C000000 		.4byte	.LFE36-.LFB36
+ 1085 0186 01       		.uleb128 0x1
+ 1086 0187 9C       		.byte	0x9c
+ 1087 0188 AA010000 		.4byte	0x1aa
+ 1088 018c 0F       		.uleb128 0xf
+ 1089 018d 696900   		.ascii	"ii\000"
+ 1090 0190 01       		.byte	0x1
+ 1091 0191 C4       		.byte	0xc4
+ 1092 0192 5D000000 		.4byte	0x5d
+ 1093 0196 65000000 		.4byte	.LLST4
+ 1094 019a 10       		.uleb128 0x10
+ 1095 019b 08000000 		.4byte	.LVL10
+ 1096 019f 4F050000 		.4byte	0x54f
+ 1097 01a3 0D       		.uleb128 0xd
+ 1098 01a4 01       		.uleb128 0x1
+ 1099 01a5 50       		.byte	0x50
+ 1100 01a6 01       		.uleb128 0x1
+ 1101 01a7 31       		.byte	0x31
+ 1102 01a8 00       		.byte	0
+ 1103 01a9 00       		.byte	0
+ 1104 01aa 11       		.uleb128 0x11
+ 1105 01ab 7D010000 		.4byte	.LASF38
+ 1106 01af 01       		.byte	0x1
+ 1107 01b0 DF       		.byte	0xdf
+ 1108 01b1 00000000 		.4byte	.LFB38
+ 1109 01b5 60000000 		.4byte	.LFE38-.LFB38
+ 1110 01b9 01       		.uleb128 0x1
+ 1111 01ba 9C       		.byte	0x9c
+ 1112 01bb 00020000 		.4byte	0x200
+ 1113 01bf 12       		.uleb128 0x12
+ 1114 01c0 7A000000 		.4byte	.LASF24
+ 1115 01c4 01       		.byte	0x1
+ 1116 01c5 DF       		.byte	0xdf
+ 1117 01c6 8F000000 		.4byte	0x8f
+ 1118 01ca 84000000 		.4byte	.LLST5
+ 1119 01ce 0F       		.uleb128 0xf
+ 1120 01cf 63707300 		.ascii	"cps\000"
+ 1121 01d3 01       		.byte	0x1
+ 1122 01d4 E3       		.byte	0xe3
+ 1123 01d5 8F000000 		.4byte	0x8f
+ 1124 01d9 A5000000 		.4byte	.LLST6
+ 1125 01dd 13       		.uleb128 0x13
+ 1126 01de 46000000 		.4byte	.LBB2
+ 1127 01e2 0C000000 		.4byte	.LBE2-.LBB2
+ 1128 01e6 0F       		.uleb128 0xf
+ 1129 01e7 70776D00 		.ascii	"pwm\000"
+ 1130 01eb 01       		.byte	0x1
+ 1131 01ec EF       		.byte	0xef
+ 1132 01ed 77000000 		.4byte	0x77
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 30
+
+
+ 1133 01f1 C3000000 		.4byte	.LLST7
+ 1134 01f5 0B       		.uleb128 0xb
+ 1135 01f6 52000000 		.4byte	.LVL25
+ 1136 01fa 60050000 		.4byte	0x560
+ 1137 01fe 00       		.byte	0
+ 1138 01ff 00       		.byte	0
+ 1139 0200 0E       		.uleb128 0xe
+ 1140 0201 E4010000 		.4byte	.LASF26
+ 1141 0205 01       		.byte	0x1
+ 1142 0206 D3       		.byte	0xd3
+ 1143 0207 00000000 		.4byte	.LFB37
+ 1144 020b 14000000 		.4byte	.LFE37-.LFB37
+ 1145 020f 01       		.uleb128 0x1
+ 1146 0210 9C       		.byte	0x9c
+ 1147 0211 41020000 		.4byte	0x241
+ 1148 0215 0C       		.uleb128 0xc
+ 1149 0216 08000000 		.4byte	.LVL26
+ 1150 021a 4F050000 		.4byte	0x54f
+ 1151 021e 28020000 		.4byte	0x228
+ 1152 0222 0D       		.uleb128 0xd
+ 1153 0223 01       		.uleb128 0x1
+ 1154 0224 50       		.byte	0x50
+ 1155 0225 01       		.uleb128 0x1
+ 1156 0226 30       		.byte	0x30
+ 1157 0227 00       		.byte	0
+ 1158 0228 0B       		.uleb128 0xb
+ 1159 0229 0C000000 		.4byte	.LVL27
+ 1160 022d 72050000 		.4byte	0x572
+ 1161 0231 10       		.uleb128 0x10
+ 1162 0232 12000000 		.4byte	.LVL28
+ 1163 0236 AA010000 		.4byte	0x1aa
+ 1164 023a 0D       		.uleb128 0xd
+ 1165 023b 01       		.uleb128 0x1
+ 1166 023c 50       		.byte	0x50
+ 1167 023d 01       		.uleb128 0x1
+ 1168 023e 30       		.byte	0x30
+ 1169 023f 00       		.byte	0
+ 1170 0240 00       		.byte	0
+ 1171 0241 0E       		.uleb128 0xe
+ 1172 0242 6F000000 		.4byte	.LASF27
+ 1173 0246 01       		.byte	0x1
+ 1174 0247 FA       		.byte	0xfa
+ 1175 0248 00000000 		.4byte	.LFB39
+ 1176 024c 0E000000 		.4byte	.LFE39-.LFB39
+ 1177 0250 01       		.uleb128 0x1
+ 1178 0251 9C       		.byte	0x9c
+ 1179 0252 6F020000 		.4byte	0x26f
+ 1180 0256 0B       		.uleb128 0xb
+ 1181 0257 06000000 		.4byte	.LVL29
+ 1182 025b 7A050000 		.4byte	0x57a
+ 1183 025f 10       		.uleb128 0x10
+ 1184 0260 0C000000 		.4byte	.LVL30
+ 1185 0264 4F050000 		.4byte	0x54f
+ 1186 0268 0D       		.uleb128 0xd
+ 1187 0269 01       		.uleb128 0x1
+ 1188 026a 50       		.byte	0x50
+ 1189 026b 01       		.uleb128 0x1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 31
+
+
+ 1190 026c 31       		.byte	0x31
+ 1191 026d 00       		.byte	0
+ 1192 026e 00       		.byte	0
+ 1193 026f 14       		.uleb128 0x14
+ 1194 0270 CC000000 		.4byte	.LASF54
+ 1195 0274 01       		.byte	0x1
+ 1196 0275 0001     		.2byte	0x100
+ 1197 0277 00000000 		.4byte	.LFB40
+ 1198 027b 02000000 		.4byte	.LFE40-.LFB40
+ 1199 027f 01       		.uleb128 0x1
+ 1200 0280 9C       		.byte	0x9c
+ 1201 0281 15       		.uleb128 0x15
+ 1202 0282 41030000 		.4byte	.LASF28
+ 1203 0286 01       		.byte	0x1
+ 1204 0287 1101     		.2byte	0x111
+ 1205 0289 00000000 		.4byte	.LFB42
+ 1206 028d B8010000 		.4byte	.LFE42-.LFB42
+ 1207 0291 01       		.uleb128 0x1
+ 1208 0292 9C       		.byte	0x9c
+ 1209 0293 8B040000 		.4byte	0x48b
+ 1210 0297 16       		.uleb128 0x16
+ 1211 0298 70776D00 		.ascii	"pwm\000"
+ 1212 029c 01       		.byte	0x1
+ 1213 029d 1F01     		.2byte	0x11f
+ 1214 029f 77000000 		.4byte	0x77
+ 1215 02a3 D6000000 		.4byte	.LLST8
+ 1216 02a7 17       		.uleb128 0x17
+ 1217 02a8 66000000 		.4byte	.LASF29
+ 1218 02ac 01       		.byte	0x1
+ 1219 02ad 2001     		.2byte	0x120
+ 1220 02af 8F000000 		.4byte	0x8f
+ 1221 02b3 05       		.uleb128 0x5
+ 1222 02b4 03       		.byte	0x3
+ 1223 02b5 C8000000 		.4byte	meas_cps.7789
+ 1224 02b9 16       		.uleb128 0x16
+ 1225 02ba 696900   		.ascii	"ii\000"
+ 1226 02bd 01       		.byte	0x1
+ 1227 02be 2101     		.2byte	0x121
+ 1228 02c0 5D000000 		.4byte	0x5d
+ 1229 02c4 02010000 		.4byte	.LLST9
+ 1230 02c8 16       		.uleb128 0x16
+ 1231 02c9 6A6A00   		.ascii	"jj\000"
+ 1232 02cc 01       		.byte	0x1
+ 1233 02cd 2201     		.2byte	0x122
+ 1234 02cf 5D000000 		.4byte	0x5d
+ 1235 02d3 6F010000 		.4byte	.LLST10
+ 1236 02d7 0A       		.uleb128 0xa
+ 1237 02d8 04030000 		.4byte	.LASF30
+ 1238 02dc 01       		.byte	0x1
+ 1239 02dd 2301     		.2byte	0x123
+ 1240 02df 5D000000 		.4byte	0x5d
+ 1241 02e3 99010000 		.4byte	.LLST11
+ 1242 02e7 0A       		.uleb128 0xa
+ 1243 02e8 35030000 		.4byte	.LASF20
+ 1244 02ec 01       		.byte	0x1
+ 1245 02ed 2401     		.2byte	0x124
+ 1246 02ef 9B000000 		.4byte	0x9b
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 32
+
+
+ 1247 02f3 CF010000 		.4byte	.LLST12
+ 1248 02f7 0A       		.uleb128 0xa
+ 1249 02f8 49010000 		.4byte	.LASF21
+ 1250 02fc 01       		.byte	0x1
+ 1251 02fd 2501     		.2byte	0x125
+ 1252 02ff 9B000000 		.4byte	0x9b
+ 1253 0303 ED010000 		.4byte	.LLST13
+ 1254 0307 0A       		.uleb128 0xa
+ 1255 0308 F6010000 		.4byte	.LASF31
+ 1256 030c 01       		.byte	0x1
+ 1257 030d 2601     		.2byte	0x126
+ 1258 030f 9B000000 		.4byte	0x9b
+ 1259 0313 00020000 		.4byte	.LLST14
+ 1260 0317 18       		.uleb128 0x18
+ 1261 0318 E9000000 		.4byte	.LASF23
+ 1262 031c 01       		.byte	0x1
+ 1263 031d 2701     		.2byte	0x127
+ 1264 031f 83000000 		.4byte	0x83
+ 1265 0323 64       		.byte	0x64
+ 1266 0324 19       		.uleb128 0x19
+ 1267 0325 D8000000 		.4byte	.LBB3
+ 1268 0329 68000000 		.4byte	.LBE3-.LBB3
+ 1269 032d BB030000 		.4byte	0x3bb
+ 1270 0331 0A       		.uleb128 0xa
+ 1271 0332 F0010000 		.4byte	.LASF32
+ 1272 0336 01       		.byte	0x1
+ 1273 0337 8F01     		.2byte	0x18f
+ 1274 0339 77000000 		.4byte	0x77
+ 1275 033d 2A020000 		.4byte	.LLST15
+ 1276 0341 0A       		.uleb128 0xa
+ 1277 0342 20030000 		.4byte	.LASF33
+ 1278 0346 01       		.byte	0x1
+ 1279 0347 9001     		.2byte	0x190
+ 1280 0349 77000000 		.4byte	0x77
+ 1281 034d 4A020000 		.4byte	.LLST16
+ 1282 0351 0A       		.uleb128 0xa
+ 1283 0352 DB010000 		.4byte	.LASF34
+ 1284 0356 01       		.byte	0x1
+ 1285 0357 9601     		.2byte	0x196
+ 1286 0359 5D000000 		.4byte	0x5d
+ 1287 035d 68020000 		.4byte	.LLST17
+ 1288 0361 0A       		.uleb128 0xa
+ 1289 0362 40010000 		.4byte	.LASF35
+ 1290 0366 01       		.byte	0x1
+ 1291 0367 9701     		.2byte	0x197
+ 1292 0369 5D000000 		.4byte	0x5d
+ 1293 036d 7B020000 		.4byte	.LLST18
+ 1294 0371 0A       		.uleb128 0xa
+ 1295 0372 BE010000 		.4byte	.LASF22
+ 1296 0376 01       		.byte	0x1
+ 1297 0377 9A01     		.2byte	0x19a
+ 1298 0379 5D000000 		.4byte	0x5d
+ 1299 037d A4020000 		.4byte	.LLST19
+ 1300 0381 0A       		.uleb128 0xa
+ 1301 0382 EF000000 		.4byte	.LASF36
+ 1302 0386 01       		.byte	0x1
+ 1303 0387 9D01     		.2byte	0x19d
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 33
+
+
+ 1304 0389 5D000000 		.4byte	0x5d
+ 1305 038d B7020000 		.4byte	.LLST20
+ 1306 0391 0A       		.uleb128 0xa
+ 1307 0392 80000000 		.4byte	.LASF37
+ 1308 0396 01       		.byte	0x1
+ 1309 0397 A101     		.2byte	0x1a1
+ 1310 0399 A7000000 		.4byte	0xa7
+ 1311 039d EC020000 		.4byte	.LLST21
+ 1312 03a1 0A       		.uleb128 0xa
+ 1313 03a2 7A000000 		.4byte	.LASF24
+ 1314 03a6 01       		.byte	0x1
+ 1315 03a7 BB01     		.2byte	0x1bb
+ 1316 03a9 A7000000 		.4byte	0xa7
+ 1317 03ad 0A030000 		.4byte	.LLST22
+ 1318 03b1 0B       		.uleb128 0xb
+ 1319 03b2 2A010000 		.4byte	.LVL78
+ 1320 03b6 82050000 		.4byte	0x582
+ 1321 03ba 00       		.byte	0
+ 1322 03bb 0C       		.uleb128 0xc
+ 1323 03bc 24000000 		.4byte	.LVL35
+ 1324 03c0 60050000 		.4byte	0x560
+ 1325 03c4 CF030000 		.4byte	0x3cf
+ 1326 03c8 0D       		.uleb128 0xd
+ 1327 03c9 01       		.uleb128 0x1
+ 1328 03ca 50       		.byte	0x50
+ 1329 03cb 02       		.uleb128 0x2
+ 1330 03cc 77       		.byte	0x77
+ 1331 03cd 00       		.sleb128 0
+ 1332 03ce 00       		.byte	0
+ 1333 03cf 0C       		.uleb128 0xc
+ 1334 03d0 2C000000 		.4byte	.LVL36
+ 1335 03d4 3E050000 		.4byte	0x53e
+ 1336 03d8 E4030000 		.4byte	0x3e4
+ 1337 03dc 0D       		.uleb128 0xd
+ 1338 03dd 01       		.uleb128 0x1
+ 1339 03de 50       		.byte	0x50
+ 1340 03df 03       		.uleb128 0x3
+ 1341 03e0 0A       		.byte	0xa
+ 1342 03e1 E803     		.2byte	0x3e8
+ 1343 03e3 00       		.byte	0
+ 1344 03e4 0C       		.uleb128 0xc
+ 1345 03e5 3A000000 		.4byte	.LVL38
+ 1346 03e9 60050000 		.4byte	0x560
+ 1347 03ed F8030000 		.4byte	0x3f8
+ 1348 03f1 0D       		.uleb128 0xd
+ 1349 03f2 01       		.uleb128 0x1
+ 1350 03f3 50       		.byte	0x50
+ 1351 03f4 02       		.uleb128 0x2
+ 1352 03f5 77       		.byte	0x77
+ 1353 03f6 00       		.sleb128 0
+ 1354 03f7 00       		.byte	0
+ 1355 03f8 0C       		.uleb128 0xc
+ 1356 03f9 42000000 		.4byte	.LVL39
+ 1357 03fd 3E050000 		.4byte	0x53e
+ 1358 0401 0D040000 		.4byte	0x40d
+ 1359 0405 0D       		.uleb128 0xd
+ 1360 0406 01       		.uleb128 0x1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 34
+
+
+ 1361 0407 50       		.byte	0x50
+ 1362 0408 03       		.uleb128 0x3
+ 1363 0409 0A       		.byte	0xa
+ 1364 040a E803     		.2byte	0x3e8
+ 1365 040c 00       		.byte	0
+ 1366 040d 0B       		.uleb128 0xb
+ 1367 040e 4C000000 		.4byte	.LVL41
+ 1368 0412 33050000 		.4byte	0x533
+ 1369 0416 0C       		.uleb128 0xc
+ 1370 0417 54000000 		.4byte	.LVL44
+ 1371 041b 3E050000 		.4byte	0x53e
+ 1372 041f 2A040000 		.4byte	0x42a
+ 1373 0423 0D       		.uleb128 0xd
+ 1374 0424 01       		.uleb128 0x1
+ 1375 0425 50       		.byte	0x50
+ 1376 0426 02       		.uleb128 0x2
+ 1377 0427 08       		.byte	0x8
+ 1378 0428 64       		.byte	0x64
+ 1379 0429 00       		.byte	0
+ 1380 042a 0B       		.uleb128 0xb
+ 1381 042b 58000000 		.4byte	.LVL45
+ 1382 042f 33050000 		.4byte	0x533
+ 1383 0433 0C       		.uleb128 0xc
+ 1384 0434 C8000000 		.4byte	.LVL57
+ 1385 0438 60050000 		.4byte	0x560
+ 1386 043c 47040000 		.4byte	0x447
+ 1387 0440 0D       		.uleb128 0xd
+ 1388 0441 01       		.uleb128 0x1
+ 1389 0442 50       		.byte	0x50
+ 1390 0443 02       		.uleb128 0x2
+ 1391 0444 74       		.byte	0x74
+ 1392 0445 00       		.sleb128 0
+ 1393 0446 00       		.byte	0
+ 1394 0447 0B       		.uleb128 0xb
+ 1395 0448 64010000 		.4byte	.LVL86
+ 1396 044c 60050000 		.4byte	0x560
+ 1397 0450 0C       		.uleb128 0xc
+ 1398 0451 6A010000 		.4byte	.LVL87
+ 1399 0455 3E050000 		.4byte	0x53e
+ 1400 0459 64040000 		.4byte	0x464
+ 1401 045d 0D       		.uleb128 0xd
+ 1402 045e 01       		.uleb128 0x1
+ 1403 045f 50       		.byte	0x50
+ 1404 0460 02       		.uleb128 0x2
+ 1405 0461 08       		.byte	0x8
+ 1406 0462 C8       		.byte	0xc8
+ 1407 0463 00       		.byte	0
+ 1408 0464 0C       		.uleb128 0xc
+ 1409 0465 76010000 		.4byte	.LVL89
+ 1410 0469 F6000000 		.4byte	0xf6
+ 1411 046d 79040000 		.4byte	0x479
+ 1412 0471 0D       		.uleb128 0xd
+ 1413 0472 01       		.uleb128 0x1
+ 1414 0473 50       		.byte	0x50
+ 1415 0474 03       		.uleb128 0x3
+ 1416 0475 0A       		.byte	0xa
+ 1417 0476 F401     		.2byte	0x1f4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 35
+
+
+ 1418 0478 00       		.byte	0
+ 1419 0479 10       		.uleb128 0x10
+ 1420 047a A0010000 		.4byte	.LVL94
+ 1421 047e 60050000 		.4byte	0x560
+ 1422 0482 0D       		.uleb128 0xd
+ 1423 0483 01       		.uleb128 0x1
+ 1424 0484 50       		.byte	0x50
+ 1425 0485 03       		.uleb128 0x3
+ 1426 0486 0A       		.byte	0xa
+ 1427 0487 DC05     		.2byte	0x5dc
+ 1428 0489 00       		.byte	0
+ 1429 048a 00       		.byte	0
+ 1430 048b 1A       		.uleb128 0x1a
+ 1431 048c F1020000 		.4byte	.LASF39
+ 1432 0490 01       		.byte	0x1
+ 1433 0491 D701     		.2byte	0x1d7
+ 1434 0493 00000000 		.4byte	.LFB43
+ 1435 0497 10000000 		.4byte	.LFE43-.LFB43
+ 1436 049b 01       		.uleb128 0x1
+ 1437 049c 9C       		.byte	0x9c
+ 1438 049d BE040000 		.4byte	0x4be
+ 1439 04a1 1B       		.uleb128 0x1b
+ 1440 04a2 D1020000 		.4byte	.LASF40
+ 1441 04a6 01       		.byte	0x1
+ 1442 04a7 D701     		.2byte	0x1d7
+ 1443 04a9 BE040000 		.4byte	0x4be
+ 1444 04ad 01       		.uleb128 0x1
+ 1445 04ae 50       		.byte	0x50
+ 1446 04af 1B       		.uleb128 0x1b
+ 1447 04b0 B1000000 		.4byte	.LASF41
+ 1448 04b4 01       		.byte	0x1
+ 1449 04b5 D701     		.2byte	0x1d7
+ 1450 04b7 CA040000 		.4byte	0x4ca
+ 1451 04bb 01       		.uleb128 0x1
+ 1452 04bc 51       		.byte	0x51
+ 1453 04bd 00       		.byte	0
+ 1454 04be 1C       		.uleb128 0x1c
+ 1455 04bf 04       		.byte	0x4
+ 1456 04c0 C4040000 		.4byte	0x4c4
+ 1457 04c4 1C       		.uleb128 0x1c
+ 1458 04c5 04       		.byte	0x4
+ 1459 04c6 8F000000 		.4byte	0x8f
+ 1460 04ca 1C       		.uleb128 0x1c
+ 1461 04cb 04       		.byte	0x4
+ 1462 04cc 77000000 		.4byte	0x77
+ 1463 04d0 1D       		.uleb128 0x1d
+ 1464 04d1 EB000000 		.4byte	0xeb
+ 1465 04d5 E0040000 		.4byte	0x4e0
+ 1466 04d9 1E       		.uleb128 0x1e
+ 1467 04da BC000000 		.4byte	0xbc
+ 1468 04de 31       		.byte	0x31
+ 1469 04df 00       		.byte	0
+ 1470 04e0 1F       		.uleb128 0x1f
+ 1471 04e1 57000000 		.4byte	.LASF42
+ 1472 04e5 01       		.byte	0x1
+ 1473 04e6 87       		.byte	0x87
+ 1474 04e7 D0040000 		.4byte	0x4d0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 36
+
+
+ 1475 04eb 05       		.uleb128 0x5
+ 1476 04ec 03       		.byte	0x3
+ 1477 04ed 00000000 		.4byte	cal_cps_to_pwm
+ 1478 04f1 1D       		.uleb128 0x1d
+ 1479 04f2 77000000 		.4byte	0x77
+ 1480 04f6 01050000 		.4byte	0x501
+ 1481 04fa 1E       		.uleb128 0x1e
+ 1482 04fb BC000000 		.4byte	0xbc
+ 1483 04ff C7       		.byte	0xc7
+ 1484 0500 00       		.byte	0
+ 1485 0501 1F       		.uleb128 0x1f
+ 1486 0502 BD000000 		.4byte	.LASF43
+ 1487 0506 01       		.byte	0x1
+ 1488 0507 A1       		.byte	0xa1
+ 1489 0508 F1040000 		.4byte	0x4f1
+ 1490 050c 05       		.uleb128 0x5
+ 1491 050d 03       		.byte	0x3
+ 1492 050e 00000000 		.4byte	map_cps_to_pwm
+ 1493 0512 1D       		.uleb128 0x1d
+ 1494 0513 B5000000 		.4byte	0xb5
+ 1495 0517 22050000 		.4byte	0x522
+ 1496 051b 1E       		.uleb128 0x1e
+ 1497 051c BC000000 		.4byte	0xbc
+ 1498 0520 FF       		.byte	0xff
+ 1499 0521 00       		.byte	0
+ 1500 0522 20       		.uleb128 0x20
+ 1501 0523 51030000 		.4byte	.LASF55
+ 1502 0527 07       		.byte	0x7
+ 1503 0528 14       		.byte	0x14
+ 1504 0529 12050000 		.4byte	0x512
+ 1505 052d 05       		.uleb128 0x5
+ 1506 052e 03       		.byte	0x3
+ 1507 052f 00000000 		.4byte	formatted_string
+ 1508 0533 21       		.uleb128 0x21
+ 1509 0534 00000000 		.4byte	.LASF56
+ 1510 0538 08       		.byte	0x8
+ 1511 0539 5D       		.byte	0x5d
+ 1512 053a 83000000 		.4byte	0x83
+ 1513 053e 22       		.uleb128 0x22
+ 1514 053f 2D030000 		.4byte	.LASF44
+ 1515 0543 03       		.byte	0x3
+ 1516 0544 5A       		.byte	0x5a
+ 1517 0545 4F050000 		.4byte	0x54f
+ 1518 0549 23       		.uleb128 0x23
+ 1519 054a 83000000 		.4byte	0x83
+ 1520 054e 00       		.byte	0
+ 1521 054f 22       		.uleb128 0x22
+ 1522 0550 A8010000 		.4byte	.LASF45
+ 1523 0554 04       		.byte	0x4
+ 1524 0555 33       		.byte	0x33
+ 1525 0556 60050000 		.4byte	0x560
+ 1526 055a 23       		.uleb128 0x23
+ 1527 055b 6B000000 		.4byte	0x6b
+ 1528 055f 00       		.byte	0
+ 1529 0560 24       		.uleb128 0x24
+ 1530 0561 53010000 		.4byte	.LASF46
+ 1531 0565 05       		.byte	0x5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 37
+
+
+ 1532 0566 5501     		.2byte	0x155
+ 1533 0568 72050000 		.4byte	0x572
+ 1534 056c 23       		.uleb128 0x23
+ 1535 056d 83000000 		.4byte	0x83
+ 1536 0571 00       		.byte	0
+ 1537 0572 25       		.uleb128 0x25
+ 1538 0573 B2020000 		.4byte	.LASF47
+ 1539 0577 05       		.byte	0x5
+ 1540 0578 3201     		.2byte	0x132
+ 1541 057a 25       		.uleb128 0x25
+ 1542 057b 12030000 		.4byte	.LASF48
+ 1543 057f 05       		.byte	0x5
+ 1544 0580 3301     		.2byte	0x133
+ 1545 0582 26       		.uleb128 0x26
+ 1546 0583 70010000 		.4byte	.LASF49
+ 1547 0587 06       		.byte	0x6
+ 1548 0588 1A01     		.2byte	0x11a
+ 1549 058a AE000000 		.4byte	0xae
+ 1550 058e 23       		.uleb128 0x23
+ 1551 058f AE000000 		.4byte	0xae
+ 1552 0593 00       		.byte	0
+ 1553 0594 00       		.byte	0
+ 1554              		.section	.debug_abbrev,"",%progbits
+ 1555              	.Ldebug_abbrev0:
+ 1556 0000 01       		.uleb128 0x1
+ 1557 0001 11       		.uleb128 0x11
+ 1558 0002 01       		.byte	0x1
+ 1559 0003 25       		.uleb128 0x25
+ 1560 0004 0E       		.uleb128 0xe
+ 1561 0005 13       		.uleb128 0x13
+ 1562 0006 0B       		.uleb128 0xb
+ 1563 0007 03       		.uleb128 0x3
+ 1564 0008 0E       		.uleb128 0xe
+ 1565 0009 1B       		.uleb128 0x1b
+ 1566 000a 0E       		.uleb128 0xe
+ 1567 000b 55       		.uleb128 0x55
+ 1568 000c 17       		.uleb128 0x17
+ 1569 000d 11       		.uleb128 0x11
+ 1570 000e 01       		.uleb128 0x1
+ 1571 000f 10       		.uleb128 0x10
+ 1572 0010 17       		.uleb128 0x17
+ 1573 0011 00       		.byte	0
+ 1574 0012 00       		.byte	0
+ 1575 0013 02       		.uleb128 0x2
+ 1576 0014 24       		.uleb128 0x24
+ 1577 0015 00       		.byte	0
+ 1578 0016 0B       		.uleb128 0xb
+ 1579 0017 0B       		.uleb128 0xb
+ 1580 0018 3E       		.uleb128 0x3e
+ 1581 0019 0B       		.uleb128 0xb
+ 1582 001a 03       		.uleb128 0x3
+ 1583 001b 0E       		.uleb128 0xe
+ 1584 001c 00       		.byte	0
+ 1585 001d 00       		.byte	0
+ 1586 001e 03       		.uleb128 0x3
+ 1587 001f 24       		.uleb128 0x24
+ 1588 0020 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 38
+
+
+ 1589 0021 0B       		.uleb128 0xb
+ 1590 0022 0B       		.uleb128 0xb
+ 1591 0023 3E       		.uleb128 0x3e
+ 1592 0024 0B       		.uleb128 0xb
+ 1593 0025 03       		.uleb128 0x3
+ 1594 0026 08       		.uleb128 0x8
+ 1595 0027 00       		.byte	0
+ 1596 0028 00       		.byte	0
+ 1597 0029 04       		.uleb128 0x4
+ 1598 002a 16       		.uleb128 0x16
+ 1599 002b 00       		.byte	0
+ 1600 002c 03       		.uleb128 0x3
+ 1601 002d 0E       		.uleb128 0xe
+ 1602 002e 3A       		.uleb128 0x3a
+ 1603 002f 0B       		.uleb128 0xb
+ 1604 0030 3B       		.uleb128 0x3b
+ 1605 0031 05       		.uleb128 0x5
+ 1606 0032 49       		.uleb128 0x49
+ 1607 0033 13       		.uleb128 0x13
+ 1608 0034 00       		.byte	0
+ 1609 0035 00       		.byte	0
+ 1610 0036 05       		.uleb128 0x5
+ 1611 0037 13       		.uleb128 0x13
+ 1612 0038 01       		.byte	0x1
+ 1613 0039 0B       		.uleb128 0xb
+ 1614 003a 0B       		.uleb128 0xb
+ 1615 003b 3A       		.uleb128 0x3a
+ 1616 003c 0B       		.uleb128 0xb
+ 1617 003d 3B       		.uleb128 0x3b
+ 1618 003e 0B       		.uleb128 0xb
+ 1619 003f 01       		.uleb128 0x1
+ 1620 0040 13       		.uleb128 0x13
+ 1621 0041 00       		.byte	0
+ 1622 0042 00       		.byte	0
+ 1623 0043 06       		.uleb128 0x6
+ 1624 0044 0D       		.uleb128 0xd
+ 1625 0045 00       		.byte	0
+ 1626 0046 03       		.uleb128 0x3
+ 1627 0047 08       		.uleb128 0x8
+ 1628 0048 3A       		.uleb128 0x3a
+ 1629 0049 0B       		.uleb128 0xb
+ 1630 004a 3B       		.uleb128 0x3b
+ 1631 004b 0B       		.uleb128 0xb
+ 1632 004c 49       		.uleb128 0x49
+ 1633 004d 13       		.uleb128 0x13
+ 1634 004e 38       		.uleb128 0x38
+ 1635 004f 0B       		.uleb128 0xb
+ 1636 0050 00       		.byte	0
+ 1637 0051 00       		.byte	0
+ 1638 0052 07       		.uleb128 0x7
+ 1639 0053 16       		.uleb128 0x16
+ 1640 0054 00       		.byte	0
+ 1641 0055 03       		.uleb128 0x3
+ 1642 0056 0E       		.uleb128 0xe
+ 1643 0057 3A       		.uleb128 0x3a
+ 1644 0058 0B       		.uleb128 0xb
+ 1645 0059 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 39
+
+
+ 1646 005a 0B       		.uleb128 0xb
+ 1647 005b 49       		.uleb128 0x49
+ 1648 005c 13       		.uleb128 0x13
+ 1649 005d 00       		.byte	0
+ 1650 005e 00       		.byte	0
+ 1651 005f 08       		.uleb128 0x8
+ 1652 0060 2E       		.uleb128 0x2e
+ 1653 0061 01       		.byte	0x1
+ 1654 0062 03       		.uleb128 0x3
+ 1655 0063 0E       		.uleb128 0xe
+ 1656 0064 3A       		.uleb128 0x3a
+ 1657 0065 0B       		.uleb128 0xb
+ 1658 0066 3B       		.uleb128 0x3b
+ 1659 0067 05       		.uleb128 0x5
+ 1660 0068 27       		.uleb128 0x27
+ 1661 0069 19       		.uleb128 0x19
+ 1662 006a 49       		.uleb128 0x49
+ 1663 006b 13       		.uleb128 0x13
+ 1664 006c 11       		.uleb128 0x11
+ 1665 006d 01       		.uleb128 0x1
+ 1666 006e 12       		.uleb128 0x12
+ 1667 006f 06       		.uleb128 0x6
+ 1668 0070 40       		.uleb128 0x40
+ 1669 0071 18       		.uleb128 0x18
+ 1670 0072 9642     		.uleb128 0x2116
+ 1671 0074 19       		.uleb128 0x19
+ 1672 0075 01       		.uleb128 0x1
+ 1673 0076 13       		.uleb128 0x13
+ 1674 0077 00       		.byte	0
+ 1675 0078 00       		.byte	0
+ 1676 0079 09       		.uleb128 0x9
+ 1677 007a 05       		.uleb128 0x5
+ 1678 007b 00       		.byte	0
+ 1679 007c 03       		.uleb128 0x3
+ 1680 007d 0E       		.uleb128 0xe
+ 1681 007e 3A       		.uleb128 0x3a
+ 1682 007f 0B       		.uleb128 0xb
+ 1683 0080 3B       		.uleb128 0x3b
+ 1684 0081 05       		.uleb128 0x5
+ 1685 0082 49       		.uleb128 0x49
+ 1686 0083 13       		.uleb128 0x13
+ 1687 0084 02       		.uleb128 0x2
+ 1688 0085 17       		.uleb128 0x17
+ 1689 0086 00       		.byte	0
+ 1690 0087 00       		.byte	0
+ 1691 0088 0A       		.uleb128 0xa
+ 1692 0089 34       		.uleb128 0x34
+ 1693 008a 00       		.byte	0
+ 1694 008b 03       		.uleb128 0x3
+ 1695 008c 0E       		.uleb128 0xe
+ 1696 008d 3A       		.uleb128 0x3a
+ 1697 008e 0B       		.uleb128 0xb
+ 1698 008f 3B       		.uleb128 0x3b
+ 1699 0090 05       		.uleb128 0x5
+ 1700 0091 49       		.uleb128 0x49
+ 1701 0092 13       		.uleb128 0x13
+ 1702 0093 02       		.uleb128 0x2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 40
+
+
+ 1703 0094 17       		.uleb128 0x17
+ 1704 0095 00       		.byte	0
+ 1705 0096 00       		.byte	0
+ 1706 0097 0B       		.uleb128 0xb
+ 1707 0098 898201   		.uleb128 0x4109
+ 1708 009b 00       		.byte	0
+ 1709 009c 11       		.uleb128 0x11
+ 1710 009d 01       		.uleb128 0x1
+ 1711 009e 31       		.uleb128 0x31
+ 1712 009f 13       		.uleb128 0x13
+ 1713 00a0 00       		.byte	0
+ 1714 00a1 00       		.byte	0
+ 1715 00a2 0C       		.uleb128 0xc
+ 1716 00a3 898201   		.uleb128 0x4109
+ 1717 00a6 01       		.byte	0x1
+ 1718 00a7 11       		.uleb128 0x11
+ 1719 00a8 01       		.uleb128 0x1
+ 1720 00a9 31       		.uleb128 0x31
+ 1721 00aa 13       		.uleb128 0x13
+ 1722 00ab 01       		.uleb128 0x1
+ 1723 00ac 13       		.uleb128 0x13
+ 1724 00ad 00       		.byte	0
+ 1725 00ae 00       		.byte	0
+ 1726 00af 0D       		.uleb128 0xd
+ 1727 00b0 8A8201   		.uleb128 0x410a
+ 1728 00b3 00       		.byte	0
+ 1729 00b4 02       		.uleb128 0x2
+ 1730 00b5 18       		.uleb128 0x18
+ 1731 00b6 9142     		.uleb128 0x2111
+ 1732 00b8 18       		.uleb128 0x18
+ 1733 00b9 00       		.byte	0
+ 1734 00ba 00       		.byte	0
+ 1735 00bb 0E       		.uleb128 0xe
+ 1736 00bc 2E       		.uleb128 0x2e
+ 1737 00bd 01       		.byte	0x1
+ 1738 00be 3F       		.uleb128 0x3f
+ 1739 00bf 19       		.uleb128 0x19
+ 1740 00c0 03       		.uleb128 0x3
+ 1741 00c1 0E       		.uleb128 0xe
+ 1742 00c2 3A       		.uleb128 0x3a
+ 1743 00c3 0B       		.uleb128 0xb
+ 1744 00c4 3B       		.uleb128 0x3b
+ 1745 00c5 0B       		.uleb128 0xb
+ 1746 00c6 11       		.uleb128 0x11
+ 1747 00c7 01       		.uleb128 0x1
+ 1748 00c8 12       		.uleb128 0x12
+ 1749 00c9 06       		.uleb128 0x6
+ 1750 00ca 40       		.uleb128 0x40
+ 1751 00cb 18       		.uleb128 0x18
+ 1752 00cc 9742     		.uleb128 0x2117
+ 1753 00ce 19       		.uleb128 0x19
+ 1754 00cf 01       		.uleb128 0x1
+ 1755 00d0 13       		.uleb128 0x13
+ 1756 00d1 00       		.byte	0
+ 1757 00d2 00       		.byte	0
+ 1758 00d3 0F       		.uleb128 0xf
+ 1759 00d4 34       		.uleb128 0x34
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 41
+
+
+ 1760 00d5 00       		.byte	0
+ 1761 00d6 03       		.uleb128 0x3
+ 1762 00d7 08       		.uleb128 0x8
+ 1763 00d8 3A       		.uleb128 0x3a
+ 1764 00d9 0B       		.uleb128 0xb
+ 1765 00da 3B       		.uleb128 0x3b
+ 1766 00db 0B       		.uleb128 0xb
+ 1767 00dc 49       		.uleb128 0x49
+ 1768 00dd 13       		.uleb128 0x13
+ 1769 00de 02       		.uleb128 0x2
+ 1770 00df 17       		.uleb128 0x17
+ 1771 00e0 00       		.byte	0
+ 1772 00e1 00       		.byte	0
+ 1773 00e2 10       		.uleb128 0x10
+ 1774 00e3 898201   		.uleb128 0x4109
+ 1775 00e6 01       		.byte	0x1
+ 1776 00e7 11       		.uleb128 0x11
+ 1777 00e8 01       		.uleb128 0x1
+ 1778 00e9 31       		.uleb128 0x31
+ 1779 00ea 13       		.uleb128 0x13
+ 1780 00eb 00       		.byte	0
+ 1781 00ec 00       		.byte	0
+ 1782 00ed 11       		.uleb128 0x11
+ 1783 00ee 2E       		.uleb128 0x2e
+ 1784 00ef 01       		.byte	0x1
+ 1785 00f0 3F       		.uleb128 0x3f
+ 1786 00f1 19       		.uleb128 0x19
+ 1787 00f2 03       		.uleb128 0x3
+ 1788 00f3 0E       		.uleb128 0xe
+ 1789 00f4 3A       		.uleb128 0x3a
+ 1790 00f5 0B       		.uleb128 0xb
+ 1791 00f6 3B       		.uleb128 0x3b
+ 1792 00f7 0B       		.uleb128 0xb
+ 1793 00f8 27       		.uleb128 0x27
+ 1794 00f9 19       		.uleb128 0x19
+ 1795 00fa 11       		.uleb128 0x11
+ 1796 00fb 01       		.uleb128 0x1
+ 1797 00fc 12       		.uleb128 0x12
+ 1798 00fd 06       		.uleb128 0x6
+ 1799 00fe 40       		.uleb128 0x40
+ 1800 00ff 18       		.uleb128 0x18
+ 1801 0100 9642     		.uleb128 0x2116
+ 1802 0102 19       		.uleb128 0x19
+ 1803 0103 01       		.uleb128 0x1
+ 1804 0104 13       		.uleb128 0x13
+ 1805 0105 00       		.byte	0
+ 1806 0106 00       		.byte	0
+ 1807 0107 12       		.uleb128 0x12
+ 1808 0108 05       		.uleb128 0x5
+ 1809 0109 00       		.byte	0
+ 1810 010a 03       		.uleb128 0x3
+ 1811 010b 0E       		.uleb128 0xe
+ 1812 010c 3A       		.uleb128 0x3a
+ 1813 010d 0B       		.uleb128 0xb
+ 1814 010e 3B       		.uleb128 0x3b
+ 1815 010f 0B       		.uleb128 0xb
+ 1816 0110 49       		.uleb128 0x49
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 42
+
+
+ 1817 0111 13       		.uleb128 0x13
+ 1818 0112 02       		.uleb128 0x2
+ 1819 0113 17       		.uleb128 0x17
+ 1820 0114 00       		.byte	0
+ 1821 0115 00       		.byte	0
+ 1822 0116 13       		.uleb128 0x13
+ 1823 0117 0B       		.uleb128 0xb
+ 1824 0118 01       		.byte	0x1
+ 1825 0119 11       		.uleb128 0x11
+ 1826 011a 01       		.uleb128 0x1
+ 1827 011b 12       		.uleb128 0x12
+ 1828 011c 06       		.uleb128 0x6
+ 1829 011d 00       		.byte	0
+ 1830 011e 00       		.byte	0
+ 1831 011f 14       		.uleb128 0x14
+ 1832 0120 2E       		.uleb128 0x2e
+ 1833 0121 00       		.byte	0
+ 1834 0122 3F       		.uleb128 0x3f
+ 1835 0123 19       		.uleb128 0x19
+ 1836 0124 03       		.uleb128 0x3
+ 1837 0125 0E       		.uleb128 0xe
+ 1838 0126 3A       		.uleb128 0x3a
+ 1839 0127 0B       		.uleb128 0xb
+ 1840 0128 3B       		.uleb128 0x3b
+ 1841 0129 05       		.uleb128 0x5
+ 1842 012a 11       		.uleb128 0x11
+ 1843 012b 01       		.uleb128 0x1
+ 1844 012c 12       		.uleb128 0x12
+ 1845 012d 06       		.uleb128 0x6
+ 1846 012e 40       		.uleb128 0x40
+ 1847 012f 18       		.uleb128 0x18
+ 1848 0130 9742     		.uleb128 0x2117
+ 1849 0132 19       		.uleb128 0x19
+ 1850 0133 00       		.byte	0
+ 1851 0134 00       		.byte	0
+ 1852 0135 15       		.uleb128 0x15
+ 1853 0136 2E       		.uleb128 0x2e
+ 1854 0137 01       		.byte	0x1
+ 1855 0138 3F       		.uleb128 0x3f
+ 1856 0139 19       		.uleb128 0x19
+ 1857 013a 03       		.uleb128 0x3
+ 1858 013b 0E       		.uleb128 0xe
+ 1859 013c 3A       		.uleb128 0x3a
+ 1860 013d 0B       		.uleb128 0xb
+ 1861 013e 3B       		.uleb128 0x3b
+ 1862 013f 05       		.uleb128 0x5
+ 1863 0140 11       		.uleb128 0x11
+ 1864 0141 01       		.uleb128 0x1
+ 1865 0142 12       		.uleb128 0x12
+ 1866 0143 06       		.uleb128 0x6
+ 1867 0144 40       		.uleb128 0x40
+ 1868 0145 18       		.uleb128 0x18
+ 1869 0146 9642     		.uleb128 0x2116
+ 1870 0148 19       		.uleb128 0x19
+ 1871 0149 01       		.uleb128 0x1
+ 1872 014a 13       		.uleb128 0x13
+ 1873 014b 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 43
+
+
+ 1874 014c 00       		.byte	0
+ 1875 014d 16       		.uleb128 0x16
+ 1876 014e 34       		.uleb128 0x34
+ 1877 014f 00       		.byte	0
+ 1878 0150 03       		.uleb128 0x3
+ 1879 0151 08       		.uleb128 0x8
+ 1880 0152 3A       		.uleb128 0x3a
+ 1881 0153 0B       		.uleb128 0xb
+ 1882 0154 3B       		.uleb128 0x3b
+ 1883 0155 05       		.uleb128 0x5
+ 1884 0156 49       		.uleb128 0x49
+ 1885 0157 13       		.uleb128 0x13
+ 1886 0158 02       		.uleb128 0x2
+ 1887 0159 17       		.uleb128 0x17
+ 1888 015a 00       		.byte	0
+ 1889 015b 00       		.byte	0
+ 1890 015c 17       		.uleb128 0x17
+ 1891 015d 34       		.uleb128 0x34
+ 1892 015e 00       		.byte	0
+ 1893 015f 03       		.uleb128 0x3
+ 1894 0160 0E       		.uleb128 0xe
+ 1895 0161 3A       		.uleb128 0x3a
+ 1896 0162 0B       		.uleb128 0xb
+ 1897 0163 3B       		.uleb128 0x3b
+ 1898 0164 05       		.uleb128 0x5
+ 1899 0165 49       		.uleb128 0x49
+ 1900 0166 13       		.uleb128 0x13
+ 1901 0167 02       		.uleb128 0x2
+ 1902 0168 18       		.uleb128 0x18
+ 1903 0169 00       		.byte	0
+ 1904 016a 00       		.byte	0
+ 1905 016b 18       		.uleb128 0x18
+ 1906 016c 34       		.uleb128 0x34
+ 1907 016d 00       		.byte	0
+ 1908 016e 03       		.uleb128 0x3
+ 1909 016f 0E       		.uleb128 0xe
+ 1910 0170 3A       		.uleb128 0x3a
+ 1911 0171 0B       		.uleb128 0xb
+ 1912 0172 3B       		.uleb128 0x3b
+ 1913 0173 05       		.uleb128 0x5
+ 1914 0174 49       		.uleb128 0x49
+ 1915 0175 13       		.uleb128 0x13
+ 1916 0176 1C       		.uleb128 0x1c
+ 1917 0177 0B       		.uleb128 0xb
+ 1918 0178 00       		.byte	0
+ 1919 0179 00       		.byte	0
+ 1920 017a 19       		.uleb128 0x19
+ 1921 017b 0B       		.uleb128 0xb
+ 1922 017c 01       		.byte	0x1
+ 1923 017d 11       		.uleb128 0x11
+ 1924 017e 01       		.uleb128 0x1
+ 1925 017f 12       		.uleb128 0x12
+ 1926 0180 06       		.uleb128 0x6
+ 1927 0181 01       		.uleb128 0x1
+ 1928 0182 13       		.uleb128 0x13
+ 1929 0183 00       		.byte	0
+ 1930 0184 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 44
+
+
+ 1931 0185 1A       		.uleb128 0x1a
+ 1932 0186 2E       		.uleb128 0x2e
+ 1933 0187 01       		.byte	0x1
+ 1934 0188 3F       		.uleb128 0x3f
+ 1935 0189 19       		.uleb128 0x19
+ 1936 018a 03       		.uleb128 0x3
+ 1937 018b 0E       		.uleb128 0xe
+ 1938 018c 3A       		.uleb128 0x3a
+ 1939 018d 0B       		.uleb128 0xb
+ 1940 018e 3B       		.uleb128 0x3b
+ 1941 018f 05       		.uleb128 0x5
+ 1942 0190 27       		.uleb128 0x27
+ 1943 0191 19       		.uleb128 0x19
+ 1944 0192 11       		.uleb128 0x11
+ 1945 0193 01       		.uleb128 0x1
+ 1946 0194 12       		.uleb128 0x12
+ 1947 0195 06       		.uleb128 0x6
+ 1948 0196 40       		.uleb128 0x40
+ 1949 0197 18       		.uleb128 0x18
+ 1950 0198 9742     		.uleb128 0x2117
+ 1951 019a 19       		.uleb128 0x19
+ 1952 019b 01       		.uleb128 0x1
+ 1953 019c 13       		.uleb128 0x13
+ 1954 019d 00       		.byte	0
+ 1955 019e 00       		.byte	0
+ 1956 019f 1B       		.uleb128 0x1b
+ 1957 01a0 05       		.uleb128 0x5
+ 1958 01a1 00       		.byte	0
+ 1959 01a2 03       		.uleb128 0x3
+ 1960 01a3 0E       		.uleb128 0xe
+ 1961 01a4 3A       		.uleb128 0x3a
+ 1962 01a5 0B       		.uleb128 0xb
+ 1963 01a6 3B       		.uleb128 0x3b
+ 1964 01a7 05       		.uleb128 0x5
+ 1965 01a8 49       		.uleb128 0x49
+ 1966 01a9 13       		.uleb128 0x13
+ 1967 01aa 02       		.uleb128 0x2
+ 1968 01ab 18       		.uleb128 0x18
+ 1969 01ac 00       		.byte	0
+ 1970 01ad 00       		.byte	0
+ 1971 01ae 1C       		.uleb128 0x1c
+ 1972 01af 0F       		.uleb128 0xf
+ 1973 01b0 00       		.byte	0
+ 1974 01b1 0B       		.uleb128 0xb
+ 1975 01b2 0B       		.uleb128 0xb
+ 1976 01b3 49       		.uleb128 0x49
+ 1977 01b4 13       		.uleb128 0x13
+ 1978 01b5 00       		.byte	0
+ 1979 01b6 00       		.byte	0
+ 1980 01b7 1D       		.uleb128 0x1d
+ 1981 01b8 01       		.uleb128 0x1
+ 1982 01b9 01       		.byte	0x1
+ 1983 01ba 49       		.uleb128 0x49
+ 1984 01bb 13       		.uleb128 0x13
+ 1985 01bc 01       		.uleb128 0x1
+ 1986 01bd 13       		.uleb128 0x13
+ 1987 01be 00       		.byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 45
+
+
+ 1988 01bf 00       		.byte	0
+ 1989 01c0 1E       		.uleb128 0x1e
+ 1990 01c1 21       		.uleb128 0x21
+ 1991 01c2 00       		.byte	0
+ 1992 01c3 49       		.uleb128 0x49
+ 1993 01c4 13       		.uleb128 0x13
+ 1994 01c5 2F       		.uleb128 0x2f
+ 1995 01c6 0B       		.uleb128 0xb
+ 1996 01c7 00       		.byte	0
+ 1997 01c8 00       		.byte	0
+ 1998 01c9 1F       		.uleb128 0x1f
+ 1999 01ca 34       		.uleb128 0x34
+ 2000 01cb 00       		.byte	0
+ 2001 01cc 03       		.uleb128 0x3
+ 2002 01cd 0E       		.uleb128 0xe
+ 2003 01ce 3A       		.uleb128 0x3a
+ 2004 01cf 0B       		.uleb128 0xb
+ 2005 01d0 3B       		.uleb128 0x3b
+ 2006 01d1 0B       		.uleb128 0xb
+ 2007 01d2 49       		.uleb128 0x49
+ 2008 01d3 13       		.uleb128 0x13
+ 2009 01d4 02       		.uleb128 0x2
+ 2010 01d5 18       		.uleb128 0x18
+ 2011 01d6 00       		.byte	0
+ 2012 01d7 00       		.byte	0
+ 2013 01d8 20       		.uleb128 0x20
+ 2014 01d9 34       		.uleb128 0x34
+ 2015 01da 00       		.byte	0
+ 2016 01db 03       		.uleb128 0x3
+ 2017 01dc 0E       		.uleb128 0xe
+ 2018 01dd 3A       		.uleb128 0x3a
+ 2019 01de 0B       		.uleb128 0xb
+ 2020 01df 3B       		.uleb128 0x3b
+ 2021 01e0 0B       		.uleb128 0xb
+ 2022 01e1 49       		.uleb128 0x49
+ 2023 01e2 13       		.uleb128 0x13
+ 2024 01e3 3F       		.uleb128 0x3f
+ 2025 01e4 19       		.uleb128 0x19
+ 2026 01e5 02       		.uleb128 0x2
+ 2027 01e6 18       		.uleb128 0x18
+ 2028 01e7 00       		.byte	0
+ 2029 01e8 00       		.byte	0
+ 2030 01e9 21       		.uleb128 0x21
+ 2031 01ea 2E       		.uleb128 0x2e
+ 2032 01eb 00       		.byte	0
+ 2033 01ec 3F       		.uleb128 0x3f
+ 2034 01ed 19       		.uleb128 0x19
+ 2035 01ee 03       		.uleb128 0x3
+ 2036 01ef 0E       		.uleb128 0xe
+ 2037 01f0 3A       		.uleb128 0x3a
+ 2038 01f1 0B       		.uleb128 0xb
+ 2039 01f2 3B       		.uleb128 0x3b
+ 2040 01f3 0B       		.uleb128 0xb
+ 2041 01f4 27       		.uleb128 0x27
+ 2042 01f5 19       		.uleb128 0x19
+ 2043 01f6 49       		.uleb128 0x49
+ 2044 01f7 13       		.uleb128 0x13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 46
+
+
+ 2045 01f8 3C       		.uleb128 0x3c
+ 2046 01f9 19       		.uleb128 0x19
+ 2047 01fa 00       		.byte	0
+ 2048 01fb 00       		.byte	0
+ 2049 01fc 22       		.uleb128 0x22
+ 2050 01fd 2E       		.uleb128 0x2e
+ 2051 01fe 01       		.byte	0x1
+ 2052 01ff 3F       		.uleb128 0x3f
+ 2053 0200 19       		.uleb128 0x19
+ 2054 0201 03       		.uleb128 0x3
+ 2055 0202 0E       		.uleb128 0xe
+ 2056 0203 3A       		.uleb128 0x3a
+ 2057 0204 0B       		.uleb128 0xb
+ 2058 0205 3B       		.uleb128 0x3b
+ 2059 0206 0B       		.uleb128 0xb
+ 2060 0207 27       		.uleb128 0x27
+ 2061 0208 19       		.uleb128 0x19
+ 2062 0209 3C       		.uleb128 0x3c
+ 2063 020a 19       		.uleb128 0x19
+ 2064 020b 01       		.uleb128 0x1
+ 2065 020c 13       		.uleb128 0x13
+ 2066 020d 00       		.byte	0
+ 2067 020e 00       		.byte	0
+ 2068 020f 23       		.uleb128 0x23
+ 2069 0210 05       		.uleb128 0x5
+ 2070 0211 00       		.byte	0
+ 2071 0212 49       		.uleb128 0x49
+ 2072 0213 13       		.uleb128 0x13
+ 2073 0214 00       		.byte	0
+ 2074 0215 00       		.byte	0
+ 2075 0216 24       		.uleb128 0x24
+ 2076 0217 2E       		.uleb128 0x2e
+ 2077 0218 01       		.byte	0x1
+ 2078 0219 3F       		.uleb128 0x3f
+ 2079 021a 19       		.uleb128 0x19
+ 2080 021b 03       		.uleb128 0x3
+ 2081 021c 0E       		.uleb128 0xe
+ 2082 021d 3A       		.uleb128 0x3a
+ 2083 021e 0B       		.uleb128 0xb
+ 2084 021f 3B       		.uleb128 0x3b
+ 2085 0220 05       		.uleb128 0x5
+ 2086 0221 27       		.uleb128 0x27
+ 2087 0222 19       		.uleb128 0x19
+ 2088 0223 3C       		.uleb128 0x3c
+ 2089 0224 19       		.uleb128 0x19
+ 2090 0225 01       		.uleb128 0x1
+ 2091 0226 13       		.uleb128 0x13
+ 2092 0227 00       		.byte	0
+ 2093 0228 00       		.byte	0
+ 2094 0229 25       		.uleb128 0x25
+ 2095 022a 2E       		.uleb128 0x2e
+ 2096 022b 00       		.byte	0
+ 2097 022c 3F       		.uleb128 0x3f
+ 2098 022d 19       		.uleb128 0x19
+ 2099 022e 03       		.uleb128 0x3
+ 2100 022f 0E       		.uleb128 0xe
+ 2101 0230 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 47
+
+
+ 2102 0231 0B       		.uleb128 0xb
+ 2103 0232 3B       		.uleb128 0x3b
+ 2104 0233 05       		.uleb128 0x5
+ 2105 0234 27       		.uleb128 0x27
+ 2106 0235 19       		.uleb128 0x19
+ 2107 0236 3C       		.uleb128 0x3c
+ 2108 0237 19       		.uleb128 0x19
+ 2109 0238 00       		.byte	0
+ 2110 0239 00       		.byte	0
+ 2111 023a 26       		.uleb128 0x26
+ 2112 023b 2E       		.uleb128 0x2e
+ 2113 023c 01       		.byte	0x1
+ 2114 023d 3F       		.uleb128 0x3f
+ 2115 023e 19       		.uleb128 0x19
+ 2116 023f 03       		.uleb128 0x3
+ 2117 0240 0E       		.uleb128 0xe
+ 2118 0241 3A       		.uleb128 0x3a
+ 2119 0242 0B       		.uleb128 0xb
+ 2120 0243 3B       		.uleb128 0x3b
+ 2121 0244 05       		.uleb128 0x5
+ 2122 0245 27       		.uleb128 0x27
+ 2123 0246 19       		.uleb128 0x19
+ 2124 0247 49       		.uleb128 0x49
+ 2125 0248 13       		.uleb128 0x13
+ 2126 0249 3C       		.uleb128 0x3c
+ 2127 024a 19       		.uleb128 0x19
+ 2128 024b 00       		.byte	0
+ 2129 024c 00       		.byte	0
+ 2130 024d 00       		.byte	0
+ 2131              		.section	.debug_loc,"",%progbits
+ 2132              	.Ldebug_loc0:
+ 2133              	.LLST0:
+ 2134 0000 00000000 		.4byte	.LVL0
+ 2135 0004 07000000 		.4byte	.LVL1-1
+ 2136 0008 0100     		.2byte	0x1
+ 2137 000a 50       		.byte	0x50
+ 2138 000b 07000000 		.4byte	.LVL1-1
+ 2139 000f 26000000 		.4byte	.LFE41
+ 2140 0013 0400     		.2byte	0x4
+ 2141 0015 F3       		.byte	0xf3
+ 2142 0016 01       		.uleb128 0x1
+ 2143 0017 50       		.byte	0x50
+ 2144 0018 9F       		.byte	0x9f
+ 2145 0019 00000000 		.4byte	0
+ 2146 001d 00000000 		.4byte	0
+ 2147              	.LLST1:
+ 2148 0021 0A000000 		.4byte	.LVL2
+ 2149 0025 0C000000 		.4byte	.LVL3
+ 2150 0029 0100     		.2byte	0x1
+ 2151 002b 50       		.byte	0x50
+ 2152 002c 0C000000 		.4byte	.LVL3
+ 2153 0030 24000000 		.4byte	.LVL9
+ 2154 0034 0100     		.2byte	0x1
+ 2155 0036 55       		.byte	0x55
+ 2156 0037 00000000 		.4byte	0
+ 2157 003b 00000000 		.4byte	0
+ 2158              	.LLST2:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 48
+
+
+ 2159 003f 14000000 		.4byte	.LVL5
+ 2160 0043 16000000 		.4byte	.LVL6
+ 2161 0047 0100     		.2byte	0x1
+ 2162 0049 50       		.byte	0x50
+ 2163 004a 00000000 		.4byte	0
+ 2164 004e 00000000 		.4byte	0
+ 2165              	.LLST3:
+ 2166 0052 16000000 		.4byte	.LVL6
+ 2167 0056 1C000000 		.4byte	.LVL7
+ 2168 005a 0100     		.2byte	0x1
+ 2169 005c 50       		.byte	0x50
+ 2170 005d 00000000 		.4byte	0
+ 2171 0061 00000000 		.4byte	0
+ 2172              	.LLST4:
+ 2173 0065 08000000 		.4byte	.LVL10
+ 2174 0069 0C000000 		.4byte	.LVL11
+ 2175 006d 0200     		.2byte	0x2
+ 2176 006f 30       		.byte	0x30
+ 2177 0070 9F       		.byte	0x9f
+ 2178 0071 0C000000 		.4byte	.LVL11
+ 2179 0075 2C000000 		.4byte	.LFE36
+ 2180 0079 0100     		.2byte	0x1
+ 2181 007b 53       		.byte	0x53
+ 2182 007c 00000000 		.4byte	0
+ 2183 0080 00000000 		.4byte	0
+ 2184              	.LLST5:
+ 2185 0084 00000000 		.4byte	.LVL13
+ 2186 0088 07000000 		.4byte	.LVL14-1
+ 2187 008c 0100     		.2byte	0x1
+ 2188 008e 50       		.byte	0x50
+ 2189 008f 07000000 		.4byte	.LVL14-1
+ 2190 0093 60000000 		.4byte	.LFE38
+ 2191 0097 0400     		.2byte	0x4
+ 2192 0099 F3       		.byte	0xf3
+ 2193 009a 01       		.uleb128 0x1
+ 2194 009b 50       		.byte	0x50
+ 2195 009c 9F       		.byte	0x9f
+ 2196 009d 00000000 		.4byte	0
+ 2197 00a1 00000000 		.4byte	0
+ 2198              	.LLST6:
+ 2199 00a5 40000000 		.4byte	.LVL21
+ 2200 00a9 4A000000 		.4byte	.LVL22
+ 2201 00ad 0100     		.2byte	0x1
+ 2202 00af 50       		.byte	0x50
+ 2203 00b0 4A000000 		.4byte	.LVL22
+ 2204 00b4 4C000000 		.4byte	.LVL23
+ 2205 00b8 0100     		.2byte	0x1
+ 2206 00ba 53       		.byte	0x53
+ 2207 00bb 00000000 		.4byte	0
+ 2208 00bf 00000000 		.4byte	0
+ 2209              	.LLST7:
+ 2210 00c3 4E000000 		.4byte	.LVL24
+ 2211 00c7 51000000 		.4byte	.LVL25-1
+ 2212 00cb 0100     		.2byte	0x1
+ 2213 00cd 50       		.byte	0x50
+ 2214 00ce 00000000 		.4byte	0
+ 2215 00d2 00000000 		.4byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 49
+
+
+ 2216              	.LLST8:
+ 2217 00d6 2C000000 		.4byte	.LVL36
+ 2218 00da 34000000 		.4byte	.LVL37
+ 2219 00de 0400     		.2byte	0x4
+ 2220 00e0 0A       		.byte	0xa
+ 2221 00e1 D007     		.2byte	0x7d0
+ 2222 00e3 9F       		.byte	0x9f
+ 2223 00e4 34000000 		.4byte	.LVL37
+ 2224 00e8 B8000000 		.4byte	.LVL55
+ 2225 00ec 0100     		.2byte	0x1
+ 2226 00ee 57       		.byte	0x57
+ 2227 00ef BA000000 		.4byte	.LVL56
+ 2228 00f3 D8000000 		.4byte	.LVL59
+ 2229 00f7 0100     		.2byte	0x1
+ 2230 00f9 57       		.byte	0x57
+ 2231 00fa 00000000 		.4byte	0
+ 2232 00fe 00000000 		.4byte	0
+ 2233              	.LLST9:
+ 2234 0102 08000000 		.4byte	.LVL31
+ 2235 0106 0C000000 		.4byte	.LVL32
+ 2236 010a 0200     		.2byte	0x2
+ 2237 010c 30       		.byte	0x30
+ 2238 010d 9F       		.byte	0x9f
+ 2239 010e 0C000000 		.4byte	.LVL32
+ 2240 0112 23000000 		.4byte	.LVL35-1
+ 2241 0116 0100     		.2byte	0x1
+ 2242 0118 53       		.byte	0x53
+ 2243 0119 42000000 		.4byte	.LVL39
+ 2244 011d 48000000 		.4byte	.LVL40
+ 2245 0121 0200     		.2byte	0x2
+ 2246 0123 30       		.byte	0x30
+ 2247 0124 9F       		.byte	0x9f
+ 2248 0125 48000000 		.4byte	.LVL40
+ 2249 0129 BA000000 		.4byte	.LVL56
+ 2250 012d 0100     		.2byte	0x1
+ 2251 012f 54       		.byte	0x54
+ 2252 0130 D6000000 		.4byte	.LVL58
+ 2253 0134 D8000000 		.4byte	.LVL59
+ 2254 0138 0100     		.2byte	0x1
+ 2255 013a 58       		.byte	0x58
+ 2256 013b D8000000 		.4byte	.LVL59
+ 2257 013f DC000000 		.4byte	.LVL60
+ 2258 0143 0100     		.2byte	0x1
+ 2259 0145 53       		.byte	0x53
+ 2260 0146 DC000000 		.4byte	.LVL60
+ 2261 014a 4E010000 		.4byte	.LVL84
+ 2262 014e 0100     		.2byte	0x1
+ 2263 0150 58       		.byte	0x58
+ 2264 0151 4E010000 		.4byte	.LVL84
+ 2265 0155 52010000 		.4byte	.LVL85
+ 2266 0159 0100     		.2byte	0x1
+ 2267 015b 53       		.byte	0x53
+ 2268 015c 52010000 		.4byte	.LVL85
+ 2269 0160 A2010000 		.4byte	.LVL95
+ 2270 0164 0100     		.2byte	0x1
+ 2271 0166 55       		.byte	0x55
+ 2272 0167 00000000 		.4byte	0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 50
+
+
+ 2273 016b 00000000 		.4byte	0
+ 2274              	.LLST10:
+ 2275 016f 18010000 		.4byte	.LVL74
+ 2276 0173 48010000 		.4byte	.LVL83
+ 2277 0177 0100     		.2byte	0x1
+ 2278 0179 54       		.byte	0x54
+ 2279 017a 6A010000 		.4byte	.LVL87
+ 2280 017e 6E010000 		.4byte	.LVL88
+ 2281 0182 0200     		.2byte	0x2
+ 2282 0184 30       		.byte	0x30
+ 2283 0185 9F       		.byte	0x9f
+ 2284 0186 6E010000 		.4byte	.LVL88
+ 2285 018a 8A010000 		.4byte	.LVL91
+ 2286 018e 0100     		.2byte	0x1
+ 2287 0190 54       		.byte	0x54
+ 2288 0191 00000000 		.4byte	0
+ 2289 0195 00000000 		.4byte	0
+ 2290              	.LLST11:
+ 2291 0199 1A000000 		.4byte	.LVL34
+ 2292 019d 34000000 		.4byte	.LVL37
+ 2293 01a1 0300     		.2byte	0x3
+ 2294 01a3 09       		.byte	0x9
+ 2295 01a4 FF       		.byte	0xff
+ 2296 01a5 9F       		.byte	0x9f
+ 2297 01a6 34000000 		.4byte	.LVL37
+ 2298 01aa 8C000000 		.4byte	.LVL52
+ 2299 01ae 0100     		.2byte	0x1
+ 2300 01b0 58       		.byte	0x58
+ 2301 01b1 8C000000 		.4byte	.LVL52
+ 2302 01b5 90000000 		.4byte	.LVL53
+ 2303 01b9 0100     		.2byte	0x1
+ 2304 01bb 53       		.byte	0x53
+ 2305 01bc 90000000 		.4byte	.LVL53
+ 2306 01c0 D8000000 		.4byte	.LVL59
+ 2307 01c4 0100     		.2byte	0x1
+ 2308 01c6 58       		.byte	0x58
+ 2309 01c7 00000000 		.4byte	0
+ 2310 01cb 00000000 		.4byte	0
+ 2311              	.LLST12:
+ 2312 01cf 4E000000 		.4byte	.LVL42
+ 2313 01d3 50000000 		.4byte	.LVL43
+ 2314 01d7 0100     		.2byte	0x1
+ 2315 01d9 50       		.byte	0x50
+ 2316 01da 50000000 		.4byte	.LVL43
+ 2317 01de 5E000000 		.4byte	.LVL48
+ 2318 01e2 0100     		.2byte	0x1
+ 2319 01e4 56       		.byte	0x56
+ 2320 01e5 00000000 		.4byte	0
+ 2321 01e9 00000000 		.4byte	0
+ 2322              	.LLST13:
+ 2323 01ed 58000000 		.4byte	.LVL45
+ 2324 01f1 5A000000 		.4byte	.LVL46
+ 2325 01f5 0100     		.2byte	0x1
+ 2326 01f7 50       		.byte	0x50
+ 2327 01f8 00000000 		.4byte	0
+ 2328 01fc 00000000 		.4byte	0
+ 2329              	.LLST14:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 51
+
+
+ 2330 0200 42000000 		.4byte	.LVL39
+ 2331 0204 48000000 		.4byte	.LVL40
+ 2332 0208 0200     		.2byte	0x2
+ 2333 020a 30       		.byte	0x30
+ 2334 020b 9F       		.byte	0x9f
+ 2335 020c 48000000 		.4byte	.LVL40
+ 2336 0210 6A000000 		.4byte	.LVL49
+ 2337 0214 0100     		.2byte	0x1
+ 2338 0216 55       		.byte	0x55
+ 2339 0217 6A000000 		.4byte	.LVL49
+ 2340 021b 70000000 		.4byte	.LVL50
+ 2341 021f 0100     		.2byte	0x1
+ 2342 0221 50       		.byte	0x50
+ 2343 0222 00000000 		.4byte	0
+ 2344 0226 00000000 		.4byte	0
+ 2345              	.LLST15:
+ 2346 022a E0000000 		.4byte	.LVL61
+ 2347 022e 18010000 		.4byte	.LVL74
+ 2348 0232 0100     		.2byte	0x1
+ 2349 0234 54       		.byte	0x54
+ 2350 0235 18010000 		.4byte	.LVL74
+ 2351 0239 1A010000 		.4byte	.LVL75
+ 2352 023d 0300     		.2byte	0x3
+ 2353 023f 74       		.byte	0x74
+ 2354 0240 7F       		.sleb128 -1
+ 2355 0241 9F       		.byte	0x9f
+ 2356 0242 00000000 		.4byte	0
+ 2357 0246 00000000 		.4byte	0
+ 2358              	.LLST16:
+ 2359 024a E8000000 		.4byte	.LVL62
+ 2360 024e FB000000 		.4byte	.LVL67-1
+ 2361 0252 0100     		.2byte	0x1
+ 2362 0254 53       		.byte	0x53
+ 2363 0255 FB000000 		.4byte	.LVL67-1
+ 2364 0259 48010000 		.4byte	.LVL83
+ 2365 025d 0100     		.2byte	0x1
+ 2366 025f 57       		.byte	0x57
+ 2367 0260 00000000 		.4byte	0
+ 2368 0264 00000000 		.4byte	0
+ 2369              	.LLST17:
+ 2370 0268 EE000000 		.4byte	.LVL63
+ 2371 026c 16010000 		.4byte	.LVL73
+ 2372 0270 0100     		.2byte	0x1
+ 2373 0272 55       		.byte	0x55
+ 2374 0273 00000000 		.4byte	0
+ 2375 0277 00000000 		.4byte	0
+ 2376              	.LLST18:
+ 2377 027b F4000000 		.4byte	.LVL64
+ 2378 027f F6000000 		.4byte	.LVL65
+ 2379 0283 0100     		.2byte	0x1
+ 2380 0285 50       		.byte	0x50
+ 2381 0286 F6000000 		.4byte	.LVL65
+ 2382 028a FB000000 		.4byte	.LVL67-1
+ 2383 028e 0C00     		.2byte	0xc
+ 2384 0290 72       		.byte	0x72
+ 2385 0291 00       		.sleb128 0
+ 2386 0292 71       		.byte	0x71
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 52
+
+
+ 2387 0293 00       		.sleb128 0
+ 2388 0294 22       		.byte	0x22
+ 2389 0295 94       		.byte	0x94
+ 2390 0296 02       		.byte	0x2
+ 2391 0297 0A       		.byte	0xa
+ 2392 0298 FFFF     		.2byte	0xffff
+ 2393 029a 1A       		.byte	0x1a
+ 2394 029b 9F       		.byte	0x9f
+ 2395 029c 00000000 		.4byte	0
+ 2396 02a0 00000000 		.4byte	0
+ 2397              	.LLST19:
+ 2398 02a4 F6000000 		.4byte	.LVL65
+ 2399 02a8 FB000000 		.4byte	.LVL67-1
+ 2400 02ac 0100     		.2byte	0x1
+ 2401 02ae 50       		.byte	0x50
+ 2402 02af 00000000 		.4byte	0
+ 2403 02b3 00000000 		.4byte	0
+ 2404              	.LLST20:
+ 2405 02b7 F8000000 		.4byte	.LVL66
+ 2406 02bb 0E010000 		.4byte	.LVL70
+ 2407 02bf 0100     		.2byte	0x1
+ 2408 02c1 56       		.byte	0x56
+ 2409 02c2 0E010000 		.4byte	.LVL70
+ 2410 02c6 18010000 		.4byte	.LVL74
+ 2411 02ca 0600     		.2byte	0x6
+ 2412 02cc 77       		.byte	0x77
+ 2413 02cd 00       		.sleb128 0
+ 2414 02ce 74       		.byte	0x74
+ 2415 02cf 00       		.sleb128 0
+ 2416 02d0 1C       		.byte	0x1c
+ 2417 02d1 9F       		.byte	0x9f
+ 2418 02d2 18010000 		.4byte	.LVL74
+ 2419 02d6 1A010000 		.4byte	.LVL75
+ 2420 02da 0800     		.2byte	0x8
+ 2421 02dc 77       		.byte	0x77
+ 2422 02dd 00       		.sleb128 0
+ 2423 02de 74       		.byte	0x74
+ 2424 02df 00       		.sleb128 0
+ 2425 02e0 1C       		.byte	0x1c
+ 2426 02e1 23       		.byte	0x23
+ 2427 02e2 01       		.uleb128 0x1
+ 2428 02e3 9F       		.byte	0x9f
+ 2429 02e4 00000000 		.4byte	0
+ 2430 02e8 00000000 		.4byte	0
+ 2431              	.LLST21:
+ 2432 02ec 0E010000 		.4byte	.LVL70
+ 2433 02f0 10010000 		.4byte	.LVL71
+ 2434 02f4 0100     		.2byte	0x1
+ 2435 02f6 50       		.byte	0x50
+ 2436 02f7 10010000 		.4byte	.LVL71
+ 2437 02fb 48010000 		.4byte	.LVL83
+ 2438 02ff 0100     		.2byte	0x1
+ 2439 0301 56       		.byte	0x56
+ 2440 0302 00000000 		.4byte	0
+ 2441 0306 00000000 		.4byte	0
+ 2442              	.LLST22:
+ 2443 030a 16010000 		.4byte	.LVL73
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 53
+
+
+ 2444 030e 1A010000 		.4byte	.LVL75
+ 2445 0312 0100     		.2byte	0x1
+ 2446 0314 50       		.byte	0x50
+ 2447 0315 1A010000 		.4byte	.LVL75
+ 2448 0319 30010000 		.4byte	.LVL80
+ 2449 031d 0100     		.2byte	0x1
+ 2450 031f 55       		.byte	0x55
+ 2451 0320 30010000 		.4byte	.LVL80
+ 2452 0324 33010000 		.4byte	.LVL81-1
+ 2453 0328 0100     		.2byte	0x1
+ 2454 032a 50       		.byte	0x50
+ 2455 032b 33010000 		.4byte	.LVL81-1
+ 2456 032f 48010000 		.4byte	.LVL83
+ 2457 0333 0100     		.2byte	0x1
+ 2458 0335 55       		.byte	0x55
+ 2459 0336 00000000 		.4byte	0
+ 2460 033a 00000000 		.4byte	0
+ 2461              		.section	.debug_aranges,"",%progbits
+ 2462 0000 54000000 		.4byte	0x54
+ 2463 0004 0200     		.2byte	0x2
+ 2464 0006 00000000 		.4byte	.Ldebug_info0
+ 2465 000a 04       		.byte	0x4
+ 2466 000b 00       		.byte	0
+ 2467 000c 0000     		.2byte	0
+ 2468 000e 0000     		.2byte	0
+ 2469 0010 00000000 		.4byte	.LFB41
+ 2470 0014 26000000 		.4byte	.LFE41-.LFB41
+ 2471 0018 00000000 		.4byte	.LFB36
+ 2472 001c 2C000000 		.4byte	.LFE36-.LFB36
+ 2473 0020 00000000 		.4byte	.LFB38
+ 2474 0024 60000000 		.4byte	.LFE38-.LFB38
+ 2475 0028 00000000 		.4byte	.LFB37
+ 2476 002c 14000000 		.4byte	.LFE37-.LFB37
+ 2477 0030 00000000 		.4byte	.LFB39
+ 2478 0034 0E000000 		.4byte	.LFE39-.LFB39
+ 2479 0038 00000000 		.4byte	.LFB40
+ 2480 003c 02000000 		.4byte	.LFE40-.LFB40
+ 2481 0040 00000000 		.4byte	.LFB42
+ 2482 0044 B8010000 		.4byte	.LFE42-.LFB42
+ 2483 0048 00000000 		.4byte	.LFB43
+ 2484 004c 10000000 		.4byte	.LFE43-.LFB43
+ 2485 0050 00000000 		.4byte	0
+ 2486 0054 00000000 		.4byte	0
+ 2487              		.section	.debug_ranges,"",%progbits
+ 2488              	.Ldebug_ranges0:
+ 2489 0000 00000000 		.4byte	.LFB41
+ 2490 0004 26000000 		.4byte	.LFE41
+ 2491 0008 00000000 		.4byte	.LFB36
+ 2492 000c 2C000000 		.4byte	.LFE36
+ 2493 0010 00000000 		.4byte	.LFB38
+ 2494 0014 60000000 		.4byte	.LFE38
+ 2495 0018 00000000 		.4byte	.LFB37
+ 2496 001c 14000000 		.4byte	.LFE37
+ 2497 0020 00000000 		.4byte	.LFB39
+ 2498 0024 0E000000 		.4byte	.LFE39
+ 2499 0028 00000000 		.4byte	.LFB40
+ 2500 002c 02000000 		.4byte	.LFE40
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 54
+
+
+ 2501 0030 00000000 		.4byte	.LFB42
+ 2502 0034 B8010000 		.4byte	.LFE42
+ 2503 0038 00000000 		.4byte	.LFB43
+ 2504 003c 10000000 		.4byte	.LFE43
+ 2505 0040 00000000 		.4byte	0
+ 2506 0044 00000000 		.4byte	0
+ 2507              		.section	.debug_line,"",%progbits
+ 2508              	.Ldebug_line0:
+ 2509 0000 97020000 		.section	.debug_str,"MS",%progbits,1
+ 2509      02000A01 
+ 2509      00000201 
+ 2509      FB0E0D00 
+ 2509      01010101 
+ 2510              	.LASF56:
+ 2511 0000 50686173 		.ascii	"Phase_Counter_ReadCounter\000"
+ 2511      655F436F 
+ 2511      756E7465 
+ 2511      725F5265 
+ 2511      6164436F 
+ 2512              	.LASF52:
+ 2513 001a 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
+ 2513      726F6A65 
+ 2513      6374735C 
+ 2513      41726C6F 
+ 2513      426F745C 
+ 2514 0048 61726431 		.ascii	"ard1-RPi.cydsn\000"
+ 2514      2D525069 
+ 2514      2E637964 
+ 2514      736E00
+ 2515              	.LASF42:
+ 2516 0057 63616C5F 		.ascii	"cal_cps_to_pwm\000"
+ 2516      6370735F 
+ 2516      746F5F70 
+ 2516      776D00
+ 2517              	.LASF29:
+ 2518 0066 6D656173 		.ascii	"meas_cps\000"
+ 2518      5F637073 
+ 2518      00
+ 2519              	.LASF27:
+ 2520 006f 4D6F746F 		.ascii	"Motor_Stop\000"
+ 2520      725F5374 
+ 2520      6F7000
+ 2521              	.LASF24:
+ 2522 007a 76616C75 		.ascii	"value\000"
+ 2522      6500
+ 2523              	.LASF37:
+ 2524 0080 73746570 		.ascii	"step\000"
+ 2524      00
+ 2525              	.LASF3:
+ 2526 0085 73686F72 		.ascii	"short unsigned int\000"
+ 2526      7420756E 
+ 2526      7369676E 
+ 2526      65642069 
+ 2526      6E7400
+ 2527              	.LASF51:
+ 2528 0098 2E2E5C73 		.ascii	"..\\source\\motor.c\000"
+ 2528      6F757263 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 55
+
+
+ 2528      655C6D6F 
+ 2528      746F722E 
+ 2528      6300
+ 2529              	.LASF15:
+ 2530 00aa 646F7562 		.ascii	"double\000"
+ 2530      6C6500
+ 2531              	.LASF41:
+ 2532 00b1 6E756D5F 		.ascii	"num_entries\000"
+ 2532      656E7472 
+ 2532      69657300 
+ 2533              	.LASF43:
+ 2534 00bd 6D61705F 		.ascii	"map_cps_to_pwm\000"
+ 2534      6370735F 
+ 2534      746F5F70 
+ 2534      776D00
+ 2535              	.LASF54:
+ 2536 00cc 4D6F746F 		.ascii	"Motor_Test\000"
+ 2536      725F5465 
+ 2536      737400
+ 2537              	.LASF14:
+ 2538 00d7 666C6F61 		.ascii	"float\000"
+ 2538      7400
+ 2539              	.LASF0:
+ 2540 00dd 7369676E 		.ascii	"signed char\000"
+ 2540      65642063 
+ 2540      68617200 
+ 2541              	.LASF23:
+ 2542 00e9 64656C61 		.ascii	"delay\000"
+ 2542      7900
+ 2543              	.LASF36:
+ 2544 00ef 7370616E 		.ascii	"span\000"
+ 2544      00
+ 2545              	.LASF53:
+ 2546 00f4 43616C63 		.ascii	"CalculateAverageCountPerSec\000"
+ 2546      756C6174 
+ 2546      65417665 
+ 2546      72616765 
+ 2546      436F756E 
+ 2547              	.LASF12:
+ 2548 0110 696E7431 		.ascii	"int16\000"
+ 2548      3600
+ 2549              	.LASF5:
+ 2550 0116 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2550      20756E73 
+ 2550      69676E65 
+ 2550      6420696E 
+ 2550      7400
+ 2551              	.LASF13:
+ 2552 0128 696E7433 		.ascii	"int32\000"
+ 2552      3200
+ 2553              	.LASF19:
+ 2554 012e 43414C49 		.ascii	"CALIBRATION_ENTRY\000"
+ 2554      42524154 
+ 2554      494F4E5F 
+ 2554      454E5452 
+ 2554      5900
+ 2555              	.LASF35:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 56
+
+
+ 2556 0140 6E657874 		.ascii	"next_pwm\000"
+ 2556      5F70776D 
+ 2556      00
+ 2557              	.LASF21:
+ 2558 0149 636F756E 		.ascii	"count_end\000"
+ 2558      745F656E 
+ 2558      6400
+ 2559              	.LASF46:
+ 2560 0153 48423235 		.ascii	"HB25_PWM_WriteCompare\000"
+ 2560      5F50574D 
+ 2560      5F577269 
+ 2560      7465436F 
+ 2560      6D706172 
+ 2561              	.LASF10:
+ 2562 0169 75696E74 		.ascii	"uint16\000"
+ 2562      313600
+ 2563              	.LASF49:
+ 2564 0170 726F756E 		.ascii	"round\000"
+ 2564      6400
+ 2565              	.LASF11:
+ 2566 0176 75696E74 		.ascii	"uint32\000"
+ 2566      333200
+ 2567              	.LASF38:
+ 2568 017d 4D6F746F 		.ascii	"Motor_SetOutput\000"
+ 2568      725F5365 
+ 2568      744F7574 
+ 2568      70757400 
+ 2569              	.LASF1:
+ 2570 018d 756E7369 		.ascii	"unsigned char\000"
+ 2570      676E6564 
+ 2570      20636861 
+ 2570      7200
+ 2571              	.LASF8:
+ 2572 019b 756E7369 		.ascii	"unsigned int\000"
+ 2572      676E6564 
+ 2572      20696E74 
+ 2572      00
+ 2573              	.LASF45:
+ 2574 01a8 48423235 		.ascii	"HB25_Enable_Pin_Write\000"
+ 2574      5F456E61 
+ 2574      626C655F 
+ 2574      50696E5F 
+ 2574      57726974 
+ 2575              	.LASF22:
+ 2576 01be 64656C74 		.ascii	"delta\000"
+ 2576      6100
+ 2577              	.LASF7:
+ 2578 01c4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2578      206C6F6E 
+ 2578      6720756E 
+ 2578      7369676E 
+ 2578      65642069 
+ 2579              	.LASF34:
+ 2580 01db 63757272 		.ascii	"curr_pwm\000"
+ 2580      5F70776D 
+ 2580      00
+ 2581              	.LASF26:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 57
+
+
+ 2582 01e4 4D6F746F 		.ascii	"Motor_Start\000"
+ 2582      725F5374 
+ 2582      61727400 
+ 2583              	.LASF32:
+ 2584 01f0 6370735F 		.ascii	"cps_i\000"
+ 2584      6900
+ 2585              	.LASF31:
+ 2586 01f6 64656C74 		.ascii	"deltas\000"
+ 2586      617300
+ 2587              	.LASF17:
+ 2588 01fd 73697A65 		.ascii	"sizetype\000"
+ 2588      74797065 
+ 2588      00
+ 2589              	.LASF50:
+ 2590 0206 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2590      4320342E 
+ 2590      392E3320 
+ 2590      32303135 
+ 2590      30333033 
+ 2591 0239 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 2591      20726576 
+ 2591      6973696F 
+ 2591      6E203232 
+ 2591      31323230 
+ 2592 026c 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2592      66756E63 
+ 2592      74696F6E 
+ 2592      2D736563 
+ 2592      74696F6E 
+ 2593              	.LASF6:
+ 2594 0294 6C6F6E67 		.ascii	"long long int\000"
+ 2594      206C6F6E 
+ 2594      6720696E 
+ 2594      7400
+ 2595              	.LASF16:
+ 2596 02a2 63686172 		.ascii	"char\000"
+ 2596      00
+ 2597              	.LASF25:
+ 2598 02a7 4D6F746F 		.ascii	"Motor_Init\000"
+ 2598      725F496E 
+ 2598      697400
+ 2599              	.LASF47:
+ 2600 02b2 48423235 		.ascii	"HB25_PWM_Start\000"
+ 2600      5F50574D 
+ 2600      5F537461 
+ 2600      727400
+ 2601              	.LASF2:
+ 2602 02c1 73686F72 		.ascii	"short int\000"
+ 2602      7420696E 
+ 2602      7400
+ 2603              	.LASF9:
+ 2604 02cb 75696E74 		.ascii	"uint8\000"
+ 2604      3800
+ 2605              	.LASF40:
+ 2606 02d1 63616C5F 		.ascii	"cal_values\000"
+ 2606      76616C75 
+ 2606      657300
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccJryN6Z.s 			page 58
+
+
+ 2607              	.LASF4:
+ 2608 02dc 6C6F6E67 		.ascii	"long int\000"
+ 2608      20696E74 
+ 2608      00
+ 2609              	.LASF18:
+ 2610 02e5 6C6F6E67 		.ascii	"long double\000"
+ 2610      20646F75 
+ 2610      626C6500 
+ 2611              	.LASF39:
+ 2612 02f1 4D6F746F 		.ascii	"Motor_GetCalValues\000"
+ 2612      725F4765 
+ 2612      7443616C 
+ 2612      56616C75 
+ 2612      657300
+ 2613              	.LASF30:
+ 2614 0304 63616C5F 		.ascii	"cal_cps_index\000"
+ 2614      6370735F 
+ 2614      696E6465 
+ 2614      7800
+ 2615              	.LASF48:
+ 2616 0312 48423235 		.ascii	"HB25_PWM_Stop\000"
+ 2616      5F50574D 
+ 2616      5F53746F 
+ 2616      7000
+ 2617              	.LASF33:
+ 2618 0320 6370735F 		.ascii	"cps_i_plus_1\000"
+ 2618      695F706C 
+ 2618      75735F31 
+ 2618      00
+ 2619              	.LASF44:
+ 2620 032d 43794465 		.ascii	"CyDelay\000"
+ 2620      6C617900 
+ 2621              	.LASF20:
+ 2622 0335 636F756E 		.ascii	"count_start\000"
+ 2622      745F7374 
+ 2622      61727400 
+ 2623              	.LASF28:
+ 2624 0341 4D6F746F 		.ascii	"Motor_Calibrate\000"
+ 2624      725F4361 
+ 2624      6C696272 
+ 2624      61746500 
+ 2625              	.LASF55:
+ 2626 0351 666F726D 		.ascii	"formatted_string\000"
+ 2626      61747465 
+ 2626      645F7374 
+ 2626      72696E67 
+ 2626      00
+ 2627              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

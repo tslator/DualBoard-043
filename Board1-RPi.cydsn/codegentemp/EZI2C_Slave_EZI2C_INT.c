@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: EZI2C_Slave_EZI2C_INT.c
-* Version 3.0
+* Version 3.10
 *
 * Description:
 *  This file provides the source code to the Interrupt Service Routine for

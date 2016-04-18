@@ -1,3 +1,15 @@
+/* ========================================
+ *
+ * Copyright YOUR COMPANY, THE YEAR
+ * All Rights Reserved
+ * UNPUBLISHED, LICENSED SOFTWARE.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ * WHICH IS THE PROPERTY OF your company.
+ *
+ * ========================================
+*/
+
 #include "debug.h"
 
 void Debug_Init()
@@ -11,3 +23,5 @@ void Debug_Start()
     UARTCOMMS_Start();
 #endif
 }
+
+/* [] END OF FILE */

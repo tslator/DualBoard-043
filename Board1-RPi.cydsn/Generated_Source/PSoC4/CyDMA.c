@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CyDMA.c
-* Version 1.0
+* Version 1.10
 *
 * Description:
 *  This file contains all of the global DMA API functions.
@@ -66,6 +66,7 @@ void CyDmaEnable(void)
     if(0u == initIntrVector)
     {
         CyDmaSetInterruptVector(&CyDmaInterrupt);
+        CyIntSetPriority(CYDMA_INTR_NUMBER, CYDMA_INTR_PRIO);
         initIntrVector = 1u;
     }
     CYDMA_CTL_REG = CYDMA_ENABLED;
@@ -595,9 +596,12 @@ void CyDmaChDisable(int32 channel)
 *******************************************************************************/
 void CyDmaTrigger(int32 channel)
 {
+    /* The LUT is device-dependent, thus it is generated during the build process. */
+    static const uint32 trCtlLut[] = {0xC0020000U};
+
     CYASSERT((channel >= 0) && (channel < CYDMA_CH_NR));
 
-    CYDMA_TR_CTL_REG = CYDMA_TRIGGER_MASK | (uint32)(channel);
+    CYDMA_TR_CTL_REG = trCtlLut[(uint32)channel >> CYDMA_TR_GROUP_SHR] | ((uint32)channel & CYDMA_TR_SEL_MASK);
 }
 
 

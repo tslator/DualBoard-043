@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: ADC_Infrared_PM.c
-* Version 2.20
+* Version 2.30
 *
 * Description:
 *  This file provides Sleep/WakeUp APIs functionality.

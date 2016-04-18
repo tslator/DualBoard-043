@@ -17,9 +17,11 @@
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_1.c" value="ARM_C_FILE;Pin_InfraredDistance_1" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_1.h" value="NONE;Pin_InfraredDistance_1" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_1_aliases.h" value="NONE;Pin_InfraredDistance_1" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_1_PM.c" value="ARM_C_FILE;Pin_InfraredDistance_1" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_2.c" value="ARM_C_FILE;Pin_InfraredDistance_2" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_2.h" value="NONE;Pin_InfraredDistance_2" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_2_aliases.h" value="NONE;Pin_InfraredDistance_2" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_2_PM.c" value="ARM_C_FILE;Pin_InfraredDistance_2" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave.c" value="ARM_C_FILE;EZI2C_Slave" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave.h" value="NONE;EZI2C_Slave" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_PM.c" value="ARM_C_FILE;EZI2C_Slave" />
@@ -35,21 +37,27 @@
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_0.c" value="ARM_C_FILE;HCSR04_Echo_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_0.h" value="NONE;HCSR04_Echo_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_0_aliases.h" value="NONE;HCSR04_Echo_0" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_0_PM.c" value="ARM_C_FILE;HCSR04_Echo_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_3.c" value="ARM_C_FILE;Pin_InfraredDistance_3" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_3.h" value="NONE;Pin_InfraredDistance_3" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_3_aliases.h" value="NONE;Pin_InfraredDistance_3" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_3_PM.c" value="ARM_C_FILE;Pin_InfraredDistance_3" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_3.c" value="ARM_C_FILE;HCSR04_Echo_3" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_3.h" value="NONE;HCSR04_Echo_3" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_3_aliases.h" value="NONE;HCSR04_Echo_3" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_3_PM.c" value="ARM_C_FILE;HCSR04_Echo_3" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_2.c" value="ARM_C_FILE;HCSR04_Echo_2" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_2.h" value="NONE;HCSR04_Echo_2" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_2_aliases.h" value="NONE;HCSR04_Echo_2" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_2_PM.c" value="ARM_C_FILE;HCSR04_Echo_2" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_1.c" value="ARM_C_FILE;HCSR04_Echo_1" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_1.h" value="NONE;HCSR04_Echo_1" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_1_aliases.h" value="NONE;HCSR04_Echo_1" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HCSR04_Echo_1_PM.c" value="ARM_C_FILE;HCSR04_Echo_1" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_0.c" value="ARM_C_FILE;Pin_InfraredDistance_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_0.h" value="NONE;Pin_InfraredDistance_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_0_aliases.h" value="NONE;Pin_InfraredDistance_0" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Pin_InfraredDistance_0_PM.c" value="ARM_C_FILE;Pin_InfraredDistance_0" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\ADC_Infrared.c" value="ARM_C_FILE;ADC_Infrared" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\ADC_Infrared.h" value="NONE;ADC_Infrared" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\ADC_Infrared_PM.c" value="ARM_C_FILE;ADC_Infrared" />
@@ -101,6 +109,7 @@
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_PWM_Pin.c" value="ARM_C_FILE;HB25_PWM_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_PWM_Pin.h" value="NONE;HB25_PWM_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_PWM_Pin_aliases.h" value="NONE;HB25_PWM_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_PWM_Pin_PM.c" value="ARM_C_FILE;HB25_PWM_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_Enable_Pin.c" value="ARM_C_FILE;HB25_Enable_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_Enable_Pin.h" value="NONE;HB25_Enable_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\HB25_Enable_Pin_aliases.h" value="NONE;HB25_Enable_Pin" />
@@ -133,14 +142,24 @@
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\PhaseCounter_Intr.h" value="NONE;PhaseCounter_Intr" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Quadrature_Decode_Clock.c" value="ARM_C_FILE;Quadrature_Decode_Clock" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Quadrature_Decode_Clock.h" value="NONE;Quadrature_Decode_Clock" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\MainLoop_Pin.c" value="ARM_C_FILE;MainLoop_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\MainLoop_Pin.h" value="NONE;MainLoop_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\MainLoop_Pin_aliases.h" value="NONE;MainLoop_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\MainLoop_Pin_PM.c" value="ARM_C_FILE;MainLoop_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Count_Pin.c" value="ARM_C_FILE;Encoder_Count_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Count_Pin.h" value="NONE;Encoder_Count_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Count_Pin_aliases.h" value="NONE;Encoder_Count_Pin" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\Encoder_Count_Pin_PM.c" value="ARM_C_FILE;Encoder_Count_Pin" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_SCBCLK.c" value="ARM_C_FILE;EZI2C_Slave_SCBCLK" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_SCBCLK.h" value="NONE;EZI2C_Slave_SCBCLK" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_sda.c" value="ARM_C_FILE;EZI2C_Slave_sda" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_sda.h" value="NONE;EZI2C_Slave_sda" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_sda_aliases.h" value="NONE;EZI2C_Slave_sda" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_sda_PM.c" value="ARM_C_FILE;EZI2C_Slave_sda" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_scl.c" value="ARM_C_FILE;EZI2C_Slave_scl" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_scl.h" value="NONE;EZI2C_Slave_scl" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_scl_aliases.h" value="NONE;EZI2C_Slave_scl" />
+  <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_scl_PM.c" value="ARM_C_FILE;EZI2C_Slave_scl" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_SCB_IRQ.c" value="ARM_C_FILE;EZI2C_Slave_SCB_IRQ" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\EZI2C_Slave_SCB_IRQ.h" value="NONE;EZI2C_Slave_SCB_IRQ" />
   <file name="D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\codegentemp\ADC_Infrared_IRQ.c" value="ARM_C_FILE;ADC_Infrared_IRQ" />

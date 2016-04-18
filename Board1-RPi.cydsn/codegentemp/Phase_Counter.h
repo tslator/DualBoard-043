@@ -163,8 +163,8 @@ void Phase_Counter_Wakeup(void)        ;
 #else
 #define Phase_Counter_INIT_COMPARE_VALUE      4294967295u
 #define Phase_Counter_INIT_INTERRUPTS_MASK ((uint8)((uint8)0u << Phase_Counter_STATUS_ZERO_INT_EN_MASK_SHIFT) | \
-        ((uint8)((uint8)0u << Phase_Counter_STATUS_CAPTURE_INT_EN_MASK_SHIFT)) | \
-        ((uint8)((uint8)0u << Phase_Counter_STATUS_CMP_INT_EN_MASK_SHIFT)) | \
+        ((uint8)((uint8)1u << Phase_Counter_STATUS_CAPTURE_INT_EN_MASK_SHIFT)) | \
+        ((uint8)((uint8)1u << Phase_Counter_STATUS_CMP_INT_EN_MASK_SHIFT)) | \
         ((uint8)((uint8)1u << Phase_Counter_STATUS_OVERFLOW_INT_EN_MASK_SHIFT)) | \
         ((uint8)((uint8)1u << Phase_Counter_STATUS_UNDERFLOW_INT_EN_MASK_SHIFT)))
 #define Phase_Counter_DEFAULT_COMPARE_MODE    1u

@@ -15,6 +15,8 @@
     
 #include <project.h>
 
+#define MS_IN_SEC (1000)    
+    
 #define DELTA_TIME(n, l, p) ((n - l) > p ? 1 : 0)
 
 void Time_Init();

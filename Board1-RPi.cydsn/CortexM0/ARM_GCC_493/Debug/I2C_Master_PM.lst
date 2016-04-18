@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
   30:.\Generated_Source\PSoC4/I2C_Master_PM.c ****     #include "I2C_Master_SPI_UART_PVT.h"
   31:.\Generated_Source\PSoC4/I2C_Master_PM.c **** #endif /* (I2C_Master_SCB_MODE_SPI_INC || I2C_Master_SCB_MODE_UART_INC) */
   32:.\Generated_Source\PSoC4/I2C_Master_PM.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/I2C_Master_PM.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
   81:.\Generated_Source\PSoC4/I2C_Master_PM.c ****     #if(!I2C_Master_CY_SCBIP_V1)
   82:.\Generated_Source\PSoC4/I2C_Master_PM.c ****         else if(I2C_Master_SCB_MODE_SPI_RUNTM_CFG)
   83:.\Generated_Source\PSoC4/I2C_Master_PM.c ****         {
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 3
 
 
   84:.\Generated_Source\PSoC4/I2C_Master_PM.c ****             I2C_Master_SpiSaveConfig();
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
   43              	.L1:
  127:.\Generated_Source\PSoC4/I2C_Master_PM.c ****         }
  128:.\Generated_Source\PSoC4/I2C_Master_PM.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 4
 
 
  129:.\Generated_Source\PSoC4/I2C_Master_PM.c ****     #endif /* defined (I2C_Master_SCB_MODE_I2C_CONST_CFG) && (I2C_Master_I2C_WAKE_ENABLE_CONST) */
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  158:.\Generated_Source\PSoC4/I2C_Master_PM.c ****         if(I2C_Master_SCB_MODE_I2C_RUNTM_CFG)
  159:.\Generated_Source\PSoC4/I2C_Master_PM.c ****         {
  160:.\Generated_Source\PSoC4/I2C_Master_PM.c ****             I2C_Master_I2CRestoreConfig();
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 5
 
 
  161:.\Generated_Source\PSoC4/I2C_Master_PM.c ****         }
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
   76              	.LVL1:
   77              	.L5:
  208:.\Generated_Source\PSoC4/I2C_Master_PM.c ****         }
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 6
 
 
  209:.\Generated_Source\PSoC4/I2C_Master_PM.c **** 
@@ -330,7 +330,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
   99              		.file 3 ".\\Generated_Source\\PSoC4\\I2C_Master.h"
  100              		.section	.debug_info,"",%progbits
  101              	.Ldebug_info0:
- 102 0000 28010000 		.4byte	0x128
+ 102 0000 2A010000 		.4byte	0x12a
  103 0004 0400     		.2byte	0x4
  104 0006 00000000 		.4byte	.Ldebug_abbrev0
  105 000a 04       		.byte	0x4
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  127 003b 02       		.byte	0x2
  128 003c 07       		.byte	0x7
  129 003d 2F010000 		.4byte	.LASF3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 7
 
 
  130 0041 02       		.uleb128 0x2
@@ -388,102 +388,102 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  154 006b 04       		.uleb128 0x4
  155 006c 40000000 		.4byte	.LASF9
  156 0070 02       		.byte	0x2
- 157 0071 C2       		.byte	0xc2
- 158 0072 2C000000 		.4byte	0x2c
- 159 0076 04       		.uleb128 0x4
- 160 0077 0E000000 		.4byte	.LASF10
- 161 007b 02       		.byte	0x2
- 162 007c C4       		.byte	0xc4
- 163 007d 48000000 		.4byte	0x48
- 164 0081 02       		.uleb128 0x2
- 165 0082 04       		.byte	0x4
- 166 0083 04       		.byte	0x4
- 167 0084 81000000 		.4byte	.LASF11
- 168 0088 02       		.uleb128 0x2
- 169 0089 08       		.byte	0x8
- 170 008a 04       		.byte	0x4
- 171 008b CC000000 		.4byte	.LASF12
- 172 008f 02       		.uleb128 0x2
- 173 0090 01       		.byte	0x1
- 174 0091 08       		.byte	0x8
- 175 0092 AC000000 		.4byte	.LASF13
- 176 0096 05       		.uleb128 0x5
- 177 0097 10010000 		.4byte	.LASF14
- 178 009b 02       		.byte	0x2
- 179 009c 6E01     		.2byte	0x16e
- 180 009e A2000000 		.4byte	0xa2
- 181 00a2 06       		.uleb128 0x6
- 182 00a3 76000000 		.4byte	0x76
- 183 00a7 02       		.uleb128 0x2
- 184 00a8 04       		.byte	0x4
- 185 00a9 07       		.byte	0x7
- 186 00aa 08020000 		.4byte	.LASF15
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 8
+ 157 0071 3801     		.2byte	0x138
+ 158 0073 2C000000 		.4byte	0x2c
+ 159 0077 04       		.uleb128 0x4
+ 160 0078 0E000000 		.4byte	.LASF10
+ 161 007c 02       		.byte	0x2
+ 162 007d 3A01     		.2byte	0x13a
+ 163 007f 48000000 		.4byte	0x48
+ 164 0083 02       		.uleb128 0x2
+ 165 0084 04       		.byte	0x4
+ 166 0085 04       		.byte	0x4
+ 167 0086 81000000 		.4byte	.LASF11
+ 168 008a 02       		.uleb128 0x2
+ 169 008b 08       		.byte	0x8
+ 170 008c 04       		.byte	0x4
+ 171 008d CC000000 		.4byte	.LASF12
+ 172 0091 02       		.uleb128 0x2
+ 173 0092 01       		.byte	0x1
+ 174 0093 08       		.byte	0x8
+ 175 0094 AC000000 		.4byte	.LASF13
+ 176 0098 04       		.uleb128 0x4
+ 177 0099 10010000 		.4byte	.LASF14
+ 178 009d 02       		.byte	0x2
+ 179 009e E401     		.2byte	0x1e4
+ 180 00a0 A4000000 		.4byte	0xa4
+ 181 00a4 05       		.uleb128 0x5
+ 182 00a5 77000000 		.4byte	0x77
+ 183 00a9 02       		.uleb128 0x2
+ 184 00aa 04       		.byte	0x4
+ 185 00ab 07       		.byte	0x7
+ 186 00ac 08020000 		.4byte	.LASF15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 8
 
 
- 187 00ae 07       		.uleb128 0x7
- 188 00af 01       		.byte	0x1
- 189 00b0 03       		.byte	0x3
- 190 00b1 5B       		.byte	0x5b
- 191 00b2 C3000000 		.4byte	0xc3
- 192 00b6 08       		.uleb128 0x8
- 193 00b7 15000000 		.4byte	.LASF24
- 194 00bb 03       		.byte	0x3
- 195 00bc 5D       		.byte	0x5d
- 196 00bd 6B000000 		.4byte	0x6b
- 197 00c1 00       		.byte	0
- 198 00c2 00       		.byte	0
- 199 00c3 04       		.uleb128 0x4
- 200 00c4 16010000 		.4byte	.LASF16
- 201 00c8 03       		.byte	0x3
- 202 00c9 5E       		.byte	0x5e
- 203 00ca AE000000 		.4byte	0xae
- 204 00ce 09       		.uleb128 0x9
- 205 00cf 11020000 		.4byte	.LASF17
- 206 00d3 01       		.byte	0x1
- 207 00d4 43       		.byte	0x43
- 208 00d5 00000000 		.4byte	.LFB1
- 209 00d9 1C000000 		.4byte	.LFE1-.LFB1
- 210 00dd 01       		.uleb128 0x1
- 211 00de 9C       		.byte	0x9c
- 212 00df ED000000 		.4byte	0xed
- 213 00e3 0A       		.uleb128 0xa
- 214 00e4 12000000 		.4byte	.LVL0
- 215 00e8 1D010000 		.4byte	0x11d
- 216 00ec 00       		.byte	0
- 217 00ed 09       		.uleb128 0x9
- 218 00ee 4E010000 		.4byte	.LASF18
- 219 00f2 01       		.byte	0x1
- 220 00f3 98       		.byte	0x98
- 221 00f4 00000000 		.4byte	.LFB2
- 222 00f8 14000000 		.4byte	.LFE2-.LFB2
- 223 00fc 01       		.uleb128 0x1
- 224 00fd 9C       		.byte	0x9c
- 225 00fe 0C010000 		.4byte	0x10c
- 226 0102 0A       		.uleb128 0xa
- 227 0103 0E000000 		.4byte	.LVL1
- 228 0107 24010000 		.4byte	0x124
- 229 010b 00       		.byte	0
- 230 010c 0B       		.uleb128 0xb
- 231 010d 2E000000 		.4byte	.LASF25
- 232 0111 01       		.byte	0x1
- 233 0112 2C       		.byte	0x2c
- 234 0113 C3000000 		.4byte	0xc3
- 235 0117 05       		.uleb128 0x5
- 236 0118 03       		.byte	0x3
- 237 0119 00000000 		.4byte	I2C_Master_backup
- 238 011d 0C       		.uleb128 0xc
- 239 011e F8010000 		.4byte	.LASF19
- 240 0122 03       		.byte	0x3
- 241 0123 69       		.byte	0x69
- 242 0124 0C       		.uleb128 0xc
- 243 0125 BA000000 		.4byte	.LASF20
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 9
+ 187 00b0 06       		.uleb128 0x6
+ 188 00b1 01       		.byte	0x1
+ 189 00b2 03       		.byte	0x3
+ 190 00b3 5B       		.byte	0x5b
+ 191 00b4 C5000000 		.4byte	0xc5
+ 192 00b8 07       		.uleb128 0x7
+ 193 00b9 15000000 		.4byte	.LASF24
+ 194 00bd 03       		.byte	0x3
+ 195 00be 5D       		.byte	0x5d
+ 196 00bf 6B000000 		.4byte	0x6b
+ 197 00c3 00       		.byte	0
+ 198 00c4 00       		.byte	0
+ 199 00c5 08       		.uleb128 0x8
+ 200 00c6 16010000 		.4byte	.LASF16
+ 201 00ca 03       		.byte	0x3
+ 202 00cb 5E       		.byte	0x5e
+ 203 00cc B0000000 		.4byte	0xb0
+ 204 00d0 09       		.uleb128 0x9
+ 205 00d1 11020000 		.4byte	.LASF17
+ 206 00d5 01       		.byte	0x1
+ 207 00d6 43       		.byte	0x43
+ 208 00d7 00000000 		.4byte	.LFB1
+ 209 00db 1C000000 		.4byte	.LFE1-.LFB1
+ 210 00df 01       		.uleb128 0x1
+ 211 00e0 9C       		.byte	0x9c
+ 212 00e1 EF000000 		.4byte	0xef
+ 213 00e5 0A       		.uleb128 0xa
+ 214 00e6 12000000 		.4byte	.LVL0
+ 215 00ea 1F010000 		.4byte	0x11f
+ 216 00ee 00       		.byte	0
+ 217 00ef 09       		.uleb128 0x9
+ 218 00f0 4E010000 		.4byte	.LASF18
+ 219 00f4 01       		.byte	0x1
+ 220 00f5 98       		.byte	0x98
+ 221 00f6 00000000 		.4byte	.LFB2
+ 222 00fa 14000000 		.4byte	.LFE2-.LFB2
+ 223 00fe 01       		.uleb128 0x1
+ 224 00ff 9C       		.byte	0x9c
+ 225 0100 0E010000 		.4byte	0x10e
+ 226 0104 0A       		.uleb128 0xa
+ 227 0105 0E000000 		.4byte	.LVL1
+ 228 0109 26010000 		.4byte	0x126
+ 229 010d 00       		.byte	0
+ 230 010e 0B       		.uleb128 0xb
+ 231 010f 2E000000 		.4byte	.LASF25
+ 232 0113 01       		.byte	0x1
+ 233 0114 2C       		.byte	0x2c
+ 234 0115 C5000000 		.4byte	0xc5
+ 235 0119 05       		.uleb128 0x5
+ 236 011a 03       		.byte	0x3
+ 237 011b 00000000 		.4byte	I2C_Master_backup
+ 238 011f 0C       		.uleb128 0xc
+ 239 0120 F8010000 		.4byte	.LASF19
+ 240 0124 03       		.byte	0x3
+ 241 0125 69       		.byte	0x69
+ 242 0126 0C       		.uleb128 0xc
+ 243 0127 BA000000 		.4byte	.LASF20
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 9
 
 
- 244 0129 03       		.byte	0x3
- 245 012a 67       		.byte	0x67
- 246 012b 00       		.byte	0
+ 244 012b 03       		.byte	0x3
+ 245 012c 67       		.byte	0x67
+ 246 012d 00       		.byte	0
  247              		.section	.debug_abbrev,"",%progbits
  248              	.Ldebug_abbrev0:
  249 0000 01       		.uleb128 0x1
@@ -535,60 +535,60 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  295 002e 3A       		.uleb128 0x3a
  296 002f 0B       		.uleb128 0xb
  297 0030 3B       		.uleb128 0x3b
- 298 0031 0B       		.uleb128 0xb
+ 298 0031 05       		.uleb128 0x5
  299 0032 49       		.uleb128 0x49
  300 0033 13       		.uleb128 0x13
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 10
 
 
  301 0034 00       		.byte	0
  302 0035 00       		.byte	0
  303 0036 05       		.uleb128 0x5
- 304 0037 16       		.uleb128 0x16
+ 304 0037 35       		.uleb128 0x35
  305 0038 00       		.byte	0
- 306 0039 03       		.uleb128 0x3
- 307 003a 0E       		.uleb128 0xe
- 308 003b 3A       		.uleb128 0x3a
- 309 003c 0B       		.uleb128 0xb
- 310 003d 3B       		.uleb128 0x3b
- 311 003e 05       		.uleb128 0x5
- 312 003f 49       		.uleb128 0x49
- 313 0040 13       		.uleb128 0x13
- 314 0041 00       		.byte	0
- 315 0042 00       		.byte	0
- 316 0043 06       		.uleb128 0x6
- 317 0044 35       		.uleb128 0x35
- 318 0045 00       		.byte	0
- 319 0046 49       		.uleb128 0x49
+ 306 0039 49       		.uleb128 0x49
+ 307 003a 13       		.uleb128 0x13
+ 308 003b 00       		.byte	0
+ 309 003c 00       		.byte	0
+ 310 003d 06       		.uleb128 0x6
+ 311 003e 13       		.uleb128 0x13
+ 312 003f 01       		.byte	0x1
+ 313 0040 0B       		.uleb128 0xb
+ 314 0041 0B       		.uleb128 0xb
+ 315 0042 3A       		.uleb128 0x3a
+ 316 0043 0B       		.uleb128 0xb
+ 317 0044 3B       		.uleb128 0x3b
+ 318 0045 0B       		.uleb128 0xb
+ 319 0046 01       		.uleb128 0x1
  320 0047 13       		.uleb128 0x13
  321 0048 00       		.byte	0
  322 0049 00       		.byte	0
  323 004a 07       		.uleb128 0x7
- 324 004b 13       		.uleb128 0x13
- 325 004c 01       		.byte	0x1
- 326 004d 0B       		.uleb128 0xb
- 327 004e 0B       		.uleb128 0xb
+ 324 004b 0D       		.uleb128 0xd
+ 325 004c 00       		.byte	0
+ 326 004d 03       		.uleb128 0x3
+ 327 004e 0E       		.uleb128 0xe
  328 004f 3A       		.uleb128 0x3a
  329 0050 0B       		.uleb128 0xb
  330 0051 3B       		.uleb128 0x3b
  331 0052 0B       		.uleb128 0xb
- 332 0053 01       		.uleb128 0x1
+ 332 0053 49       		.uleb128 0x49
  333 0054 13       		.uleb128 0x13
- 334 0055 00       		.byte	0
- 335 0056 00       		.byte	0
- 336 0057 08       		.uleb128 0x8
- 337 0058 0D       		.uleb128 0xd
- 338 0059 00       		.byte	0
- 339 005a 03       		.uleb128 0x3
- 340 005b 0E       		.uleb128 0xe
- 341 005c 3A       		.uleb128 0x3a
- 342 005d 0B       		.uleb128 0xb
- 343 005e 3B       		.uleb128 0x3b
+ 334 0055 38       		.uleb128 0x38
+ 335 0056 0B       		.uleb128 0xb
+ 336 0057 00       		.byte	0
+ 337 0058 00       		.byte	0
+ 338 0059 08       		.uleb128 0x8
+ 339 005a 16       		.uleb128 0x16
+ 340 005b 00       		.byte	0
+ 341 005c 03       		.uleb128 0x3
+ 342 005d 0E       		.uleb128 0xe
+ 343 005e 3A       		.uleb128 0x3a
  344 005f 0B       		.uleb128 0xb
- 345 0060 49       		.uleb128 0x49
- 346 0061 13       		.uleb128 0x13
- 347 0062 38       		.uleb128 0x38
- 348 0063 0B       		.uleb128 0xb
+ 345 0060 3B       		.uleb128 0x3b
+ 346 0061 0B       		.uleb128 0xb
+ 347 0062 49       		.uleb128 0x49
+ 348 0063 13       		.uleb128 0x13
  349 0064 00       		.byte	0
  350 0065 00       		.byte	0
  351 0066 09       		.uleb128 0x9
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  355 006a 19       		.uleb128 0x19
  356 006b 03       		.uleb128 0x3
  357 006c 0E       		.uleb128 0xe
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 11
 
 
  358 006d 3A       		.uleb128 0x3a
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  412 00a6 0B       		.uleb128 0xb
  413 00a7 27       		.uleb128 0x27
  414 00a8 19       		.uleb128 0x19
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 12
 
 
  415 00a9 3C       		.uleb128 0x3c
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  454      65725F62 
  454      61636B75 
  454      7000
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 13
 
 
  455              	.LASF9:
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  477      736E00
  478              	.LASF14:
  479 0110 72656733 		.ascii	"reg32\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 14
 
 
  479      3200
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 1
  499      4D617374 
  499      65725F53 
  499      6C656570 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccsh9tMq.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccu4nOIh.s 			page 15
 
 
  499      00

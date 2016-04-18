@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
   30:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** * Parameters:
   31:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** *  None
   32:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** *
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** * Return:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
   49 0016 B64B     		ldr	r3, .L41+8
   50 0018 1A60     		str	r2, [r3]
   51              	.L3:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 3
 
 
   64:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****     }
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
   90:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****             * A Misplaced Start or Stop condition is treated as lost arbitration when the master dr
   91:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****             * The interrupt source is cleared in I2C_FSM_EXIT_IDLE.
   92:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****             */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 4
 
 
   93:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****             if(I2C_Master_CHECK_INTR_MASTER_MASKED(I2C_Master_INTR_MASTER_I2C_ARB_LOST))
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  100              		.loc 1 125 0
  101 0056 A74A     		ldr	r2, .L41+12
  102 0058 1278     		ldrb	r2, [r2]
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 5
 
 
  103 005a D207     		lsl	r2, r2, #31
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  168:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         else
  169:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         {
  170:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                             /* Set I2C_FSM_EXIT_IDLE for BUS_ERR and ARB_LOST (that is really bus e
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 6
 
 
  171:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                             I2C_Master_state = I2C_Master_I2C_FSM_EXIT_IDLE;
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  213:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                                                           I2C_Master_I2C_SSTAT_WR_CMPLT);
  214:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 }
  215:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 7
 
 
  216:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 I2C_Master_state = I2C_Master_I2C_FSM_EXIT_IDLE;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  155 009e 1188     		ldrh	r1, [r2]
  156 00a0 0B43     		orr	r3, r1
  157 00a2 1380     		strh	r3, [r2]
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 8
 
 
  241:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 I2C_Master_state       = I2C_Master_I2C_FSM_IDLE;
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  260:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     *  - TX direction: the clock is stretched after the ACK phase, because the TX F
  261:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     *    EMPTY. The TX EMPTY cleans all the TX interrupt sources.
  262:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     *  - RX direction: the 1st byte is received, but there is no ACK permission,
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 9
 
 
  263:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     *    the clock is stretched after 1 byte is received.
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  284:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 {
  285:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     if(I2C_Master_CHECK_I2C_FSM_RD) /* Reading */
  226              		.loc 1 285 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 10
 
 
  227 0100 7C4A     		ldr	r2, .L41+12
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  259 0130 7B4B     		ldr	r3, .L41+56
  260              	.LVL17:
  261 0132 0B40     		and	r3, r1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 11
 
 
  262 0134 1360     		str	r3, [r2]
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  300 015e 19E0     		b	.L21
  301              	.LVL23:
  302              	.L17:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 12
 
 
  318:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                             }
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  337              	.L21:
  338:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                             }
  339:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         }
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 13
 
 
  340:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         else
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  369 01be CB18     		add	r3, r1, r3
  370 01c0 5E4A     		ldr	r2, .L41+84
  371 01c2 1168     		ldr	r1, [r2]
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 14
 
 
  372 01c4 CB1A     		sub	r3, r1, r3
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  378:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         {
  379:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                             while(I2C_Master_I2C_FIFO_SIZE != I2C_Master_GET_TX_FIFO_ENTRIES)
  380:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                             {
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 15
 
 
  381:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                                 /* The temporary mstrWrBufIndexTmp is used because slave could NACK
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  443 0232 1168     		ldr	r1, [r2]
  444 0234 0131     		add	r1, r1, #1
  445 0236 1160     		str	r1, [r2]
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 16
 
 
  446              	.L24:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  427:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** 
  428:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                             endTransfer = I2C_Master_I2C_CMPLT_ANY_TRANSFER;
  473              		.loc 1 428 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 17
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 17
 
 
  474 025c 0123     		mov	r3, #1
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  505 0286 0923     		mov	r3, #9
  506 0288 00E0     		b	.L30
  507              	.L38:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 18
 
 
  508 028a 0A23     		mov	r3, #10
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  537              		.loc 1 474 0 is_stmt 1
  538 02b0 104B     		ldr	r3, .L41+12
  539              	.LVL33:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 19
 
 
  540 02b2 1B78     		ldrb	r3, [r3]
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  526:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 */
  527:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 if (0u != (I2C_Master_I2C_CTRL_REG & I2C_Master_I2C_CTRL_S_READY_DATA_ACK))
  528:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 {
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 20
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 20
 
 
  529:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     while(0u != I2C_Master_GET_RX_FIFO_ENTRIES)
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  583:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     {
  584:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         /* Call custom address handler */
  585:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         response = I2C_Master_customAddressHandler();
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 21
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 21
 
 
  586:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     }
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  640:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         }
  641:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         else
  642:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         /* Receive data: into RX FIFO */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 22
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 22
 
 
  643:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                         {
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  697:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     /* Clear address match and stop history */
  698:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     I2C_Master_ClearSlaveInterruptSource(I2C_Master_INTR_SLAVE_ALL);
  699:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 23
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 23
 
 
  700:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 #if (!I2C_Master_CY_SCBIP_V0)
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  754:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** 
  755:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 if(I2C_Master_slWrBufIndex < I2C_Master_slWrBufSize)
  756:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                 {
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 24
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 24
 
 
  757:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****                     I2C_Master_I2C_SLAVE_GENERATE_ACK;
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  811:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****             }
  812:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c **** 
  813:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****         }  /* (I2C_Master_I2C_SLAVE) */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 25
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 25
 
 
  814:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****         #endif
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  568 02e0 0B43     		orr	r3, r1
  569 02e2 1360     		str	r3, [r2]
  570              	.L1:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 26
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 26
 
 
  843:.\Generated_Source\PSoC4/I2C_Master_I2C_INT.c ****     }
@@ -1558,11 +1558,11 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  618              		.file 3 ".\\Generated_Source\\PSoC4\\I2C_Master_PVT.h"
  619              		.file 4 ".\\Generated_Source\\PSoC4\\I2C_Master_I2C_PVT.h"
  620              		.section	.debug_info,"",%progbits
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 27
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 27
 
 
  621              	.Ldebug_info0:
- 622 0000 86010000 		.4byte	0x186
+ 622 0000 89010000 		.4byte	0x189
  623 0004 0400     		.2byte	0x4
  624 0006 00000000 		.4byte	.Ldebug_abbrev0
  625 000a 04       		.byte	0x4
@@ -1617,144 +1617,144 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  674 006b 04       		.uleb128 0x4
  675 006c DB000000 		.4byte	.LASF9
  676 0070 02       		.byte	0x2
- 677 0071 C2       		.byte	0xc2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 28
+ 677 0071 3801     		.2byte	0x138
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 28
 
 
- 678 0072 2C000000 		.4byte	0x2c
- 679 0076 04       		.uleb128 0x4
- 680 0077 28010000 		.4byte	.LASF10
- 681 007b 02       		.byte	0x2
- 682 007c C3       		.byte	0xc3
- 683 007d 3A000000 		.4byte	0x3a
- 684 0081 04       		.uleb128 0x4
- 685 0082 2F010000 		.4byte	.LASF11
- 686 0086 02       		.byte	0x2
- 687 0087 C4       		.byte	0xc4
- 688 0088 48000000 		.4byte	0x48
- 689 008c 02       		.uleb128 0x2
- 690 008d 04       		.byte	0x4
- 691 008e 04       		.byte	0x4
- 692 008f 2A000000 		.4byte	.LASF12
- 693 0093 02       		.uleb128 0x2
- 694 0094 08       		.byte	0x8
- 695 0095 04       		.byte	0x4
- 696 0096 17010000 		.4byte	.LASF13
- 697 009a 02       		.uleb128 0x2
- 698 009b 01       		.byte	0x1
- 699 009c 08       		.byte	0x8
- 700 009d 98010000 		.4byte	.LASF14
- 701 00a1 05       		.uleb128 0x5
- 702 00a2 6B000000 		.4byte	0x6b
- 703 00a6 05       		.uleb128 0x5
- 704 00a7 76000000 		.4byte	0x76
- 705 00ab 06       		.uleb128 0x6
- 706 00ac 00000000 		.4byte	.LASF15
- 707 00b0 02       		.byte	0x2
- 708 00b1 6E01     		.2byte	0x16e
- 709 00b3 B7000000 		.4byte	0xb7
- 710 00b7 05       		.uleb128 0x5
- 711 00b8 81000000 		.4byte	0x81
- 712 00bc 06       		.uleb128 0x6
- 713 00bd 5A010000 		.4byte	.LASF16
- 714 00c1 02       		.byte	0x2
- 715 00c2 7E01     		.2byte	0x17e
- 716 00c4 C8000000 		.4byte	0xc8
- 717 00c8 07       		.uleb128 0x7
- 718 00c9 04       		.byte	0x4
- 719 00ca CE000000 		.4byte	0xce
- 720 00ce 08       		.uleb128 0x8
- 721 00cf 02       		.uleb128 0x2
- 722 00d0 04       		.byte	0x4
- 723 00d1 07       		.byte	0x7
- 724 00d2 67010000 		.4byte	.LASF17
- 725 00d6 09       		.uleb128 0x9
- 726 00d7 06000000 		.4byte	.LASF34
- 727 00db 01       		.byte	0x1
- 728 00dc 25       		.byte	0x25
- 729 00dd 00000000 		.4byte	.LFB1
- 730 00e1 74030000 		.4byte	.LFE1-.LFB1
- 731 00e5 01       		.uleb128 0x1
- 732 00e6 9C       		.byte	0x9c
- 733 00e7 0A010000 		.4byte	0x10a
- 734 00eb 0A       		.uleb128 0xa
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 29
+ 678 0073 2C000000 		.4byte	0x2c
+ 679 0077 04       		.uleb128 0x4
+ 680 0078 28010000 		.4byte	.LASF10
+ 681 007c 02       		.byte	0x2
+ 682 007d 3901     		.2byte	0x139
+ 683 007f 3A000000 		.4byte	0x3a
+ 684 0083 04       		.uleb128 0x4
+ 685 0084 2F010000 		.4byte	.LASF11
+ 686 0088 02       		.byte	0x2
+ 687 0089 3A01     		.2byte	0x13a
+ 688 008b 48000000 		.4byte	0x48
+ 689 008f 02       		.uleb128 0x2
+ 690 0090 04       		.byte	0x4
+ 691 0091 04       		.byte	0x4
+ 692 0092 2A000000 		.4byte	.LASF12
+ 693 0096 02       		.uleb128 0x2
+ 694 0097 08       		.byte	0x8
+ 695 0098 04       		.byte	0x4
+ 696 0099 17010000 		.4byte	.LASF13
+ 697 009d 02       		.uleb128 0x2
+ 698 009e 01       		.byte	0x1
+ 699 009f 08       		.byte	0x8
+ 700 00a0 98010000 		.4byte	.LASF14
+ 701 00a4 05       		.uleb128 0x5
+ 702 00a5 6B000000 		.4byte	0x6b
+ 703 00a9 05       		.uleb128 0x5
+ 704 00aa 77000000 		.4byte	0x77
+ 705 00ae 04       		.uleb128 0x4
+ 706 00af 00000000 		.4byte	.LASF15
+ 707 00b3 02       		.byte	0x2
+ 708 00b4 E401     		.2byte	0x1e4
+ 709 00b6 BA000000 		.4byte	0xba
+ 710 00ba 05       		.uleb128 0x5
+ 711 00bb 83000000 		.4byte	0x83
+ 712 00bf 04       		.uleb128 0x4
+ 713 00c0 5A010000 		.4byte	.LASF16
+ 714 00c4 02       		.byte	0x2
+ 715 00c5 F401     		.2byte	0x1f4
+ 716 00c7 CB000000 		.4byte	0xcb
+ 717 00cb 06       		.uleb128 0x6
+ 718 00cc 04       		.byte	0x4
+ 719 00cd D1000000 		.4byte	0xd1
+ 720 00d1 07       		.uleb128 0x7
+ 721 00d2 02       		.uleb128 0x2
+ 722 00d3 04       		.byte	0x4
+ 723 00d4 07       		.byte	0x7
+ 724 00d5 67010000 		.4byte	.LASF17
+ 725 00d9 08       		.uleb128 0x8
+ 726 00da 06000000 		.4byte	.LASF34
+ 727 00de 01       		.byte	0x1
+ 728 00df 25       		.byte	0x25
+ 729 00e0 00000000 		.4byte	.LFB1
+ 730 00e4 74030000 		.4byte	.LFE1-.LFB1
+ 731 00e8 01       		.uleb128 0x1
+ 732 00e9 9C       		.byte	0x9c
+ 733 00ea 0D010000 		.4byte	0x10d
+ 734 00ee 09       		.uleb128 0x9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 29
 
 
- 735 00ec D1000000 		.4byte	.LASF18
- 736 00f0 01       		.byte	0x1
- 737 00f1 27       		.byte	0x27
- 738 00f2 81000000 		.4byte	0x81
- 739 00f6 00000000 		.4byte	.LLST0
- 740 00fa 0A       		.uleb128 0xa
- 741 00fb 60000000 		.4byte	.LASF19
- 742 00ff 01       		.byte	0x1
- 743 0100 28       		.byte	0x28
- 744 0101 81000000 		.4byte	0x81
- 745 0105 35000000 		.4byte	.LLST1
- 746 0109 00       		.byte	0
- 747 010a 0B       		.uleb128 0xb
- 748 010b FA000000 		.4byte	.LASF20
- 749 010f 03       		.byte	0x3
- 750 0110 3A       		.byte	0x3a
- 751 0111 BC000000 		.4byte	0xbc
- 752 0115 0B       		.uleb128 0xb
- 753 0116 19000000 		.4byte	.LASF21
- 754 011a 04       		.byte	0x4
- 755 011b 1D       		.byte	0x1d
- 756 011c A1000000 		.4byte	0xa1
- 757 0120 0B       		.uleb128 0xb
- 758 0121 84000000 		.4byte	.LASF22
- 759 0125 04       		.byte	0x4
- 760 0126 30       		.byte	0x30
- 761 0127 A6000000 		.4byte	0xa6
- 762 012b 0B       		.uleb128 0xb
- 763 012c A8000000 		.4byte	.LASF23
- 764 0130 04       		.byte	0x4
- 765 0131 31       		.byte	0x31
- 766 0132 A1000000 		.4byte	0xa1
- 767 0136 0B       		.uleb128 0xb
- 768 0137 C4020000 		.4byte	.LASF24
- 769 013b 04       		.byte	0x4
- 770 013c 34       		.byte	0x34
- 771 013d 41010000 		.4byte	0x141
- 772 0141 07       		.uleb128 0x7
- 773 0142 04       		.byte	0x4
- 774 0143 A1000000 		.4byte	0xa1
- 775 0147 0B       		.uleb128 0xb
- 776 0148 E1000000 		.4byte	.LASF25
- 777 014c 04       		.byte	0x4
- 778 014d 35       		.byte	0x35
- 779 014e B7000000 		.4byte	0xb7
- 780 0152 0B       		.uleb128 0xb
- 781 0153 DC020000 		.4byte	.LASF26
- 782 0157 04       		.byte	0x4
- 783 0158 36       		.byte	0x36
- 784 0159 B7000000 		.4byte	0xb7
- 785 015d 0B       		.uleb128 0xb
- 786 015e 6C000000 		.4byte	.LASF27
- 787 0162 04       		.byte	0x4
- 788 0163 39       		.byte	0x39
- 789 0164 41010000 		.4byte	0x141
- 790 0168 0B       		.uleb128 0xb
- 791 0169 2B020000 		.4byte	.LASF28
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 30
+ 735 00ef D1000000 		.4byte	.LASF18
+ 736 00f3 01       		.byte	0x1
+ 737 00f4 27       		.byte	0x27
+ 738 00f5 83000000 		.4byte	0x83
+ 739 00f9 00000000 		.4byte	.LLST0
+ 740 00fd 09       		.uleb128 0x9
+ 741 00fe 60000000 		.4byte	.LASF19
+ 742 0102 01       		.byte	0x1
+ 743 0103 28       		.byte	0x28
+ 744 0104 83000000 		.4byte	0x83
+ 745 0108 35000000 		.4byte	.LLST1
+ 746 010c 00       		.byte	0
+ 747 010d 0A       		.uleb128 0xa
+ 748 010e FA000000 		.4byte	.LASF20
+ 749 0112 03       		.byte	0x3
+ 750 0113 3A       		.byte	0x3a
+ 751 0114 BF000000 		.4byte	0xbf
+ 752 0118 0A       		.uleb128 0xa
+ 753 0119 19000000 		.4byte	.LASF21
+ 754 011d 04       		.byte	0x4
+ 755 011e 1D       		.byte	0x1d
+ 756 011f A4000000 		.4byte	0xa4
+ 757 0123 0A       		.uleb128 0xa
+ 758 0124 84000000 		.4byte	.LASF22
+ 759 0128 04       		.byte	0x4
+ 760 0129 30       		.byte	0x30
+ 761 012a A9000000 		.4byte	0xa9
+ 762 012e 0A       		.uleb128 0xa
+ 763 012f A8000000 		.4byte	.LASF23
+ 764 0133 04       		.byte	0x4
+ 765 0134 31       		.byte	0x31
+ 766 0135 A4000000 		.4byte	0xa4
+ 767 0139 0A       		.uleb128 0xa
+ 768 013a C4020000 		.4byte	.LASF24
+ 769 013e 04       		.byte	0x4
+ 770 013f 34       		.byte	0x34
+ 771 0140 44010000 		.4byte	0x144
+ 772 0144 06       		.uleb128 0x6
+ 773 0145 04       		.byte	0x4
+ 774 0146 A4000000 		.4byte	0xa4
+ 775 014a 0A       		.uleb128 0xa
+ 776 014b E1000000 		.4byte	.LASF25
+ 777 014f 04       		.byte	0x4
+ 778 0150 35       		.byte	0x35
+ 779 0151 BA000000 		.4byte	0xba
+ 780 0155 0A       		.uleb128 0xa
+ 781 0156 DC020000 		.4byte	.LASF26
+ 782 015a 04       		.byte	0x4
+ 783 015b 36       		.byte	0x36
+ 784 015c BA000000 		.4byte	0xba
+ 785 0160 0A       		.uleb128 0xa
+ 786 0161 6C000000 		.4byte	.LASF27
+ 787 0165 04       		.byte	0x4
+ 788 0166 39       		.byte	0x39
+ 789 0167 44010000 		.4byte	0x144
+ 790 016b 0A       		.uleb128 0xa
+ 791 016c 2B020000 		.4byte	.LASF28
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 30
 
 
- 792 016d 04       		.byte	0x4
- 793 016e 3A       		.byte	0x3a
- 794 016f B7000000 		.4byte	0xb7
- 795 0173 0B       		.uleb128 0xb
- 796 0174 7E010000 		.4byte	.LASF29
- 797 0178 04       		.byte	0x4
- 798 0179 3B       		.byte	0x3b
- 799 017a B7000000 		.4byte	0xb7
- 800 017e 0B       		.uleb128 0xb
- 801 017f 30000000 		.4byte	.LASF30
- 802 0183 04       		.byte	0x4
- 803 0184 3C       		.byte	0x3c
- 804 0185 B7000000 		.4byte	0xb7
- 805 0189 00       		.byte	0
+ 792 0170 04       		.byte	0x4
+ 793 0171 3A       		.byte	0x3a
+ 794 0172 BA000000 		.4byte	0xba
+ 795 0176 0A       		.uleb128 0xa
+ 796 0177 7E010000 		.4byte	.LASF29
+ 797 017b 04       		.byte	0x4
+ 798 017c 3B       		.byte	0x3b
+ 799 017d BA000000 		.4byte	0xba
+ 800 0181 0A       		.uleb128 0xa
+ 801 0182 30000000 		.4byte	.LASF30
+ 802 0186 04       		.byte	0x4
+ 803 0187 3C       		.byte	0x3c
+ 804 0188 BA000000 		.4byte	0xba
+ 805 018c 00       		.byte	0
  806              		.section	.debug_abbrev,"",%progbits
  807              	.Ldebug_abbrev0:
  808 0000 01       		.uleb128 0x1
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  846 0026 08       		.uleb128 0x8
  847 0027 00       		.byte	0
  848 0028 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 31
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 31
 
 
  849 0029 04       		.uleb128 0x4
@@ -1809,7 +1809,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  854 002e 3A       		.uleb128 0x3a
  855 002f 0B       		.uleb128 0xb
  856 0030 3B       		.uleb128 0x3b
- 857 0031 0B       		.uleb128 0xb
+ 857 0031 05       		.uleb128 0x5
  858 0032 49       		.uleb128 0x49
  859 0033 13       		.uleb128 0x13
  860 0034 00       		.byte	0
@@ -1822,429 +1822,416 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 1
  867 003b 00       		.byte	0
  868 003c 00       		.byte	0
  869 003d 06       		.uleb128 0x6
- 870 003e 16       		.uleb128 0x16
+ 870 003e 0F       		.uleb128 0xf
  871 003f 00       		.byte	0
- 872 0040 03       		.uleb128 0x3
- 873 0041 0E       		.uleb128 0xe
- 874 0042 3A       		.uleb128 0x3a
- 875 0043 0B       		.uleb128 0xb
- 876 0044 3B       		.uleb128 0x3b
- 877 0045 05       		.uleb128 0x5
- 878 0046 49       		.uleb128 0x49
- 879 0047 13       		.uleb128 0x13
+ 872 0040 0B       		.uleb128 0xb
+ 873 0041 0B       		.uleb128 0xb
+ 874 0042 49       		.uleb128 0x49
+ 875 0043 13       		.uleb128 0x13
+ 876 0044 00       		.byte	0
+ 877 0045 00       		.byte	0
+ 878 0046 07       		.uleb128 0x7
+ 879 0047 15       		.uleb128 0x15
  880 0048 00       		.byte	0
- 881 0049 00       		.byte	0
- 882 004a 07       		.uleb128 0x7
- 883 004b 0F       		.uleb128 0xf
+ 881 0049 27       		.uleb128 0x27
+ 882 004a 19       		.uleb128 0x19
+ 883 004b 00       		.byte	0
  884 004c 00       		.byte	0
- 885 004d 0B       		.uleb128 0xb
- 886 004e 0B       		.uleb128 0xb
- 887 004f 49       		.uleb128 0x49
- 888 0050 13       		.uleb128 0x13
- 889 0051 00       		.byte	0
- 890 0052 00       		.byte	0
- 891 0053 08       		.uleb128 0x8
- 892 0054 15       		.uleb128 0x15
- 893 0055 00       		.byte	0
- 894 0056 27       		.uleb128 0x27
- 895 0057 19       		.uleb128 0x19
- 896 0058 00       		.byte	0
- 897 0059 00       		.byte	0
- 898 005a 09       		.uleb128 0x9
- 899 005b 2E       		.uleb128 0x2e
- 900 005c 01       		.byte	0x1
- 901 005d 3F       		.uleb128 0x3f
- 902 005e 19       		.uleb128 0x19
- 903 005f 03       		.uleb128 0x3
- 904 0060 0E       		.uleb128 0xe
- 905 0061 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 32
+ 885 004d 08       		.uleb128 0x8
+ 886 004e 2E       		.uleb128 0x2e
+ 887 004f 01       		.byte	0x1
+ 888 0050 3F       		.uleb128 0x3f
+ 889 0051 19       		.uleb128 0x19
+ 890 0052 03       		.uleb128 0x3
+ 891 0053 0E       		.uleb128 0xe
+ 892 0054 3A       		.uleb128 0x3a
+ 893 0055 0B       		.uleb128 0xb
+ 894 0056 3B       		.uleb128 0x3b
+ 895 0057 0B       		.uleb128 0xb
+ 896 0058 27       		.uleb128 0x27
+ 897 0059 19       		.uleb128 0x19
+ 898 005a 11       		.uleb128 0x11
+ 899 005b 01       		.uleb128 0x1
+ 900 005c 12       		.uleb128 0x12
+ 901 005d 06       		.uleb128 0x6
+ 902 005e 40       		.uleb128 0x40
+ 903 005f 18       		.uleb128 0x18
+ 904 0060 9642     		.uleb128 0x2116
+ 905 0062 19       		.uleb128 0x19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 32
 
 
- 906 0062 0B       		.uleb128 0xb
- 907 0063 3B       		.uleb128 0x3b
- 908 0064 0B       		.uleb128 0xb
- 909 0065 27       		.uleb128 0x27
- 910 0066 19       		.uleb128 0x19
- 911 0067 11       		.uleb128 0x11
- 912 0068 01       		.uleb128 0x1
- 913 0069 12       		.uleb128 0x12
- 914 006a 06       		.uleb128 0x6
- 915 006b 40       		.uleb128 0x40
- 916 006c 18       		.uleb128 0x18
- 917 006d 9642     		.uleb128 0x2116
- 918 006f 19       		.uleb128 0x19
- 919 0070 01       		.uleb128 0x1
+ 906 0063 01       		.uleb128 0x1
+ 907 0064 13       		.uleb128 0x13
+ 908 0065 00       		.byte	0
+ 909 0066 00       		.byte	0
+ 910 0067 09       		.uleb128 0x9
+ 911 0068 34       		.uleb128 0x34
+ 912 0069 00       		.byte	0
+ 913 006a 03       		.uleb128 0x3
+ 914 006b 0E       		.uleb128 0xe
+ 915 006c 3A       		.uleb128 0x3a
+ 916 006d 0B       		.uleb128 0xb
+ 917 006e 3B       		.uleb128 0x3b
+ 918 006f 0B       		.uleb128 0xb
+ 919 0070 49       		.uleb128 0x49
  920 0071 13       		.uleb128 0x13
- 921 0072 00       		.byte	0
- 922 0073 00       		.byte	0
- 923 0074 0A       		.uleb128 0xa
- 924 0075 34       		.uleb128 0x34
- 925 0076 00       		.byte	0
- 926 0077 03       		.uleb128 0x3
- 927 0078 0E       		.uleb128 0xe
- 928 0079 3A       		.uleb128 0x3a
- 929 007a 0B       		.uleb128 0xb
- 930 007b 3B       		.uleb128 0x3b
+ 921 0072 02       		.uleb128 0x2
+ 922 0073 17       		.uleb128 0x17
+ 923 0074 00       		.byte	0
+ 924 0075 00       		.byte	0
+ 925 0076 0A       		.uleb128 0xa
+ 926 0077 34       		.uleb128 0x34
+ 927 0078 00       		.byte	0
+ 928 0079 03       		.uleb128 0x3
+ 929 007a 0E       		.uleb128 0xe
+ 930 007b 3A       		.uleb128 0x3a
  931 007c 0B       		.uleb128 0xb
- 932 007d 49       		.uleb128 0x49
- 933 007e 13       		.uleb128 0x13
- 934 007f 02       		.uleb128 0x2
- 935 0080 17       		.uleb128 0x17
- 936 0081 00       		.byte	0
- 937 0082 00       		.byte	0
- 938 0083 0B       		.uleb128 0xb
- 939 0084 34       		.uleb128 0x34
+ 932 007d 3B       		.uleb128 0x3b
+ 933 007e 0B       		.uleb128 0xb
+ 934 007f 49       		.uleb128 0x49
+ 935 0080 13       		.uleb128 0x13
+ 936 0081 3F       		.uleb128 0x3f
+ 937 0082 19       		.uleb128 0x19
+ 938 0083 3C       		.uleb128 0x3c
+ 939 0084 19       		.uleb128 0x19
  940 0085 00       		.byte	0
- 941 0086 03       		.uleb128 0x3
- 942 0087 0E       		.uleb128 0xe
- 943 0088 3A       		.uleb128 0x3a
- 944 0089 0B       		.uleb128 0xb
- 945 008a 3B       		.uleb128 0x3b
- 946 008b 0B       		.uleb128 0xb
- 947 008c 49       		.uleb128 0x49
- 948 008d 13       		.uleb128 0x13
- 949 008e 3F       		.uleb128 0x3f
- 950 008f 19       		.uleb128 0x19
- 951 0090 3C       		.uleb128 0x3c
- 952 0091 19       		.uleb128 0x19
- 953 0092 00       		.byte	0
- 954 0093 00       		.byte	0
- 955 0094 00       		.byte	0
- 956              		.section	.debug_loc,"",%progbits
- 957              	.Ldebug_loc0:
- 958              	.LLST0:
- 959 0000 24010000 		.4byte	.LVL16
- 960 0004 36010000 		.4byte	.LVL18
- 961 0008 0100     		.2byte	0x1
- 962 000a 54       		.byte	0x54
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 33
+ 941 0086 00       		.byte	0
+ 942 0087 00       		.byte	0
+ 943              		.section	.debug_loc,"",%progbits
+ 944              	.Ldebug_loc0:
+ 945              	.LLST0:
+ 946 0000 24010000 		.4byte	.LVL16
+ 947 0004 36010000 		.4byte	.LVL18
+ 948 0008 0100     		.2byte	0x1
+ 949 000a 54       		.byte	0x54
+ 950 000b 36010000 		.4byte	.LVL18
+ 951 000f 3C010000 		.4byte	.LVL19
+ 952 0013 0200     		.2byte	0x2
+ 953 0015 38       		.byte	0x38
+ 954 0016 9F       		.byte	0x9f
+ 955 0017 3C010000 		.4byte	.LVL19
+ 956 001b 3E010000 		.4byte	.LVL20
+ 957 001f 0100     		.2byte	0x1
+ 958 0021 54       		.byte	0x54
+ 959 0022 40010000 		.4byte	.LVL21
+ 960 0026 60010000 		.4byte	.LVL23
+ 961 002a 0100     		.2byte	0x1
+ 962 002c 54       		.byte	0x54
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 33
 
 
- 963 000b 36010000 		.4byte	.LVL18
- 964 000f 3C010000 		.4byte	.LVL19
- 965 0013 0200     		.2byte	0x2
- 966 0015 38       		.byte	0x38
- 967 0016 9F       		.byte	0x9f
- 968 0017 3C010000 		.4byte	.LVL19
- 969 001b 3E010000 		.4byte	.LVL20
- 970 001f 0100     		.2byte	0x1
- 971 0021 54       		.byte	0x54
- 972 0022 40010000 		.4byte	.LVL21
- 973 0026 60010000 		.4byte	.LVL23
- 974 002a 0100     		.2byte	0x1
- 975 002c 54       		.byte	0x54
- 976 002d 00000000 		.4byte	0
- 977 0031 00000000 		.4byte	0
- 978              	.LLST1:
- 979 0035 02000000 		.4byte	.LVL0
- 980 0039 36000000 		.4byte	.LVL2
- 981 003d 0200     		.2byte	0x2
- 982 003f 30       		.byte	0x30
- 983 0040 9F       		.byte	0x9f
- 984 0041 36000000 		.4byte	.LVL2
- 985 0045 3A000000 		.4byte	.LVL3
- 986 0049 0200     		.2byte	0x2
- 987 004b 31       		.byte	0x31
- 988 004c 9F       		.byte	0x9f
- 989 004d 3A000000 		.4byte	.LVL3
- 990 0051 3C000000 		.4byte	.LVL4
- 991 0055 0200     		.2byte	0x2
- 992 0057 30       		.byte	0x30
- 993 0058 9F       		.byte	0x9f
- 994 0059 3C000000 		.4byte	.LVL4
- 995 005d 4A000000 		.4byte	.LVL5
- 996 0061 0100     		.2byte	0x1
- 997 0063 53       		.byte	0x53
- 998 0064 50000000 		.4byte	.LVL6
- 999 0068 52000000 		.4byte	.LVL7
- 1000 006c 0200     		.2byte	0x2
- 1001 006e 31       		.byte	0x31
- 1002 006f 9F       		.byte	0x9f
- 1003 0070 52000000 		.4byte	.LVL7
- 1004 0074 74000000 		.4byte	.LVL8
- 1005 0078 0100     		.2byte	0x1
- 1006 007a 53       		.byte	0x53
- 1007 007b 74000000 		.4byte	.LVL8
- 1008 007f 76000000 		.4byte	.LVL9
- 1009 0083 0200     		.2byte	0x2
- 1010 0085 30       		.byte	0x30
- 1011 0086 9F       		.byte	0x9f
- 1012 0087 76000000 		.4byte	.LVL9
- 1013 008b 8C000000 		.4byte	.LVL10
- 1014 008f 0100     		.2byte	0x1
- 1015 0091 53       		.byte	0x53
- 1016 0092 AC000000 		.4byte	.LVL11
- 1017 0096 C0000000 		.4byte	.LVL12
- 1018 009a 0100     		.2byte	0x1
- 1019 009c 53       		.byte	0x53
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 34
+ 963 002d 00000000 		.4byte	0
+ 964 0031 00000000 		.4byte	0
+ 965              	.LLST1:
+ 966 0035 02000000 		.4byte	.LVL0
+ 967 0039 36000000 		.4byte	.LVL2
+ 968 003d 0200     		.2byte	0x2
+ 969 003f 30       		.byte	0x30
+ 970 0040 9F       		.byte	0x9f
+ 971 0041 36000000 		.4byte	.LVL2
+ 972 0045 3A000000 		.4byte	.LVL3
+ 973 0049 0200     		.2byte	0x2
+ 974 004b 31       		.byte	0x31
+ 975 004c 9F       		.byte	0x9f
+ 976 004d 3A000000 		.4byte	.LVL3
+ 977 0051 3C000000 		.4byte	.LVL4
+ 978 0055 0200     		.2byte	0x2
+ 979 0057 30       		.byte	0x30
+ 980 0058 9F       		.byte	0x9f
+ 981 0059 3C000000 		.4byte	.LVL4
+ 982 005d 4A000000 		.4byte	.LVL5
+ 983 0061 0100     		.2byte	0x1
+ 984 0063 53       		.byte	0x53
+ 985 0064 50000000 		.4byte	.LVL6
+ 986 0068 52000000 		.4byte	.LVL7
+ 987 006c 0200     		.2byte	0x2
+ 988 006e 31       		.byte	0x31
+ 989 006f 9F       		.byte	0x9f
+ 990 0070 52000000 		.4byte	.LVL7
+ 991 0074 74000000 		.4byte	.LVL8
+ 992 0078 0100     		.2byte	0x1
+ 993 007a 53       		.byte	0x53
+ 994 007b 74000000 		.4byte	.LVL8
+ 995 007f 76000000 		.4byte	.LVL9
+ 996 0083 0200     		.2byte	0x2
+ 997 0085 30       		.byte	0x30
+ 998 0086 9F       		.byte	0x9f
+ 999 0087 76000000 		.4byte	.LVL9
+ 1000 008b 8C000000 		.4byte	.LVL10
+ 1001 008f 0100     		.2byte	0x1
+ 1002 0091 53       		.byte	0x53
+ 1003 0092 AC000000 		.4byte	.LVL11
+ 1004 0096 C0000000 		.4byte	.LVL12
+ 1005 009a 0100     		.2byte	0x1
+ 1006 009c 53       		.byte	0x53
+ 1007 009d CE000000 		.4byte	.LVL13
+ 1008 00a1 D2000000 		.4byte	.LVL14
+ 1009 00a5 0200     		.2byte	0x2
+ 1010 00a7 31       		.byte	0x31
+ 1011 00a8 9F       		.byte	0x9f
+ 1012 00a9 D2000000 		.4byte	.LVL14
+ 1013 00ad 32010000 		.4byte	.LVL17
+ 1014 00b1 0100     		.2byte	0x1
+ 1015 00b3 53       		.byte	0x53
+ 1016 00b4 36010000 		.4byte	.LVL18
+ 1017 00b8 3C010000 		.4byte	.LVL19
+ 1018 00bc 0200     		.2byte	0x2
+ 1019 00be 31       		.byte	0x31
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 34
 
 
- 1020 009d CE000000 		.4byte	.LVL13
- 1021 00a1 D2000000 		.4byte	.LVL14
- 1022 00a5 0200     		.2byte	0x2
- 1023 00a7 31       		.byte	0x31
- 1024 00a8 9F       		.byte	0x9f
- 1025 00a9 D2000000 		.4byte	.LVL14
- 1026 00ad 32010000 		.4byte	.LVL17
- 1027 00b1 0100     		.2byte	0x1
- 1028 00b3 53       		.byte	0x53
- 1029 00b4 36010000 		.4byte	.LVL18
- 1030 00b8 3C010000 		.4byte	.LVL19
- 1031 00bc 0200     		.2byte	0x2
- 1032 00be 31       		.byte	0x31
- 1033 00bf 9F       		.byte	0x9f
- 1034 00c0 3C010000 		.4byte	.LVL19
- 1035 00c4 A8010000 		.4byte	.LVL25
- 1036 00c8 0100     		.2byte	0x1
- 1037 00ca 53       		.byte	0x53
- 1038 00cb EE010000 		.4byte	.LVL26
- 1039 00cf F2010000 		.4byte	.LVL27
- 1040 00d3 0200     		.2byte	0x2
- 1041 00d5 31       		.byte	0x31
- 1042 00d6 9F       		.byte	0x9f
- 1043 00d7 F2010000 		.4byte	.LVL27
- 1044 00db 56020000 		.4byte	.LVL28
- 1045 00df 0100     		.2byte	0x1
- 1046 00e1 53       		.byte	0x53
- 1047 00e2 5C020000 		.4byte	.LVL29
- 1048 00e6 5E020000 		.4byte	.LVL30
- 1049 00ea 0200     		.2byte	0x2
- 1050 00ec 31       		.byte	0x31
- 1051 00ed 9F       		.byte	0x9f
- 1052 00ee 5E020000 		.4byte	.LVL30
- 1053 00f2 68020000 		.4byte	.LVL31
- 1054 00f6 0100     		.2byte	0x1
- 1055 00f8 53       		.byte	0x53
- 1056 00f9 B0020000 		.4byte	.LVL32
- 1057 00fd B2020000 		.4byte	.LVL33
- 1058 0101 0100     		.2byte	0x1
- 1059 0103 53       		.byte	0x53
- 1060 0104 00000000 		.4byte	0
- 1061 0108 00000000 		.4byte	0
- 1062              		.section	.debug_aranges,"",%progbits
- 1063 0000 1C000000 		.4byte	0x1c
- 1064 0004 0200     		.2byte	0x2
- 1065 0006 00000000 		.4byte	.Ldebug_info0
- 1066 000a 04       		.byte	0x4
- 1067 000b 00       		.byte	0
- 1068 000c 0000     		.2byte	0
- 1069 000e 0000     		.2byte	0
- 1070 0010 00000000 		.4byte	.LFB1
- 1071 0014 74030000 		.4byte	.LFE1-.LFB1
- 1072 0018 00000000 		.4byte	0
- 1073 001c 00000000 		.4byte	0
- 1074              		.section	.debug_ranges,"",%progbits
- 1075              	.Ldebug_ranges0:
- 1076 0000 00000000 		.4byte	.LFB1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 35
+ 1020 00bf 9F       		.byte	0x9f
+ 1021 00c0 3C010000 		.4byte	.LVL19
+ 1022 00c4 A8010000 		.4byte	.LVL25
+ 1023 00c8 0100     		.2byte	0x1
+ 1024 00ca 53       		.byte	0x53
+ 1025 00cb EE010000 		.4byte	.LVL26
+ 1026 00cf F2010000 		.4byte	.LVL27
+ 1027 00d3 0200     		.2byte	0x2
+ 1028 00d5 31       		.byte	0x31
+ 1029 00d6 9F       		.byte	0x9f
+ 1030 00d7 F2010000 		.4byte	.LVL27
+ 1031 00db 56020000 		.4byte	.LVL28
+ 1032 00df 0100     		.2byte	0x1
+ 1033 00e1 53       		.byte	0x53
+ 1034 00e2 5C020000 		.4byte	.LVL29
+ 1035 00e6 5E020000 		.4byte	.LVL30
+ 1036 00ea 0200     		.2byte	0x2
+ 1037 00ec 31       		.byte	0x31
+ 1038 00ed 9F       		.byte	0x9f
+ 1039 00ee 5E020000 		.4byte	.LVL30
+ 1040 00f2 68020000 		.4byte	.LVL31
+ 1041 00f6 0100     		.2byte	0x1
+ 1042 00f8 53       		.byte	0x53
+ 1043 00f9 B0020000 		.4byte	.LVL32
+ 1044 00fd B2020000 		.4byte	.LVL33
+ 1045 0101 0100     		.2byte	0x1
+ 1046 0103 53       		.byte	0x53
+ 1047 0104 00000000 		.4byte	0
+ 1048 0108 00000000 		.4byte	0
+ 1049              		.section	.debug_aranges,"",%progbits
+ 1050 0000 1C000000 		.4byte	0x1c
+ 1051 0004 0200     		.2byte	0x2
+ 1052 0006 00000000 		.4byte	.Ldebug_info0
+ 1053 000a 04       		.byte	0x4
+ 1054 000b 00       		.byte	0
+ 1055 000c 0000     		.2byte	0
+ 1056 000e 0000     		.2byte	0
+ 1057 0010 00000000 		.4byte	.LFB1
+ 1058 0014 74030000 		.4byte	.LFE1-.LFB1
+ 1059 0018 00000000 		.4byte	0
+ 1060 001c 00000000 		.4byte	0
+ 1061              		.section	.debug_ranges,"",%progbits
+ 1062              	.Ldebug_ranges0:
+ 1063 0000 00000000 		.4byte	.LFB1
+ 1064 0004 74030000 		.4byte	.LFE1
+ 1065 0008 00000000 		.4byte	0
+ 1066 000c 00000000 		.4byte	0
+ 1067              		.section	.debug_line,"",%progbits
+ 1068              	.Ldebug_line0:
+ 1069 0000 8A010000 		.section	.debug_str,"MS",%progbits,1
+ 1069      02009400 
+ 1069      00000201 
+ 1069      FB0E0D00 
+ 1069      01010101 
+ 1070              	.LASF15:
+ 1071 0000 72656733 		.ascii	"reg32\000"
+ 1071      3200
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 35
 
 
- 1077 0004 74030000 		.4byte	.LFE1
- 1078 0008 00000000 		.4byte	0
- 1079 000c 00000000 		.4byte	0
- 1080              		.section	.debug_line,"",%progbits
- 1081              	.Ldebug_line0:
- 1082 0000 8A010000 		.section	.debug_str,"MS",%progbits,1
- 1082      02009400 
- 1082      00000201 
- 1082      FB0E0D00 
- 1082      01010101 
- 1083              	.LASF15:
- 1084 0000 72656733 		.ascii	"reg32\000"
- 1084      3200
- 1085              	.LASF34:
- 1086 0006 4932435F 		.ascii	"I2C_Master_I2C_ISR\000"
- 1086      4D617374 
- 1086      65725F49 
- 1086      32435F49 
- 1086      535200
- 1087              	.LASF21:
- 1088 0019 4932435F 		.ascii	"I2C_Master_state\000"
- 1088      4D617374 
- 1088      65725F73 
- 1088      74617465 
- 1088      00
- 1089              	.LASF12:
- 1090 002a 666C6F61 		.ascii	"float\000"
- 1090      7400
- 1091              	.LASF30:
- 1092 0030 4932435F 		.ascii	"I2C_Master_mstrWrBufIndexTmp\000"
- 1092      4D617374 
- 1092      65725F6D 
- 1092      73747257 
- 1092      72427566 
- 1093              	.LASF3:
- 1094 004d 73686F72 		.ascii	"short unsigned int\000"
- 1094      7420756E 
- 1094      7369676E 
- 1094      65642069 
- 1094      6E7400
- 1095              	.LASF19:
- 1096 0060 656E6454 		.ascii	"endTransfer\000"
- 1096      72616E73 
- 1096      66657200 
- 1097              	.LASF27:
- 1098 006c 4932435F 		.ascii	"I2C_Master_mstrWrBufPtr\000"
- 1098      4D617374 
- 1098      65725F6D 
- 1098      73747257 
- 1098      72427566 
- 1099              	.LASF22:
- 1100 0084 4932435F 		.ascii	"I2C_Master_mstrStatus\000"
- 1100      4D617374 
- 1100      65725F6D 
- 1100      73747253 
- 1100      74617475 
- 1101              	.LASF1:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 36
+ 1072              	.LASF34:
+ 1073 0006 4932435F 		.ascii	"I2C_Master_I2C_ISR\000"
+ 1073      4D617374 
+ 1073      65725F49 
+ 1073      32435F49 
+ 1073      535200
+ 1074              	.LASF21:
+ 1075 0019 4932435F 		.ascii	"I2C_Master_state\000"
+ 1075      4D617374 
+ 1075      65725F73 
+ 1075      74617465 
+ 1075      00
+ 1076              	.LASF12:
+ 1077 002a 666C6F61 		.ascii	"float\000"
+ 1077      7400
+ 1078              	.LASF30:
+ 1079 0030 4932435F 		.ascii	"I2C_Master_mstrWrBufIndexTmp\000"
+ 1079      4D617374 
+ 1079      65725F6D 
+ 1079      73747257 
+ 1079      72427566 
+ 1080              	.LASF3:
+ 1081 004d 73686F72 		.ascii	"short unsigned int\000"
+ 1081      7420756E 
+ 1081      7369676E 
+ 1081      65642069 
+ 1081      6E7400
+ 1082              	.LASF19:
+ 1083 0060 656E6454 		.ascii	"endTransfer\000"
+ 1083      72616E73 
+ 1083      66657200 
+ 1084              	.LASF27:
+ 1085 006c 4932435F 		.ascii	"I2C_Master_mstrWrBufPtr\000"
+ 1085      4D617374 
+ 1085      65725F6D 
+ 1085      73747257 
+ 1085      72427566 
+ 1086              	.LASF22:
+ 1087 0084 4932435F 		.ascii	"I2C_Master_mstrStatus\000"
+ 1087      4D617374 
+ 1087      65725F6D 
+ 1087      73747253 
+ 1087      74617475 
+ 1088              	.LASF1:
+ 1089 009a 756E7369 		.ascii	"unsigned char\000"
+ 1089      676E6564 
+ 1089      20636861 
+ 1089      7200
+ 1090              	.LASF23:
+ 1091 00a8 4932435F 		.ascii	"I2C_Master_mstrControl\000"
+ 1091      4D617374 
+ 1091      65725F6D 
+ 1091      73747243 
+ 1091      6F6E7472 
+ 1092              	.LASF5:
+ 1093 00bf 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1093      20756E73 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 36
 
 
- 1102 009a 756E7369 		.ascii	"unsigned char\000"
- 1102      676E6564 
- 1102      20636861 
- 1102      7200
- 1103              	.LASF23:
- 1104 00a8 4932435F 		.ascii	"I2C_Master_mstrControl\000"
- 1104      4D617374 
- 1104      65725F6D 
- 1104      73747243 
- 1104      6F6E7472 
- 1105              	.LASF5:
- 1106 00bf 6C6F6E67 		.ascii	"long unsigned int\000"
- 1106      20756E73 
- 1106      69676E65 
- 1106      6420696E 
- 1106      7400
- 1107              	.LASF18:
- 1108 00d1 64696666 		.ascii	"diffCount\000"
- 1108      436F756E 
- 1108      7400
- 1109              	.LASF9:
- 1110 00db 75696E74 		.ascii	"uint8\000"
- 1110      3800
- 1111              	.LASF25:
- 1112 00e1 4932435F 		.ascii	"I2C_Master_mstrRdBufSize\000"
- 1112      4D617374 
- 1112      65725F6D 
- 1112      73747252 
- 1112      64427566 
- 1113              	.LASF20:
- 1114 00fa 4932435F 		.ascii	"I2C_Master_customIntrHandler\000"
- 1114      4D617374 
- 1114      65725F63 
- 1114      7573746F 
- 1114      6D496E74 
- 1115              	.LASF13:
- 1116 0117 646F7562 		.ascii	"double\000"
- 1116      6C6500
- 1117              	.LASF2:
- 1118 011e 73686F72 		.ascii	"short int\000"
- 1118      7420696E 
- 1118      7400
- 1119              	.LASF10:
- 1120 0128 75696E74 		.ascii	"uint16\000"
- 1120      313600
- 1121              	.LASF11:
- 1122 012f 75696E74 		.ascii	"uint32\000"
- 1122      333200
- 1123              	.LASF8:
- 1124 0136 756E7369 		.ascii	"unsigned int\000"
- 1124      676E6564 
- 1124      20696E74 
- 1124      00
- 1125              	.LASF7:
- 1126 0143 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1126      206C6F6E 
- 1126      6720756E 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 37
+ 1093      69676E65 
+ 1093      6420696E 
+ 1093      7400
+ 1094              	.LASF18:
+ 1095 00d1 64696666 		.ascii	"diffCount\000"
+ 1095      436F756E 
+ 1095      7400
+ 1096              	.LASF9:
+ 1097 00db 75696E74 		.ascii	"uint8\000"
+ 1097      3800
+ 1098              	.LASF25:
+ 1099 00e1 4932435F 		.ascii	"I2C_Master_mstrRdBufSize\000"
+ 1099      4D617374 
+ 1099      65725F6D 
+ 1099      73747252 
+ 1099      64427566 
+ 1100              	.LASF20:
+ 1101 00fa 4932435F 		.ascii	"I2C_Master_customIntrHandler\000"
+ 1101      4D617374 
+ 1101      65725F63 
+ 1101      7573746F 
+ 1101      6D496E74 
+ 1102              	.LASF13:
+ 1103 0117 646F7562 		.ascii	"double\000"
+ 1103      6C6500
+ 1104              	.LASF2:
+ 1105 011e 73686F72 		.ascii	"short int\000"
+ 1105      7420696E 
+ 1105      7400
+ 1106              	.LASF10:
+ 1107 0128 75696E74 		.ascii	"uint16\000"
+ 1107      313600
+ 1108              	.LASF11:
+ 1109 012f 75696E74 		.ascii	"uint32\000"
+ 1109      333200
+ 1110              	.LASF8:
+ 1111 0136 756E7369 		.ascii	"unsigned int\000"
+ 1111      676E6564 
+ 1111      20696E74 
+ 1111      00
+ 1112              	.LASF7:
+ 1113 0143 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1113      206C6F6E 
+ 1113      6720756E 
+ 1113      7369676E 
+ 1113      65642069 
+ 1114              	.LASF16:
+ 1115 015a 63796973 		.ascii	"cyisraddress\000"
+ 1115      72616464 
+ 1115      72657373 
+ 1115      00
+ 1116              	.LASF17:
+ 1117 0167 73697A65 		.ascii	"sizetype\000"
+ 1117      74797065 
+ 1117      00
+ 1118              	.LASF6:
+ 1119 0170 6C6F6E67 		.ascii	"long long int\000"
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 37
 
 
- 1126      7369676E 
- 1126      65642069 
- 1127              	.LASF16:
- 1128 015a 63796973 		.ascii	"cyisraddress\000"
- 1128      72616464 
- 1128      72657373 
- 1128      00
- 1129              	.LASF17:
- 1130 0167 73697A65 		.ascii	"sizetype\000"
- 1130      74797065 
- 1130      00
- 1131              	.LASF6:
- 1132 0170 6C6F6E67 		.ascii	"long long int\000"
- 1132      206C6F6E 
- 1132      6720696E 
- 1132      7400
- 1133              	.LASF29:
- 1134 017e 4932435F 		.ascii	"I2C_Master_mstrWrBufIndex\000"
- 1134      4D617374 
- 1134      65725F6D 
- 1134      73747257 
- 1134      72427566 
- 1135              	.LASF14:
- 1136 0198 63686172 		.ascii	"char\000"
- 1136      00
- 1137              	.LASF31:
- 1138 019d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1138      4320342E 
- 1138      392E3320 
- 1138      32303135 
- 1138      30333033 
- 1139 01d0 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 1139      20726576 
- 1139      6973696F 
- 1139      6E203232 
- 1139      31323230 
- 1140 0203 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1140      66756E63 
- 1140      74696F6E 
- 1140      2D736563 
- 1140      74696F6E 
- 1141              	.LASF28:
- 1142 022b 4932435F 		.ascii	"I2C_Master_mstrWrBufSize\000"
+ 1119      206C6F6E 
+ 1119      6720696E 
+ 1119      7400
+ 1120              	.LASF29:
+ 1121 017e 4932435F 		.ascii	"I2C_Master_mstrWrBufIndex\000"
+ 1121      4D617374 
+ 1121      65725F6D 
+ 1121      73747257 
+ 1121      72427566 
+ 1122              	.LASF14:
+ 1123 0198 63686172 		.ascii	"char\000"
+ 1123      00
+ 1124              	.LASF31:
+ 1125 019d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1125      4320342E 
+ 1125      392E3320 
+ 1125      32303135 
+ 1125      30333033 
+ 1126 01d0 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1126      20726576 
+ 1126      6973696F 
+ 1126      6E203232 
+ 1126      31323230 
+ 1127 0203 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1127      66756E63 
+ 1127      74696F6E 
+ 1127      2D736563 
+ 1127      74696F6E 
+ 1128              	.LASF28:
+ 1129 022b 4932435F 		.ascii	"I2C_Master_mstrWrBufSize\000"
+ 1129      4D617374 
+ 1129      65725F6D 
+ 1129      73747257 
+ 1129      72427566 
+ 1130              	.LASF33:
+ 1131 0244 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
+ 1131      726F6A65 
+ 1131      6374735C 
+ 1131      41726C6F 
+ 1131      426F745C 
+ 1132 0272 61726431 		.ascii	"ard1-RPi.cydsn\000"
+ 1132      2D525069 
+ 1132      2E637964 
+ 1132      736E00
+ 1133              	.LASF4:
+ 1134 0281 6C6F6E67 		.ascii	"long int\000"
+ 1134      20696E74 
+ 1134      00
+ 1135              	.LASF32:
+ 1136 028a 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\I2C_Master_I2C_INT.c\000"
+ 1136      6E657261 
+ 1136      7465645F 
+ 1136      536F7572 
+ 1136      63655C50 
+ 1137              	.LASF0:
+ 1138 02b8 7369676E 		.ascii	"signed char\000"
+ 1138      65642063 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccfpmc1M.s 			page 38
+
+
+ 1138      68617200 
+ 1139              	.LASF24:
+ 1140 02c4 4932435F 		.ascii	"I2C_Master_mstrRdBufPtr\000"
+ 1140      4D617374 
+ 1140      65725F6D 
+ 1140      73747252 
+ 1140      64427566 
+ 1141              	.LASF26:
+ 1142 02dc 4932435F 		.ascii	"I2C_Master_mstrRdBufIndex\000"
  1142      4D617374 
  1142      65725F6D 
- 1142      73747257 
- 1142      72427566 
- 1143              	.LASF33:
- 1144 0244 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
- 1144      726F6A65 
- 1144      6374735C 
- 1144      41726C6F 
- 1144      426F745C 
- 1145 0272 61726431 		.ascii	"ard1-RPi.cydsn\000"
- 1145      2D525069 
- 1145      2E637964 
- 1145      736E00
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccftdR8Y.s 			page 38
-
-
- 1146              	.LASF4:
- 1147 0281 6C6F6E67 		.ascii	"long int\000"
- 1147      20696E74 
- 1147      00
- 1148              	.LASF32:
- 1149 028a 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\I2C_Master_I2C_INT.c\000"
- 1149      6E657261 
- 1149      7465645F 
- 1149      536F7572 
- 1149      63655C50 
- 1150              	.LASF0:
- 1151 02b8 7369676E 		.ascii	"signed char\000"
- 1151      65642063 
- 1151      68617200 
- 1152              	.LASF24:
- 1153 02c4 4932435F 		.ascii	"I2C_Master_mstrRdBufPtr\000"
- 1153      4D617374 
- 1153      65725F6D 
- 1153      73747252 
- 1153      64427566 
- 1154              	.LASF26:
- 1155 02dc 4932435F 		.ascii	"I2C_Master_mstrRdBufIndex\000"
- 1155      4D617374 
- 1155      65725F6D 
- 1155      73747252 
- 1155      64427566 
- 1156              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 1142      73747252 
+ 1142      64427566 
+ 1143              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

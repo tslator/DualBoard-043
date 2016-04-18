@@ -10,6 +10,7 @@
 <v>.\Board-KitProg.cydsn\Board-KitProg.cyprj</v>
 <v>.\Board2-RPi.cydsn\Board2-RPi.cyprj</v>
 <v>.\Board1-RPi.cydsn\Board1-RPi.cyprj</v>
+<v>.\i2c.cydsn\i2c.cyprj</v>
 </projects>
 <workspace_id v="e99f9cff-bbcb-43e7-a5e3-02e0c9250f2a" />
 <WriteAppVersionLastSavedWith v="3.3.0.7343" />

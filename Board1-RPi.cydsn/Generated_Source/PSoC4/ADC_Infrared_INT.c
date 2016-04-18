@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: ADC_Infrared_INT.c
-* Version 2.20
+* Version 2.30
 *
 *  Description:
 *    This file contains the code that operates during the ADC_SAR interrupt

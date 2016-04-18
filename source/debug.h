@@ -1,3 +1,15 @@
+/* ========================================
+ *
+ * Copyright YOUR COMPANY, THE YEAR
+ * All Rights Reserved
+ * UNPUBLISHED, LICENSED SOFTWARE.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ * WHICH IS THE PROPERTY OF your company.
+ *
+ * ========================================
+*/
+
 #ifndef COMMS_DEBUG_H
 #define COMMS_DEBUG_H
 
@@ -34,3 +46,6 @@ void Debug_Init();
 void Debug_Start();
 
 #endif
+
+/* [] END OF FILE */
+

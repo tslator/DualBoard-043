@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: ADC_Infrared.c
-* Version 2.20
+* Version 2.30
 *
 * Description:
 *  This file provides the source code to the API for the Sequencing Successive

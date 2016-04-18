@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: Pin_InfraredDistance_2.h  
-* Version 2.10
+* Version 2.20
 *
 * Description:
 *  This file contains the Alias definitions for Per-Pin APIs in cypins.h. 
@@ -9,7 +9,7 @@
 * Note:
 *
 ********************************************************************************
-* Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions, 
 * disclaimers, and limitations in the end user license agreement accompanying 
 * the software package with which this file was provided.
@@ -26,11 +26,14 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define Pin_InfraredDistance_2_0		(Pin_InfraredDistance_2__0__PC)
+#define Pin_InfraredDistance_2_0			(Pin_InfraredDistance_2__0__PC)
 #define Pin_InfraredDistance_2_0_PS		(Pin_InfraredDistance_2__0__PS)
 #define Pin_InfraredDistance_2_0_PC		(Pin_InfraredDistance_2__0__PC)
 #define Pin_InfraredDistance_2_0_DR		(Pin_InfraredDistance_2__0__DR)
 #define Pin_InfraredDistance_2_0_SHIFT	(Pin_InfraredDistance_2__0__SHIFT)
+#define Pin_InfraredDistance_2_0_INTR	((uint16)((uint16)0x0003u << (Pin_InfraredDistance_2__0__SHIFT*2u)))
+
+#define Pin_InfraredDistance_2_INTR_ALL	 ((uint16)(Pin_InfraredDistance_2_0_INTR))
 
 
 #endif /* End Pins Pin_InfraredDistance_2_ALIASES_H */

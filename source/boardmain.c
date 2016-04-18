@@ -21,9 +21,8 @@
 #include "infrared.h"
 #include "time.h"
 #include "debug.h"
-
-#define MAX_MILLIMETERS_PER_SECOND (1000)
-#define MIN_MILLIMETERS_PER_SECOND (-1000)
+#include "cal.h"
+#include "diag.h"
 
 int main()
 {       
@@ -32,6 +31,9 @@ int main()
     /* Start this right away so that we debug as soon as possible */
     Debug_Init();
     Debug_Start();
+    
+    Diag_Init();
+    Diag_Start();
         
     Control_Init();
     Time_Init();
@@ -39,28 +41,33 @@ int main()
     Encoder_Init();
     Odom_Init();
     Motor_Init();
+    Cal_Init();
 
+    Control_Start();
     Time_Start();
     I2c_Start();
     PID_Start();
     Encoder_Start();
     Odom_Start();
     Motor_Start();
-    
-    Control_Start();
+    Cal_Start();
     
     for(;;)
     {
         /* Update any control changes */
         Control_Update();
-        /* Apply the velocity command to PID */
-        PID_Update();
+        /* Update encoder-related values */
+        Encoder_Update();
         /* Update the odometry calculation */
         Odom_Update();
+        /* Apply the velocity command to PID */
+        PID_Update();
         /* Read the infrared sensors */
         Infrared_Measure();
         /* Read the ultrasonic sensors */
         Ultrasonic_Measure();
+        /* Diagnostic update */
+        Diag_Update();
     }
 }
 
