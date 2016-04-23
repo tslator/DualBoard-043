@@ -17,7 +17,8 @@
 
 void Motor_Init();
 void Motor_Start();
-void Motor_SetOutput(int16 value);
+//void Motor_SetOutput(int16 value);
+void Motor_SetOutput(float output);
 void Motor_Stop();
 void Motor_Calibrate();
 void Motor_GetCalValues(int16** cal_values, uint16* num_entries);

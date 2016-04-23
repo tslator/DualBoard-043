@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
   27              		.cfi_startproc
   28 0000 08B5     		push	{r3, lr}
   29              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 2
 
 
   30              		.cfi_offset 3, -8
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
   68 002c FFF7FEFF 		bl	Cal_Init
   69              	.LVL10:
   45:..\source/boardmain.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 3
 
 
   46:..\source/boardmain.c ****     Control_Start();
@@ -157,46 +157,50 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
   54:..\source/boardmain.c ****     
   55:..\source/boardmain.c ****     for(;;)
   56:..\source/boardmain.c ****     {
-  57:..\source/boardmain.c ****         /* Update any control changes */
-  58:..\source/boardmain.c ****         Control_Update();
-  95              		.loc 1 58 0 discriminator 1
+  57:..\source/boardmain.c **** #ifdef PID_TUNE
+  58:..\source/boardmain.c ****         PID_Tune();
+  59:..\source/boardmain.c **** #else    
+  60:..\source/boardmain.c ****         /* Update any control changes */
+  61:..\source/boardmain.c ****         Control_Update();
+  95              		.loc 1 61 0 discriminator 1
   96 0050 FFF7FEFF 		bl	Control_Update
   97              	.LVL19:
-  59:..\source/boardmain.c ****         /* Update encoder-related values */
-  60:..\source/boardmain.c ****         Encoder_Update();
-  98              		.loc 1 60 0 discriminator 1
+  62:..\source/boardmain.c ****         /* Update encoder-related values */
+  63:..\source/boardmain.c ****         Encoder_Update();
+  98              		.loc 1 63 0 discriminator 1
   99 0054 FFF7FEFF 		bl	Encoder_Update
  100              	.LVL20:
-  61:..\source/boardmain.c ****         /* Update the odometry calculation */
-  62:..\source/boardmain.c ****         Odom_Update();
- 101              		.loc 1 62 0 discriminator 1
+  64:..\source/boardmain.c ****         /* Update the odometry calculation */
+  65:..\source/boardmain.c ****         Odom_Update();
+ 101              		.loc 1 65 0 discriminator 1
  102 0058 FFF7FEFF 		bl	Odom_Update
  103              	.LVL21:
-  63:..\source/boardmain.c ****         /* Apply the velocity command to PID */
-  64:..\source/boardmain.c ****         PID_Update();
- 104              		.loc 1 64 0 discriminator 1
+  66:..\source/boardmain.c ****         /* Apply the velocity command to PID */
+  67:..\source/boardmain.c ****         PID_Update();
+ 104              		.loc 1 67 0 discriminator 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 4
+
+
  105 005c FFF7FEFF 		bl	PID_Update
  106              	.LVL22:
-  65:..\source/boardmain.c ****         /* Read the infrared sensors */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 4
-
-
-  66:..\source/boardmain.c ****         Infrared_Measure();
- 107              		.loc 1 66 0 discriminator 1
+  68:..\source/boardmain.c ****         /* Read the infrared sensors */
+  69:..\source/boardmain.c ****         Infrared_Measure();
+ 107              		.loc 1 69 0 discriminator 1
  108 0060 FFF7FEFF 		bl	Infrared_Measure
  109              	.LVL23:
-  67:..\source/boardmain.c ****         /* Read the ultrasonic sensors */
-  68:..\source/boardmain.c ****         Ultrasonic_Measure();
- 110              		.loc 1 68 0 discriminator 1
+  70:..\source/boardmain.c ****         /* Read the ultrasonic sensors */
+  71:..\source/boardmain.c ****         Ultrasonic_Measure();
+ 110              		.loc 1 71 0 discriminator 1
  111 0064 FFF7FEFF 		bl	Ultrasonic_Measure
  112              	.LVL24:
-  69:..\source/boardmain.c ****         /* Diagnostic update */
-  70:..\source/boardmain.c ****         Diag_Update();
- 113              		.loc 1 70 0 discriminator 1
+  72:..\source/boardmain.c ****         /* Diagnostic update */
+  73:..\source/boardmain.c ****         Diag_Update();
+ 113              		.loc 1 73 0 discriminator 1
  114 0068 FFF7FEFF 		bl	Diag_Update
  115              	.LVL25:
-  71:..\source/boardmain.c ****     }
- 116              		.loc 1 71 0 discriminator 1
+  74:..\source/boardmain.c **** #endif
+  75:..\source/boardmain.c ****     }
+ 116              		.loc 1 75 0 discriminator 1
  117 006c F0E7     		b	.L2
  118              		.cfi_endproc
  119              	.LFE36:
@@ -234,13 +238,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  151 0026 01       		.byte	0x1
  152 0027 06       		.byte	0x6
  153 0028 B1020000 		.4byte	.LASF0
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 5
+
+
  154 002c 02       		.uleb128 0x2
  155 002d 01       		.byte	0x1
  156 002e 08       		.byte	0x8
  157 002f 94000000 		.4byte	.LASF1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 5
-
-
  158 0033 02       		.uleb128 0x2
  159 0034 02       		.byte	0x2
  160 0035 05       		.byte	0x5
@@ -294,13 +298,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  208 008c 01       		.byte	0x1
  209 008d 1B       		.byte	0x1b
  210 008e 5D000000 		.4byte	0x5d
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 6
+
+
  211 0092 00000000 		.4byte	.LFB36
  212 0096 6E000000 		.4byte	.LFE36-.LFB36
  213 009a 01       		.uleb128 0x1
  214 009b 9C       		.byte	0x9c
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 6
-
-
  215 009c 8B010000 		.4byte	0x18b
  216 00a0 05       		.uleb128 0x5
  217 00a1 08000000 		.4byte	.LVL0
@@ -354,13 +358,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  265 0131 48000000 		.4byte	.LVL16
  266 0135 7C020000 		.4byte	0x27c
  267 0139 05       		.uleb128 0x5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 7
+
+
  268 013a 4C000000 		.4byte	.LVL17
  269 013e 89020000 		.4byte	0x289
  270 0142 05       		.uleb128 0x5
  271 0143 50000000 		.4byte	.LVL18
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 7
-
-
  272 0147 96020000 		.4byte	0x296
  273 014b 05       		.uleb128 0x5
  274 014c 54000000 		.4byte	.LVL19
@@ -414,13 +418,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  322 01c4 0A       		.uleb128 0xa
  323 01c5 00       		.byte	0
  324 01c6 09       		.uleb128 0x9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 8
+
+
  325 01c7 F0000000 		.4byte	.LASF15
  326 01cb 03       		.byte	0x3
  327 01cc 0F       		.byte	0xf
  328 01cd D3010000 		.4byte	0x1d3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 8
-
-
  329 01d1 0A       		.uleb128 0xa
  330 01d2 00       		.byte	0
  331 01d3 09       		.uleb128 0x9
@@ -474,13 +478,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  379 022d 00       		.byte	0
  380 022e 09       		.uleb128 0x9
  381 022f BB010000 		.4byte	.LASF23
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 9
+
+
  382 0233 0A       		.byte	0xa
  383 0234 12       		.byte	0x12
  384 0235 3B020000 		.4byte	0x23b
  385 0239 0A       		.uleb128 0xa
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 9
-
-
  386 023a 00       		.byte	0
  387 023b 09       		.uleb128 0x9
  388 023c FA000000 		.4byte	.LASF24
@@ -506,7 +510,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  408 0262 09       		.uleb128 0x9
  409 0263 9E010000 		.4byte	.LASF27
  410 0267 0B       		.byte	0xb
- 411 0268 21       		.byte	0x21
+ 411 0268 1E       		.byte	0x1e
  412 0269 6F020000 		.4byte	0x26f
  413 026d 0A       		.uleb128 0xa
  414 026e 00       		.byte	0
@@ -534,13 +538,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  436 0296 09       		.uleb128 0x9
  437 0297 24010000 		.4byte	.LASF31
  438 029b 0A       		.byte	0xa
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 10
+
+
  439 029c 13       		.byte	0x13
  440 029d A3020000 		.4byte	0x2a3
  441 02a1 0A       		.uleb128 0xa
  442 02a2 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 10
-
-
  443 02a3 09       		.uleb128 0x9
  444 02a4 B1000000 		.4byte	.LASF32
  445 02a8 04       		.byte	0x4
@@ -551,7 +555,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  450 02b0 09       		.uleb128 0x9
  451 02b1 A2000000 		.4byte	.LASF33
  452 02b5 07       		.byte	0x7
- 453 02b6 14       		.byte	0x14
+ 453 02b6 15       		.byte	0x15
  454 02b7 BD020000 		.4byte	0x2bd
  455 02bb 0A       		.uleb128 0xa
  456 02bc 00       		.byte	0
@@ -565,7 +569,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  464 02ca 09       		.uleb128 0x9
  465 02cb 77000000 		.4byte	.LASF35
  466 02cf 0B       		.byte	0xb
- 467 02d0 28       		.byte	0x28
+ 467 02d0 25       		.byte	0x25
  468 02d1 D7020000 		.4byte	0x2d7
  469 02d5 0A       		.uleb128 0xa
  470 02d6 00       		.byte	0
@@ -594,13 +598,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  493              	.Ldebug_abbrev0:
  494 0000 01       		.uleb128 0x1
  495 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 11
+
+
  496 0002 01       		.byte	0x1
  497 0003 25       		.uleb128 0x25
  498 0004 0E       		.uleb128 0xe
  499 0005 13       		.uleb128 0x13
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 11
-
-
  500 0006 0B       		.uleb128 0xb
  501 0007 03       		.uleb128 0x3
  502 0008 0E       		.uleb128 0xe
@@ -654,13 +658,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  550 0038 12       		.uleb128 0x12
  551 0039 06       		.uleb128 0x6
  552 003a 40       		.uleb128 0x40
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 12
+
+
  553 003b 18       		.uleb128 0x18
  554 003c 9742     		.uleb128 0x2117
  555 003e 19       		.uleb128 0x19
  556 003f 01       		.uleb128 0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 12
-
-
  557 0040 13       		.uleb128 0x13
  558 0041 00       		.byte	0
  559 0042 00       		.byte	0
@@ -714,13 +718,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  607 0074 3F       		.uleb128 0x3f
  608 0075 19       		.uleb128 0x19
  609 0076 03       		.uleb128 0x3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 13
+
+
  610 0077 0E       		.uleb128 0xe
  611 0078 3A       		.uleb128 0x3a
  612 0079 0B       		.uleb128 0xb
  613 007a 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 13
-
-
  614 007b 0B       		.uleb128 0xb
  615 007c 3C       		.uleb128 0x3c
  616 007d 19       		.uleb128 0x19
@@ -774,13 +778,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  662      00000201 
  662      FB0E0D00 
  662      01010101 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 14
+
+
  663              	.LASF40:
  664 0000 443A5C70 		.ascii	"D:\\projects\\ArloBot\\ArlobotHw\\DualBoard-043\\Bo"
  664      726F6A65 
  664      6374735C 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 14
-
-
  664      41726C6F 
  664      426F745C 
  665 002e 61726431 		.ascii	"ard1-RPi.cydsn\000"
@@ -834,13 +838,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  687 00b1 436F6E74 		.ascii	"Control_Update\000"
  687      726F6C5F 
  687      55706461 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 15
+
+
  687      746500
  688              	.LASF5:
  689 00c0 6C6F6E67 		.ascii	"long unsigned int\000"
  689      20756E73 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 15
-
-
  689      69676E65 
  689      6420696E 
  689      7400
@@ -894,13 +898,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  712              	.LASF8:
  713 014f 756E7369 		.ascii	"unsigned int\000"
  713      676E6564 
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 16
+
+
  713      20696E74 
  713      00
  714              	.LASF39:
  715 015c 2E2E5C73 		.ascii	"..\\source\\boardmain.c\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 16
-
-
  715      6F757263 
  715      655C626F 
  715      6172646D 
@@ -954,13 +958,13 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 1
  733      2D736563 
  733      74696F6E 
  734              	.LASF6:
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccMVMnhc.s 			page 17
+
+
  735 025b 6C6F6E67 		.ascii	"long long int\000"
  735      206C6F6E 
  735      6720696E 
  735      7400
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc1fHNSn.s 			page 17
-
-
  736              	.LASF10:
  737 0269 63686172 		.ascii	"char\000"
  737      00

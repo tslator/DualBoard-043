@@ -52,7 +52,7 @@
 #define UARTCOMMS_REMOVE_SPI_SLAVE_MISO_PIN      (1u)
 #define UARTCOMMS_REMOVE_UART_TX_PIN             (0u)
 #define UARTCOMMS_REMOVE_UART_RX_TX_PIN          (1u)
-#define UARTCOMMS_REMOVE_UART_RX_PIN             (1u)
+#define UARTCOMMS_REMOVE_UART_RX_PIN             (0u)
 #define UARTCOMMS_REMOVE_UART_RX_WAKE_PIN        (1u)
 #define UARTCOMMS_REMOVE_UART_RTS_PIN            (1u)
 #define UARTCOMMS_REMOVE_UART_CTS_PIN            (1u)

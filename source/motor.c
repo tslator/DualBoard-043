@@ -43,6 +43,11 @@
         PWM_MAX          |  1500  | 1000  |
  */
 
+#define PWM_BUFFER (200)
+#define MAX_PWM_VALUE  (2000)
+#define MID_PWM_VALUE  (1500)
+#define MIN_PWM_VALUE  (1000)
+
 #ifdef LEFT_BOARD
 /* Per the HB-25 data sheet: 
 	1.0 ms Full Reverse 
@@ -51,23 +56,33 @@
     
    Note: The datasheet is in error, it should be 1000 ms, 1500 ms and 2000 ms
  */
-#define PWM_FULL_FORWARD (2000)
-#define PWM_STOP         (1500)
-#define PWM_FULL_REVERSE (1000)
+#define PWM_MAX_FULL_FORWARD (MAX_PWM_VALUE)
+#define PWM_MAX_FULL_REVERSE (MIN_PWM_VALUE)
+#define PWM_FULL_FORWARD (PWM_MAX_FULL_FORWARD - PWM_BUFFER)
+#define PWM_STOP         (MID_PWM_VALUE)    
+#define PWM_FULL_REVERSE (PWM_MAX_FULL_REVERSE + PWM_BUFFER)
 #define PWM_DECREMENT    (-1)
 #define PWM_INCREMENT    (1)
 #define PWM_MIN          (PWM_FULL_FORWARD)
 #define PWM_MAX          (PWM_STOP)   
 #define CAL_PWM_EVAL(limit) (pwm > limit)
+#define DELTA_X             (1.0 - (-1.0))
+#define DELTA_Y             (PWM_FULL_FORWARD - PWM_FULL_REVERSE)
+#define UNITY_TO_PWM(value) ( ((DELTA_Y * value)/DELTA_X) + MID_PWM_VALUE )
 #elif defined RIGHT_BOARD
-#define PWM_FULL_FORWARD (1000)
-#define PWM_STOP         (1500)
-#define PWM_FULL_REVERSE (2000)
+#define PWM_MAX_FULL_FORWARD (MIN_PWM_VALUE)
+#define PWM_MAX_FULL_REVERSE (MAX_PWM_VALUE)
+#define PWM_FULL_FORWARD (PWM_MAX_FULL_FORWARD + PWM_BUFFER)
+#define PWM_STOP         (MID_PWM_VALUE)    
+#define PWM_FULL_REVERSE (PWM_MAX_FULL_REVERSE - PWM_BUFFER)
 #define PWM_DECREMENT     (1)
 #define PWM_INCREMENT    (-1)
 #define PWM_MIN          (PWM_STOP)
 #define PWM_MAX          (PWM_FULL_FORWARD)
 #define CAL_PWM_EVAL(limit) (pwm < limit)
+#define DELTA_X             (1.0 - (-1.0))
+#define DELTA_Y             (PWM_FULL_FORWARD - PWM_FULL_REVERSE)
+#define UNITY_TO_PWM(value) ( ((DELTA_Y * value)/DELTA_X) + MID_PWM_VALUE )
 #else
     #error "You haven't defined a board, e.g. LEFT_BOARD or RIGHT_BOARD"
 #endif
@@ -253,28 +268,32 @@ void Motor_Start()
     Motor_SetOutput(0);
 }
 
-void Motor_SetOutput(int16 value)
+//void Motor_SetOutput(int16 value)
+void Motor_SetOutput(float value)
 /* Translate value, in millimeter per second to pwm via count/sec mapping
  */
 {
-    int16 cps;
     uint16 pwm;
     
+    /* Map unity to pwm 
     
-    /* 
-                 mm      count
-          cps = ----- x -------
-                 sec      mm
+        -1.0 ... 1.0
+        1000 ... 2000
+    
+         y = f(x), where y is 1000 ... 2000 and x is -1.0 ... 1.0
+    
+      Left Wheel          Right Wheel
+        x      y            x    y
+       -1.0   1000        -1.0  2000
+        0.0   1500         0.0  1500
+        1.0   2000         1.0  1000
+    
+      Yleft = 500x + 1500
+      Yright = -500x + 1500
+    
     */
-    cps = abs(value * COUNT_PER_MILLIMETER);
     
-    /* Constrain the CPS to the calibrated values */
-    cps = constrain(cps, MIN_CPS_ENTRY, cps_to_pwm_last_entry);
-    
-    /* Note: PWM_REFLECT handles forward/reverse mapping and is defined appropriately for each board, i.e., BOARD_1,
-       BOARD_2, and motor, i.e., LEFT_BOARD, RIGHT_BOARD
-     */
-    pwm = PWM_REFLECT(value, map_cps_to_pwm[cps]);
+    pwm = UNITY_TO_PWM(value);
     
     HB25_PWM_WriteCompare(pwm);
 }
@@ -304,49 +323,29 @@ static int16 CalculateAverageCountPerSec(uint8 samples, uint16 delay)
 }
 
 void Motor_Calibrate()
-/* The purpose of calibration is to create a mapping between the speed of the motor (in count/sec) and the PWM
-   value that produces the same speed and measured via the encoder.
+/* The purpose of calibration is to find the maximum controllable PWM value
 
    Calibration is performed in three steps:
 
-    1. Run the motor over the range of PWM values, calculating the speed at each pwm sample, storing min/max pwm
-       values for each count/sec calculation and the count/sec.
-        Note: Limit the count/sec range to a usable range
-    2. Calculate average pwm values from the min/max samples
-    3. Linear interpolate between each marker
+    1. Run the motor over the range of PWM values, calculating the speed at each pwm sample and storing the maximum 
+       value in both forward and reverse.
 
  */
 {
     uint16 pwm;
-    static int16 meas_cps;
-    int ii;
-    int cal_cps_index;
-    uint32 delay = 100;
+    int16 meas_cps;
+    static int16 max_fwd_meas_cps;
+    static int16 max_rvs_meas_cps;
+    static uint16 max_pwm;
+    static uint16 min_pwm;
     
-    for (ii = 0; ii < MAX_CPS_ENTRY; ++ii)
-    {
-        map_cps_to_pwm[ii] = PWM_STOP;
-    }
+    /* Run the motor from stop to full forward pwm */
     
-    cal_cps_index = -1;
+    max_fwd_meas_cps = 0;
     
-    /* STEP 1.
-        1. Run the motor from full forward to stop in steps of PWM_CAL_STEP
-        2. At each step, calculate an average count/sec
+    HB25_PWM_WriteCompare(PWM_STOP);
     
-        Note: This code works the same for both left and right motors in that forward is with respect to the robot even
-              one more is actually running in reverse - just in case you get confused :-)
-     */
-    
-    /* Allow the motor to spin up to full speed.
-       Note: I don't understand why 1sec is needed.  When looking at the encoder pulses they appear to be accurate after
-       several 100 milliseconds, but experimentally, I don't get accurate measurements until about 1sec.
-       Fortunately, calibration is occassional.
-     */
-    HB25_PWM_WriteCompare(CAL_PWM_START);
-    CyDelay(PWM_SETTLE_TIME);
-    
-    for (pwm = CAL_PWM_START; CAL_PWM_EVAL(CAL_PWM_END); pwm += CAL_PWM_STEP)
+    for (pwm = PWM_STOP; pwm <= PWM_FULL_FORWARD; pwm += 20)
     {   
         HB25_PWM_WriteCompare(pwm);
         /* Allow the motor to settle before measuing the speed.  Same thing here as above regarding how long.  Above
@@ -358,101 +357,39 @@ void Motor_Calibrate()
         /* Measure the speed and calculate an average
            Note: Averaging the delta counts proved more consistent than averaging cps
          */
-        meas_cps = CalculateAverageCountPerSec(MAX_SPEED_SAMPLES, delay);
+        meas_cps = CalculateAverageCountPerSec(MAX_SPEED_SAMPLES, 200);
+        if (meas_cps > max_fwd_meas_cps)
+        {
+            max_fwd_meas_cps = meas_cps;
+            max_pwm = pwm;
+        }
         
-        // Constrain the measurement to the calibration range and store min/max pwm values
-        if (meas_cps >= MIN_CPS_VALUE && meas_cps < MAX_CPS_VALUE)
-        {   
-            // If this is the first one or "new" one (cps != meas_cps) add a slot and set the values
-            if (cal_cps_index < 0 || cal_cps_to_pwm[cal_cps_index].cps != meas_cps)
-            {
-                cal_cps_index++;
-                cal_cps_to_pwm[cal_cps_index].cps = meas_cps;
-                cal_cps_to_pwm[cal_cps_index].pwm = pwm;
-            }
-            // If this is a duplicate cps entry, overwrite it and we'll take care of that in interpolation
-            else
-            {
-                cal_cps_to_pwm[cal_cps_index].pwm = pwm;
-            }
-        }        
     }
     
     HB25_PWM_WriteCompare(PWM_STOP);
     
-    /* The first entry in the calibration array will always be where the motor stops, so set the min/max pwm values to
-       PWM_STOP and also set the CPS to 0
-     */
-    cal_cps_to_pwm[cal_cps_index].pwm = PWM_STOP;
-    cal_cps_to_pwm[cal_cps_index].cps = 0;
+    for (pwm = PWM_STOP; pwm >= PWM_FULL_REVERSE; pwm -= 20)
+    {   
+        HB25_PWM_WriteCompare(pwm);
+        /* Allow the motor to settle before measuing the speed.  Same thing here as above regarding how long.  Above
+           the motor was stopped, here we're just changing the speed to be slightly slower.  I would have thought 100-
+           200ms would be sufficient, but, again, 1sec gives the best and more accurate results.
+         */
+        CyDelay(PWM_SETTLE_TIME);
 
-    /* 
-        Capture the last (largest) cps entry       
-     */
-    cps_to_pwm_last_entry = cal_cps_to_pwm[0].cps;
-            
-    /* Linear interpolate the values 
-        1. Loop over the markers array creating a delta, span and step between each sample
-        2. Fill in the spaces between each sample with the interpolated values  
-    */
-        
-    uint16 cps_i;
-    uint16 cps_i_minus_1;
-    uint16 pwm_i;
-    uint16 pwm_i_minus_1;
-    int jj;
-    
-    for (ii = cal_cps_index; ii >= MIN_CAL_ENTRY; --ii)
-    {
-        cps_i = cal_cps_to_pwm[ii].cps;
-        cps_i_minus_1 = cal_cps_to_pwm[ii-1].cps;
-        
-        // Get the ith and ith+1 samples
-        pwm_i = cal_cps_to_pwm[ii].pwm;
-        pwm_i_minus_1 = cal_cps_to_pwm[ii-1].pwm;
-        
-        // Calculate the delta
-        int delta = max(pwm_i_minus_1, pwm_i) - min(pwm_i_minus_1, pwm_i);
-        
-        // Calculate the span between samples
-        int span = max(cps_i_minus_1, cps_i) - min(cps_i_minus_1, cps_i);
-        
-        // Calculate step for filling in blanks
-        // Note: Use float so we benefit from round up
-        float step = PWM_INCREMENT * ( ((float) delta) / span );
-        
-        /*
-            Example:
-        
-            cps         pwm     samples
-            ...
-            114
-            115        1700        ith
-            116      ->1702
-            117      ->1704
-            118      ->1705
-            119      ->1708
-            120        1710        ith - 1
-            121
-            ...
-        
-            Delta: 1710 - 1700 - 10
-            Span:  120 - 115 = 5
-            Step:  10 / 5 = 2
-        
-            Interpolated Values:
-            jj start = cps[i] <= 120
-            ...
-            jj end   = cps[i+1]   < 120
-         */        
-        float value = pwm_i;
-        for (jj = cps_i; jj <= cps_i_minus_1; ++jj)
+        /* Measure the speed and calculate an average
+           Note: Averaging the delta counts proved more consistent than averaging cps
+         */
+        meas_cps = CalculateAverageCountPerSec(MAX_SPEED_SAMPLES, 200);
+        if (meas_cps > max_rvs_meas_cps)
         {
-            // Round up so we don't lose significant digits
-            map_cps_to_pwm[jj] = (int) value;
-            value = round(value + step);
+            max_rvs_meas_cps = meas_cps;
+            min_pwm = pwm;
         }
-    }    
+        
+    }
+    
+    HB25_PWM_WriteCompare(PWM_STOP);
 }
 
 void Motor_ValidateCalibration()

@@ -17,13 +17,10 @@
 
 /*------------------------------------------------------------------------------------------------
  Description: Initializes the gain parameters and sample rate
- Parameters: Kp - proportional gain
-             Ki - integral gain
-             Kd - derivative gain
-             sample_rate - how often the PID controller is updated
+ Parameters: None
  Return: None
  ------------------------------------------------------------------------------------------------*/
-void PID_Init(float Kp, float Ki, float Kd, uint8 sample_rate);
+void PID_Init();
 
 /*------------------------------------------------------------------------------------------------
  Description: Starts the PID controller
@@ -40,6 +37,8 @@ void PID_Start();
 void PID_Update();
 
 void PID_SetOutput();
+
+void PID_Tune();
 
 #endif
 

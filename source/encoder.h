@@ -17,6 +17,7 @@
 
 void Encoder_Init();
 void Encoder_Start();
+void Encoder_Sample(uint32 delta_time);
 void Encoder_Update();
 void Encoder_Reset();
 /* Returns the calculated speed for both the left and right wheels

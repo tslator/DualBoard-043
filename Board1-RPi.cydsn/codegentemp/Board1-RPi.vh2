@@ -2,7 +2,7 @@
 --	Conversion of Board1-RPi.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Mon Apr 18 15:20:57 2016
+--	Fri Apr 22 21:15:20 2016
 --
 
 USE cypress.cypress.all;
@@ -309,6 +309,7 @@ SIGNAL \UARTCOMMS:Net_1194\ : bit;
 SIGNAL \UARTCOMMS:Net_1195\ : bit;
 SIGNAL \UARTCOMMS:Net_1196\ : bit;
 SIGNAL \UARTCOMMS:Net_654\ : bit;
+SIGNAL \UARTCOMMS:Net_1197\ : bit;
 SIGNAL \UARTCOMMS:Net_1257\ : bit;
 SIGNAL \UARTCOMMS:uncfg_rx_irq\ : bit;
 SIGNAL \UARTCOMMS:Net_1170\ : bit;
@@ -324,6 +325,10 @@ SIGNAL \UARTCOMMS:tmpINTERRUPT_0__tx_net_0\ : bit;
 SIGNAL \UARTCOMMS:Net_1099\ : bit;
 SIGNAL \UARTCOMMS:Net_1258\ : bit;
 SIGNAL Net_884 : bit;
+SIGNAL \UARTCOMMS:tmpOE__rx_net_0\ : bit;
+SIGNAL \UARTCOMMS:tmpIO_0__rx_net_0\ : bit;
+TERMINAL \UARTCOMMS:tmpSIOVREF__rx_net_0\ : bit;
+SIGNAL \UARTCOMMS:tmpINTERRUPT_0__rx_net_0\ : bit;
 SIGNAL \UARTCOMMS:Net_1175\ : bit;
 SIGNAL \UARTCOMMS:Net_747\ : bit;
 SIGNAL \UARTCOMMS:Net_1053\ : bit;
@@ -982,7 +987,7 @@ Pin_InfraredDistance_2:cy_psoc3_pins_v1_10
 		id=>"7c22e3c5-da93-4267-9ea2-622856a53add/2dc2d7a8-ce2b-43c7-af4a-821c8cd73ccf",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"645161290.322581",
+		period=>"63131313.1313131",
 		is_direct=>'0',
 		is_digital=>'0')
 	PORT MAP(clock_out=>\EZI2C_Slave:Net_847\,
@@ -2395,12 +2400,82 @@ HCSR04_Trigger_1:cy_psoc3_pins_v1_10
 \UARTCOMMS:SCB_IRQ\:cy_isr_v1_0
 	GENERIC MAP(int_type=>"10")
 	PORT MAP(int_signal=>Net_884);
+\UARTCOMMS:rx\:cy_psoc3_pins_v1_10
+	GENERIC MAP(id=>"43ec2fa1-bf22-4b71-9477-b6ca7b97f0b0/78e33e5d-45ea-4b75-88d5-73274e8a7ce4",
+		drive_mode=>"001",
+		ibuf_enabled=>"1",
+		init_dr_st=>"0",
+		input_sync=>"0",
+		input_clk_en=>'0',
+		input_sync_mode=>"0",
+		intr_mode=>"00",
+		invert_in_clock=>'0',
+		invert_in_clock_en=>'0',
+		invert_in_reset=>'0',
+		invert_out_clock=>'0',
+		invert_out_clock_en=>'0',
+		invert_out_reset=>'0',
+		io_voltage=>"",
+		layout_mode=>"CONTIGUOUS",
+		output_conn=>"0",
+		output_sync=>"0",
+		output_clk_en=>'0',
+		output_mode=>"0",
+		output_reset=>'0',
+		output_clock_mode=>"0",
+		oe_sync=>"0",
+		oe_conn=>"0",
+		oe_reset=>'0',
+		pin_aliases=>"",
+		pin_mode=>"I",
+		por_state=>4,
+		sio_group_cnt=>0,
+		sio_hifreq=>"00000000",
+		sio_hyst=>"1",
+		sio_ibuf=>"00000000",
+		sio_info=>"00",
+		sio_obuf=>"00000000",
+		sio_refsel=>"00000000",
+		sio_vtrip=>"00000000",
+		sio_vohsel=>"00000000",
+		slew_rate=>"0",
+		spanning=>'0',
+		sw_only=>'0',
+		vtrip=>"00",
+		width=>1,
+		port_alias_required=>'0',
+		port_alias_group=>"",
+		use_annotation=>"0",
+		pa_in_clock=>-1,
+		pa_in_clock_en=>-1,
+		pa_in_reset=>-1,
+		pa_out_clock=>-1,
+		pa_out_clock_en=>-1,
+		pa_out_reset=>-1,
+		ovt_needed=>"0",
+		ovt_slew_control=>"00",
+		ovt_hyst_trim=>"0",
+		input_buffer_sel=>"00")
+	PORT MAP(oe=>(Net_1582),
+		y=>(zero),
+		fb=>\UARTCOMMS:Net_654\,
+		analog=>(open),
+		io=>(\UARTCOMMS:tmpIO_0__rx_net_0\),
+		siovref=>(\UARTCOMMS:tmpSIOVREF__rx_net_0\),
+		annotation=>(open),
+		in_clock=>zero,
+		in_clock_en=>Net_1582,
+		in_reset=>zero,
+		out_clock=>zero,
+		out_clock_en=>Net_1582,
+		out_reset=>zero,
+		interrupt=>\UARTCOMMS:tmpINTERRUPT_0__rx_net_0\);
 \UARTCOMMS:SCB\:cy_m0s8_scb_v2_0
 	GENERIC MAP(cy_registers=>"",
 		scb_mode=>2)
 	PORT MAP(clock=>\UARTCOMMS:Net_847\,
 		interrupt=>Net_884,
-		rx=>zero,
+		rx=>\UARTCOMMS:Net_654\,
 		tx=>\UARTCOMMS:Net_1062\,
 		cts=>zero,
 		rts=>\UARTCOMMS:Net_1053\,
@@ -2601,7 +2676,7 @@ Bat_1:cy_annotation_universal_v1_0
 		id=>"3dbba19d-7851-4a83-b204-a0a386fe8d68/2dc2d7a8-ce2b-43c7-af4a-821c8cd73ccf",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"645161290.322581",
+		period=>"69832402.2346369",
 		is_direct=>'0',
 		is_digital=>'0')
 	PORT MAP(clock_out=>\I2C_Master:Net_847\,
@@ -3278,7 +3353,7 @@ Quadrature_Decode_Clock:cy_clock_v1_0
 		divisor=>0,
 		period=>"83333333.3333333",
 		is_direct=>'0',
-		is_digital=>'1')
+		is_digital=>'0')
 	PORT MAP(clock_out=>Net_75,
 		dig_domain_out=>open);
 bufoe_1:cy_bufoe

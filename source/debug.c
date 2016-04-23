@@ -12,6 +12,8 @@
 
 #include "debug.h"
 
+#define COMMS_DEBUG_ENABLED
+
 void Debug_Init()
 {
     memset(formatted_string, 0, sizeof(formatted_string));

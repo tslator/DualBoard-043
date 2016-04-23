@@ -13,10 +13,9 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="DualBoard-043\Board1-RPi">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="DualBoard-043\UART\UART.cydwr">
 <ExpandedNodeIds>
 <v>DualBoard-043</v>
-<v>DualBoard-043\Board1-RPi</v>
 <v>DualBoard-043\Board1-RPi\TopDesign</v>
 <v>DualBoard-043\Board1-RPi\Header Files</v>
 <v>DualBoard-043\Board1-RPi\Header Files\cal.h</v>
@@ -24,6 +23,7 @@
 <v>DualBoard-043\Board1-RPi\Source Files</v>
 <v>DualBoard-043\Board1-RPi\Source Files\cal.c</v>
 <v>DualBoard-043\Board1-RPi\Source Files\diag.c</v>
+<v>DualBoard-043\Board1-RPi\Generated_Source</v>
 <v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4</v>
 <v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\Encoder_Count_Pin</v>
 <v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\Encoder_Count_Pin\Encoder_Count_Pin.c</v>
@@ -90,6 +90,11 @@
 <v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\Pin_InfraredDistance_2\Pin_InfraredDistance_2_PM.c</v>
 <v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\Pin_InfraredDistance_3</v>
 <v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\Pin_InfraredDistance_3\Pin_InfraredDistance_3_PM.c</v>
+<v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\UARTCOMMS_rx</v>
+<v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\UARTCOMMS_rx\UARTCOMMS_rx.c</v>
+<v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\UARTCOMMS_rx\UARTCOMMS_rx.h</v>
+<v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\UARTCOMMS_rx\UARTCOMMS_rx_aliases.h</v>
+<v>DualBoard-043\Board1-RPi\Generated_Source\PSoC4\UARTCOMMS_rx\UARTCOMMS_rx_PM.c</v>
 <v>DualBoard-043\Board2-RPi\TopDesign</v>
 <v>DualBoard-043\Board-KitProg\TopDesign</v>
 <v>DualBoard-043\i2c\TopDesign</v>
@@ -127,35 +132,65 @@
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cy_lfclk</v>
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cy_lfclk\CyLFClk.c</v>
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cy_lfclk\CyLFClk.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_BOOT.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_BOOT.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_EZI2C.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_EZI2C.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_EZI2C_BOOT.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_EZI2C_INT.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_EZI2C_PVT.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_PINS.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_PM.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1\EZI2C_1_PVT.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_SCB_IRQ</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_SCB_IRQ\EZI2C_1_SCB_IRQ.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_SCB_IRQ\EZI2C_1_SCB_IRQ.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_SCBCLK</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_SCBCLK\EZI2C_1_SCBCLK.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_SCBCLK\EZI2C_1_SCBCLK.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_scl</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_scl\EZI2C_1_scl.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_scl\EZI2C_1_scl.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_scl\EZI2C_1_scl_aliases.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_scl\EZI2C_1_scl_PM.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_sda</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_sda\EZI2C_1_sda.c</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_sda\EZI2C_1_sda.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_sda\EZI2C_1_sda_aliases.h</v>
-<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_1_sda\EZI2C_1_sda_PM.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_BOOT.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_BOOT.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_EZI2C.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_EZI2C.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_EZI2C_BOOT.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_EZI2C_INT.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_EZI2C_PVT.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_PINS.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_PM.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C\EZI2C_PVT.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_SCB_IRQ</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_SCB_IRQ\EZI2C_SCB_IRQ.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_SCB_IRQ\EZI2C_SCB_IRQ.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_SCBCLK</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_SCBCLK\EZI2C_SCBCLK.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_SCBCLK\EZI2C_SCBCLK.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_scl</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_scl\EZI2C_scl.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_scl\EZI2C_scl.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_scl\EZI2C_scl_aliases.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_scl\EZI2C_scl_PM.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_sda</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_sda\EZI2C_sda.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_sda\EZI2C_sda.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_sda\EZI2C_sda_aliases.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\EZI2C_sda\EZI2C_sda_PM.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_BOOT.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_BOOT.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_I2C.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_I2C.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_I2C_BOOT.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_I2C_INT.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_I2C_MASTER.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_I2C_PVT.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_PINS.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_PM.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM\I2CM_PVT.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_SCB_IRQ</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_SCB_IRQ\I2CM_SCB_IRQ.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_SCB_IRQ\I2CM_SCB_IRQ.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_SCBCLK</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_SCBCLK\I2CM_SCBCLK.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_SCBCLK\I2CM_SCBCLK.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_scl</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_scl\I2CM_scl.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_scl\I2CM_scl.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_scl\I2CM_scl_aliases.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_scl\I2CM_scl_PM.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_sda</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_sda\I2CM_sda.c</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_sda\I2CM_sda.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_sda\I2CM_sda_aliases.h</v>
+<v>DualBoard-043\i2c\Generated_Source\PSoC4\I2CM_sda\I2CM_sda_PM.c</v>
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cycodeshareexport.ld</v>
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cycodeshareimport.ld</v>
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cycodeshareimport.scat</v>
@@ -172,47 +207,136 @@
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cyfitterrv.inc</v>
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\cymetadata.c</v>
 <v>DualBoard-043\i2c\Generated_Source\PSoC4\project.h</v>
+<v>DualBoard-043\UART</v>
+<v>DualBoard-043\UART\TopDesign</v>
+<v>DualBoard-043\UART\UART.cydwr</v>
+<v>DualBoard-043\UART\Header Files</v>
+<v>DualBoard-043\UART\Header Files\cyapicallbacks.h</v>
+<v>DualBoard-043\UART\Source Files</v>
+<v>DualBoard-043\UART\Source Files\main.c</v>
+<v>DualBoard-043\UART\Generated_Source</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\Cm0Iar.icf</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\Cm0RealView.scat</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\Cm0Start.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cm0.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cm0_psoc4.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cmFunc.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cmInstr.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyBootAsmGnu.s</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyBootAsmIar.s</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyBootAsmRv.s</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyFlash.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyFlash.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyLib.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyLib.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cypins.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cyPm.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cyPm.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cytypes.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cyutils.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_dmac</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_dmac\CyDMA.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_dmac\CyDMA.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_lfclk</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_lfclk\CyLFClk.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_lfclk\CyLFClk.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_BOOT.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_BOOT.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_PINS.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_PM.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_PVT.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_SPI_UART.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_SPI_UART.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_SPI_UART_INT.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_SPI_UART_PVT.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_UART.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_UART_BOOT.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_rx</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_rx\UART_rx.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_rx\UART_rx.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_rx\UART_rx_aliases.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_rx\UART_rx_PM.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_SCBCLK</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_SCBCLK\UART_SCBCLK.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_SCBCLK\UART_SCBCLK.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_tx</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_tx\UART_tx.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_tx\UART_tx.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_tx\UART_tx_aliases.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART_tx\UART_tx_PM.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cycodeshareexport.ld</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cycodeshareimport.ld</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cycodeshareimport.scat</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cydevice_trm.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cydevicegnu_trm.inc</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cydeviceiar_trm.inc</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cydevicerv_trm.inc</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cydisabledsheets.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cyfitter.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cyfitter_cfg.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cyfitter_cfg.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cyfittergnu.inc</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cyfitteriar.inc</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cyfitterrv.inc</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cymetadata.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\project.h</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>DualBoard-043</v>
 <v>DualBoard-043\Board1-RPi</v>
-<v>DualBoard-043\Board1-RPi\TopDesign</v>
-<v>DualBoard-043\Board1-RPi\Board1-RPi.cydwr</v>
-<v>DualBoard-043\Board1-RPi\Header Files</v>
-<v>DualBoard-043\Board1-RPi\Header Files\cal.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\control.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\cyapicallbacks.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\debug.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\diag.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\encoder.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\hwconfig.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\i2c.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\infrared.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\motor.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\odom.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\pid.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\time.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\ultrasonic.h</v>
-<v>DualBoard-043\Board1-RPi\Header Files\utils.h</v>
-<v>DualBoard-043\Board1-RPi\Source Files</v>
-<v>DualBoard-043\Board1-RPi\Source Files\boardmain.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\cal.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\control.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\debug.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\diag.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\encoder.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\i2c.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\infrared.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\motor.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\odom.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\pid.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\time.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\ultrasonic.c</v>
-<v>DualBoard-043\Board1-RPi\Source Files\utils.c</v>
-<v>DualBoard-043\Board1-RPi\Generated_Source</v>
 <v>DualBoard-043\Board2-RPi</v>
 <v>DualBoard-043\Board-KitProg</v>
 <v>DualBoard-043\i2c</v>
+<v>DualBoard-043\UART</v>
+<v>DualBoard-043\UART\TopDesign</v>
+<v>DualBoard-043\UART\UART.cydwr</v>
+<v>DualBoard-043\UART\Header Files</v>
+<v>DualBoard-043\UART\Header Files\cyapicallbacks.h</v>
+<v>DualBoard-043\UART\Source Files</v>
+<v>DualBoard-043\UART\Source Files\main.c</v>
+<v>DualBoard-043\UART\Generated_Source</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cm0gcc.ld</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\Cm0Iar.icf</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\Cm0RealView.scat</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\Cm0Start.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cm0.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cm0_psoc4.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cmFunc.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\core_cmInstr.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyBootAsmGnu.s</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyBootAsmIar.s</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyBootAsmRv.s</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyFlash.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyFlash.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyLib.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\CyLib.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cypins.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cyPm.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cyPm.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cytypes.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_boot\cyutils.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_dmac</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_dmac\CyDMA.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_dmac\CyDMA.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_lfclk</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_lfclk\CyLFClk.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\cy_lfclk\CyLFClk.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_BOOT.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_BOOT.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_PINS.h</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_PM.c</v>
+<v>DualBoard-043\UART\Generated_Source\PSoC4\UART\UART_PVT.h</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -232,6 +356,9 @@
 <v>DualBoard-043\i2c</v>
 <v>DualBoard-043\i2c\TopDesign</v>
 <v>DualBoard-043\i2c\TopDesign\TopDesign.cysch</v>
+<v>DualBoard-043\UART</v>
+<v>DualBoard-043\UART\TopDesign</v>
+<v>DualBoard-043\UART\TopDesign\TopDesign.cysch</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>DualBoard-043</v>
@@ -249,9 +376,12 @@
 <v>DualBoard-043\i2c</v>
 <v>DualBoard-043\i2c\TopDesign</v>
 <v>DualBoard-043\i2c\TopDesign\TopDesign.cysch</v>
+<v>DualBoard-043\UART</v>
+<v>DualBoard-043\UART\TopDesign</v>
+<v>DualBoard-043\UART\TopDesign\TopDesign.cysch</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="DualBoard-043">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="DualBoard-043\UART">
 <ExpandedNodeIds>
 <v>DualBoard-043</v>
 <v>DualBoard-043\Board1-RPi</v>
@@ -363,6 +493,8 @@
 <v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS.lst</v>
 <v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS_BOOT.lst</v>
 <v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS_rx.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS_rx_PM.lst</v>
 <v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS_SCB_IRQ.lst</v>
 <v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS_SCBCLK.lst</v>
 <v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\UARTCOMMS_SPI_UART.lst</v>
@@ -588,18 +720,31 @@
 <v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
 <v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
 <v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_BOOT.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_EZI2C.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_EZI2C_BOOT.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_EZI2C_INT.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_PM.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_SCB_IRQ.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_SCBCLK.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_scl.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_scl_PM.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_sda.lst</v>
-<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_1_sda_PM.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_BOOT.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_EZI2C.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_EZI2C_BOOT.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_EZI2C_INT.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_PM.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_SCB_IRQ.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_SCBCLK.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_scl.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_scl_PM.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_sda.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_sda_PM.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_BOOT.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C_BOOT.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C_INT.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_I2C_MASTER.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_PM.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_SCB_IRQ.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_SCBCLK.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_scl.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_scl_PM.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_sda.lst</v>
+<v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\I2CM_sda_PM.lst</v>
 <v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\Listing Files\main.lst</v>
 <v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\i2c.elf</v>
 <v>DualBoard-043\i2c\CortexM0\ARM_GCC_493\Debug\i2c.hex</v>
@@ -607,10 +752,91 @@
 <v>DualBoard-043\i2c\i2c.gpdsc</v>
 <v>DualBoard-043\i2c\i2c.rpt</v>
 <v>DualBoard-043\i2c\i2c_timing.html</v>
+<v>DualBoard-043\UART</v>
+<v>DualBoard-043\UART\CortexM0</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\Cm0Start.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\CyDMA.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\CyLFClk.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\main.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_BOOT.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_PM.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_rx.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_rx_PM.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_SCBCLK.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_SPI_UART.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_SPI_UART_INT.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_tx.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_tx_PM.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_UART.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\Listing Files\UART_UART_BOOT.lst</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\UART.elf</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\UART.hex</v>
+<v>DualBoard-043\UART\CortexM0\ARM_GCC_493\Debug\UART.map</v>
+<v>DualBoard-043\UART\UART.gpdsc</v>
+<v>DualBoard-043\UART\UART.rpt</v>
+<v>DualBoard-043\UART\UART_timing.html</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>DualBoard-043</v>
 <v>DualBoard-043\Board1-RPi</v>
+<v>DualBoard-043\Board1-RPi\CortexM0</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\ADC_Infrared.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\ADC_Infrared_INT.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\ADC_Infrared_intClock.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\ADC_Infrared_IRQ.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\ADC_Infrared_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\boardmain.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\cal.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\Cm0Start.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\control.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\CyDMA.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\CyLFClk.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\CyLib.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\cymetadata.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\debug.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\diag.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\encoder.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\Encoder_A.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\Encoder_A_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\Encoder_B.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\Encoder_B_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\Encoder_Count_Pin.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\Encoder_Count_Pin_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_BOOT.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_EZI2C.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_EZI2C_BOOT.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_EZI2C_INT.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_SCB_IRQ.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_SCBCLK.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_scl.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_scl_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_sda.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\EZI2C_Slave_sda_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\HB25_Enable_Pin.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\HB25_Enable_Pin_PM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\HB25_PWM.lst</v>
+<v>DualBoard-043\Board1-RPi\CortexM0\ARM_GCC_493\Debug\Listing Files\HB25_PWM_Pin.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -705,7 +931,16 @@
 <v>DualBoard-043\i2c\System Reference Guides\cy_boot_v5_30</v>
 <v>DualBoard-043\i2c\System Reference Guides\cy_dmac_v1_10</v>
 <v>DualBoard-043\i2c\System Reference Guides\cy_lfclk_v1_0</v>
-<v>DualBoard-043\i2c\SCB_P4_v3_10.pdf</v>
+<v>DualBoard-043\i2c\SCB_P4_v3_10</v>
+<v>DualBoard-043\i2c\SCB_P4_v3_10\SCB_P4_v3_10.pdf</v>
+<v>DualBoard-043\UART</v>
+<v>DualBoard-043\UART\PSoC 4 Architecture TRM</v>
+<v>DualBoard-043\UART\PSoC 4200M Family Datasheet</v>
+<v>DualBoard-043\UART\System Reference Guides</v>
+<v>DualBoard-043\UART\System Reference Guides\cy_boot_v5_30</v>
+<v>DualBoard-043\UART\System Reference Guides\cy_dmac_v1_10</v>
+<v>DualBoard-043\UART\System Reference Guides\cy_lfclk_v1_0</v>
+<v>DualBoard-043\UART\SCB_P4_v3_10.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>DualBoard-043</v>
@@ -772,25 +1007,22 @@
 <Unloaded />
 <OpenDocs>
 <name v=".\Board1-RPi.cydsn\TopDesign\TopDesign.cysch" />
-<name v=".\Board1-RPi.cydsn\Board1-RPi.cydwr" />
-<name v=".\source\boardmain.c" />
+<name v=".\source\hwconfig.h" />
 <name v=".\source\pid.c" />
-<name v=".\source\encoder.c" />
-<name v=".\source\motor.c" />
-<name v=".\source\cal.c" />
-<name v=".\source\i2c.c" />
-<name v=".\source\encoder.h" />
-<name v=".\source\odom.c" />
-<name v=".\source\i2c.h" />
-<name v=".\source\utils.c" />
-<name v=".\source\utils.h" />
-<name v=".\source\control.c" />
-<name v=".\Board1-RPi.cydsn\Generated_Source\PSoC4\HB25_PWM.c" />
-<name v=".\source\motor.h" />
-<name v=".\source\cal.h" />
+<name v=".\source\boardmain.c" />
 <name v=".\source\pid.h" />
-<name v=".\source\ultrasonic.c" />
-<name v=".\Board1-RPi.cydsn\Generated_Source\PSoC4\Cm0Start.c" />
+<name v=".\source\motor.c" />
+<name v=".\source\motor.h" />
+<name v=".\source\i2c.c" />
+<name v=".\source\odom.c" />
+<name v=".\source\encoder.c" />
+<name v=".\source\cal.c" />
+<name v=".\source\control.c" />
+<name v=".\UART.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\UART.cydsn\main.c" />
+<name v=".\Board1-RPi.cydsn\Board1-RPi.cydwr" />
+<name v=".\source\debug.c" />
+<name v=".\UART.cydsn\UART.cydwr" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />

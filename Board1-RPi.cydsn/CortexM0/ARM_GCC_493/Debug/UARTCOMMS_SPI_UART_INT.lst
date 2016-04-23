@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
   30:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c **** * Parameters:
   31:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c **** *  None
   32:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c **** *
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c **** * Return:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
   72:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c ****                 /* Adjust local head index */
   73:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c ****                 if (UARTCOMMS_INTERNAL_RX_BUFFER_SIZE == locHead)
   74:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c ****                 {
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 3
 
 
   75:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c ****                     locHead = 0u;
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  123:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c ****                 /* Check for room in TX software buffer */
  124:.\Generated_Source\PSoC4/UARTCOMMS_SPI_UART_INT.c ****                 if (UARTCOMMS_txBufferHead != UARTCOMMS_txBufferTail)
   47              		.loc 1 124 0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 4
 
 
   48 0014 134B     		ldr	r3, .L9+8
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
   78 003c 1B68     		ldr	r3, [r3]
   79 003e 1F22     		mov	r2, #31
   80              	.LVL4:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 5
 
 
   81 0040 1340     		and	r3, r2
@@ -278,14 +278,14 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  103 005a C046     		.align	2
  104              	.L9:
  105 005c 00000000 		.word	UARTCOMMS_customIntrHandler
- 106 0060 8C0F2540 		.word	1076170636
+ 106 0060 8C0F2440 		.word	1076105100
  107 0064 00000000 		.word	UARTCOMMS_txBufferHead
  108 0068 00000000 		.word	UARTCOMMS_txBufferTail
  109 006c 00000000 		.word	UARTCOMMS_txBufferInternal
- 110 0070 40022540 		.word	1076167232
- 111 0074 08022540 		.word	1076167176
- 112 0078 880F2540 		.word	1076170632
- 113 007c 800F2540 		.word	1076170624
+ 110 0070 40022440 		.word	1076101696
+ 111 0074 08022440 		.word	1076101640
+ 112 0078 880F2440 		.word	1076105096
+ 113 007c 800F2440 		.word	1076105088
  114              		.cfi_endproc
  115              	.LFE1:
  116              		.size	UARTCOMMS_SPI_UART_ISR, .-UARTCOMMS_SPI_UART_ISR
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  123              	.Ldebug_info0:
  124 0000 26010000 		.4byte	0x126
  125 0004 0400     		.2byte	0x4
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 6
 
 
  126 0006 00000000 		.4byte	.Ldebug_abbrev0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  180 0073 2C000000 		.4byte	0x2c
  181 0077 04       		.uleb128 0x4
  182 0078 0E000000 		.4byte	.LASF10
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 7
 
 
  183 007c 02       		.byte	0x2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  237 00ee 3A       		.byte	0x3a
  238 00ef A9000000 		.4byte	0xa9
  239 00f3 0A       		.uleb128 0xa
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 8
 
 
  240 00f4 30000000 		.4byte	.LASF18
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  294 001c 00       		.byte	0
  295 001d 00       		.byte	0
  296 001e 03       		.uleb128 0x3
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 9
 
 
  297 001f 24       		.uleb128 0x24
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  351 0055 0B       		.uleb128 0xb
  352 0056 3B       		.uleb128 0x3b
  353 0057 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 10
 
 
  354 0058 27       		.uleb128 0x27
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  408 008f 00       		.byte	0
  409 0090 0C       		.uleb128 0xc
  410 0091 21       		.uleb128 0x21
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 11
 
 
  411 0092 00       		.byte	0
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  458 000e 75696E74 		.ascii	"uint32\000"
  458      333200
  459              	.LASF20:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 12
 
 
  460 0015 55415254 		.ascii	"UARTCOMMS_txBufferInternal\000"
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  481      20636861 
  481      7200
  482              	.LASF13:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 13
 
 
  483 00f7 63686172 		.ascii	"char\000"
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 1
  504 01f8 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
  504      66756E63 
  504      74696F6E 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccqTihNN.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccUPOLyk.s 			page 14
 
 
  504      2D736563 

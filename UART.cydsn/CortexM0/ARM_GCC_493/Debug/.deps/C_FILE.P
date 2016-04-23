@@ -1,0 +1,58 @@
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/CortexM0/ARM_GCC_493/Debug/main.o : D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyDMA.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyFlash.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyLFClk.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyLib.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_BOOT.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_PINS.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_PVT.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_SCBCLK.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_SPI_UART.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_SPI_UART_PVT.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_rx.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_rx_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_tx.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_tx_aliases.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cm0.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cmFunc.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cmInstr.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cyPm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cydevice_trm.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cydisabledsheets.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cyfitter.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cypins.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cytypes.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/project.h D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/main.c 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyDMA.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyFlash.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyLFClk.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/CyLib.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_BOOT.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_PINS.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_PVT.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_SCBCLK.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_SPI_UART.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_SPI_UART_PVT.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_rx.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_rx_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_tx.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/UART_tx_aliases.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cm0.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cmFunc.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/core_cmInstr.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cyPm.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cydevice_trm.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cydisabledsheets.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cyfitter.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cypins.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/cytypes.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/Generated_Source/PSoC4/project.h : 
+
+D:/projects/ArloBot/ArlobotHw/DualBoard-043/UART.cydsn/main.c : 
+

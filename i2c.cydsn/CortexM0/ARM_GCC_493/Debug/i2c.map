@@ -2,20 +2,28 @@ Archive member included because of file (symbol)
 
 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
                               .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o (cyfitter_cfg)
-.\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
-                              .\CortexM0\ARM_GCC_493\Debug\main.o (EZI2C_1_Start)
-.\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-                              .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o) (EZI2C_1_EzI2CInit)
-.\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
-                              .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o) (EZI2C_1_EZI2C_STRETCH_ISR)
 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
                               .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o) (CyIntEnable)
 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
                               .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o) (CySysClkWcoEnabled)
+.\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+                              .\CortexM0\ARM_GCC_493\Debug\main.o (I2CM_Start)
+.\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+                              .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o) (I2CM_I2CInit)
+.\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                              .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o) (I2CM_mstrRdBufIndex)
+.\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+                              .\CortexM0\ARM_GCC_493\Debug\main.o (EZI2C_Start)
+.\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+                              .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o) (EZI2C_EzI2CInit)
+.\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+                              .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o) (EZI2C_EZI2C_STRETCH_ISR)
 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
                               .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o) (CyDelayCycles)
 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
                               .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o) (CySysFlashSetWaitCycles)
+.\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
+                              .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o) (I2CM_I2C_ISR)
 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
                               .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o) (__aeabi_uidiv)
 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_dvmd_tls.o)
@@ -36,16 +44,26 @@ c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.
 Allocating common symbols
 Common symbol       size              file
 
-EZI2C_1_curStatus   0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-EZI2C_1_protectBuf1
-                    0x2               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-EZI2C_1_bufSizeBuf1
-                    0x2               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-EZI2C_1_dataBuffer1
-                    0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-EZI2C_1_indexBuf1   0x2               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-EZI2C_1_fsmState    0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-EZI2C_1_offsetBuf1  0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
+I2CM_state          0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+EZI2C_offsetBuf1    0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+I2CM_mstrRdBufPtr   0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+I2CM_mstrWrBufPtr   0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+I2CM_mstrRdBufIndex
+                    0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+I2CM_mstrStatus     0x2               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+EZI2C_indexBuf1     0x2               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+I2CM_mstrWrBufIndex
+                    0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+EZI2C_fsmState      0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+EZI2C_protectBuf1   0x2               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+EZI2C_curStatus     0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+I2CM_mstrControl    0x1               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+I2CM_mstrWrBufIndexTmp
+                    0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+EZI2C_dataBuffer1   0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+I2CM_mstrRdBufSize  0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+EZI2C_bufSizeBuf1   0x2               .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+I2CM_mstrWrBufSize  0x4               .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
 
 Discarded input sections
 
@@ -71,33 +89,6 @@ Discarded input sections
  .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
  .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
  .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .text.EZI2C_1_ScbModeStop
-                0x00000000        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .text.EZI2C_1_Stop
-                0x00000000       0x2c .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .text.EZI2C_1_SetRxFifoLevel
-                0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .text.EZI2C_1_SetTxFifoLevel
-                0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .text.EZI2C_1_SetCustomInterruptHandler
-                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .text.EZI2C_1_EzI2CStop
-                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .text.EZI2C_1_EzI2CGetActivity
-                0x00000000       0x24 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .text.EZI2C_1_EzI2CSetAddress1
-                0x00000000       0x18 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .text.EZI2C_1_EzI2CGetAddress1
-                0x00000000       0x10 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .text.EZI2C_1_EzI2CSetReadBoundaryBuffer1
-                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
  .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
  .bss           0x00000000       0x18 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
  .text.CySysClkImoStart
@@ -252,6 +243,71 @@ Discarded input sections
  .text.CySysWatchdogFeed
                 0x00000000       0x60 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
  .rodata        0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .text.I2CM_ScbModeStop
+                0x00000000        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .text.I2CM_Stop
+                0x00000000       0x2c .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .text.I2CM_SetRxFifoLevel
+                0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .text.I2CM_SetTxFifoLevel
+                0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .text.I2CM_SetCustomInterruptHandler
+                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .text.I2CM_I2CStop
+                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterSendStart
+                0x00000000       0xd8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterSendStop
+                0x00000000       0x8c .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterWriteByte
+                0x00000000       0x98 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterReadByte
+                0x00000000       0x84 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterGetReadBufSize
+                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterGetWriteBufSize
+                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterClearReadBuf
+                0x00000000       0x28 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterClearWriteBuf
+                0x00000000       0x28 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text.I2CM_I2CMasterSendRestart
+                0x00000000       0xc4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .text.EZI2C_ScbModeStop
+                0x00000000        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .text.EZI2C_Stop
+                0x00000000       0x2c .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .text.EZI2C_SetRxFifoLevel
+                0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .text.EZI2C_SetTxFifoLevel
+                0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .text.EZI2C_SetCustomInterruptHandler
+                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .text.EZI2C_EzI2CStop
+                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .text.EZI2C_EzI2CGetActivity
+                0x00000000       0x24 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .text.EZI2C_EzI2CSetAddress1
+                0x00000000       0x18 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .text.EZI2C_EzI2CGetAddress1
+                0x00000000       0x10 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .text.EZI2C_EzI2CSetReadBoundaryBuffer1
+                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
  .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
  .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
  .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
@@ -265,6 +321,9 @@ Discarded input sections
                 0x00000000       0xd8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
  .text.CySysSFlashWriteUserRow
                 0x00000000       0xcc .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
  .text          0x00000000      0x120 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
  .data          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
@@ -350,7 +409,7 @@ END GROUP
                 0x00000000                CY_APPL_LOADABLE = 0x0
                 0x00000000                CY_CHECKSUM_EXCLUDE_SIZE = ALIGN (0x0, CY_FLASH_ROW_SIZE)
                 0x00000000                CY_APP_FOR_STACK_AND_COPIER = 0x0
-                0x20000138                PROVIDE (__cy_heap_start, _end)
+                0x20000170                PROVIDE (__cy_heap_start, _end)
                 0x00000001                PROVIDE (__cy_region_num, ((__cy_regions_end - __cy_regions) / 0x10))
                 0x20004000                PROVIDE (__cy_stack, (ORIGIN (ram) + 0x4000))
                 0x20003800                PROVIDE (__cy_heap_end, (__cy_stack - 0x800))
@@ -363,7 +422,7 @@ END GROUP
                 0x00000001                cy_project_type_bootloader = (appl_start == 0x0)?0x1:0x0
                 0x00000000                cy_project_type_app_for_stack_and_copier = (CY_APP_FOR_STACK_AND_COPIER == 0x1)?0x1:0x0
 
-.text           0x00000000      0xb88
+.text           0x00000000     0x1374
  CREATE_OBJECT_SYMBOLS
                 0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
  *(.romvectors)
@@ -377,103 +436,139 @@ END GROUP
                 0x00000010                Reset
                 0x00000001                ASSERT ((. != __cy_reset), No reset code)
  *(.psocinit)
- .psocinit      0x00000018      0x124 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
-                0x00000094                cyfitter_cfg
-                0x0000013c                . = MAX (., 0x100)
+ .psocinit      0x00000018      0x158 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+                0x000000b0                cyfitter_cfg
+                0x00000170                . = MAX (., 0x100)
  *(.text .text.* .gnu.linkonce.t.*)
- .text          0x0000013c       0x60 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
- .text.main     0x0000019c       0x2c .\CortexM0\ARM_GCC_493\Debug\main.o
-                0x0000019c                main
+ .text          0x00000170       0x60 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
+ .text.MasterWriteSlave
+                0x000001d0       0x58 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .text.MasterReadSlave
+                0x00000228       0x6c .\CortexM0\ARM_GCC_493\Debug\main.o
+ .text.main     0x00000294       0x34 .\CortexM0\ARM_GCC_493\Debug\main.o
+                0x00000294                main
  .text.IntDefaultHandler
-                0x000001c8        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
-                0x000001c8                IntDefaultHandler
- .text.Start_c  0x000001cc       0x48 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
-                0x000001cc                Start_c
+                0x000002c8        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+                0x000002c8                IntDefaultHandler
+ .text.Start_c  0x000002cc       0x48 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+                0x000002cc                Start_c
  .text.initialize_psoc
-                0x00000214       0x54 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
-                0x00000214                initialize_psoc
+                0x00000314       0x54 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+                0x00000314                initialize_psoc
  .text.AnalogSetDefault
-                0x00000268       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+                0x00000368       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
  .text.CYMEMZERO
-                0x00000288        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .text.EZI2C_1_ScbEnableIntr
-                0x00000294        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .text.EZI2C_1_Init
-                0x000002a0        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
-                0x000002a0                EZI2C_1_Init
- .text.EZI2C_1_Enable
-                0x000002a8       0x18 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
-                0x000002a8                EZI2C_1_Enable
- .text.EZI2C_1_Start
-                0x000002c0       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
-                0x000002c0                EZI2C_1_Start
- .text.EZI2C_1_EzI2CInit
-                0x000002e0       0xc0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-                0x000002e0                EZI2C_1_EzI2CInit
- .text.EZI2C_1_EzI2CSetBuffer1
-                0x000003a0       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-                0x000003a0                EZI2C_1_EzI2CSetBuffer1
- .text.EZI2C_1_EZI2C_STRETCH_ISR
-                0x000003d0      0x324 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
-                0x000003d0                EZI2C_1_EZI2C_STRETCH_ISR
+                0x00000388        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
  .text.CySysClkImoDisableWcoLock
-                0x000006f4       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x000006f4                CySysClkImoDisableWcoLock
+                0x00000394       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x00000394                CySysClkImoDisableWcoLock
  .text.CySysClkImoGetWcoLock
-                0x00000708       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x00000708                CySysClkImoGetWcoLock
+                0x000003a8       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x000003a8                CySysClkImoGetWcoLock
  .text.CyIntEnable
-                0x0000071c       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x0000071c                CyIntEnable
+                0x000003bc       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x000003bc                CyIntEnable
  .text.CyIntDisable
-                0x00000730       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x00000730                CyIntDisable
- .text.CyHalt   0x00000744        0x4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x00000744                CyHalt
+                0x000003d0       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x000003d0                CyIntDisable
+ .text.CyHalt   0x000003e4        0x4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x000003e4                CyHalt
  .text.CyIntSetVector
-                0x00000748       0x24 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x00000748                CyIntSetVector
+                0x000003e8       0x24 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x000003e8                CyIntSetVector
  .text.CyIntSetPriority
-                0x0000076c       0x4c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x0000076c                CyIntSetPriority
- .text.CyDelay  0x000007b8       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x000007b8                CyDelay
+                0x0000040c       0x4c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x0000040c                CyIntSetPriority
+ .text.CyDelay  0x00000458       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x00000458                CyDelay
  .text.CySysClkImoEnableWcoLock
-                0x000007e8       0xe8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x000007e8                CySysClkImoEnableWcoLock
+                0x00000488       0xe8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x00000488                CySysClkImoEnableWcoLock
  .text.CySysClkWriteImoFreq
-                0x000008d0       0x80 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x000008d0                CySysClkWriteImoFreq
+                0x00000570       0x80 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x00000570                CySysClkWriteImoFreq
  .text.CySysWdtLocked
-                0x00000950       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x000005f0       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
  .text.CySysClkWcoEnabled
-                0x00000964       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
-                0x00000964                CySysClkWcoEnabled
+                0x00000604       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x00000604                CySysClkWcoEnabled
  .text.CySysWdtLock
-                0x00000978       0x1c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
-                0x00000978                CySysWdtLock
+                0x00000618       0x1c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x00000618                CySysWdtLock
  .text.CySysWdtUnlock
-                0x00000994       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
-                0x00000994                CySysWdtUnlock
+                0x00000634       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x00000634                CySysWdtUnlock
  .text.CySysWdtClearInterrupt
-                0x000009c4       0x4c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
-                0x000009c4                CySysWdtClearInterrupt
+                0x00000664       0x4c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x00000664                CySysWdtClearInterrupt
  .text.CySysWdtIsr
-                0x00000a10       0xa4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
-                0x00000a10                CySysWdtIsr
- *fill*         0x00000ab4        0x4 
- .text          0x00000ab8       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
-                0x00000ab8                CyDelayCycles
-                0x00000aca                CyEnterCriticalSection
-                0x00000ad2                CyExitCriticalSection
+                0x000006b0       0xa4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x000006b0                CySysWdtIsr
+ .text.I2CM_ScbEnableIntr
+                0x00000754        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .text.I2CM_Init
+                0x00000760        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+                0x00000760                I2CM_Init
+ .text.I2CM_Enable
+                0x00000768       0x18 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+                0x00000768                I2CM_Enable
+ .text.I2CM_Start
+                0x00000780       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+                0x00000780                I2CM_Start
+ .text.I2CM_I2CInit
+                0x000007a0       0xd4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+                0x000007a0                I2CM_I2CInit
+ .text.I2CM_I2CMasterStatus
+                0x00000874       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                0x00000874                I2CM_I2CMasterStatus
+ .text.I2CM_I2CMasterClearStatus
+                0x000008a4       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                0x000008a4                I2CM_I2CMasterClearStatus
+ .text.I2CM_I2CReStartGeneration
+                0x000008c4       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                0x000008c4                I2CM_I2CReStartGeneration
+ .text.I2CM_I2CMasterWriteBuf
+                0x000008e4       0xec .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                0x000008e4                I2CM_I2CMasterWriteBuf
+ .text.I2CM_I2CMasterReadBuf
+                0x000009d0       0xfc .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                0x000009d0                I2CM_I2CMasterReadBuf
+ .text.EZI2C_ScbEnableIntr
+                0x00000acc        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .text.EZI2C_Init
+                0x00000ad8        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+                0x00000ad8                EZI2C_Init
+ .text.EZI2C_Enable
+                0x00000ae0       0x18 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+                0x00000ae0                EZI2C_Enable
+ .text.EZI2C_Start
+                0x00000af8       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+                0x00000af8                EZI2C_Start
+ .text.EZI2C_EzI2CInit
+                0x00000b18       0xc0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+                0x00000b18                EZI2C_EzI2CInit
+ .text.EZI2C_EzI2CSetBuffer1
+                0x00000bd8       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+                0x00000bd8                EZI2C_EzI2CSetBuffer1
+ .text.EZI2C_EZI2C_STRETCH_ISR
+                0x00000c08      0x324 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+                0x00000c08                EZI2C_EZI2C_STRETCH_ISR
+ *fill*         0x00000f2c        0x4 
+ .text          0x00000f30       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
+                0x00000f30                CyDelayCycles
+                0x00000f42                CyEnterCriticalSection
+                0x00000f4a                CyExitCriticalSection
  .text.CySysFlashSetWaitCycles
-                0x00000ad8       0x54 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
-                0x00000ad8                CySysFlashSetWaitCycles
+                0x00000f50       0x54 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+                0x00000f50                CySysFlashSetWaitCycles
+ .text.I2CM_I2C_ISR
+                0x00000fa4      0x374 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
+                0x00000fa4                I2CM_I2C_ISR
  .text.__libc_init_array
-                0x00000b2c       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
-                0x00000b2c                __libc_init_array
- .text.memset   0x00000b78       0x10 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
-                0x00000b78                memset
+                0x00001318       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+                0x00001318                __libc_init_array
+ .text.memset   0x00001364       0x10 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+                0x00001364                memset
  *(.plt)
  *(.gnu.warning)
  *(.glue_7t)
@@ -486,81 +581,80 @@ END GROUP
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  *(.gcc_except_table)
 
-.v4_bx          0x00000b88        0x0
+.v4_bx          0x00001374        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x00000b88        0x0
+.iplt           0x00001374        0x0
  .iplt          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x00000b88        0x4
+.eh_frame       0x00001374        0x4
  *(.eh_frame)
- .eh_frame      0x00000b88        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
- .eh_frame      0x00000b88        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtend.o
-                0x00000b8c                PROVIDE (__exidx_start, .)
+ .eh_frame      0x00001374        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
+ .eh_frame      0x00001374        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtend.o
+                0x00001378                PROVIDE (__exidx_start, .)
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x00000b8c                __exidx_end = .
+                0x00001378                __exidx_end = .
 
-.rodata         0x00000b8c       0x8c
+.rodata         0x00001378       0x88
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x00000b8c        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .rodata        0x00000b98       0x48 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
-                0x00000b98                cyImoFreqMhz2Reg
-                0x00000bc8                cyImoFreqMhz2DpllOffset
-                0x00000be0                . = ALIGN (0x4)
+ .rodata        0x00001378        0xc .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .rodata        0x00001384       0x48 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x00001384                cyImoFreqMhz2Reg
+                0x000013b4                cyImoFreqMhz2DpllOffset
+                0x000013cc                . = ALIGN (0x4)
  *(.init)
- .init          0x00000be0        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
-                0x00000be0                _init
- .init          0x00000be4        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
-                0x00000bec                . = ALIGN (0x4)
-                0x00000bec                __preinit_array_start = .
+ .init          0x000013cc        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
+                0x000013cc                _init
+ .init          0x000013d0        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
+                0x000013d8                . = ALIGN (0x4)
+                0x000013d8                __preinit_array_start = .
  *(.preinit_array)
-                0x00000bec                __preinit_array_end = .
-                0x00000bec                . = ALIGN (0x4)
-                0x00000bec                __init_array_start = .
+                0x000013d8                __preinit_array_end = .
+                0x000013d8                . = ALIGN (0x4)
+                0x000013d8                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
- .init_array    0x00000bec        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
- .init_array    0x00000bf0        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
-                0x00000bf4                __init_array_end = .
-                0x00000bf4                . = ALIGN (0x4)
+ .init_array    0x000013d8        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
+ .init_array    0x000013dc        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+                0x000013e0                __init_array_end = .
+                0x000013e0                . = ALIGN (0x4)
  *(.fini)
- .fini          0x00000bf4        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
-                0x00000bf4                _fini
- .fini          0x00000bf8        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
-                0x00000c00                . = ALIGN (0x4)
-                0x00000c00                __fini_array_start = .
+ .fini          0x000013e0        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
+                0x000013e0                _fini
+ .fini          0x000013e4        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
+                0x000013ec                . = ALIGN (0x4)
+                0x000013ec                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x00000c00        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
+ .fini_array    0x000013ec        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x00000c04                __fini_array_end = .
-                0x00000c04                . = ALIGN (0x4)
+                0x000013f0                __fini_array_end = .
+                0x000013f0                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x00000c04                . = ALIGN (0x4)
+                0x000013f0                . = ALIGN (0x4)
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x00000c04                . = ALIGN (0x4)
-                0x00000c04                __cy_regions = .
-                0x00000c04        0x4 LONG 0xc18 __cy_region_init_ram
-                0x00000c08        0x4 LONG 0x200000c8 __cy_region_start_data
-                0x00000c0c        0x4 LONG 0x18 __cy_region_init_size_ram
-                0x00000c10        0x4 LONG 0x58 __cy_region_zero_size_ram
-                0x00000c14                __cy_regions_end = .
-                0x00000c18                . = ALIGN (0x8)
- *fill*         0x00000c14        0x4 
-                0x00000c18                _etext = .
+                0x000013f0                . = ALIGN (0x4)
+                0x000013f0                __cy_regions = .
+                0x000013f0        0x4 LONG 0x1400 __cy_region_init_ram
+                0x000013f4        0x4 LONG 0x200000c8 __cy_region_start_data
+                0x000013f8        0x4 LONG 0x18 __cy_region_init_size_ram
+                0x000013fc        0x4 LONG 0x90 __cy_region_zero_size_ram
+                0x00001400                __cy_regions_end = .
+                0x00001400                . = ALIGN (0x8)
+                0x00001400                _etext = .
 
 .cy_checksum_exclude
-                0x00000c18        0x0
+                0x00001400        0x0
  *(.cy_checksum_exclude)
 
 .ramvectors     0x20000000       0xc0
@@ -573,7 +667,7 @@ END GROUP
  *(.noinit)
  .noinit        0x200000c0        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
 
-.data           0x200000c8       0x18 load address 0x00000c18
+.data           0x200000c8       0x18 load address 0x00001400
                 0x200000c8                __cy_region_start_data = .
  *(.jcr)
  .jcr           0x200000c8        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
@@ -592,45 +686,61 @@ END GROUP
  *(.ram)
                 0x200000e0                _edata = .
 
-.igot.plt       0x200000e0        0x0 load address 0x00000c30
+.igot.plt       0x200000e0        0x0 load address 0x00001418
  .igot.plt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
 
-.bss            0x200000e0       0x58 load address 0x00000c30
+.bss            0x200000e0       0x90 load address 0x00001418
                 0x200000e0                PROVIDE (__bss_start__, .)
  *(.shbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
  .bss           0x200000e0       0x1c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
- .bss           0x200000fc        0x4 .\CortexM0\ARM_GCC_493\Debug\main.o
- .bss           0x20000100        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
-                0x20000100                EZI2C_1_initVar
-                0x20000104                EZI2C_1_customIntrHandler
- .bss           0x20000108        0x2 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- *fill*         0x2000010a        0x2 
- .bss           0x2000010c       0x1c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .bss           0x200000fc        0x8 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .bss           0x20000104       0x1c .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .bss           0x20000120        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+                0x20000120                I2CM_initVar
+                0x20000124                I2CM_customIntrHandler
+ .bss           0x20000128        0x8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+                0x20000128                EZI2C_initVar
+                0x2000012c                EZI2C_customIntrHandler
+ .bss           0x20000130        0x2 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
  *(COMMON)
- COMMON         0x20000128       0x10 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-                0x20000128                EZI2C_1_curStatus
-                0x2000012a                EZI2C_1_protectBuf1
-                0x2000012c                EZI2C_1_bufSizeBuf1
-                0x20000130                EZI2C_1_dataBuffer1
-                0x20000134                EZI2C_1_indexBuf1
-                0x20000136                EZI2C_1_fsmState
-                0x20000137                EZI2C_1_offsetBuf1
-                0x20000138                . = ALIGN (0x8)
+ COMMON         0x20000132        0x1 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+                0x20000132                I2CM_state
+ *fill*         0x20000133        0x1 
+ COMMON         0x20000134       0x24 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                0x20000134                I2CM_mstrRdBufPtr
+                0x20000138                I2CM_mstrWrBufPtr
+                0x2000013c                I2CM_mstrRdBufIndex
+                0x20000140                I2CM_mstrStatus
+                0x20000144                I2CM_mstrWrBufIndex
+                0x20000148                I2CM_mstrControl
+                0x2000014c                I2CM_mstrWrBufIndexTmp
+                0x20000150                I2CM_mstrRdBufSize
+                0x20000154                I2CM_mstrWrBufSize
+ COMMON         0x20000158       0x12 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+                0x20000158                EZI2C_offsetBuf1
+                0x2000015a                EZI2C_indexBuf1
+                0x2000015c                EZI2C_fsmState
+                0x2000015e                EZI2C_protectBuf1
+                0x20000160                EZI2C_curStatus
+                0x20000164                EZI2C_dataBuffer1
+                0x20000168                EZI2C_bufSizeBuf1
+                0x20000170                . = ALIGN (0x8)
+ *fill*         0x2000016a        0x6 
  *(.ram.b)
-                0x20000138                _end = .
-                0x20000138                __end = .
-                0x20000138                PROVIDE (end, .)
-                0x20000138                PROVIDE (__bss_end__, .)
-                0x00000c18                __cy_region_init_ram = LOADADDR (.data)
+                0x20000170                _end = .
+                0x20000170                __end = .
+                0x20000170                PROVIDE (end, .)
+                0x20000170                PROVIDE (__bss_end__, .)
+                0x00001400                __cy_region_init_ram = LOADADDR (.data)
                 0x00000018                __cy_region_init_size_ram = (_edata - ADDR (.data))
-                0x00000058                __cy_region_zero_size_ram = (_end - _edata)
+                0x00000090                __cy_region_zero_size_ram = (_end - _edata)
 
-.heap           0x20000138       0x80 load address 0x00000c30
-                0x20000138                . = _end
-                0x200001b8                . = (. + 0x80)
- *fill*         0x20000138       0x80 
-                0x200001b8                __cy_heap_limit = .
+.heap           0x20000170       0x80 load address 0x00001418
+                0x20000170                . = _end
+                0x200001f0                . = (. + 0x80)
+ *fill*         0x20000170       0x80 
+                0x200001f0                __cy_heap_limit = .
 
 .stack          0x20003800      0x800
                 0x20003800                __cy_stack_limit = .
@@ -666,7 +776,7 @@ END GROUP
                 0x90600000        0x4 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
                 0x90600000                cy_meta_chipprotect
 
-.rel.dyn        0x00000c30        0x0 load address 0x90600004
+.rel.dyn        0x00001418        0x0 load address 0x90600004
  .rel.iplt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
 
 .stab
@@ -687,142 +797,182 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x4f0
+.debug_aranges  0x00000000      0x630
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x20 .\CortexM0\ARM_GCC_493\Debug\main.o
+                0x00000000       0x30 .\CortexM0\ARM_GCC_493\Debug\main.o
  .debug_aranges
-                0x00000020       0x18 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+                0x00000030       0x18 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
  .debug_aranges
-                0x00000038       0x48 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+                0x00000048       0x48 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
  .debug_aranges
-                0x00000080       0x38 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+                0x00000090       0x38 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
  .debug_aranges
-                0x000000b8       0x60 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
+                0x000000c8      0x1b8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
  .debug_aranges
-                0x00000118       0x50 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
+                0x00000280      0x150 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
  .debug_aranges
-                0x00000168       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
+                0x000003d0       0x60 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
  .debug_aranges
-                0x00000188      0x1b8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x00000430       0x28 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
  .debug_aranges
-                0x00000340      0x150 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x00000458       0x88 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
  .debug_aranges
-                0x00000490       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
+                0x000004e0       0x60 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
  .debug_aranges
-                0x000004b0       0x40 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+                0x00000540       0x50 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .debug_aranges
+                0x00000590       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .debug_aranges
+                0x000005b0       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
+ .debug_aranges
+                0x000005d0       0x40 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_aranges
+                0x00000610       0x20 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x2ed0
+.debug_info     0x00000000     0x3c03
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x150 .\CortexM0\ARM_GCC_493\Debug\main.o
- .debug_info    0x00000150       0xfe .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
- .debug_info    0x0000024e      0x38e .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_info    0x000005dc      0x2ae .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .debug_info    0x0000088a      0x297 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .debug_info    0x00000b21      0x347 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .debug_info    0x00000e68      0x1df .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- .debug_info    0x00001047      0xcf4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
- .debug_info    0x00001d3b      0xda4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
- .debug_info    0x00002adf       0x86 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
- .debug_info    0x00002b65      0x36b .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_info    0x00000000      0x311 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_info    0x00000311       0xfe .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+ .debug_info    0x0000040f      0x38e .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_info    0x0000079d      0x2ae .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .debug_info    0x00000a4b      0xcf4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+ .debug_info    0x0000173f      0xda4 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .debug_info    0x000024e3      0x297 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .debug_info    0x0000277a      0x1ab .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .debug_info    0x00002925      0x5a3 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .debug_info    0x00002ec8      0x297 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .debug_info    0x0000315f      0x347 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .debug_info    0x000034a6      0x1df .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .debug_info    0x00003685       0x86 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
+ .debug_info    0x0000370b      0x36b .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_info    0x00003a76      0x18d .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
 
-.debug_abbrev   0x00000000      0xec1
+.debug_abbrev   0x00000000     0x1370
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xed .\CortexM0\ARM_GCC_493\Debug\main.o
- .debug_abbrev  0x000000ed       0x5d .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
- .debug_abbrev  0x0000014a      0x1d5 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_abbrev  0x0000031f      0x1a2 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .debug_abbrev  0x000004c1      0x143 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .debug_abbrev  0x00000604      0x170 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .debug_abbrev  0x00000774       0xc6 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- .debug_abbrev  0x0000083a      0x245 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
- .debug_abbrev  0x00000a7f      0x26d .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
- .debug_abbrev  0x00000cec       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
- .debug_abbrev  0x00000d00      0x1c1 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_abbrev  0x00000000      0x155 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_abbrev  0x00000155       0x5d .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+ .debug_abbrev  0x000001b2      0x1d5 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_abbrev  0x00000387      0x1a2 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .debug_abbrev  0x00000529      0x245 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+ .debug_abbrev  0x0000076e      0x26d .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .debug_abbrev  0x000009db      0x143 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .debug_abbrev  0x00000b1e       0xf3 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .debug_abbrev  0x00000c11      0x189 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .debug_abbrev  0x00000d9a      0x143 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .debug_abbrev  0x00000edd      0x170 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .debug_abbrev  0x0000104d       0xc6 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .debug_abbrev  0x00001113       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x00001127      0x1c1 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_abbrev  0x000012e8       0x88 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
 
-.debug_line     0x00000000     0x13c5
+.debug_line     0x00000000     0x1a4a
  *(.debug_line)
- .debug_line    0x00000000       0x9a .\CortexM0\ARM_GCC_493\Debug\main.o
- .debug_line    0x0000009a       0x53 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
- .debug_line    0x000000ed      0x249 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_line    0x00000336      0x148 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .debug_line    0x0000047e      0x145 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .debug_line    0x000005c3      0x11e .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .debug_line    0x000006e1      0x156 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- .debug_line    0x00000837      0x51a .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
- .debug_line    0x00000d51      0x4c5 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
- .debug_line    0x00001216       0x68 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
- .debug_line    0x0000127e      0x147 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_line    0x00000000       0xfb .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_line    0x000000fb       0x53 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+ .debug_line    0x0000014e      0x249 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_line    0x00000397      0x14e .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .debug_line    0x000004e5      0x51a .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+ .debug_line    0x000009ff      0x4c5 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .debug_line    0x00000ec4      0x13f .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .debug_line    0x00001003       0xbf .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .debug_line    0x000010c2      0x2b0 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .debug_line    0x00001372      0x141 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .debug_line    0x000014b3      0x11c .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .debug_line    0x000015cf      0x150 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .debug_line    0x0000171f       0x68 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
+ .debug_line    0x00001787      0x147 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_line    0x000018ce      0x17c .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
 
-.debug_frame    0x00000000      0xce0
+.debug_frame    0x00000000      0xfdc
  *(.debug_frame)
- .debug_frame   0x00000000       0x2c .\CortexM0\ARM_GCC_493\Debug\main.o
- .debug_frame   0x0000002c       0xb0 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_frame   0x000000dc       0x74 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .debug_frame   0x00000150       0xe8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .debug_frame   0x00000238       0xa8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .debug_frame   0x000002e0       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- .debug_frame   0x00000310      0x468 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
- .debug_frame   0x00000778      0x3fc .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
- .debug_frame   0x00000b74       0x90 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
- .debug_frame   0x00000c04       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
- .debug_frame   0x00000c24       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x00000c44       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
- .debug_frame   0x00000c6c       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
- .debug_frame   0x00000c98       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy.o)
- .debug_frame   0x00000cc0       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x00000000       0x6c .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_frame   0x0000006c       0xb0 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_frame   0x0000011c       0x74 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .debug_frame   0x00000190      0x468 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+ .debug_frame   0x000005f8      0x3fc .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .debug_frame   0x000009f4       0xe8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .debug_frame   0x00000adc       0x3c .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .debug_frame   0x00000b18      0x16c .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .debug_frame   0x00000c84       0xe8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .debug_frame   0x00000d6c       0xa8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .debug_frame   0x00000e14       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .debug_frame   0x00000e44       0x90 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_frame   0x00000ed4       0x2c .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
+ .debug_frame   0x00000f00       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
+ .debug_frame   0x00000f20       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x00000f40       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .debug_frame   0x00000f68       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x00000f94       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy.o)
+ .debug_frame   0x00000fbc       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
 
-.debug_str      0x00000000     0x1282
+.debug_str      0x00000000     0x165f
  *(.debug_str)
- .debug_str     0x00000000      0x17a .\CortexM0\ARM_GCC_493\Debug\main.o
-                                0x1b3 (size before relaxing)
- .debug_str     0x0000017a       0x5b .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+ .debug_str     0x00000000      0x226 .\CortexM0\ARM_GCC_493\Debug\main.o
+                                0x266 (size before relaxing)
+ .debug_str     0x00000226       0x5b .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
                                 0x1c4 (size before relaxing)
- .debug_str     0x000001d5      0x15c .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_str     0x00000281      0x15c .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
                                 0x2eb (size before relaxing)
- .debug_str     0x00000331       0xae .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .debug_str     0x000003dd       0xa7 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
                                 0x252 (size before relaxing)
- .debug_str     0x000003df      0x154 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
-                                0x2e4 (size before relaxing)
- .debug_str     0x00000533      0x149 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
-                                0x34d (size before relaxing)
- .debug_str     0x0000067c       0x9d .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
-                                0x2cc (size before relaxing)
- .debug_str     0x00000719      0x5b2 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+ .debug_str     0x00000484      0x5dc .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
                                 0x7b8 (size before relaxing)
- .debug_str     0x00000ccb      0x505 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .debug_str     0x00000a60      0x505 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
                                 0x6f9 (size before relaxing)
- .debug_str     0x000011d0       0xb2 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_str     0x00000f65      0x10a .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+                                0x2b6 (size before relaxing)
+ .debug_str     0x0000106f       0x67 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+                                0x238 (size before relaxing)
+ .debug_str     0x000010d6      0x1e5 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+                                0x426 (size before relaxing)
+ .debug_str     0x000012bb       0xfa .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+                                0x2c8 (size before relaxing)
+ .debug_str     0x000013b5      0x120 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+                                0x32f (size before relaxing)
+ .debug_str     0x000014d5       0x99 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+                                0x2b8 (size before relaxing)
+ .debug_str     0x0000156e       0xb2 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
                                 0x29a (size before relaxing)
+ .debug_str     0x00001620       0x3f .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
+                                0x2a1 (size before relaxing)
 
-.debug_loc      0x00000000     0x163d
+.debug_loc      0x00000000     0x20c3
  *(.debug_loc)
- .debug_loc     0x00000000      0x14f .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_loc     0x0000014f       0xa9 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .debug_loc     0x000001f8       0x7e .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .debug_loc     0x00000276       0xe1 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .debug_loc     0x00000357      0x132 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- .debug_loc     0x00000489      0x7be .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
- .debug_loc     0x00000c47      0x8af .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
- .debug_loc     0x000014f6      0x147 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_loc     0x00000000       0x6e .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_loc     0x0000006e      0x14f .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_loc     0x000001bd       0xa9 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .debug_loc     0x00000266      0x7be .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+ .debug_loc     0x00000a24      0x8af .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .debug_loc     0x000012d3       0x7e .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .debug_loc     0x00001351      0x88e .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .debug_loc     0x00001bdf       0x7e .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .debug_loc     0x00001c5d       0xe1 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .debug_loc     0x00001d3e      0x132 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .debug_loc     0x00001e70      0x147 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_loc     0x00001fb7      0x10c .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
 
 .debug_macinfo
  *(.debug_macinfo)
 
-.debug_ranges   0x00000000      0x428
+.debug_ranges   0x00000000      0x528
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x10 .\CortexM0\ARM_GCC_493\Debug\main.o
- .debug_ranges  0x00000010       0x38 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_ranges  0x00000048       0x28 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .debug_ranges  0x00000070       0x50 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .debug_ranges  0x000000c0       0x40 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .debug_ranges  0x00000100       0x10 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
- .debug_ranges  0x00000110      0x1a8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
- .debug_ranges  0x000002b8      0x140 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
- .debug_ranges  0x000003f8       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_ranges  0x00000000       0x20 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_ranges  0x00000020       0x38 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_ranges  0x00000058       0x28 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
+ .debug_ranges  0x00000080      0x1a8 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+ .debug_ranges  0x00000228      0x140 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .debug_ranges  0x00000368       0x50 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .debug_ranges  0x000003b8       0x18 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .debug_ranges  0x000003d0       0x78 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .debug_ranges  0x00000448       0x50 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .debug_ranges  0x00000498       0x40 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .debug_ranges  0x000004d8       0x10 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
+ .debug_ranges  0x000004e8       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .debug_ranges  0x00000518       0x10 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
 
 .comment        0x00000000       0x70
  .comment       0x00000000       0x70 .\CortexM0\ARM_GCC_493\Debug\main.o
@@ -830,12 +980,16 @@ END GROUP
  .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
  .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
  .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
- .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
- .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
- .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
  .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
  .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+ .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
+ .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
+ .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
+ .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
+ .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
+ .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
  .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+ .comment       0x00000000       0x71 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
 
 .debug_weaknames
  *(.debug_weaknames)
@@ -870,39 +1024,47 @@ END GROUP
  .ARM.attributes
                 0x000000f8       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(cyfitter_cfg.o)
  .ARM.attributes
-                0x00000129       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1.o)
+                0x00000129       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
  .ARM.attributes
-                0x0000015a       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C.o)
+                0x0000015a       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
  .ARM.attributes
-                0x0000018b       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_1_EZI2C_INT.o)
+                0x0000018b       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM.o)
  .ARM.attributes
-                0x000001bc       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLib.o)
+                0x000001bc       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C.o)
  .ARM.attributes
-                0x000001ed       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyLFClk.o)
+                0x000001ed       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_MASTER.o)
  .ARM.attributes
-                0x0000021e       0x21 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
+                0x0000021e       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C.o)
  .ARM.attributes
-                0x0000023f       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
+                0x0000024f       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C.o)
  .ARM.attributes
-                0x00000270       0x1e c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
+                0x00000280       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(EZI2C_EZI2C_INT.o)
  .ARM.attributes
-                0x0000028e       0x1e c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_dvmd_tls.o)
+                0x000002b1       0x21 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyBootAsmGnu.o)
  .ARM.attributes
-                0x000002ac       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+                0x000002d2       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(CyFlash.o)
  .ARM.attributes
-                0x000002d8       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+                0x00000303       0x31 .\CortexM0\ARM_GCC_493\Debug\i2c.a(I2CM_I2C_INT.o)
  .ARM.attributes
-                0x00000304       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                0x00000334       0x1e c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
  .ARM.attributes
-                0x00000330       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+                0x00000352       0x1e c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_dvmd_tls.o)
  .ARM.attributes
-                0x0000035c       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy.o)
+                0x00000370       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
  .ARM.attributes
-                0x00000388       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+                0x0000039c       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
  .ARM.attributes
-                0x000003b4       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtend.o
+                0x000003c8       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
  .ARM.attributes
-                0x000003e0       0x1e c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
+                0x000003f4       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .ARM.attributes
+                0x00000420       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy.o)
+ .ARM.attributes
+                0x0000044c       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x00000478       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtend.o
+ .ARM.attributes
+                0x000004a4       0x1e c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
 
 /DISCARD/
  *(.note.GNU-stack)

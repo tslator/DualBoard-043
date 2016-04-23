@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
   31              		.cfi_endproc
   32              	.LFE36:
   33              		.size	Control_Init, .-Control_Init
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 2
 
 
   34 0002 C046     		.section	.text.Control_Start,"ax",%progbits
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
   73 000c FFF7FEFF 		bl	Encoder_Reset
   74              	.LVL2:
   75              	.L4:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 3
 
 
   40:..\source/control.c ****     }    
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  105              		@ sp needed
  106 0030 10BD     		pop	{r4, pc}
  107              		.cfi_endproc
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 4
 
 
  108              	.LFE38:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  162 005d 03       		.uleb128 0x3
  163 005e 04       		.byte	0x4
  164 005f 05       		.byte	0x5
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 5
 
 
  165 0060 696E7400 		.ascii	"int\000"
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  219 00d0 20       		.byte	0x20
  220 00d1 6B000000 		.4byte	0x6b
  221 00d5 00000000 		.4byte	.LLST0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 6
 
 
  222 00d9 08       		.uleb128 0x8
@@ -331,7 +331,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  249 0121 0B       		.uleb128 0xb
  250 0122 A0010000 		.4byte	.LASF15
  251 0126 02       		.byte	0x2
- 252 0127 15       		.byte	0x15
+ 252 0127 16       		.byte	0x16
  253 0128 2E010000 		.4byte	0x12e
  254 012c 0A       		.uleb128 0xa
  255 012d 00       		.byte	0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  276 0154 00       		.byte	0
  277 0155 0C       		.uleb128 0xc
  278 0156 2C010000 		.4byte	.LASF26
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 7
 
 
  279 015a 03       		.byte	0x3
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  333 002f 0B       		.uleb128 0xb
  334 0030 3B       		.uleb128 0x3b
  335 0031 05       		.uleb128 0x5
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 8
 
 
  336 0032 49       		.uleb128 0x49
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  390 006a 0B       		.uleb128 0xb
  391 006b 3B       		.uleb128 0x3b
  392 006c 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 9
 
 
  393 006d 49       		.uleb128 0x49
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  447 00a5 00       		.byte	0
  448 00a6 00       		.byte	0
  449 00a7 0C       		.uleb128 0xc
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 10
 
 
  450 00a8 2E       		.uleb128 0x2e
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  502      00000201 
  502      FB0E0D00 
  502      01010101 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 11
 
 
  503              	.LASF6:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  522      00
  523              	.LASF10:
  524 0100 646F7562 		.ascii	"double\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 12
 
 
  524      6C6500
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 1
  545      6C2E6300 
  546              	.LASF9:
  547 01c2 666C6F61 		.ascii	"float\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccLTE34d.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\cc06lKI5.s 			page 13
 
 
  547      7400

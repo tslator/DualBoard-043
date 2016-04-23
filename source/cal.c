@@ -107,7 +107,7 @@ void Cal_Update()
     I2c_SetStatusBit(STATUS_CALIBRATING_BIT);
     
     Motor_Calibrate();
-    Motor_ValidateCalibration();
+    //Motor_ValidateCalibration();
     
     I2c_ClearStatusBit(STATUS_CALIBRATING_BIT);
     I2c_SetStatusBit(STATUS_CALIBRATED_BIT);

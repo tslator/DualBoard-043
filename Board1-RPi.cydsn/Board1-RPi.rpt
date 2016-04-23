@@ -1,13 +1,13 @@
-Loading plugins phase: Elapsed time ==> 0s.200ms
+Loading plugins phase: Elapsed time ==> 0s.218ms
 Initializing data phase: Elapsed time ==> 0s.000ms
 <CYPRESSTAG name="CyDsfit arguments...">
 cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\Board1-RPi.cyprj -d CY8C4247AZS-M485 -s D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\Generated_Source\PSoC4 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE</CYPRESSTAG>
 <CYPRESSTAG name="Design elaboration results...">
 </CYPRESSTAG>
-Elaboration phase: Elapsed time ==> 2s.444ms
+Elaboration phase: Elapsed time ==> 2s.281ms
 <CYPRESSTAG name="HDL generation results...">
 </CYPRESSTAG>
-HDL generation phase: Elapsed time ==> 0s.142ms
+HDL generation phase: Elapsed time ==> 0s.156ms
 <CYPRESSTAG name="Synthesis results...">
 
      | | | | | | |
@@ -41,7 +41,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\projects\Ar
 ======================================================================
 
 vlogfe V6.3 IR 41:  Verilog parser
-Mon Apr 18 15:20:56 2016
+Fri Apr 22 21:15:19 2016
 
 
 ======================================================================
@@ -51,7 +51,7 @@ Options  :    -yv2 -q10 Board1-RPi.v
 ======================================================================
 
 vpp V6.3 IR 41:  Verilog Pre-Processor
-Mon Apr 18 15:20:56 2016
+Fri Apr 22 21:15:19 2016
 
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\cy_constant_v1_0\cy_constant_v1_0.v'
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\ZeroTerminal\ZeroTerminal.v'
@@ -97,7 +97,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\projects\Ar
 ======================================================================
 
 tovif V6.3 IR 41:  High-level synthesis
-Mon Apr 18 15:20:57 2016
+Fri Apr 22 21:15:19 2016
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -136,7 +136,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\projects\Ar
 ======================================================================
 
 topld V6.3 IR 41:  Synthesis and optimization
-Mon Apr 18 15:20:57 2016
+Fri Apr 22 21:15:20 2016
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -186,6 +186,7 @@ Detecting unused logic.
 	Net_847
 	Net_848
 	Net_849
+	\UARTCOMMS:Net_452\
 	\UARTCOMMS:Net_1257\
 	\UARTCOMMS:uncfg_rx_irq\
 	\UARTCOMMS:Net_1099\
@@ -220,7 +221,7 @@ Detecting unused logic.
 	\Phase_Counter:CounterUDB:reload_tc\
 
 
-Deleted 48 User equations/components.
+Deleted 49 User equations/components.
 Deleted 0 Synthesized equations/components.
 
 ------------------------------------------------------
@@ -263,11 +264,11 @@ Aliasing tmpOE__HCSR04_Trigger_2_net_0 to Net_1582
 Aliasing tmpOE__HCSR04_Trigger_3_net_0 to Net_1582
 Aliasing tmpOE__HCSR04_Trigger_1_net_0 to Net_1582
 Aliasing \UARTCOMMS:Net_459\ to zero
-Aliasing \UARTCOMMS:Net_452\ to zero
 Aliasing \UARTCOMMS:Net_1194\ to zero
 Aliasing \UARTCOMMS:Net_1195\ to zero
 Aliasing \UARTCOMMS:Net_1196\ to zero
 Aliasing \UARTCOMMS:tmpOE__tx_net_0\ to Net_1582
+Aliasing \UARTCOMMS:tmpOE__rx_net_0\ to Net_1582
 Aliasing \UARTCOMMS:Net_747\ to zero
 Aliasing \HB25_PWM:Net_75\ to zero
 Aliasing \HB25_PWM:Net_69\ to Net_1582
@@ -350,89 +351,89 @@ Removing Lhs of wire tmpOE__HCSR04_Trigger_3_net_0[391] = Net_1582[0]
 Removing Lhs of wire tmpOE__HCSR04_Trigger_1_net_0[397] = Net_1582[0]
 Removing Lhs of wire \UARTCOMMS:Net_459\[404] = zero[3]
 Removing Lhs of wire \UARTCOMMS:Net_652\[405] = zero[3]
-Removing Lhs of wire \UARTCOMMS:Net_452\[406] = zero[3]
 Removing Lhs of wire \UARTCOMMS:Net_1194\[407] = zero[3]
 Removing Lhs of wire \UARTCOMMS:Net_1195\[408] = zero[3]
 Removing Lhs of wire \UARTCOMMS:Net_1196\[409] = zero[3]
-Removing Lhs of wire \UARTCOMMS:Net_654\[410] = zero[3]
-Removing Lhs of wire \UARTCOMMS:Net_1170\[413] = \UARTCOMMS:Net_847\[403]
-Removing Lhs of wire \UARTCOMMS:Net_990\[414] = zero[3]
-Removing Lhs of wire \UARTCOMMS:Net_909\[415] = zero[3]
-Removing Lhs of wire \UARTCOMMS:Net_663\[416] = zero[3]
-Removing Lhs of wire \UARTCOMMS:tmpOE__tx_net_0\[418] = Net_1582[0]
-Removing Lhs of wire \UARTCOMMS:Net_1175\[428] = zero[3]
-Removing Lhs of wire \UARTCOMMS:Net_747\[429] = zero[3]
-Removing Lhs of wire \HB25_PWM:Net_81\[458] = Net_1586[456]
-Removing Lhs of wire \HB25_PWM:Net_75\[459] = zero[3]
-Removing Lhs of wire \HB25_PWM:Net_69\[460] = Net_1582[0]
-Removing Lhs of wire \HB25_PWM:Net_66\[461] = zero[3]
-Removing Lhs of wire \HB25_PWM:Net_82\[462] = zero[3]
-Removing Lhs of wire \HB25_PWM:Net_72\[463] = zero[3]
-Removing Lhs of wire tmpOE__HB25_PWM_Pin_net_0[471] = Net_1582[0]
-Removing Lhs of wire tmpOE__HB25_Enable_Pin_net_0[477] = Net_1582[0]
-Removing Lhs of wire Net_1573[485] = cydff_1[484]
-Removing Lhs of wire \I2C_Master:Net_459\[495] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_652\[496] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_452\[497] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_1194\[498] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_1195\[499] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_1196\[500] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_654\[501] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_1170\[504] = \I2C_Master:Net_847\[494]
-Removing Lhs of wire \I2C_Master:Net_990\[505] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_909\[506] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_663\[507] = zero[3]
-Removing Lhs of wire \I2C_Master:tmpOE__sda_net_0\[509] = Net_1582[0]
-Removing Lhs of wire \I2C_Master:tmpOE__scl_net_0\[515] = Net_1582[0]
-Removing Lhs of wire \I2C_Master:Net_1175\[524] = zero[3]
-Removing Lhs of wire \I2C_Master:Net_747\[525] = zero[3]
-Removing Lhs of wire \Phase_Counter:Net_89\[547] = Net_112[548]
-Removing Rhs of wire Net_112[548] = \Decode_Lookup:tmp__Decode_Lookup_reg_2\[794]
-Removing Lhs of wire \Phase_Counter:CounterUDB:ctrl_capmode_1\[556] = zero[3]
-Removing Lhs of wire \Phase_Counter:CounterUDB:ctrl_capmode_0\[557] = zero[3]
-Removing Lhs of wire \Phase_Counter:CounterUDB:capt_rising\[568] = zero[3]
-Removing Lhs of wire \Phase_Counter:CounterUDB:capt_falling\[569] = \Phase_Counter:CounterUDB:prevCapture\[567]
-Removing Lhs of wire \Phase_Counter:CounterUDB:reload\[572] = zero[3]
-Removing Lhs of wire \Phase_Counter:CounterUDB:final_enable\[573] = Net_1582[0]
-Removing Lhs of wire Net_1484[574] = Net_1582[0]
-Removing Lhs of wire \Phase_Counter:CounterUDB:counter_enable\[575] = Net_1582[0]
-Removing Rhs of wire \Phase_Counter:CounterUDB:status_0\[576] = \Phase_Counter:CounterUDB:cmp_out_status\[577]
-Removing Rhs of wire \Phase_Counter:CounterUDB:status_1\[578] = \Phase_Counter:CounterUDB:per_zero\[579]
-Removing Rhs of wire \Phase_Counter:CounterUDB:status_2\[580] = \Phase_Counter:CounterUDB:overflow_status\[581]
-Removing Rhs of wire \Phase_Counter:CounterUDB:status_3\[582] = \Phase_Counter:CounterUDB:underflow_status\[583]
-Removing Lhs of wire \Phase_Counter:CounterUDB:status_4\[584] = \Phase_Counter:CounterUDB:hwCapture\[571]
-Removing Rhs of wire \Phase_Counter:CounterUDB:status_5\[585] = \Phase_Counter:CounterUDB:fifo_full\[586]
-Removing Rhs of wire \Phase_Counter:CounterUDB:status_6\[587] = \Phase_Counter:CounterUDB:fifo_nempty\[588]
-Removing Lhs of wire \Phase_Counter:CounterUDB:reset\[590] = zero[3]
-Removing Rhs of wire \Phase_Counter:CounterUDB:overflow\[592] = \Phase_Counter:CounterUDB:per_FF\[593]
-Removing Lhs of wire \Phase_Counter:CounterUDB:underflow\[594] = \Phase_Counter:CounterUDB:status_1\[578]
-Removing Rhs of wire \Phase_Counter:CounterUDB:cmp_out_i\[600] = \Phase_Counter:CounterUDB:cmp_less\[601]
-Removing Rhs of wire Net_1622[606] = \Decode_Lookup:tmp__Decode_Lookup_reg_3\[793]
-Removing Lhs of wire \Phase_Counter:CounterUDB:dp_dir\[608] = Net_112[548]
-Removing Lhs of wire \Phase_Counter:CounterUDB:cs_addr_2\[610] = Net_112[548]
-Removing Lhs of wire \Phase_Counter:CounterUDB:cs_addr_1\[611] = \Phase_Counter:CounterUDB:count_enable\[607]
-Removing Lhs of wire \Phase_Counter:CounterUDB:cs_addr_0\[612] = zero[3]
-Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_3\[785] = Net_69[786]
-Removing Rhs of wire Net_69[786] = \Decode_Lookup:tmp__Decode_Lookup_reg_1\[795]
-Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_2\[787] = Net_70[788]
-Removing Rhs of wire Net_70[788] = \Decode_Lookup:tmp__Decode_Lookup_reg_0\[796]
-Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_1\[789] = Net_3174[790]
-Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_0\[791] = Net_3173[792]
-Removing Lhs of wire tmpOE__Encoder_B_net_0[798] = Net_1582[0]
-Removing Lhs of wire tmpOE__Encoder_A_net_0[803] = Net_1582[0]
-Removing Lhs of wire tmpOE__bufoe_1_net_0[810] = cydff_1[484]
-Removing Lhs of wire tmpOE__MainLoop_Pin_net_0[812] = Net_1582[0]
-Removing Lhs of wire tmpOE__Encoder_Count_Pin_net_0[818] = Net_1582[0]
-Removing Lhs of wire cydff_1D[823] = Net_1582[0]
-Removing Lhs of wire \Phase_Counter:CounterUDB:prevCapture\\D\[824] = zero[3]
-Removing Lhs of wire \Phase_Counter:CounterUDB:overflow_reg_i\\D\[825] = \Phase_Counter:CounterUDB:overflow\[592]
-Removing Lhs of wire \Phase_Counter:CounterUDB:underflow_reg_i\\D\[826] = \Phase_Counter:CounterUDB:status_1\[578]
-Removing Lhs of wire \Phase_Counter:CounterUDB:tc_reg_i\\D\[827] = \Phase_Counter:CounterUDB:tc_i\[597]
-Removing Lhs of wire \Phase_Counter:CounterUDB:prevCompare\\D\[828] = \Phase_Counter:CounterUDB:cmp_out_i\[600]
-Removing Lhs of wire \Phase_Counter:CounterUDB:cmp_out_reg_i\\D\[829] = \Phase_Counter:CounterUDB:cmp_out_i\[600]
-Removing Lhs of wire \Phase_Counter:CounterUDB:count_stored_i\\D\[830] = Net_1622[606]
-Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_reg_1\\D\[833] = Net_3174[790]
-Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_reg_0\\D\[834] = Net_3173[792]
+Removing Rhs of wire \UARTCOMMS:Net_654\[410] = \UARTCOMMS:Net_1197\[411]
+Removing Lhs of wire \UARTCOMMS:Net_1170\[414] = \UARTCOMMS:Net_847\[403]
+Removing Lhs of wire \UARTCOMMS:Net_990\[415] = zero[3]
+Removing Lhs of wire \UARTCOMMS:Net_909\[416] = zero[3]
+Removing Lhs of wire \UARTCOMMS:Net_663\[417] = zero[3]
+Removing Lhs of wire \UARTCOMMS:tmpOE__tx_net_0\[419] = Net_1582[0]
+Removing Lhs of wire \UARTCOMMS:tmpOE__rx_net_0\[430] = Net_1582[0]
+Removing Lhs of wire \UARTCOMMS:Net_1175\[434] = zero[3]
+Removing Lhs of wire \UARTCOMMS:Net_747\[435] = zero[3]
+Removing Lhs of wire \HB25_PWM:Net_81\[464] = Net_1586[462]
+Removing Lhs of wire \HB25_PWM:Net_75\[465] = zero[3]
+Removing Lhs of wire \HB25_PWM:Net_69\[466] = Net_1582[0]
+Removing Lhs of wire \HB25_PWM:Net_66\[467] = zero[3]
+Removing Lhs of wire \HB25_PWM:Net_82\[468] = zero[3]
+Removing Lhs of wire \HB25_PWM:Net_72\[469] = zero[3]
+Removing Lhs of wire tmpOE__HB25_PWM_Pin_net_0[477] = Net_1582[0]
+Removing Lhs of wire tmpOE__HB25_Enable_Pin_net_0[483] = Net_1582[0]
+Removing Lhs of wire Net_1573[491] = cydff_1[490]
+Removing Lhs of wire \I2C_Master:Net_459\[501] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_652\[502] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_452\[503] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_1194\[504] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_1195\[505] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_1196\[506] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_654\[507] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_1170\[510] = \I2C_Master:Net_847\[500]
+Removing Lhs of wire \I2C_Master:Net_990\[511] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_909\[512] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_663\[513] = zero[3]
+Removing Lhs of wire \I2C_Master:tmpOE__sda_net_0\[515] = Net_1582[0]
+Removing Lhs of wire \I2C_Master:tmpOE__scl_net_0\[521] = Net_1582[0]
+Removing Lhs of wire \I2C_Master:Net_1175\[530] = zero[3]
+Removing Lhs of wire \I2C_Master:Net_747\[531] = zero[3]
+Removing Lhs of wire \Phase_Counter:Net_89\[553] = Net_112[554]
+Removing Rhs of wire Net_112[554] = \Decode_Lookup:tmp__Decode_Lookup_reg_2\[800]
+Removing Lhs of wire \Phase_Counter:CounterUDB:ctrl_capmode_1\[562] = zero[3]
+Removing Lhs of wire \Phase_Counter:CounterUDB:ctrl_capmode_0\[563] = zero[3]
+Removing Lhs of wire \Phase_Counter:CounterUDB:capt_rising\[574] = zero[3]
+Removing Lhs of wire \Phase_Counter:CounterUDB:capt_falling\[575] = \Phase_Counter:CounterUDB:prevCapture\[573]
+Removing Lhs of wire \Phase_Counter:CounterUDB:reload\[578] = zero[3]
+Removing Lhs of wire \Phase_Counter:CounterUDB:final_enable\[579] = Net_1582[0]
+Removing Lhs of wire Net_1484[580] = Net_1582[0]
+Removing Lhs of wire \Phase_Counter:CounterUDB:counter_enable\[581] = Net_1582[0]
+Removing Rhs of wire \Phase_Counter:CounterUDB:status_0\[582] = \Phase_Counter:CounterUDB:cmp_out_status\[583]
+Removing Rhs of wire \Phase_Counter:CounterUDB:status_1\[584] = \Phase_Counter:CounterUDB:per_zero\[585]
+Removing Rhs of wire \Phase_Counter:CounterUDB:status_2\[586] = \Phase_Counter:CounterUDB:overflow_status\[587]
+Removing Rhs of wire \Phase_Counter:CounterUDB:status_3\[588] = \Phase_Counter:CounterUDB:underflow_status\[589]
+Removing Lhs of wire \Phase_Counter:CounterUDB:status_4\[590] = \Phase_Counter:CounterUDB:hwCapture\[577]
+Removing Rhs of wire \Phase_Counter:CounterUDB:status_5\[591] = \Phase_Counter:CounterUDB:fifo_full\[592]
+Removing Rhs of wire \Phase_Counter:CounterUDB:status_6\[593] = \Phase_Counter:CounterUDB:fifo_nempty\[594]
+Removing Lhs of wire \Phase_Counter:CounterUDB:reset\[596] = zero[3]
+Removing Rhs of wire \Phase_Counter:CounterUDB:overflow\[598] = \Phase_Counter:CounterUDB:per_FF\[599]
+Removing Lhs of wire \Phase_Counter:CounterUDB:underflow\[600] = \Phase_Counter:CounterUDB:status_1\[584]
+Removing Rhs of wire \Phase_Counter:CounterUDB:cmp_out_i\[606] = \Phase_Counter:CounterUDB:cmp_less\[607]
+Removing Rhs of wire Net_1622[612] = \Decode_Lookup:tmp__Decode_Lookup_reg_3\[799]
+Removing Lhs of wire \Phase_Counter:CounterUDB:dp_dir\[614] = Net_112[554]
+Removing Lhs of wire \Phase_Counter:CounterUDB:cs_addr_2\[616] = Net_112[554]
+Removing Lhs of wire \Phase_Counter:CounterUDB:cs_addr_1\[617] = \Phase_Counter:CounterUDB:count_enable\[613]
+Removing Lhs of wire \Phase_Counter:CounterUDB:cs_addr_0\[618] = zero[3]
+Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_3\[791] = Net_69[792]
+Removing Rhs of wire Net_69[792] = \Decode_Lookup:tmp__Decode_Lookup_reg_1\[801]
+Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_2\[793] = Net_70[794]
+Removing Rhs of wire Net_70[794] = \Decode_Lookup:tmp__Decode_Lookup_reg_0\[802]
+Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_1\[795] = Net_3174[796]
+Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_ins_0\[797] = Net_3173[798]
+Removing Lhs of wire tmpOE__Encoder_B_net_0[804] = Net_1582[0]
+Removing Lhs of wire tmpOE__Encoder_A_net_0[809] = Net_1582[0]
+Removing Lhs of wire tmpOE__bufoe_1_net_0[816] = cydff_1[490]
+Removing Lhs of wire tmpOE__MainLoop_Pin_net_0[818] = Net_1582[0]
+Removing Lhs of wire tmpOE__Encoder_Count_Pin_net_0[824] = Net_1582[0]
+Removing Lhs of wire cydff_1D[829] = Net_1582[0]
+Removing Lhs of wire \Phase_Counter:CounterUDB:prevCapture\\D\[830] = zero[3]
+Removing Lhs of wire \Phase_Counter:CounterUDB:overflow_reg_i\\D\[831] = \Phase_Counter:CounterUDB:overflow\[598]
+Removing Lhs of wire \Phase_Counter:CounterUDB:underflow_reg_i\\D\[832] = \Phase_Counter:CounterUDB:status_1\[584]
+Removing Lhs of wire \Phase_Counter:CounterUDB:tc_reg_i\\D\[833] = \Phase_Counter:CounterUDB:tc_i\[603]
+Removing Lhs of wire \Phase_Counter:CounterUDB:prevCompare\\D\[834] = \Phase_Counter:CounterUDB:cmp_out_i\[606]
+Removing Lhs of wire \Phase_Counter:CounterUDB:cmp_out_reg_i\\D\[835] = \Phase_Counter:CounterUDB:cmp_out_i\[606]
+Removing Lhs of wire \Phase_Counter:CounterUDB:count_stored_i\\D\[836] = Net_1622[612]
+Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_reg_1\\D\[839] = Net_3174[796]
+Removing Lhs of wire \Decode_Lookup:tmp__Decode_Lookup_reg_0\\D\[840] = Net_3173[798]
 
 ------------------------------------------------------
 Aliased 0 equations, 136 wires.
@@ -469,7 +470,7 @@ Circuit simplification results:
 Alias Detection
 ------------------------------------------------------
 Aliasing \Phase_Counter:CounterUDB:hwCapture\ to zero
-Removing Lhs of wire \Phase_Counter:CounterUDB:hwCapture\[571] = zero[3]
+Removing Lhs of wire \Phase_Counter:CounterUDB:hwCapture\[577] = zero[3]
 
 ------------------------------------------------------
 Aliased 0 equations, 1 wires.
@@ -502,14 +503,14 @@ CYPRESS_DIR    : C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\wa
 Warp Program   : C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\bin/warp.exe
 Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\Board1-RPi.cyprj -dcpsoc3 Board1-RPi.v -verilog
 </CYPRESSTAG>
-Warp synthesis phase: Elapsed time ==> 1s.014ms
+Warp synthesis phase: Elapsed time ==> 0s.968ms
 <CYPRESSTAG name="Fitter results...">
 <CYPRESSTAG name="Fitter startup details...">
-cyp3fit: V3.3.0.7343, Family: PSoC3, Started at: Monday, 18 April 2016 15:20:57
+cyp3fit: V3.3.0.7343, Family: PSoC3, Started at: Friday, 22 April 2016 21:15:20
 Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\Board1-RPi.cyprj -d CY8C4247AZS-M485 Board1-RPi.v -verilog
 </CYPRESSTAG>
 <CYPRESSTAG name="Design parsing">
-Design parsing phase: Elapsed time ==> 0s.017ms
+Design parsing phase: Elapsed time ==> 0s.015ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Tech mapping">
 <CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
@@ -518,9 +519,9 @@ Design parsing phase: Elapsed time ==> 0s.017ms
 Removing unused cells resulting from optimization
 Done removing unused cells.
 <CYPRESSTAG name="Global Clock Selection" icon="FILE_RPT_TECHM">
+    Fixed Function Clock 2: Automatic-assigning  clock 'EZI2C_Slave_SCBCLK'. Signal=\EZI2C_Slave:Net_847_ff2\
+    Fixed Function Clock 3: Automatic-assigning  clock 'I2C_Master_SCBCLK'. Signal=\I2C_Master:Net_847_ff3\
     Digital Clock 0: Automatic-assigning  clock 'Quadrature_Decode_Clock'. Fanout=5, Signal=Net_75_digital
-    Fixed Function Clock 2: Automatic-assigning  clock 'I2C_Master_SCBCLK'. Signal=\I2C_Master:Net_847_ff2\
-    Fixed Function Clock 3: Automatic-assigning  clock 'EZI2C_Slave_SCBCLK'. Signal=\EZI2C_Slave:Net_847_ff3\
     Fixed Function Clock 4: Automatic-assigning  clock 'UARTCOMMS_SCBCLK'. Signal=\UARTCOMMS:Net_847_ff4\
     Fixed Function Clock 10: Automatic-assigning  clock 'ADC_Infrared_intClock'. Signal=\ADC_Infrared:Net_1845_ff10\
     Fixed Function Clock 11: Automatic-assigning  clock 'HCSR04_Clock'. Signal=Net_542_ff11
@@ -537,7 +538,7 @@ Done removing unused cells.
         Enable Signal: True
 </CYPRESSTAG>
 </CYPRESSTAG>
-ADD: pft.M0040: information: The following 4 pin(s) will be assigned a location by the fitter: \ADC_Infrared:ExtVref(0)\, \I2C_Master:scl(0)\, \I2C_Master:sda(0)\, \UARTCOMMS:tx(0)\
+ADD: pft.M0040: information: The following 4 pin(s) will be assigned a location by the fitter: \ADC_Infrared:ExtVref(0)\, \EZI2C_Slave:scl(0)\, \EZI2C_Slave:sda(0)\, HCSR04_Echo_1(0)
 
 Info: plm.M0038: The pin named HB25_PWM_Pin(0) at location P3[4] prevents usage of special purposes: TCPWM[2].line_out. (App=cydsfit)
 Info: plm.M0038: The pin named HB25_PWM_Pin(0) at location P3[4] prevents usage of special purposes: SCB[1].spi_select[1]. (App=cydsfit)
@@ -676,9 +677,6 @@ Design Equations
             pa_out => \EZI2C_Slave:sda(0)\__PA ,
             fb => \EZI2C_Slave:Net_581\ ,
             pad => \EZI2C_Slave:sda(0)_PAD\ );
-        Properties:
-        {
-        }
 
     Pin : Name = \EZI2C_Slave:scl(0)\
         Attributes:
@@ -716,9 +714,6 @@ Design Equations
             pa_out => \EZI2C_Slave:scl(0)\__PA ,
             fb => \EZI2C_Slave:Net_580\ ,
             pad => \EZI2C_Slave:scl(0)_PAD\ );
-        Properties:
-        {
-        }
 
     Pin : Name = HCSR04_Echo_0(0)
         Attributes:
@@ -916,9 +911,6 @@ Design Equations
             pa_out => HCSR04_Echo_1(0)__PA ,
             fb => Net_802 ,
             pad => HCSR04_Echo_1(0)_PAD );
-        Properties:
-        {
-        }
 
     Pin : Name = Pin_InfraredDistance_0(0)
         Attributes:
@@ -1189,6 +1181,49 @@ Design Equations
             pa_out => \UARTCOMMS:tx(0)\__PA ,
             input => \UARTCOMMS:Net_1062\ ,
             pad => \UARTCOMMS:tx(0)_PAD\ );
+        Properties:
+        {
+        }
+
+    Pin : Name = \UARTCOMMS:rx(0)\
+        Attributes:
+            In Group/Port: True
+            In Sync Option: NOSYNC
+            Out Sync Option: AUTO
+            Interrupt generated: False
+            Interrupt mode: NONE
+            Drive mode: HI_Z_DIGITAL
+            VTrip: CMOS
+            Slew: FAST
+            Input Sync needed: False
+            Output Sync needed: False
+            SC shield enabled: False
+            POR State: ANY
+            LCD Mode: COMMON
+            Register Mode: RegComb
+            CaSense Mode: NEITHER
+            Treat as pin: True
+            Is OE Registered: False
+            Uses Analog: False
+            Can contain Digital: True
+            Is SIO: False
+            SIO Output Buf: NONREGULATED
+            SIO Input Buf: SINGLE_ENDED
+            SIO HiFreq: LOW
+            SIO Hyst: DISABLED
+            SIO Vtrip: MULTIPLIER_0_5
+            SIO Multiplier Index: 0
+            SIO RefSel: VCC_IO
+            Required Capabilitites: DIGITAL
+            Initial Value: 0
+            IO Voltage: 0
+        PORT MAP (
+            pa_out => \UARTCOMMS:rx(0)\__PA ,
+            fb => \UARTCOMMS:Net_654\ ,
+            pad => \UARTCOMMS:rx(0)_PAD\ );
+        Properties:
+        {
+        }
 
     Pin : Name = HB25_PWM_Pin(0)
         Attributes:
@@ -1308,6 +1343,9 @@ Design Equations
             pa_out => \I2C_Master:sda(0)\__PA ,
             fb => \I2C_Master:Net_581\ ,
             pad => \I2C_Master:sda(0)_PAD\ );
+        Properties:
+        {
+        }
 
     Pin : Name = \I2C_Master:scl(0)\
         Attributes:
@@ -1345,6 +1383,9 @@ Design Equations
             pa_out => \I2C_Master:scl(0)\__PA ,
             fb => \I2C_Master:Net_580\ ,
             pad => \I2C_Master:scl(0)_PAD\ );
+        Properties:
+        {
+        }
 
     Pin : Name = Encoder_B(0)
         Attributes:
@@ -1960,7 +2001,7 @@ Resource Type                 : Used : Free :  Max :  % Used
 ============================================================
 Digital Clocks                :    1 :    3 :    4 : 25.00 %
 Interrupts                    :    6 :   26 :   32 : 18.75 %
-IO                            :   26 :   25 :   51 : 50.98 %
+IO                            :   27 :   24 :   51 : 52.94 %
 Segment LCD                   :    0 :    1 :    1 :  0.00 %
 CapSense                      :    0 :    2 :    2 :  0.00 %
 Die Temp                      :    0 :    1 :    1 :  0.00 %
@@ -1984,20 +2025,20 @@ DAC                           :      :      :      :
   7-bit IDAC                  :    0 :    1 :    1 :  0.00 %
   8-bit IDAC                  :    0 :    1 :    1 :  0.00 %
 </CYPRESSTAG>
-Technology Mapping: Elapsed time ==> 0s.080ms
-Tech mapping phase: Elapsed time ==> 0s.104ms
+Technology Mapping: Elapsed time ==> 0s.140ms
+Tech mapping phase: Elapsed time ==> 0s.171ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Placement">
 <CYPRESSTAG name="Analog Placement">
-Elapsed time ==> 0.2873535s
+Elapsed time ==> 0.2590498s
 </CYPRESSTAG>
-Analog Placement phase: Elapsed time ==> 0s.483ms
+Analog Placement phase: Elapsed time ==> 0s.474ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Routing">
 <CYPRESSTAG name="Analog Routing">
-Route success=True, Iterations=1 Elapsed=0.0223888 secs
+Route success=True, Iterations=1 Elapsed=0.0119286 secs
 </CYPRESSTAG>
-Analog Routing phase: Elapsed time ==> 0s.023ms
+Analog Routing phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Code Generation">
 ============ Analog Final Answer Routes ============
@@ -2142,7 +2183,7 @@ Mux Info {
     }
   }
 }
-Analog Code Generation phase: Elapsed time ==> 0s.020ms
+Analog Code Generation phase: Elapsed time ==> 0s.031ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Placement">
 <CYPRESSTAG name="Detailed placement messages">
@@ -2157,33 +2198,33 @@ PLD Packing Summary
 ------------------------------------------------------------
             Resource Type : Used : Free :  Max :  % Used
     ====================================================
-                     PLDs :    7 :    1 :    8 :  87.50%
+                     PLDs :    6 :    2 :    8 :  75.00%
 
 <CYPRESSTAG name="PLD Statistics">
 
         PLD Resource Type :     Average/LAB
     =======================================
-                   Inputs :            3.71
-                   Pterms :            3.71
-               Macrocells :            2.00
+                   Inputs :            3.83
+                   Pterms :            4.33
+               Macrocells :            2.33
 </CYPRESSTAG>
 <CYPRESSTAG name="Packed PLD Contents">
 Packed PLD Contents not displayed at this verbose level.</CYPRESSTAG>
 </CYPRESSTAG>
-PLD Packing: Elapsed time ==> 0s.001ms
+PLD Packing: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Partitioning">
 <CYPRESSTAG name="Initial Partitioning Summary">
 Initial Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
 <CYPRESSTAG name="Final Partitioning Summary">
 Final Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
-Partitioning: Elapsed time ==> 0s.022ms
+Partitioning: Elapsed time ==> 0s.015ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Simulated Annealing">
-Annealing: Elapsed time ==> 0s.001ms
+Annealing: Elapsed time ==> 0s.000ms
 <CYPRESSTAG name="Simulated Annealing Results">
 The seed used for moves was 114161200.
-Inital cost was 172, final cost is 172 (0.00% improvement).</CYPRESSTAG>
+Inital cost was 162, final cost is 162 (0.00% improvement).</CYPRESSTAG>
 </CYPRESSTAG>
 <CYPRESSTAG name="Final Placement Summary">
 
@@ -2193,7 +2234,7 @@ Final Placement Summary
 
        Resource Type :      Count : Avg Inputs : Avg Outputs
     ========================================================
-                 UDB :          4 :       5.00 :       3.50
+                 UDB :          4 :       4.75 :       3.50
 <CYPRESSTAG name="Final Placement Details">
 <CYPRESSTAG name="Component Details">
 
@@ -2201,43 +2242,23 @@ Final Placement Summary
 Component Placement Details
 ------------------------------------------------------------
 UDB [UDB=(0,0)] contents:
-LAB@[UDB=(0,0)][LB=0] #macrocells=2, #inputs=2, #pterms=1
+LAB@[UDB=(0,0)][LB=0] #macrocells=4, #inputs=4, #pterms=4
 {
-    [McSlotId=0]:     MacroCell: Name=cydff_1, Mode=(D-Register) @ [UDB=(0,0)][LB=0][MC=0]
-        Total # of inputs        : 0
-        Total # of product terms : 0
-        List of special equations: 
-            Clock  = (Net_1584)
-            Clock Enable: True
-        Main Equation            : 0 pterms
-        !(
-            0
-        );
-        Output = cydff_1 (fanout=1)
-        Properties               : 
-        {
-        }
-
-    [McSlotId=1]: (empty)
-    [McSlotId=2]: (empty)
-    [McSlotId=3]:     MacroCell: Name=\Phase_Counter:CounterUDB:status_3\, Mode=(Combinatorial) @ [UDB=(0,0)][LB=0][MC=3]
+    [McSlotId=0]:     MacroCell: Name=\Phase_Counter:CounterUDB:status_0\, Mode=(Combinatorial) @ [UDB=(0,0)][LB=0][MC=0]
         Total # of inputs        : 2
         Total # of product terms : 1
             Clock Enable: True
         Main Equation            : 1 pterm
         (
-              \Phase_Counter:CounterUDB:status_1\ * 
-              !\Phase_Counter:CounterUDB:underflow_reg_i\
+              \Phase_Counter:CounterUDB:cmp_out_i\ * 
+              !\Phase_Counter:CounterUDB:prevCompare\
         );
-        Output = \Phase_Counter:CounterUDB:status_3\ (fanout=1)
+        Output = \Phase_Counter:CounterUDB:status_0\ (fanout=1)
         Properties               : 
         {
         }
-}
 
-LAB@[UDB=(0,0)][LB=1] #macrocells=3, #inputs=3, #pterms=3
-{
-    [McSlotId=0]:     MacroCell: Name=\Phase_Counter:CounterUDB:prevCompare\, Mode=(D-Register) @ [UDB=(0,0)][LB=1][MC=0]
+    [McSlotId=1]:     MacroCell: Name=\Phase_Counter:CounterUDB:prevCompare\, Mode=(D-Register) @ [UDB=(0,0)][LB=0][MC=1]
         Total # of inputs        : 1
         Total # of product terms : 1
         List of special equations: 
@@ -2252,22 +2273,53 @@ LAB@[UDB=(0,0)][LB=1] #macrocells=3, #inputs=3, #pterms=3
         {
         }
 
-    [McSlotId=1]: (empty)
-    [McSlotId=2]:     MacroCell: Name=\Phase_Counter:CounterUDB:status_0\, Mode=(Combinatorial) @ [UDB=(0,0)][LB=1][MC=2]
+    [McSlotId=2]:     MacroCell: Name=\Phase_Counter:CounterUDB:status_2\, Mode=(Combinatorial) @ [UDB=(0,0)][LB=0][MC=2]
         Total # of inputs        : 2
         Total # of product terms : 1
             Clock Enable: True
         Main Equation            : 1 pterm
         (
-              \Phase_Counter:CounterUDB:cmp_out_i\ * 
-              !\Phase_Counter:CounterUDB:prevCompare\
+              \Phase_Counter:CounterUDB:overflow\ * 
+              !\Phase_Counter:CounterUDB:overflow_reg_i\
         );
-        Output = \Phase_Counter:CounterUDB:status_0\ (fanout=1)
+        Output = \Phase_Counter:CounterUDB:status_2\ (fanout=1)
         Properties               : 
         {
         }
 
-    [McSlotId=3]:     MacroCell: Name=\Phase_Counter:CounterUDB:underflow_reg_i\, Mode=(D-Register) @ [UDB=(0,0)][LB=1][MC=3]
+    [McSlotId=3]:     MacroCell: Name=\Phase_Counter:CounterUDB:overflow_reg_i\, Mode=(D-Register) @ [UDB=(0,0)][LB=0][MC=3]
+        Total # of inputs        : 1
+        Total # of product terms : 1
+        List of special equations: 
+            Clock  = (Net_75_digital) => Global
+            Clock Enable: True
+        Main Equation            : 1 pterm
+        (
+              \Phase_Counter:CounterUDB:overflow\
+        );
+        Output = \Phase_Counter:CounterUDB:overflow_reg_i\ (fanout=1)
+        Properties               : 
+        {
+        }
+}
+
+LAB@[UDB=(0,0)][LB=1] #macrocells=2, #inputs=2, #pterms=2
+{
+    [McSlotId=0]:     MacroCell: Name=\Phase_Counter:CounterUDB:status_3\, Mode=(Combinatorial) @ [UDB=(0,0)][LB=1][MC=0]
+        Total # of inputs        : 2
+        Total # of product terms : 1
+            Clock Enable: True
+        Main Equation            : 1 pterm
+        (
+              \Phase_Counter:CounterUDB:status_1\ * 
+              !\Phase_Counter:CounterUDB:underflow_reg_i\
+        );
+        Output = \Phase_Counter:CounterUDB:status_3\ (fanout=1)
+        Properties               : 
+        {
+        }
+
+    [McSlotId=1]:     MacroCell: Name=\Phase_Counter:CounterUDB:underflow_reg_i\, Mode=(D-Register) @ [UDB=(0,0)][LB=1][MC=1]
         Total # of inputs        : 1
         Total # of product terms : 1
         List of special equations: 
@@ -2281,6 +2333,9 @@ LAB@[UDB=(0,0)][LB=1] #macrocells=3, #inputs=3, #pterms=3
         Properties               : 
         {
         }
+
+    [McSlotId=2]: (empty)
+    [McSlotId=3]: (empty)
 }
 
 datapathcell: Name =\Phase_Counter:CounterUDB:sC32:counterdp:u3\
@@ -2342,9 +2397,55 @@ statusicell: Name =\Phase_Counter:CounterUDB:sSTSReg:stsreg\
     Clock Enable: True
 
 UDB [UDB=(0,1)] contents:
-LAB@[UDB=(0,1)][LB=0] #macrocells=3, #inputs=4, #pterms=3
+LAB@[UDB=(0,1)][LB=0] #macrocells=4, #inputs=6, #pterms=7
 {
-    [McSlotId=0]:     MacroCell: Name=Net_69, Mode=(D-Register) @ [UDB=(0,1)][LB=0][MC=0]
+    [McSlotId=0]:     MacroCell: Name=\Phase_Counter:CounterUDB:count_enable\, Mode=(Combinatorial) @ [UDB=(0,1)][LB=0][MC=0]
+        Total # of inputs        : 2
+        Total # of product terms : 1
+            Clock Enable: True
+        Main Equation            : 1 pterm
+        (
+              !\Phase_Counter:CounterUDB:count_stored_i\ * Net_1622
+        );
+        Output = \Phase_Counter:CounterUDB:count_enable\ (fanout=4)
+        Properties               : 
+        {
+        }
+
+    [McSlotId=1]:     MacroCell: Name=\Phase_Counter:CounterUDB:count_stored_i\, Mode=(D-Register) @ [UDB=(0,1)][LB=0][MC=1]
+        Total # of inputs        : 1
+        Total # of product terms : 1
+        List of special equations: 
+            Clock  = (Net_75_digital) => Global
+            Clock Enable: True
+        Main Equation            : 1 pterm
+        (
+              Net_1622
+        );
+        Output = \Phase_Counter:CounterUDB:count_stored_i\ (fanout=1)
+        Properties               : 
+        {
+        }
+
+    [McSlotId=2]:     MacroCell: Name=Net_112, Mode=(D-Register) @ [UDB=(0,1)][LB=0][MC=2]
+        Total # of inputs        : 4
+        Total # of product terms : 4
+        List of special equations: 
+            Clock  = (Net_75_digital) => Global
+            Clock Enable: True
+        Main Equation            : 4 pterms
+        (
+              !Net_69 * !Net_70 * Net_3174 * !Net_3173
+            + !Net_69 * Net_70 * !Net_3174 * !Net_3173
+            + Net_69 * !Net_70 * Net_3174 * Net_3173
+            + Net_69 * Net_70 * !Net_3174 * Net_3173
+        );
+        Output = Net_112 (fanout=4)
+        Properties               : 
+        {
+        }
+
+    [McSlotId=3]:     MacroCell: Name=Net_69, Mode=(D-Register) @ [UDB=(0,1)][LB=0][MC=3]
         Total # of inputs        : 1
         Total # of product terms : 1
         List of special equations: 
@@ -2358,51 +2459,28 @@ LAB@[UDB=(0,1)][LB=0] #macrocells=3, #inputs=4, #pterms=3
         Properties               : 
         {
         }
-
-    [McSlotId=1]:     MacroCell: Name=Net_70, Mode=(D-Register) @ [UDB=(0,1)][LB=0][MC=1]
-        Total # of inputs        : 1
-        Total # of product terms : 1
-        List of special equations: 
-            Clock  = (Net_75_digital) => Global
-            Clock Enable: True
-        Main Equation            : 1 pterm
-        (
-              Net_3173
-        );
-        Output = Net_70 (fanout=2)
-        Properties               : 
-        {
-        }
-
-    [McSlotId=2]: (empty)
-    [McSlotId=3]:     MacroCell: Name=\Phase_Counter:CounterUDB:status_2\, Mode=(Combinatorial) @ [UDB=(0,1)][LB=0][MC=3]
-        Total # of inputs        : 2
-        Total # of product terms : 1
-            Clock Enable: True
-        Main Equation            : 1 pterm
-        (
-              \Phase_Counter:CounterUDB:overflow\ * 
-              !\Phase_Counter:CounterUDB:overflow_reg_i\
-        );
-        Output = \Phase_Counter:CounterUDB:status_2\ (fanout=1)
-        Properties               : 
-        {
-        }
 }
 
-LAB@[UDB=(0,1)][LB=1] #macrocells=1, #inputs=1, #pterms=1
+LAB@[UDB=(0,1)][LB=1] #macrocells=1, #inputs=4, #pterms=8
 {
-    [McSlotId=0]:     MacroCell: Name=\Phase_Counter:CounterUDB:overflow_reg_i\, Mode=(D-Register) @ [UDB=(0,1)][LB=1][MC=0]
-        Total # of inputs        : 1
-        Total # of product terms : 1
+    [McSlotId=0]:     MacroCell: Name=Net_1622, Mode=(D-Register) @ [UDB=(0,1)][LB=1][MC=0]
+        Total # of inputs        : 4
+        Total # of product terms : 8
         List of special equations: 
             Clock  = (Net_75_digital) => Global
             Clock Enable: True
-        Main Equation            : 1 pterm
+        Main Equation            : 8 pterms
         (
-              \Phase_Counter:CounterUDB:overflow\
+              !Net_69 * !Net_70 * !Net_3174 * Net_3173
+            + !Net_69 * !Net_70 * Net_3174 * !Net_3173
+            + !Net_69 * Net_70 * !Net_3174 * !Net_3173
+            + !Net_69 * Net_70 * Net_3174 * Net_3173
+            + Net_69 * !Net_70 * !Net_3174 * !Net_3173
+            + Net_69 * !Net_70 * Net_3174 * Net_3173
+            + Net_69 * Net_70 * !Net_3174 * Net_3173
+            + Net_69 * Net_70 * Net_3174 * !Net_3173
         );
-        Output = \Phase_Counter:CounterUDB:overflow_reg_i\ (fanout=1)
+        Output = Net_1622 (fanout=3)
         Properties               : 
         {
         }
@@ -2447,26 +2525,25 @@ datapathcell: Name =\Phase_Counter:CounterUDB:sC32:counterdp:u0\
     Next in chain : \Phase_Counter:CounterUDB:sC32:counterdp:u1\
 
 UDB [UDB=(1,0)] contents:
-LAB@[UDB=(1,0)][LB=0] #macrocells=1, #inputs=6, #pterms=4
+LAB@[UDB=(1,0)][LB=0] #macrocells=1, #inputs=0, #pterms=0
 {
     [McSlotId=0]: (empty)
-    [McSlotId=1]:     MacroCell: Name=Net_714, Mode=(Combinatorial) @ [UDB=(1,0)][LB=0][MC=1]
-        Total # of inputs        : 6
-        Total # of product terms : 4
+    [McSlotId=1]: (empty)
+    [McSlotId=2]:     MacroCell: Name=cydff_1, Mode=(D-Register) @ [UDB=(1,0)][LB=0][MC=2]
+        Total # of inputs        : 0
+        Total # of product terms : 0
+        List of special equations: 
+            Clock  = (Net_1584)
             Clock Enable: True
-        Main Equation            : 4 pterms
-        (
-              Net_801 * !Net_901_1 * !Net_901_0
-            + Net_891 * Net_901_1 * Net_901_0
-            + Net_890 * Net_901_1 * !Net_901_0
-            + Net_802 * !Net_901_1 * Net_901_0
+        Main Equation            : 0 pterms
+        !(
+            0
         );
-        Output = Net_714 (fanout=4)
+        Output = cydff_1 (fanout=1)
         Properties               : 
         {
         }
 
-    [McSlotId=2]: (empty)
     [McSlotId=3]: (empty)
 }
 
@@ -2506,43 +2583,26 @@ datapathcell: Name =\Phase_Counter:CounterUDB:sC32:counterdp:u2\
     Previous in chain : \Phase_Counter:CounterUDB:sC32:counterdp:u1\
     Next in chain : \Phase_Counter:CounterUDB:sC32:counterdp:u3\
 
-controlcell: Name =\HCSR04_Control:Sync:ctrl_reg\
-    PORT MAP (
-        control_7 => \HCSR04_Control:control_7\ ,
-        control_6 => \HCSR04_Control:control_6\ ,
-        control_5 => \HCSR04_Control:control_5\ ,
-        control_4 => \HCSR04_Control:control_4\ ,
-        control_3 => \HCSR04_Control:control_3\ ,
-        control_2 => \HCSR04_Control:control_2\ ,
-        control_1 => Net_901_1 ,
-        control_0 => Net_901_0 );
-    Properties:
-    {
-        cy_ctrl_mode_0 = "00000000"
-        cy_ctrl_mode_1 = "00000000"
-        cy_ext_reset = 0
-        cy_force_order = 1
-        cy_init_value = "00000000"
-    }
-    Clock Enable: True
-
 UDB [UDB=(1,1)] contents:
-LAB@[UDB=(1,1)][LB=0] #macrocells=3, #inputs=6, #pterms=6
+LAB@[UDB=(1,1)][LB=0] #macrocells=2, #inputs=7, #pterms=5
 {
-    [McSlotId=0]:     MacroCell: Name=\Phase_Counter:CounterUDB:count_enable\, Mode=(Combinatorial) @ [UDB=(1,1)][LB=0][MC=0]
-        Total # of inputs        : 2
-        Total # of product terms : 1
+    [McSlotId=0]:     MacroCell: Name=Net_714, Mode=(Combinatorial) @ [UDB=(1,1)][LB=0][MC=0]
+        Total # of inputs        : 6
+        Total # of product terms : 4
             Clock Enable: True
-        Main Equation            : 1 pterm
+        Main Equation            : 4 pterms
         (
-              !\Phase_Counter:CounterUDB:count_stored_i\ * Net_1622
+              Net_801 * !Net_901_1 * !Net_901_0
+            + Net_891 * Net_901_1 * Net_901_0
+            + Net_890 * Net_901_1 * !Net_901_0
+            + Net_802 * !Net_901_1 * Net_901_0
         );
-        Output = \Phase_Counter:CounterUDB:count_enable\ (fanout=4)
+        Output = Net_714 (fanout=4)
         Properties               : 
         {
         }
 
-    [McSlotId=1]:     MacroCell: Name=\Phase_Counter:CounterUDB:count_stored_i\, Mode=(D-Register) @ [UDB=(1,1)][LB=0][MC=1]
+    [McSlotId=1]:     MacroCell: Name=Net_70, Mode=(D-Register) @ [UDB=(1,1)][LB=0][MC=1]
         Total # of inputs        : 1
         Total # of product terms : 1
         List of special equations: 
@@ -2550,59 +2610,13 @@ LAB@[UDB=(1,1)][LB=0] #macrocells=3, #inputs=6, #pterms=6
             Clock Enable: True
         Main Equation            : 1 pterm
         (
-              Net_1622
+              Net_3173
         );
-        Output = \Phase_Counter:CounterUDB:count_stored_i\ (fanout=1)
+        Output = Net_70 (fanout=2)
         Properties               : 
         {
         }
 
-    [McSlotId=2]:     MacroCell: Name=Net_112, Mode=(D-Register) @ [UDB=(1,1)][LB=0][MC=2]
-        Total # of inputs        : 4
-        Total # of product terms : 4
-        List of special equations: 
-            Clock  = (Net_75_digital) => Global
-            Clock Enable: True
-        Main Equation            : 4 pterms
-        (
-              !Net_69 * !Net_70 * Net_3174 * !Net_3173
-            + !Net_69 * Net_70 * !Net_3174 * !Net_3173
-            + Net_69 * !Net_70 * Net_3174 * Net_3173
-            + Net_69 * Net_70 * !Net_3174 * Net_3173
-        );
-        Output = Net_112 (fanout=4)
-        Properties               : 
-        {
-        }
-
-    [McSlotId=3]: (empty)
-}
-
-LAB@[UDB=(1,1)][LB=1] #macrocells=1, #inputs=4, #pterms=8
-{
-    [McSlotId=0]:     MacroCell: Name=Net_1622, Mode=(D-Register) @ [UDB=(1,1)][LB=1][MC=0]
-        Total # of inputs        : 4
-        Total # of product terms : 8
-        List of special equations: 
-            Clock  = (Net_75_digital) => Global
-            Clock Enable: True
-        Main Equation            : 8 pterms
-        (
-              !Net_69 * !Net_70 * !Net_3174 * Net_3173
-            + !Net_69 * !Net_70 * Net_3174 * !Net_3173
-            + !Net_69 * Net_70 * !Net_3174 * !Net_3173
-            + !Net_69 * Net_70 * Net_3174 * Net_3173
-            + Net_69 * !Net_70 * !Net_3174 * !Net_3173
-            + Net_69 * !Net_70 * Net_3174 * Net_3173
-            + Net_69 * Net_70 * !Net_3174 * Net_3173
-            + Net_69 * Net_70 * Net_3174 * !Net_3173
-        );
-        Output = Net_1622 (fanout=3)
-        Properties               : 
-        {
-        }
-
-    [McSlotId=1]: (empty)
     [McSlotId=2]: (empty)
     [McSlotId=3]: (empty)
 }
@@ -2643,6 +2657,26 @@ datapathcell: Name =\Phase_Counter:CounterUDB:sC32:counterdp:u1\
     Previous in chain : \Phase_Counter:CounterUDB:sC32:counterdp:u0\
     Next in chain : \Phase_Counter:CounterUDB:sC32:counterdp:u2\
 
+controlcell: Name =\HCSR04_Control:Sync:ctrl_reg\
+    PORT MAP (
+        control_7 => \HCSR04_Control:control_7\ ,
+        control_6 => \HCSR04_Control:control_6\ ,
+        control_5 => \HCSR04_Control:control_5\ ,
+        control_4 => \HCSR04_Control:control_4\ ,
+        control_3 => \HCSR04_Control:control_3\ ,
+        control_2 => \HCSR04_Control:control_2\ ,
+        control_1 => Net_901_1 ,
+        control_0 => Net_901_0 );
+    Properties:
+    {
+        cy_ctrl_mode_0 = "00000000"
+        cy_ctrl_mode_1 = "00000000"
+        cy_ext_reset = 0
+        cy_force_order = 1
+        cy_init_value = "00000000"
+    }
+    Clock Enable: True
+
 Intr container @ [IntrContainer=(0)]: 
   Intr@ [IntrContainer=(0)][IntrId=(0)] 
     interrupt: Name =PhaseCounter_Intr
@@ -2653,14 +2687,6 @@ Intr container @ [IntrContainer=(0)]:
             int_type = "10"
         }
   Intr@ [IntrContainer=(0)][IntrId=(8)] 
-    interrupt: Name =\EZI2C_Slave:SCB_IRQ\
-        PORT MAP (
-            interrupt => Net_167 );
-        Properties:
-        {
-            int_type = "10"
-        }
-  Intr@ [IntrContainer=(0)][IntrId=(9)] 
     interrupt: Name =\UARTCOMMS:SCB_IRQ\
         PORT MAP (
             interrupt => Net_884 );
@@ -2668,7 +2694,15 @@ Intr container @ [IntrContainer=(0)]:
         {
             int_type = "10"
         }
-  Intr@ [IntrContainer=(0)][IntrId=(10)] 
+  Intr@ [IntrContainer=(0)][IntrId=(9)] 
+    interrupt: Name =\EZI2C_Slave:SCB_IRQ\
+        PORT MAP (
+            interrupt => Net_167 );
+        Properties:
+        {
+            int_type = "10"
+        }
+  Intr@ [IntrContainer=(0)][IntrId=(11)] 
     interrupt: Name =\I2C_Master:SCB_IRQ\
         PORT MAP (
             interrupt => Net_1472 );
@@ -2855,15 +2889,15 @@ Pin : Name = HCSR04_Trigger_3(0)
     {
     }
 
-[IoId=5]: 
-Pin : Name = \UARTCOMMS:tx(0)\
+[IoId=4]: 
+Pin : Name = \EZI2C_Slave:scl(0)\
     Attributes:
         In Group/Port: True
         In Sync Option: NOSYNC
         Out Sync Option: NOSYNC
         Interrupt generated: False
         Interrupt mode: NONE
-        Drive mode: CMOS_OUT
+        Drive mode: OPEN_DRAIN_LO
         VTrip: CMOS
         Slew: FAST
         Input Sync needed: False
@@ -2889,9 +2923,91 @@ Pin : Name = \UARTCOMMS:tx(0)\
         Initial Value: 1
         IO Voltage: 0
     PORT MAP (
-        pa_out => \UARTCOMMS:tx(0)\__PA ,
-        input => \UARTCOMMS:Net_1062\ ,
-        pad => \UARTCOMMS:tx(0)_PAD\ );
+        pa_out => \EZI2C_Slave:scl(0)\__PA ,
+        fb => \EZI2C_Slave:Net_580\ ,
+        pad => \EZI2C_Slave:scl(0)_PAD\ );
+    Properties:
+    {
+    }
+
+[IoId=5]: 
+Pin : Name = \EZI2C_Slave:sda(0)\
+    Attributes:
+        In Group/Port: True
+        In Sync Option: NOSYNC
+        Out Sync Option: NOSYNC
+        Interrupt generated: False
+        Interrupt mode: NONE
+        Drive mode: OPEN_DRAIN_LO
+        VTrip: CMOS
+        Slew: FAST
+        Input Sync needed: False
+        Output Sync needed: False
+        SC shield enabled: False
+        POR State: ANY
+        LCD Mode: COMMON
+        Register Mode: RegComb
+        CaSense Mode: NEITHER
+        Treat as pin: True
+        Is OE Registered: False
+        Uses Analog: False
+        Can contain Digital: True
+        Is SIO: False
+        SIO Output Buf: NONREGULATED
+        SIO Input Buf: SINGLE_ENDED
+        SIO HiFreq: LOW
+        SIO Hyst: DISABLED
+        SIO Vtrip: MULTIPLIER_0_5
+        SIO Multiplier Index: 0
+        SIO RefSel: VCC_IO
+        Required Capabilitites: DIGITAL
+        Initial Value: 1
+        IO Voltage: 0
+    PORT MAP (
+        pa_out => \EZI2C_Slave:sda(0)\__PA ,
+        fb => \EZI2C_Slave:Net_581\ ,
+        pad => \EZI2C_Slave:sda(0)_PAD\ );
+    Properties:
+    {
+    }
+
+[IoId=6]: 
+Pin : Name = HCSR04_Echo_1(0)
+    Attributes:
+        In Group/Port: True
+        In Sync Option: SYNC
+        Out Sync Option: AUTO
+        Interrupt generated: False
+        Interrupt mode: NONE
+        Drive mode: HI_Z_DIGITAL
+        VTrip: CMOS
+        Slew: FAST
+        Input Sync needed: True
+        Output Sync needed: False
+        SC shield enabled: False
+        POR State: ANY
+        LCD Mode: COMMON
+        Register Mode: RegComb
+        CaSense Mode: NEITHER
+        Treat as pin: True
+        Is OE Registered: False
+        Uses Analog: False
+        Can contain Digital: True
+        Is SIO: False
+        SIO Output Buf: NONREGULATED
+        SIO Input Buf: SINGLE_ENDED
+        SIO HiFreq: LOW
+        SIO Hyst: DISABLED
+        SIO Vtrip: MULTIPLIER_0_5
+        SIO Multiplier Index: 0
+        SIO RefSel: VCC_IO
+        Required Capabilitites: DIGITAL, ROUTABLE
+        Initial Value: 0
+        IO Voltage: 0
+    PORT MAP (
+        pa_out => HCSR04_Echo_1(0)__PA ,
+        fb => Net_802 ,
+        pad => HCSR04_Echo_1(0)_PAD );
     Properties:
     {
     }
@@ -2934,47 +3050,6 @@ Pin : Name = HCSR04_Echo_0(0)
         pa_out => HCSR04_Echo_0(0)__PA ,
         fb => Net_801 ,
         pad => HCSR04_Echo_0(0)_PAD );
-    Properties:
-    {
-    }
-
-[IoId=1]: 
-Pin : Name = HCSR04_Echo_1(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: SYNC
-        Out Sync Option: AUTO
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: HI_Z_DIGITAL
-        VTrip: CMOS
-        Slew: FAST
-        Input Sync needed: True
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilitites: DIGITAL, ROUTABLE
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => HCSR04_Echo_1(0)__PA ,
-        fb => Net_802 ,
-        pad => HCSR04_Echo_1(0)_PAD );
     Properties:
     {
     }
@@ -3436,14 +3511,14 @@ Pin : Name = HB25_Enable_Pin(0)
 
 Port 4 contains the following IO cells:
 [IoId=0]: 
-Pin : Name = \EZI2C_Slave:scl(0)\
+Pin : Name = \UARTCOMMS:rx(0)\
     Attributes:
         In Group/Port: True
         In Sync Option: NOSYNC
-        Out Sync Option: NOSYNC
+        Out Sync Option: AUTO
         Interrupt generated: False
         Interrupt mode: NONE
-        Drive mode: OPEN_DRAIN_LO
+        Drive mode: HI_Z_DIGITAL
         VTrip: CMOS
         Slew: FAST
         Input Sync needed: False
@@ -3466,25 +3541,25 @@ Pin : Name = \EZI2C_Slave:scl(0)\
         SIO Multiplier Index: 0
         SIO RefSel: VCC_IO
         Required Capabilitites: DIGITAL
-        Initial Value: 1
+        Initial Value: 0
         IO Voltage: 0
     PORT MAP (
-        pa_out => \EZI2C_Slave:scl(0)\__PA ,
-        fb => \EZI2C_Slave:Net_580\ ,
-        pad => \EZI2C_Slave:scl(0)_PAD\ );
+        pa_out => \UARTCOMMS:rx(0)\__PA ,
+        fb => \UARTCOMMS:Net_654\ ,
+        pad => \UARTCOMMS:rx(0)_PAD\ );
     Properties:
     {
     }
 
 [IoId=1]: 
-Pin : Name = \EZI2C_Slave:sda(0)\
+Pin : Name = \UARTCOMMS:tx(0)\
     Attributes:
         In Group/Port: True
         In Sync Option: NOSYNC
         Out Sync Option: NOSYNC
         Interrupt generated: False
         Interrupt mode: NONE
-        Drive mode: OPEN_DRAIN_LO
+        Drive mode: CMOS_OUT
         VTrip: CMOS
         Slew: FAST
         Input Sync needed: False
@@ -3510,14 +3585,95 @@ Pin : Name = \EZI2C_Slave:sda(0)\
         Initial Value: 1
         IO Voltage: 0
     PORT MAP (
-        pa_out => \EZI2C_Slave:sda(0)\__PA ,
-        fb => \EZI2C_Slave:Net_581\ ,
-        pad => \EZI2C_Slave:sda(0)_PAD\ );
+        pa_out => \UARTCOMMS:tx(0)\__PA ,
+        input => \UARTCOMMS:Net_1062\ ,
+        pad => \UARTCOMMS:tx(0)_PAD\ );
     Properties:
     {
     }
 
 Port 5 contains the following IO cells:
+[IoId=3]: 
+Pin : Name = HCSR04_Trigger_0(0)
+    Attributes:
+        In Group/Port: True
+        In Sync Option: AUTO
+        Out Sync Option: NOSYNC
+        Interrupt generated: False
+        Interrupt mode: NONE
+        Drive mode: CMOS_OUT
+        VTrip: EITHER
+        Slew: FAST
+        Input Sync needed: False
+        Output Sync needed: False
+        SC shield enabled: False
+        POR State: ANY
+        LCD Mode: COMMON
+        Register Mode: RegComb
+        CaSense Mode: NEITHER
+        Treat as pin: True
+        Is OE Registered: False
+        Uses Analog: False
+        Can contain Digital: True
+        Is SIO: False
+        SIO Output Buf: NONREGULATED
+        SIO Input Buf: SINGLE_ENDED
+        SIO HiFreq: LOW
+        SIO Hyst: DISABLED
+        SIO Vtrip: MULTIPLIER_0_5
+        SIO Multiplier Index: 0
+        SIO RefSel: VCC_IO
+        Required Capabilitites: DIGITAL
+        Initial Value: 0
+        IO Voltage: 0
+    PORT MAP (
+        pa_out => HCSR04_Trigger_0(0)__PA ,
+        pad => HCSR04_Trigger_0(0)_PAD );
+    Properties:
+    {
+    }
+
+[IoId=5]: 
+Pin : Name = HCSR04_Trigger_1(0)
+    Attributes:
+        In Group/Port: True
+        In Sync Option: AUTO
+        Out Sync Option: NOSYNC
+        Interrupt generated: False
+        Interrupt mode: NONE
+        Drive mode: CMOS_OUT
+        VTrip: EITHER
+        Slew: FAST
+        Input Sync needed: False
+        Output Sync needed: False
+        SC shield enabled: False
+        POR State: ANY
+        LCD Mode: COMMON
+        Register Mode: RegComb
+        CaSense Mode: NEITHER
+        Treat as pin: True
+        Is OE Registered: False
+        Uses Analog: False
+        Can contain Digital: True
+        Is SIO: False
+        SIO Output Buf: NONREGULATED
+        SIO Input Buf: SINGLE_ENDED
+        SIO HiFreq: LOW
+        SIO Hyst: DISABLED
+        SIO Vtrip: MULTIPLIER_0_5
+        SIO Multiplier Index: 0
+        SIO RefSel: VCC_IO
+        Required Capabilitites: DIGITAL
+        Initial Value: 0
+        IO Voltage: 0
+    PORT MAP (
+        pa_out => HCSR04_Trigger_1(0)__PA ,
+        pad => HCSR04_Trigger_1(0)_PAD );
+    Properties:
+    {
+    }
+
+Port 6 contains the following IO cells:
 [IoId=0]: 
 Pin : Name = \I2C_Master:scl(0)\
     Attributes:
@@ -3600,87 +3756,6 @@ Pin : Name = \I2C_Master:sda(0)\
     {
     }
 
-[IoId=3]: 
-Pin : Name = HCSR04_Trigger_0(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: AUTO
-        Out Sync Option: NOSYNC
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: CMOS_OUT
-        VTrip: EITHER
-        Slew: FAST
-        Input Sync needed: False
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilitites: DIGITAL
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => HCSR04_Trigger_0(0)__PA ,
-        pad => HCSR04_Trigger_0(0)_PAD );
-    Properties:
-    {
-    }
-
-[IoId=5]: 
-Pin : Name = HCSR04_Trigger_1(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: AUTO
-        Out Sync Option: NOSYNC
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: CMOS_OUT
-        VTrip: EITHER
-        Slew: FAST
-        Input Sync needed: False
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilitites: DIGITAL
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => HCSR04_Trigger_1(0)__PA ,
-        pad => HCSR04_Trigger_1(0)_PAD );
-    Properties:
-    {
-    }
-
-Port 6 is empty
 Port 7 is empty
 CAN 2.0b group 0: empty
 Clock group 0: 
@@ -3695,9 +3770,9 @@ Clock group 0:
             lfclk => ClockBlock_LFCLK ,
             wco => ClockBlock_WCO ,
             dsi_in_0 => ClockBlock_Routed1 ,
+            ff_div_2 => \EZI2C_Slave:Net_847_ff2\ ,
+            ff_div_3 => \I2C_Master:Net_847_ff3\ ,
             udb_div_0 => dclk_to_genclk ,
-            ff_div_2 => \I2C_Master:Net_847_ff2\ ,
-            ff_div_3 => \EZI2C_Slave:Net_847_ff3\ ,
             ff_div_4 => \UARTCOMMS:Net_847_ff4\ ,
             ff_div_10 => \ADC_Infrared:Net_1845_ff10\ ,
             ff_div_11 => Net_542_ff11 ,
@@ -3712,9 +3787,31 @@ FSS group 0: empty
 LP Comparator group 0: empty
 Serial Communication (SCB) group 0: 
     SCB Block @ F(SCB,0): 
+    m0s8scbcell: Name =\UARTCOMMS:SCB\
+        PORT MAP (
+            clock => \UARTCOMMS:Net_847_ff4\ ,
+            interrupt => Net_884 ,
+            rx => \UARTCOMMS:Net_654\ ,
+            tx => \UARTCOMMS:Net_1062\ ,
+            rts => \UARTCOMMS:Net_1053\ ,
+            mosi_m => \UARTCOMMS:Net_1061\ ,
+            select_m_3 => \UARTCOMMS:ss_3\ ,
+            select_m_2 => \UARTCOMMS:ss_2\ ,
+            select_m_1 => \UARTCOMMS:ss_1\ ,
+            select_m_0 => \UARTCOMMS:ss_0\ ,
+            sclk_m => \UARTCOMMS:Net_1059\ ,
+            miso_s => \UARTCOMMS:Net_1055\ ,
+            tx_req => Net_887 ,
+            rx_req => Net_886 );
+        Properties:
+        {
+            cy_registers = ""
+            scb_mode = 2
+        }
+    SCB Block @ F(SCB,1): 
     m0s8scbcell: Name =\EZI2C_Slave:SCB\
         PORT MAP (
-            clock => \EZI2C_Slave:Net_847_ff3\ ,
+            clock => \EZI2C_Slave:Net_847_ff2\ ,
             interrupt => Net_167 ,
             tx => \EZI2C_Slave:Net_1062\ ,
             rts => \EZI2C_Slave:Net_1053\ ,
@@ -3734,31 +3831,10 @@ Serial Communication (SCB) group 0:
             cy_registers = ""
             scb_mode = 0
         }
-    SCB Block @ F(SCB,1): 
-    m0s8scbcell: Name =\UARTCOMMS:SCB\
-        PORT MAP (
-            clock => \UARTCOMMS:Net_847_ff4\ ,
-            interrupt => Net_884 ,
-            tx => \UARTCOMMS:Net_1062\ ,
-            rts => \UARTCOMMS:Net_1053\ ,
-            mosi_m => \UARTCOMMS:Net_1061\ ,
-            select_m_3 => \UARTCOMMS:ss_3\ ,
-            select_m_2 => \UARTCOMMS:ss_2\ ,
-            select_m_1 => \UARTCOMMS:ss_1\ ,
-            select_m_0 => \UARTCOMMS:ss_0\ ,
-            sclk_m => \UARTCOMMS:Net_1059\ ,
-            miso_s => \UARTCOMMS:Net_1055\ ,
-            tx_req => Net_887 ,
-            rx_req => Net_886 );
-        Properties:
-        {
-            cy_registers = ""
-            scb_mode = 2
-        }
-    SCB Block @ F(SCB,2): 
+    SCB Block @ F(SCB,3): 
     m0s8scbcell: Name =\I2C_Master:SCB\
         PORT MAP (
-            clock => \I2C_Master:Net_847_ff2\ ,
+            clock => \I2C_Master:Net_847_ff3\ ,
             interrupt => Net_1472 ,
             tx => \I2C_Master:Net_1062\ ,
             rts => \I2C_Master:Net_1053\ ,
@@ -3906,10 +3982,11 @@ Port | Pin | Fixed |      Type |       Drive Mode |                      Name | 
      |   1 |     * |      NONE |         CMOS_OUT |      Encoder_Count_Pin(0) | In(Net_1622)
      |   2 |     * |      NONE |         CMOS_OUT |       HCSR04_Trigger_2(0) | 
      |   3 |     * |      NONE |         CMOS_OUT |       HCSR04_Trigger_3(0) | 
-     |   5 |       |      NONE |         CMOS_OUT |         \UARTCOMMS:tx(0)\ | In(\UARTCOMMS:Net_1062\)
+     |   4 |       |      NONE |    OPEN_DRAIN_LO |      \EZI2C_Slave:scl(0)\ | FB(\EZI2C_Slave:Net_580\)
+     |   5 |       |      NONE |    OPEN_DRAIN_LO |      \EZI2C_Slave:sda(0)\ | FB(\EZI2C_Slave:Net_581\)
+     |   6 |       |      NONE |     HI_Z_DIGITAL |          HCSR04_Echo_1(0) | FB(Net_802)
 -----+-----+-------+-----------+------------------+---------------------------+----------------------------------------
    1 |   0 |     * |      NONE |         CMOS_OUT |          HCSR04_Echo_0(0) | FB(Net_801)
-     |   1 |     * |      NONE |     HI_Z_DIGITAL |          HCSR04_Echo_1(0) | FB(Net_802)
      |   2 |     * |      NONE |     HI_Z_DIGITAL |          HCSR04_Echo_2(0) | FB(Net_890)
      |   3 |     * |      NONE |     HI_Z_DIGITAL |          HCSR04_Echo_3(0) | FB(Net_891)
      |   7 |       |      NONE |      HI_Z_ANALOG | \ADC_Infrared:ExtVref(0)\ | Analog(\ADC_Infrared:Net_3226\)
@@ -3924,43 +4001,44 @@ Port | Pin | Fixed |      Type |       Drive Mode |                      Name | 
    3 |   4 |     * |      NONE |      RES_PULL_UP |           HB25_PWM_Pin(0) | FB(Net_1584), In(Net_1537), OE(cydff_1)
      |   5 |     * |      NONE |         CMOS_OUT |        HB25_Enable_Pin(0) | 
 -----+-----+-------+-----------+------------------+---------------------------+----------------------------------------
-   4 |   0 |     * |      NONE |    OPEN_DRAIN_LO |      \EZI2C_Slave:scl(0)\ | FB(\EZI2C_Slave:Net_580\)
-     |   1 |     * |      NONE |    OPEN_DRAIN_LO |      \EZI2C_Slave:sda(0)\ | FB(\EZI2C_Slave:Net_581\)
+   4 |   0 |     * |      NONE |     HI_Z_DIGITAL |         \UARTCOMMS:rx(0)\ | FB(\UARTCOMMS:Net_654\)
+     |   1 |     * |      NONE |         CMOS_OUT |         \UARTCOMMS:tx(0)\ | In(\UARTCOMMS:Net_1062\)
 -----+-----+-------+-----------+------------------+---------------------------+----------------------------------------
-   5 |   0 |       |      NONE |    OPEN_DRAIN_LO |       \I2C_Master:scl(0)\ | FB(\I2C_Master:Net_580\)
-     |   1 |       |      NONE |    OPEN_DRAIN_LO |       \I2C_Master:sda(0)\ | FB(\I2C_Master:Net_581\)
-     |   3 |     * |      NONE |         CMOS_OUT |       HCSR04_Trigger_0(0) | 
+   5 |   3 |     * |      NONE |         CMOS_OUT |       HCSR04_Trigger_0(0) | 
      |   5 |     * |      NONE |         CMOS_OUT |       HCSR04_Trigger_1(0) | 
+-----+-----+-------+-----------+------------------+---------------------------+----------------------------------------
+   6 |   0 |     * |      NONE |    OPEN_DRAIN_LO |       \I2C_Master:scl(0)\ | FB(\I2C_Master:Net_580\)
+     |   1 |     * |      NONE |    OPEN_DRAIN_LO |       \I2C_Master:sda(0)\ | FB(\I2C_Master:Net_581\)
 -----------------------------------------------------------------------------------------------------------------------
 </CYPRESSTAG>
 </CYPRESSTAG>
 </CYPRESSTAG>
-Digital component placer commit/Report: Elapsed time ==> 0s.002ms
-Digital Placement phase: Elapsed time ==> 0s.757ms
+Digital component placer commit/Report: Elapsed time ==> 0s.000ms
+Digital Placement phase: Elapsed time ==> 0s.797ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Routing">
 Routing successful.
-Digital Routing phase: Elapsed time ==> 0s.787ms
+Digital Routing phase: Elapsed time ==> 0s.578ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream and API generation">
-Bitstream and API generation phase: Elapsed time ==> 0s.322ms
+Bitstream and API generation phase: Elapsed time ==> 0s.375ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream verification">
 Bitstream verification phase: Elapsed time ==> 0s.015ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Static timing analysis">
 Timing report is in Board1-RPi_timing.html.
-Static timing analysis phase: Elapsed time ==> 0s.323ms
+Static timing analysis phase: Elapsed time ==> 0s.250ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Data reporting">
 Data reporting phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Database update...">
-Design database save phase: Elapsed time ==> 0s.151ms
+Design database save phase: Elapsed time ==> 0s.140ms
 </CYPRESSTAG>
-cydsfit: Elapsed time ==> 3s.016ms
+cydsfit: Elapsed time ==> 2s.865ms
 </CYPRESSTAG>
-Fitter phase: Elapsed time ==> 3s.052ms
-API generation phase: Elapsed time ==> 4s.595ms
-Dependency generation phase: Elapsed time ==> 0s.097ms
+Fitter phase: Elapsed time ==> 2s.927ms
+API generation phase: Elapsed time ==> 3s.734ms
+Dependency generation phase: Elapsed time ==> 0s.031ms
 Cleanup phase: Elapsed time ==> 0s.000ms

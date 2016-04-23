@@ -94,6 +94,8 @@
 #include "UARTCOMMS_tx.h"
 #include "UARTCOMMS_tx_aliases.h"
 #include "UARTCOMMS_SCB_IRQ.h"
+#include "UARTCOMMS_rx.h"
+#include "UARTCOMMS_rx_aliases.h"
 #include "I2C_Master_SCBCLK.h"
 #include "I2C_Master_sda.h"
 #include "I2C_Master_sda_aliases.h"

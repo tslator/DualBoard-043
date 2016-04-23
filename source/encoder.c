@@ -29,6 +29,9 @@ static int16 right_wheel_velocity;
 static MOVING_AVERAGE_TYPE ma_left_wheel_velocity;
 static MOVING_AVERAGE_TYPE ma_right_wheel_velocity;
 
+static int16 left_count_per_second;
+static int16 right_count_per_second;
+
 
 CY_ISR( Phase_Counter_Interrupt_Handler )
 {
@@ -99,6 +102,10 @@ void Encoder_Init()
     
     left_wheel_velocity = 0;
     right_wheel_velocity = 0;
+    
+    left_count_per_second = 0;
+    right_count_per_second = 0;
+
 }
 
 void Encoder_Start()
@@ -106,60 +113,59 @@ void Encoder_Start()
     PhaseCounter_Intr_StartEx( Phase_Counter_Interrupt_Handler );    
 }
 
-void Encoder_Update()
+void Encoder_Sample(uint32 delta_time)
 {
     static int32 last_left_count = 0;
     static int32 last_right_count = 0;
-    static uint32 last_capture_time = 0;
-    static int16 left_count_per_second;
-    static int16 right_count_per_second;
-    static int32 left_count;
-    static int32 right_count;
-    static int32 left_delta_count;
-    static int32 right_delta_count;
-    static uint32 delta_time;
-
-
+    int32 left_delta_count;
+    int32 right_delta_count;
+    int32 left_count;
+    int32 right_count;
+    
     left_count = LeftCounterWrapper();
     right_count = RightCounterWrapper();
     
+    left_delta_count = left_count - last_left_count;
+    right_delta_count = right_count - last_right_count;
+
+    last_left_count = LeftCounterWrapper();
+    last_right_count = RightCounterWrapper();
+    
+    left_count_per_second = (left_delta_count * MS_IN_SEC) / (int32) delta_time;
+    right_count_per_second =  (right_delta_count * MS_IN_SEC) / (int32) delta_time;
+
+    /* Update left/right linear speeds
+                count     meter
+       speed = ------- X -------
+                 sec      count
+    */
+    left_wheel_velocity = MovingAverage(&ma_left_wheel_velocity, left_count_per_second * MILLIMETER_PER_COUNT);
+    right_wheel_velocity = MovingAverage(&ma_right_wheel_velocity, right_count_per_second * MILLIMETER_PER_COUNT);
+}
+
+void Encoder_Update()
+{
+    static uint32 last_capture_time = 0;
+    static uint32 delta_time;
+    
     delta_time = millis() - last_capture_time;
     
-    if (delta_time > 250)
-    {
-        last_capture_time = millis();
+    last_capture_time = millis();
     
-        left_delta_count = left_count - last_left_count;
-        right_delta_count = right_count - last_right_count;
-
-        last_left_count = LeftCounterWrapper();
-        last_right_count = RightCounterWrapper();
-        
-        left_count_per_second = (left_delta_count * MS_IN_SEC) / (int32) delta_time;
-        right_count_per_second =  (right_delta_count * MS_IN_SEC) / (int32) delta_time;
-
-        /* Update left/right linear speeds
-                    count     meter
-           speed = ------- X -------
-                     sec      count
-        */
-        left_wheel_velocity = MovingAverage(&ma_left_wheel_velocity, left_count_per_second * MILLIMETER_PER_COUNT);
-        right_wheel_velocity = MovingAverage(&ma_right_wheel_velocity, right_count_per_second * MILLIMETER_PER_COUNT);
-    
+    Encoder_Sample(delta_time);    
                     
 #ifdef LEFT_BOARD
-        I2c_WriteCount(LeftCounterWrapper());
-        I2c_WriteCountPerSecond(left_count_per_second);
-        I2c_WriteWheelVelocity(left_wheel_velocity);
+    I2c_WriteCount(LeftCounterWrapper());
+    I2c_WriteCountPerSecond(left_count_per_second);
+    I2c_WriteWheelVelocity(left_wheel_velocity);
 #elif defined RIGHT_BOARD
-        I2c_WriteCount(RightCounterWrapper());
-        I2c_WriteCountPerSecond(right_count_per_second);
-        I2c_WriteWheelVelocity(right_wheel_velocity);
+    I2c_WriteCount(RightCounterWrapper());
+    I2c_WriteCountPerSecond(right_count_per_second);
+    I2c_WriteWheelVelocity(right_wheel_velocity);
 #else
     #error "You haven't defined a board, e.g. LEFT_BOARD or RIGHT_BOARD"
 #endif
 
-    }
 }
 
 void Encoder_GetLRSpeed(int16* left, int16* right)
@@ -192,7 +198,12 @@ void Encoder_GetLRCount(int32* left, int32* right)
 
 void Encoder_Reset()
 {
+    left_wheel_velocity = 0;
+    right_wheel_velocity = 0;
+    left_count_per_second = 0;
+    right_count_per_second = 0;
     Phase_Counter_WriteCounter(0);
+    I2c_WriteCount(0);
 }
 
 

@@ -54,6 +54,9 @@ int main()
     
     for(;;)
     {
+#ifdef PID_TUNE
+        PID_Tune();
+#else    
         /* Update any control changes */
         Control_Update();
         /* Update encoder-related values */
@@ -68,6 +71,7 @@ int main()
         Ultrasonic_Measure();
         /* Diagnostic update */
         Diag_Update();
+#endif
     }
 }
 

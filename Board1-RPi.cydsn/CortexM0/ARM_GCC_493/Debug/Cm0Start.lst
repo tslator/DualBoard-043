@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
   30:.\Generated_Source\PSoC4/Cm0Start.c **** 
   31:.\Generated_Source\PSoC4/Cm0Start.c **** #if defined (__ICCARM__)
   32:.\Generated_Source\PSoC4/Cm0Start.c ****     #define CY_NUM_ROM_VECTORS      (CY_NUM_VECTORS)
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 2
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/Cm0Start.c **** #else
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
   87:.\Generated_Source\PSoC4/Cm0Start.c ****     volatile uint32 cyBtldrRunType;
   88:.\Generated_Source\PSoC4/Cm0Start.c **** 
   89:.\Generated_Source\PSoC4/Cm0Start.c **** #endif  /* (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_STANDARD) */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 3
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 3
 
 
   90:.\Generated_Source\PSoC4/Cm0Start.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  128:.\Generated_Source\PSoC4/Cm0Start.c **** #if defined(__ARMCC_VERSION)
  129:.\Generated_Source\PSoC4/Cm0Start.c **** 
  130:.\Generated_Source\PSoC4/Cm0Start.c **** /* Local function for device reset. */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 4
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 4
 
 
  131:.\Generated_Source\PSoC4/Cm0Start.c **** extern void Reset(void);
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  185:.\Generated_Source\PSoC4/Cm0Start.c **** * Summary:
  186:.\Generated_Source\PSoC4/Cm0Start.c **** *  This function is called immediately before the users main
  187:.\Generated_Source\PSoC4/Cm0Start.c **** *
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 5
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 5
 
 
  188:.\Generated_Source\PSoC4/Cm0Start.c **** * Parameters:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  242:.\Generated_Source\PSoC4/Cm0Start.c **** ********************************************************************************
  243:.\Generated_Source\PSoC4/Cm0Start.c **** *
  244:.\Generated_Source\PSoC4/Cm0Start.c **** * Summary:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 6
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 6
 
 
  245:.\Generated_Source\PSoC4/Cm0Start.c **** *  Exit a program without cleaning up files. If your system doesn't provide
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  273:.\Generated_Source\PSoC4/Cm0Start.c **** *  Increase program data space. As malloc and related functions depend on this,
  274:.\Generated_Source\PSoC4/Cm0Start.c **** *  it is useful to have a working implementation. The following suffices for a
  275:.\Generated_Source\PSoC4/Cm0Start.c **** *  standalone system; it exploits the symbol end automatically defined by the
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 7
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 7
 
 
  276:.\Generated_Source\PSoC4/Cm0Start.c **** *  GNU linker.
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  303:.\Generated_Source\PSoC4/Cm0Start.c ****         errno = ENOMEM;
   95              		.loc 1 303 0
   96 001c FFF7FEFF 		bl	__errno
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 8
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 8
 
 
   97              	.LVL8:
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  125              		.loc 1 329 0
  126              		.cfi_startproc
  127 0000 70B5     		push	{r4, r5, r6, lr}
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 9
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 9
 
 
  128              		.cfi_def_cfa_offset 16
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  163              		.loc 1 344 0 discriminator 3
  164 0016 0432     		add	r2, r2, #4
  165              	.LVL20:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 10
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 10
 
 
  166              	.L12:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  200              		.loc 1 361 0 is_stmt 1
  201 0034 FFF7FEFF 		bl	__libc_init_array
  202              	.LVL27:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 11
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 11
 
 
  362:.\Generated_Source\PSoC4/Cm0Start.c ****         (void) main();
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  229              		.cfi_offset 3, -8
  230              		.cfi_offset 14, -4
  390:.\Generated_Source\PSoC4/Cm0Start.c ****     #if (CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE || CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 12
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 12
 
 
  391:.\Generated_Source\PSoC4/Cm0Start.c **** 
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  431:.\Generated_Source\PSoC4/Cm0Start.c **** *******************************************************************************/
  432:.\Generated_Source\PSoC4/Cm0Start.c **** #pragma inline = never
  433:.\Generated_Source\PSoC4/Cm0Start.c **** int __low_level_init(void)
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 13
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 13
 
 
  434:.\Generated_Source\PSoC4/Cm0Start.c **** {
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  488:.\Generated_Source\PSoC4/Cm0Start.c **** {
  489:.\Generated_Source\PSoC4/Cm0Start.c ****     CY_SYS_INITIAL_STACK_POINTER,   /* The initial stack pointer  0 */
  490:.\Generated_Source\PSoC4/Cm0Start.c ****     #if defined (__ICCARM__) /* The reset handler          1 */
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 14
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 14
 
 
  491:.\Generated_Source\PSoC4/Cm0Start.c ****         __iar_program_start,
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  257              	.LVL30:
  533:.\Generated_Source\PSoC4/Cm0Start.c ****     #endif  /* (CY_IP_CPUSSV2) */
  534:.\Generated_Source\PSoC4/Cm0Start.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 15
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 15
 
 
  535:.\Generated_Source\PSoC4/Cm0Start.c ****     /* Set Ram interrupt vectors to default functions. */
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  292 0032 1A60     		str	r2, [r3]
  552:.\Generated_Source\PSoC4/Cm0Start.c ****     #endif  /* !defined (__ICCARM__) */
  553:.\Generated_Source\PSoC4/Cm0Start.c **** 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 16
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 16
 
 
  554:.\Generated_Source\PSoC4/Cm0Start.c ****     #if (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_STANDARD)
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  334 0000 00000000 		.word	end
  335              		.section	.noinit,"aw",%progbits
  336              		.align	2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 17
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 17
 
 
  337              		.set	.LANCHOR3,. + 0
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  387 0041 02       		.uleb128 0x2
  388 0042 04       		.byte	0x4
  389 0043 05       		.byte	0x5
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 18
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 18
 
 
  390 0044 B5020000 		.4byte	.LASF4
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  444 00b1 B5000000 		.4byte	0xb5
  445 00b5 06       		.uleb128 0x6
  446 00b6 04       		.byte	0x4
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 19
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 19
 
 
  447 00b7 BB000000 		.4byte	0xbb
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  501 0123 0D       		.uleb128 0xd
  502 0124 F4000000 		.4byte	.LASF49
  503 0128 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 20
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 20
 
 
  504 0129 6F       		.byte	0x6f
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  558 01a3 A4000000 		.4byte	.LASF25
  559 01a7 01       		.byte	0x1
  560 01a8 2301     		.2byte	0x123
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 21
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 21
 
 
  561 01aa CE000000 		.4byte	0xce
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  615 0237 5501     		.2byte	0x155
  616 0239 64000000 		.4byte	0x64
  617 023d DC000000 		.4byte	.LLST7
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 22
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 22
 
 
  618 0241 14       		.uleb128 0x14
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  672 02c6 19       		.uleb128 0x19
  673 02c7 CD000000 		.4byte	.LASF36
  674 02cb 01       		.byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 23
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 23
 
 
  675 02cc 46       		.byte	0x46
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  729 0347 05       		.uleb128 0x5
  730 0348 03       		.byte	0x3
  731 0349 00000000 		.4byte	RomVectors
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 24
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 24
 
 
  732 034d 0A       		.uleb128 0xa
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  786 0014 24       		.uleb128 0x24
  787 0015 00       		.byte	0
  788 0016 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 25
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 25
 
 
  789 0017 0B       		.uleb128 0xb
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  843 004d 08       		.uleb128 0x8
  844 004e 16       		.uleb128 0x16
  845 004f 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 26
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 26
 
 
  846 0050 03       		.uleb128 0x3
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  900 0086 0D       		.uleb128 0xd
  901 0087 2E       		.uleb128 0x2e
  902 0088 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 27
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 27
 
 
  903 0089 3F       		.uleb128 0x3f
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  957 00c1 49       		.uleb128 0x49
  958 00c2 13       		.uleb128 0x13
  959 00c3 02       		.uleb128 0x2
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 28
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 28
 
 
  960 00c4 17       		.uleb128 0x17
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1014 0100 0B       		.uleb128 0xb
  1015 0101 3B       		.uleb128 0x3b
  1016 0102 05       		.uleb128 0x5
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 29
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 29
 
 
  1017 0103 49       		.uleb128 0x49
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1071 013b 01       		.uleb128 0x1
  1072 013c 13       		.uleb128 0x13
  1073 013d 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 30
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 30
 
 
  1074 013e 00       		.byte	0
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1128 0174 49       		.uleb128 0x49
  1129 0175 13       		.uleb128 0x13
  1130 0176 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 31
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 31
 
 
  1131 0177 19       		.uleb128 0x19
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1185 01ad 13       		.uleb128 0x13
  1186 01ae 00       		.byte	0
  1187 01af 00       		.byte	0
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 32
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 32
 
 
  1188 01b0 21       		.uleb128 0x21
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1242 0021 00000000 		.4byte	.LVL3
  1243 0025 08000000 		.4byte	.LVL4
  1244 0029 0100     		.2byte	0x1
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 33
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 33
 
 
  1245 002b 50       		.byte	0x50
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1299 00b4 7C       		.sleb128 -4
  1300 00b5 9F       		.byte	0x9f
  1301 00b6 16000000 		.4byte	.LVL19
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 34
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 34
 
 
  1302 00ba 22000000 		.4byte	.LVL22
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1356 0147 00000000 		.4byte	0
  1357 014b 00000000 		.4byte	0
  1358              		.section	.debug_aranges,"",%progbits
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 35
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 35
 
 
  1359 0000 44000000 		.4byte	0x44
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1406 0014 5F5F6C69 		.ascii	"__libc_init_array\000"
  1406      62635F69 
  1406      6E69745F 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 36
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 36
 
 
  1406      61727261 
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1434      726E5661 
  1434      6C756500 
  1435              	.LASF40:
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 37
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 37
 
 
  1436 00b0 526F6D56 		.ascii	"RomVectors\000"
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1462      7400
  1463              	.LASF8:
  1464 0143 756E7369 		.ascii	"unsigned int\000"
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 38
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 38
 
 
  1464      676E6564 
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 1
  1485      31323230 
  1486 0224 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
  1486      66756E63 
-ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccA7LpRR.s 			page 39
+ARM GAS  C:\Users\Tim\AppData\Local\Temp\ccWJ8mYp.s 			page 39
 
 
  1486      74696F6E 
