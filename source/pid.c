@@ -56,8 +56,8 @@ static void PrintPid()
     {
     char buffer[256];
     memset(buffer, 0, sizeof(buffer));
-    snprintf(buffer, sizeof(buffer), "%f%f%f%f\r\n", p_error, i_error, d_error, p_error_last);
-    UARTCOMMS_UartPutString(buffer);
+    snprintf(buffer, sizeof(buffer), "%f,%f,%f,%f,\r\n", p_error, i_error, d_error, p_error_last);
+    UART_Debug_PutString(buffer);
     }
 }
 
@@ -70,7 +70,7 @@ void PID_Start()
     
 }
 
-static float PID_Calc(float error, uint32 delta_time)
+static float PID_Calc(float error, float target, uint32 delta_time)
 {
     float p_term;
     float i_term;
@@ -107,7 +107,7 @@ static float PID_Calc(float error, uint32 delta_time)
     d_term = d_gain * d_error;
     
     PrintPid();
-    return p_term + i_term + d_term;
+    return target + p_term + i_term + d_term;
 }
 
 void PID_Update()
@@ -169,9 +169,9 @@ void PID_Update()
             }
         }
         */
-        float output = PID_Calc(error, delta_time);
+        float output = PID_Calc(error, scaled_target, delta_time);
         
-        Motor_SetOutput(scaled_target + output);
+        Motor_SetOutput(output);
     }
     
 }

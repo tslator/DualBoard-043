@@ -14,6 +14,9 @@
 
 #define COMMS_DEBUG_ENABLED
 
+// https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=134391
+
+
 void Debug_Init()
 {
     memset(formatted_string, 0, sizeof(formatted_string));
@@ -22,7 +25,7 @@ void Debug_Init()
 void Debug_Start()
 {
 #ifdef COMMS_DEBUG_ENABLED
-    UARTCOMMS_Start();
+    UART_Debug_Start();
 #endif
 }
 

@@ -1,9 +1,9 @@
-D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board-KitProg.cydsn\Board-KitProg.cyprj|32e5ab08-9fba-4fe8-bcc6-8d0b3cc2929b
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|1acd36e8-7159-4d80-b1a8-8324aa7cd825
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|6e8560dd-edd4-4bc9-b4fc-e136bc07f02c
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|a20e0f05-4d25-4faf-a182-329c61f101c2
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|c33e7418-395e-4d64-85d4-98a7aafac315
-D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board2-RPi.cydsn\Board2-RPi.cyprj|84701965-4d9e-4645-a16f-fee9d4cfd2d9
-D:\projects\ArloBot\ArlobotHw\DualBoard-043\Board1-RPi.cydsn\Board1-RPi.cyprj|a0512756-e950-4494-933b-68552912aed2
-D:\projects\ArloBot\ArlobotHw\DualBoard-043\i2c.cydsn\i2c.cyprj|20796ede-e9cf-459d-a911-0b5bca5a0ea7
-D:\projects\ArloBot\ArlobotHw\DualBoard-043\UART.cydsn\UART.cyprj|5a51cf22-6d7d-4028-a801-7b4bf5af6dec
+D:\projects\DualBoard-043\UART.cydsn\UART.cyprj|627339e0-3638-49f6-bfab-4c481c403b94
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|b842c40c-976d-4dba-a3e3-3b541b39e514
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|2d06e655-c434-457f-ba51-695de2ef8c2b
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|bb303c15-4fc8-4c5e-ad3e-2c5459b22727
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|efa9c227-114c-4fb4-9ead-2dc33fcbc1a2
+D:\projects\DualBoard-043\i2c.cydsn\i2c.cyprj|a564bebc-4c9b-4114-b92f-13f845ec1b13
+D:\projects\DualBoard-043\Board1-RPi.cydsn\Board1-RPi.cyprj|f881e928-6600-40e1-8cc4-33addb3d3002
+D:\projects\DualBoard-043\Board2-RPi.cydsn\Board2-RPi.cyprj|ccd94edb-4cc5-4fd6-8c4d-4de22c85b3aa
+D:\projects\DualBoard-043\Board-KitProg.cydsn\Board-KitProg.cyprj|a8390187-9f80-4ef5-b1eb-a49a01634798
